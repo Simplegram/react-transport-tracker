@@ -1,0 +1,64 @@
+import { Pressable, StyleProp, StyleSheet, Text, TextStyle } from "react-native"
+
+type Props = {
+    title: string,
+    onPress?: () => void,
+    style?: StyleProp<TextStyle>,
+    textStyle?: StyleProp<TextStyle>,
+    color?: string,
+    darkenAmount?: number,
+}
+
+export default function Button({ title, onPress, style, textStyle, color = '#f3f3f3', darkenAmount = 0.3 }: Props) {
+    const darkenColor = (hexColor: string, amount: number) => {
+        // Remove the '#' if it exists
+        hexColor = hexColor.replace('#', '');
+
+        // Parse the hex color into its RGB components
+        const r = parseInt(hexColor.substring(0, 2), 16);
+        const g = parseInt(hexColor.substring(2, 4), 16);
+        const b = parseInt(hexColor.substring(4, 6), 16);
+
+        // Darken each component
+        const darkenR = Math.max(0, Math.floor(r * (1 - amount)));
+        const darkenG = Math.max(0, Math.floor(g * (1 - amount)));
+        const darkenB = Math.max(0, Math.floor(b * (1 - amount)));
+
+        // Convert the darkened components back to hex
+        const darkenRHex = darkenR.toString(16).padStart(2, '0');
+        const darkenGHex = darkenG.toString(16).padStart(2, '0');
+        const darkenBHex = darkenB.toString(16).padStart(2, '0');
+
+        return `#${darkenRHex}${darkenGHex}${darkenBHex}`;
+    };
+
+    const buttonStyle = ({ pressed } : {pressed: boolean}) => {
+        const backgroundColor = pressed ? darkenColor(color, darkenAmount) : color;
+        return [styles.buttonContainer, style, { backgroundColor }];
+    };
+    
+    return (
+        <Pressable style={buttonStyle} onPress={onPress}>
+            <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+        </Pressable>
+    );
+}
+
+const styles = StyleSheet.create({
+    buttonContainer: {
+        maxHeight: 55,
+        borderRadius: 8,
+        paddingVertical: 12,
+        paddingHorizontal: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
+        borderColor: '#000'
+    },
+    buttonText: {
+        color: '#000',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+})
