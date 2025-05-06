@@ -30,10 +30,6 @@ const AddDirectionModalContent: React.FC<BaseModalContentProps> = ({ onSubmit, o
         autoFocus={true} // Auto-focus when this content is shown
       />
 
-      {/* Add your specific form fields here */}
-      {/* ... potentially more inputs, pickers, etc. */}
-
-      {/* Buttons for this specific content */}
       <View style={contentStyles.buttonRow}>
         <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={contentStyles.cancelButton} textStyle={contentStyles.cancelButtonText}></Button>
         <Button title='Add Direction' color='#0284f5' onPress={handleAddPress} style={contentStyles.addButton} textStyle={contentStyles.addButtonText}></Button>
