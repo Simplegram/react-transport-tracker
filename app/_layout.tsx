@@ -1,11 +1,38 @@
-import { Stack } from "expo-router";
+import { Slot, useRouter, useSegments } from 'expo-router'
+import { useEffect } from 'react'
+import { AuthProvider, useAuth } from '@/provider/AuthProvider'
 
+// Makes sure the user is authenticated before accessing protected pages
+const InitialLayout = () => {
+  const { session, initialized } = useAuth()
+  const segments = useSegments()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!initialized) return
+
+    // Check if the path/url is in the (auth) group
+    const inAuthGroup = segments[0] === '(tabs)'
+
+    if (session && !inAuthGroup) {
+      // Redirect authenticated users to the list page
+      router.replace('/mainMenu')
+    } else if (!session) {
+      // Redirect unauthenticated users to the login page
+      router.replace('/')
+    }
+  }, [session, initialized])
+
+  return <Slot />
+}
+
+// Wrap the app with the AuthProvider
 const RootLayout = () => {
   return (
-    <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }}></Stack.Screen>
-    </Stack>
-  );
-};
+    <AuthProvider>
+      <InitialLayout />
+    </AuthProvider>
+  )
+}
 
-export default RootLayout;
+export default RootLayout
