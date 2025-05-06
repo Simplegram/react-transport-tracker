@@ -60,6 +60,7 @@ const CollapsibleHeaderPage: React.FC<CollapsibleHeaderPageProps> = ({
     const scrollY = useRef(new Animated.Value(0)).current;
 
     // State to control the scrollability of the inner ScrollView
+    const [innerScroll, setInnerScroll] = useState<number>()
     const [outerScroll, setOuterScroll] = useState<number>()
     const [isInnerScrollEnabled, setIsInnerScrollEnabled] = useState(false);
 
@@ -114,6 +115,7 @@ const CollapsibleHeaderPage: React.FC<CollapsibleHeaderPageProps> = ({
     // Handle snap behavior on scroll end for the *outer* ScrollView
     const handleOuterScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
         const currentScrollY = event.nativeEvent.contentOffset.y;
+        const currentInnerScroll = innerScroll ?? 0;
         setOuterScroll(currentScrollY)
 
         if (snapTimer.current) {
@@ -130,12 +132,13 @@ const CollapsibleHeaderPage: React.FC<CollapsibleHeaderPageProps> = ({
     };
 
     const handleInnerScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-       const currentOuterScrollY = outerScroll ?? 0;
+        const currentScrollY = event.nativeEvent.contentOffset.y;
+        const currentOuterScrollY = outerScroll ?? 0;
+        setInnerScroll(currentScrollY)
 
-        if (currentOuterScrollY >= BOTTOM_SCROLL_THRESHOLD) {
+        if (currentScrollY != 0 && currentOuterScrollY < BOTTOM_SCROLL_THRESHOLD){
             setIsInnerScrollEnabled(true)
-        } 
-        else if (currentOuterScrollY < BOTTOM_SCROLL_THRESHOLD) {
+        } else if (currentScrollY < BOTTOM_SCROLL_THRESHOLD) {
             setIsInnerScrollEnabled(false)
         }
     };
@@ -198,8 +201,7 @@ const CollapsibleHeaderPage: React.FC<CollapsibleHeaderPageProps> = ({
                 <View style={[styles.scrollContentInner, { height: screenHeight }]}>
                     <ScrollView
                         ref={innerScrollViewRef}
-                        scrollEnabled={isInnerScrollEnabled}
-                        nestedScrollEnabled={true}
+                        nestedScrollEnabled={isInnerScrollEnabled}
                         onScrollEndDrag={handleInnerScrollEnd}
                         onMomentumScrollEnd={handleInnerScrollEnd}
                         keyboardShouldPersistTaps="always"
@@ -239,7 +241,7 @@ const styles = StyleSheet.create({
      // This inner view provides padding and contains the inner ScrollView
     scrollContentInner: {
         paddingHorizontal: PADDING_HORIZONTAL,
-        paddingBottom: 20,
+        // paddingBottom: 20,
         // paddingTop: 18,
         flex: 1, // Ensure it takes available space within the outer ScrollView's content container
     },
