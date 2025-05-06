@@ -1,0 +1,41 @@
+interface Direction {
+    id: number
+    name: string
+}
+
+interface Stop {
+    id: number,
+    name: string,
+    lat?: number,
+    lon?: number,
+    name_alt?: string,
+    vehicle_type: number
+}
+
+interface Route {
+    code: string
+    id: number
+    name: string
+}
+
+interface VehicleType {
+    id: number
+    name: string
+}
+
+interface DataItem {
+    id: number;
+    created_at: string;
+    bus_initial_arrival: string;
+    bus_initial_departure: string;
+    bus_final_arrival: string;
+    routes: Route
+    first_stop_id: Stop;
+    last_stop_id: Stop;
+    notes: string | null;
+    vehicle_code: string;
+    directions: Direction;
+    types: VehicleType;
+}
+
+export { Direction, Stop, Route, VehicleType, DataItem }
