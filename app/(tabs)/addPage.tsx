@@ -16,12 +16,14 @@ import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'; // Adjus
 import { router } from 'expo-router'; // Keep if needed elsewhere
 
 // Import the specific modal content components
-import AddDirectionModalContent from '@/components/add_modal/AddDirectionModalContent'; // Adjust path
-import AddStopModalContent from '@/components/add_modal/AddStopModalContent'; // Adjust path
-import AddVehicleTypeModalContent from '@/components/add_modal/AddVehicleTypeModalContent'; // Adjust path
+import AddDirectionModalContent from '@/components/modal/addModal/AddDirectionModalContent'; // Adjust path
+import AddStopModalContent from '@/components/modal/addModal/AddStopModalContent'; // Adjust path
+import AddVehicleTypeModalContent from '@/components/modal/addModal/AddVehicleTypeModalContent'; // Adjust path
 // Import others as you create them...
 
 import { BaseModalContentProps } from '@/src/types/ModalContentProps'; // Adjust path
+import { useTravelContext } from '@/context/PageContext';
+import Button from '@/components/BaseButton';
 
 // --- Define the specific handlers for adding each item type ---
 // These functions will receive the *structured data* from the modal content components
@@ -49,31 +51,23 @@ const handleAddVehicleType = (data: { name: string; type: string }) => {
   // --- Your actual API/state logic here ---
 };
 
-const handleAddTravel = (data: { identifier: string; startTime: Date }) => { // Example: Assuming travel has identifier and time
-    console.log('Adding travel:', data.identifier, 'Start Time:', data.startTime);
-    Alert.alert('Travel Added', `Travel "${data.identifier}" starting at ${data.startTime.toLocaleString()} has been saved.`);
-    // --- Your actual API/state logic here ---
-};
-
 // --- Define the configuration for each button and its modal content ---
 interface ModalConfig {
     title: string;
-    // This is the component that will be rendered inside the modal
-    // It receives onSubmit and onCancel functions
     content: React.FC<BaseModalContentProps>;
-    // This is the function called by NavigationPage AFTER
-    // the content component calls its onSubmit prop
     onSubmitDataHandler: (data: any) => void;
 }
 
 interface ButtonConfig {
+    id: string
     text: string; // The button label
     modalConfig: ModalConfig; // The configuration for the modal opened by this button
 }
 
 const navigationButtons: ButtonConfig[] = [
-  {
-    text: 'Add direction',
+  { 
+    id: 'Directions', 
+    text: 'Manage direction',
     modalConfig: {
       title: 'Add Direction',
       content: AddDirectionModalContent, // Reference the component
@@ -81,7 +75,8 @@ const navigationButtons: ButtonConfig[] = [
     },
   },
   {
-    text: 'Add stop',
+    id: 'Stops', 
+    text: 'Manage stop',
     modalConfig: {
       title: 'Add Stop',
       content: AddStopModalContent, // Reference the component
@@ -89,7 +84,8 @@ const navigationButtons: ButtonConfig[] = [
     },
   },
   {
-    text: 'Add route',
+    id: 'Routes', 
+    text: 'Manage route',
     modalConfig: {
       title: 'Add Route',
       content: AddDirectionModalContent, // Reuse AddDirectionContent if it's just a name
@@ -97,7 +93,17 @@ const navigationButtons: ButtonConfig[] = [
     },
   },
   {
-    text: 'Add vehicle type',
+    id: 'VehicleTypes', 
+    text: 'Manage vehicle type',
+    modalConfig: {
+      title: 'Add Vehicle Type',
+      content: AddVehicleTypeModalContent, // Reference the component with picker
+      onSubmitDataHandler: handleAddVehicleType, // Reference the specific handler
+    },
+  },
+  {
+    id: 'Icons', 
+    text: 'Manage icons',
     modalConfig: {
       title: 'Add Vehicle Type',
       content: AddVehicleTypeModalContent, // Reference the component with picker
@@ -108,10 +114,20 @@ const navigationButtons: ButtonConfig[] = [
 
 
 const NavigationPage: React.FC = () => {
+  const { setSelectedModification } = useTravelContext()
+
   // State for controlling the modal visibility
   const [isModalVisible, setModalVisible] = useState(false);
   // State to hold the configuration for the currently active modal
   const [activeModalConfig, setActiveModalConfig] = useState<ModalConfig | null>(null);
+
+  const handleItemPress = ( selectedModification: string ) => {
+    // Access the item from the correctly grouped/sorted data
+    if (selectedModification) {
+        setSelectedModification(selectedModification);
+        router.push("/(tabs)/dataList");
+    }
+  };
 
   // Function to open the modal, storing the specific config
   const handleOpenModal = (config: ModalConfig) => {
@@ -149,47 +165,38 @@ const NavigationPage: React.FC = () => {
       largeHeaderText="Add vehicle type, direction, stops, routes, or travels"
       smallHeaderText="Add Page"
     >
-      <View>
-        <View style={pageStyles.buttonContainer}>
+      <View style={styles.container}>
+        <View style={styles.fillingContainer}></View>
+        <View style={styles.buttonContainer}>
           {navigationButtons.map((button) => (
-              <TouchableOpacity
-                  key={button.text} // Use text as key
-                  style={pageStyles.button}
-                  // Pass the entire modalConfig object to the handler
-                  onPress={() => handleOpenModal(button.modalConfig)}
-                  activeOpacity={0.8}
-              >
-                  <Text style={pageStyles.buttonText}>{button.text}</Text>
-              </TouchableOpacity>
+            <Button 
+              color='#007bff'
+              key={button.text} 
+              title={button.text} 
+              style={styles.button} 
+              textStyle={styles.buttonText}
+              onPress={() => handleItemPress(button.id)} 
+            />
           ))}
         </View>
       </View>
 
-      {/* --- The Modal Component --- */}
-      {/* Render the modal only if activeModalConfig exists or manage visibility separately */}
       <Modal
         animationType="slide" // Slide from the bottom
         transparent={true} // Allow background content to show
         visible={isModalVisible} // Control visibility with state
         onRequestClose={handleCloseModal} // Handle hardware back button on Android
       >
-        {/* Pressable backdrop to close modal on tap outside */}
         <Pressable style={modalStyles.backdrop} onPress={handleCloseModal}>
-           {/* KeyboardAvoidingView to push content up when keyboard appears */}
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'} // Adjust behavior based on platform
             style={modalStyles.keyboardAvoidingContainer}
           >
-             {/* This Pressable prevents taps on the modal content from closing it */}
-             {/* The modalContent styled View provides the white background, padding, etc. */}
             <Pressable style={modalStyles.modalContent} onPress={(e) => e.stopPropagation()}>
-                {/* Render the title from the active config */}
                 {activeModalConfig?.title && (
                     <Text style={modalStyles.modalTitle}>{activeModalConfig.title}</Text>
                 )}
 
-                {/* Render the specific content component for the active modal */}
-                {/* Pass the onSubmit and onCancel handlers down as props */}
                 {ModalContentComponent ? (
                     <ModalContentComponent
                         onSubmit={handleSubmitFromContent} // This will be called by the content component's "Add" button
@@ -204,24 +211,26 @@ const NavigationPage: React.FC = () => {
           </KeyboardAvoidingView>
         </Pressable>
       </Modal>
-      {/* --- End Modal Component --- */}
-
     </CollapsibleHeaderPage>
   );
 };
 
 // --- Styles specific to the NavigationPage's content ---
-const pageStyles = StyleSheet.create({
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  fillingContainer: {
+    flex: 1,
+  },
   buttonContainer: {
-    // Existing styles
+    gap: 10,
   },
   button: {
-    backgroundColor: '#1E88E5',
     paddingVertical: 14,
     paddingHorizontal: 20,
     borderRadius: 8,
     alignItems: 'center',
-    marginTop: 12, // Space between stacked buttons
   },
   buttonText: {
     color: '#fff',
