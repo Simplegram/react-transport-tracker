@@ -137,7 +137,7 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
     
     const inputRow = (label: string, value: string, onChangeText: (text: string) => void, placeholder: string, maxLength?: number) => (
         <View style={styles.inputRow}>
-            <Text style={styles.inputLabel}>{label}:</Text>
+            <Text style={styles.inputLabel}>{label}</Text>
             <TextInput
                 style={styles.textInput}
                 value={value}
@@ -163,16 +163,20 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
 
                         <View style={styles.dateTimeSection}>
                             <Text style={styles.sectionTitle}>Date</Text>
-                            {inputRow('Year', year, (text) => handlePartChange('year', text), 'YYYY', 4)}
-                            {inputRow('Month', month, (text) => handlePartChange('month', text), 'MM', 2)}
-                            {inputRow('Day', day, (text) => handlePartChange('day', text), 'DD', 2)}
+                            <View style={styles.timePicker}>
+                                {inputRow('Year', year, (text) => handlePartChange('year', text), 'YYYY', 4)}
+                                {inputRow('Month', month, (text) => handlePartChange('month', text), 'MM', 2)}
+                                {inputRow('Day', day, (text) => handlePartChange('day', text), 'DD', 2)}
+                            </View>
                         </View>
 
                         <View style={styles.dateTimeSection}>
                             <Text style={styles.sectionTitle}>Time</Text>
-                            {inputRow('Hours', hours, (text) => handlePartChange('hours', text), 'HH', 2)}
-                            {inputRow('Minutes', minutes, (text) => handlePartChange('minutes', text), 'mm', 2)}
-                            {inputRow('Seconds', seconds, (text) => handlePartChange('seconds', text), 'ss', 2)}
+                            <View style={styles.timePicker}>
+                                {inputRow('Hours', hours, (text) => handlePartChange('hours', text), 'HH', 2)}
+                                {inputRow('Minutes', minutes, (text) => handlePartChange('minutes', text), 'mm', 2)}
+                                {inputRow('Seconds', seconds, (text) => handlePartChange('seconds', text), 'ss', 2)}
+                            </View>
                         </View>
 
                         <View style={styles.timeAdjustmentButtons}>
@@ -232,6 +236,7 @@ const styles = StyleSheet.create({
     },
     dateTimeSection: {
         marginBottom: 15,
+        alignItems: 'center',
     },
     sectionTitle: {
         fontSize: 16,
@@ -239,18 +244,27 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         color: '#333',
     },
+    timePicker: {
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     inputRow: {
+        flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
     },
     inputLabel: {
         flex: 1, 
         fontSize: 16,
-        marginRight: 10,
         minWidth: 70, 
+        textAlign: 'center',
     },
     textInput: {
         flex: 1,
+        width: '100%',
         borderWidth: 1,
         borderColor: '#ccc',
         borderRadius: 5,
