@@ -9,7 +9,7 @@ interface Stop {
     lat?: number,
     lon?: number,
     name_alt?: string,
-    vehicle_type: number
+    vehicle_type: VehicleType
 }
 
 interface Route {
@@ -20,6 +20,12 @@ interface Route {
 
 interface VehicleType {
     id: number
+    name: string,
+    icon_id: Icon,
+}
+
+interface Icon {
+    id: number,
     name: string
 }
 
@@ -38,4 +44,4 @@ interface DataItem {
     types: VehicleType;
 }
 
-export { Direction, Stop, Route, VehicleType, DataItem }
+export { Direction, Stop, Route, VehicleType, Icon, DataItem }
