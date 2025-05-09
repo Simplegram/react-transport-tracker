@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { BaseModalContentProps, AddStopData } from '@/src/types/ModalContentProps'; // Adjust path
-import Button from '../BaseButton';
+import Button from '@/components/BaseButton';
 
 const AddStopModalContent: React.FC<BaseModalContentProps> = ({ onSubmit, onCancel }) => {
   const [stopName, setStopName] = useState('');

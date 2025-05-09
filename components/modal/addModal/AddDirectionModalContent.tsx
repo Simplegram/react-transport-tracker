@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { BaseModalContentProps, AddDirectionData } from '@/src/types/ModalContentProps'; // Adjust path
-import Button from '../BaseButton';
+import Button from '@/components/BaseButton';
 
 // Important: This component will ONLY render the form fields and its own internal buttons
 // The outer modal styling (backdrop, slide-up, etc.) is handled by the parent
@@ -38,12 +38,9 @@ const AddDirectionModalContent: React.FC<BaseModalContentProps> = ({ onSubmit, o
   );
 };
 
-// --- Styles specific to the modal *content* inside the box ---
-// These styles are for the fields and buttons rendered by THIS component
 const contentStyles = StyleSheet.create({
   container: {
-    // Padding is often handled by the outer modal content box,
-    // but you might need some internal spacing
+    
   },
   label: {
     fontSize: 16,
