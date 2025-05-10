@@ -1,13 +1,13 @@
 import { supabase } from "@/lib/supabase"
-import { Direction, Icon, Route, Stop, VehicleType } from "@/src/types/Travels"
+import { Direction, IconType, Route, Stop, VehicleType } from "@/src/types/Travels"
 import { useCallback, useEffect, useState } from "react"
 
-export default function useTravelData() {
+export default function useGetTravelData() {
     const [directions, setDirections] = useState<Direction[]>([])
     const [stops, setStops] = useState<Stop[]>([])
     const [routes, setRoutes] = useState<Route[]>([])
     const [vehicleTypes, setVehicleTypes] = useState<VehicleType[]>([])
-    const [icons, setIcons] = useState<Icon[]>([])
+    const [icons, setIcons] = useState<IconType[]>([])
 
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -26,7 +26,7 @@ export default function useTravelData() {
 
     const getStops = useCallback(async () => {
         setLoading(true)
-        
+
         const { data, error } = await supabase
             .from("stops")
             .select("*, vehicle_type(id, name)")
@@ -66,12 +66,16 @@ export default function useTravelData() {
     }, [])
 
     const getIcons = useCallback(async () => {
+        setLoading(true)
+
         const { data, error } = await supabase
             .from("icons")
             .select()
 
         if (error) console.log(error)
         if (data) setIcons(data)
+
+        setLoading(false)
     }, [])
 
     useEffect(() => {
@@ -81,7 +85,7 @@ export default function useTravelData() {
         getRoutes()
     }, [getDirections, getStops, getVehicleTypes, getRoutes])
 
-    return { 
+    return {
         directions, getDirections,
         stops, getStops,
         routes, getRoutes,
