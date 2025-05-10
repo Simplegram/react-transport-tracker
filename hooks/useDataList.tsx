@@ -1,7 +1,7 @@
 import { Direction, Icon, Route, Stop, VehicleType } from "@/src/types/Travels";
 import { useEffect, useMemo, useState } from "react";
 import { useTravelContext } from "@/context/PageContext";
-import useTravelData from "./useTravelData";
+import useGetTravelData from "./useGetTravelData";
 
 export default function useDataList() {
     const { selectedModification: dataType } = useTravelContext()
@@ -13,9 +13,9 @@ export default function useDataList() {
         vehicleTypes, getVehicleTypes,
         icons, getIcons,
         loading
-    } = useTravelData()
-    
-    const [data, setData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | Icon[]>([]);
+    } = useGetTravelData()
+
+    const [data, setData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>('')
     
     useEffect(() => {

@@ -13,7 +13,7 @@ import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
 import EditStopModal from '@/components/modal/editModal/EditStopModal';
 import useStopModal from '@/hooks/useStopModal';
 import CustomDateTimePicker from '@/components/CustomDatetimePicker';
-import useTravelData from '@/hooks/useTravelData';
+import useGetTravelData from '@/hooks/useGetTravelData';
 
 const mockDirections = [
     { id: 1, name: "Pergi" },
@@ -45,7 +45,7 @@ const getDefaultDataItem = (
 
 
 const EditTravelItemScreen = () => {
-    const { stops, vehicleTypes } = useTravelData();
+    const { stops, vehicleTypes } = useGetTravelData();
 
     const [editableItem, setEditableItem] = useState<DataItem | null>(null);
     // const [showDatePicker, setShowDatePicker] = useState(false); // REMOVE
