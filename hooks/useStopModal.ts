@@ -11,6 +11,10 @@ export default function useStopModal() {
         setShowStopModal(true);
     };
 
+    const openModal = () => {
+        setShowStopModal(true);
+    };
+
     const closeStopModal = () => {
         setShowStopModal(false);
         setEditingStopField(null);
@@ -24,6 +28,7 @@ export default function useStopModal() {
         setShowStopModal,
         setEditingStopField,
         setStopSearchQuery,
+        openModal,
         openStopModal,
         closeStopModal
     }
