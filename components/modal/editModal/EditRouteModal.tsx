@@ -3,14 +3,14 @@ import { useModalContext } from "@/context/ModalContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { EditableRoute } from "@/src/types/EditableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
-import { useEffect, useState } from "react"
+import { useRef, useState } from "react"
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import EditTravelStopModal from "./EditTravelStopModal"
 import useStopModal from "@/hooks/useStopModal"
 import { sortByIdToFront } from "@/src/utils/utils"
 import LoadingScreen from "@/components/LoadingScreen"
-import useModalLoading from "@/hooks/useModalLoading"
+import useLoading from "@/hooks/useLoading"
 
 
 export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {
@@ -36,6 +36,8 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
         'last_stop_id': data.last_stop_id.id,
         'vehicle_type_id': data.vehicle_type_id.id
     })
+
+    const savedVehicleTypeId = useRef(route.vehicle_type_id)
 
     const {
         loading
@@ -98,7 +100,7 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
                                 contentContainerStyle={styles.iconScrollView}
                                 keyboardShouldPersistTaps={"always"}
                             >
-                            {sortByIdToFront(fullVehicleTypes, route.vehicle_type_id).map((type) => (
+                            {sortByIdToFront(fullVehicleTypes, savedVehicleTypeId.current).map((type) => (
                                 <TouchableOpacity
                                     key={type.id}
                                     style={[

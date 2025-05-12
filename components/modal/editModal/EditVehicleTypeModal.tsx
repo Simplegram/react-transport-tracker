@@ -4,7 +4,7 @@ import useGetTravelData from "@/hooks/useGetTravelData";
 import { EditableVehicleType } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { sortByIdToFront } from "@/src/utils/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
@@ -14,6 +14,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
   const { icons, getIcons } = useGetTravelData()
 
   const [vehicleType, setVehicleType] = useState<EditableVehicleType>(data)
+  const savedVehicleTypeId = useRef(vehicleType.icon_id)
 
   useEffect(() => {
     getIcons()
@@ -47,7 +48,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
             contentContainerStyle={styles.iconScrollView}
             keyboardShouldPersistTaps={"always"}
           >
-            {sortByIdToFront(icons, vehicleType.icon_id).map((icon) => (
+            {sortByIdToFront(icons, savedVehicleTypeId.current).map((icon) => (
               <TouchableOpacity
                 key={icon.id}
                 style={[
