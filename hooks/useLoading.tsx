@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 
-export default function useModalLoading() {
+export default function useLoading(timeout: number = 500) {
     const [loading, setLoading] = useState<boolean>(true)
 
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-        }, 500);
+        }, timeout);
     }, [])
 
     return {

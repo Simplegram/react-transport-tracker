@@ -39,7 +39,7 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
 
     const {
         loading
-    } = useModalLoading()
+    } = useLoading()
 
     const handleAddPress = () => {
         onSubmit(route);
