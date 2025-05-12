@@ -42,9 +42,9 @@ const CollapsibleHeaderPage: React.FC<CollapsibleHeaderPageProps> = ({ // Not us
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
         paddingHorizontal: 15,
         paddingBottom: 15,
+        backgroundColor: '#fff',
     },
     fillerContainer: {
         flex: 1,
