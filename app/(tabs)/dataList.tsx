@@ -8,6 +8,7 @@ import useStopModal from '@/hooks/useStopModal';
 import useDatalistModal from '@/hooks/useDatalistModal';
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import { useModalContext } from '@/context/ModalContext';
+import useLoading from '@/hooks/useLoading';
 
 interface ItemTemplate {
   id: string | number; // Use a unique ID
@@ -22,7 +23,6 @@ const DataListScreen: React.FC = () => {
     dataType,
     filteredData: data, refetchTravelData,
     searchQuery, setSearchQuery,
-    loading,
   } = useDataList()
 
   const { 
@@ -34,6 +34,10 @@ const DataListScreen: React.FC = () => {
     activeModalConfig, 
     setActiveModal, setActiveEditModal
   } = useDatalistModal(refetchTravelData)
+
+  const {
+    loading
+  } = useLoading()
 
   const handleModify = (item: ItemTemplate) => {
     setActiveEditModal(dataType)
@@ -90,7 +94,7 @@ const DataListScreen: React.FC = () => {
 
   if (loading) {
     return (
-      <LoadingScreen text="Loading..." />
+      <LoadingScreen />
     );
   }
 
@@ -108,7 +112,6 @@ const DataListScreen: React.FC = () => {
           refreshing={loading}
           onRefresh={refetchTravelData}
           data={data}
-          extraData={loading}
           renderItem={renderItem}
           keyExtractor={item => item.id.toString()} // Ensure key is a string
           contentContainerStyle={styles.listContent}

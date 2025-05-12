@@ -15,8 +15,6 @@ export default function useDataList() {
         refetchTravelData,
     } = useGetTravelData()
 
-    const [loading, setLoading] = useState<boolean>(false)
-
     const [data, setData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]>([]);
     const [filteredData, setFilteredData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]>([]);
     const [searchQuery, setSearchQuery] = useState<string>('')
@@ -38,8 +36,6 @@ export default function useDataList() {
 
     let fetchedData: Direction[] | Stop[] | Route[] | VehicleType[] | IconType[] = [];
     useEffect(() => {
-        setLoading(true)
-
         switch (dataType) {
             case 'Directions':
                 fetchedData = directions
@@ -63,8 +59,6 @@ export default function useDataList() {
 
         setData(fetchedData)
         setFilteredData(filteredStops(fetchedData))
-
-        setLoading(false)
     }, [dataType, directions, stops, routes, vehicleTypes, icons]); // Include all fetched data arrays as dependencies
 
     useEffect(() => {
@@ -75,6 +69,5 @@ export default function useDataList() {
         dataType,
         filteredData, data, refetchTravelData,
         searchQuery, setSearchQuery,
-        loading,
     }
 }
