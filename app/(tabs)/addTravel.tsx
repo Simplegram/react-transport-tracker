@@ -7,9 +7,7 @@ import {
     Platform,
     Pressable,
 } from 'react-native';
-// import DateTimePicker from '@react-native-community/datetimepicker'; // REMOVE
 import { Picker } from '@react-native-picker/picker';
-import { useTravelContext } from '@/context/PageContext';
 import { DataItem, Stop } from '@/src/types/Travels';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
 import EditTravelStopModal from '@/components/modal/editModal/EditTravelStopModal';
@@ -47,16 +45,12 @@ const getDefaultDataItem = (
 
 
 const EditTravelItemScreen = () => {
-    const { selectedItem } = useTravelContext();
     const { stops, vehicleTypes } = useGetTravelData();
-
-    const isEditMode = useMemo(() => !!selectedItem, [selectedItem]);
 
     const [editableItem, setEditableItem] = useState<DataItem | null>(null);
     // const [showDatePicker, setShowDatePicker] = useState(false); // REMOVE
     const [showCustomPicker, setShowCustomPicker] = useState(false); // ADD
     const [editingDateField, setEditingDateField] = useState<keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'> | null>(null);
-
 
     const {
         showStopModal,
@@ -67,28 +61,9 @@ const EditTravelItemScreen = () => {
         closeStopModal
     } = useStopModal();
 
-
     useEffect(() => {
-        if (isEditMode && selectedItem) {
-            try {
-                const selectedItemJSON = JSON.parse(JSON.stringify(selectedItem));
-                setEditableItem(selectedItemJSON);
-            } catch (e) {
-                console.error("Failed to deep copy selectedItem:", e);
-                setEditableItem(selectedItem);
-            }
-        } else if (!isEditMode) {
-            setEditableItem(getDefaultDataItem(vehicleTypes, mockDirections));
-        }
-
-        if (showStopModal) {
-            closeStopModal();
-        }
-        // Close custom date picker if open when item/mode changes
-        if (showCustomPicker) {
-            closeCustomPicker();
-        }
-    }, [selectedItem, isEditMode, vehicleTypes]);
+        setEditableItem(getDefaultDataItem(vehicleTypes, mockDirections));
+    }, [])
 
     const handleChangeText = (field: keyof DataItem | 'route', value: string) => {
         setEditableItem(prev => {
@@ -140,15 +115,7 @@ const EditTravelItemScreen = () => {
         closeStopModal();
     };
 
-    const screenTitle = isEditMode ? 'Edit Travel Item' : 'Add New Travel';
-
-    if (!editableItem) {
-        return (
-            <View style={styles.centeredContainer}>
-                <Text>{isEditMode ? "Loading travel item..." : "Initializing new travel form..."}</Text>
-            </View>
-        );
-    }
+    const screenTitle = 'Add New Travel';
 
     const formatDateForDisplay = (isoString: string | undefined | null) => {
         if (!isoString) return 'Select Date/Time';
@@ -166,6 +133,14 @@ const EditTravelItemScreen = () => {
             return 'Invalid Date';
         }
     };
+
+    if (!editableItem) {
+        return (
+            <View style={styles.centeredContainer}>
+                <Text>Initializing new travel form...</Text>
+            </View>
+        );
+    }
 
     return (
         <CollapsibleHeaderPage largeHeaderText={screenTitle}>
@@ -190,9 +165,6 @@ const EditTravelItemScreen = () => {
                 </Pressable>
             </View>
 
-            {/* REMOVE old DateTimePicker for Android and iOS Modal */}
-
-            {/* ADD Custom DateTime Picker Modal */}
             {showCustomPicker && editingDateField && (
                 <CustomDateTimePicker
                     visible={showCustomPicker}
@@ -220,7 +192,7 @@ const EditTravelItemScreen = () => {
             <View style={styles.inputGroup}>
                 <Text style={styles.label}>Type:</Text>
                 <Picker
-                    enabled={!isEditMode}
+                    enabled={false}
                     selectedValue={editableItem.types?.id || null}
                     style={styles.picker}
                     onValueChange={(itemValue) => {
@@ -334,7 +306,7 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#000',
         borderRadius: 5,
         paddingHorizontal: 10,
         paddingVertical: Platform.OS === 'ios' ? 12 : 10,
@@ -347,7 +319,7 @@ const styles = StyleSheet.create({
     },
     pressableInput: {
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#000',
         borderRadius: 5,
         paddingHorizontal: 10,
         paddingVertical: 12,
@@ -357,8 +329,8 @@ const styles = StyleSheet.create({
     },
     picker: {
         backgroundColor: Platform.OS === 'ios' ? '#fff' : '#E0E0E0',
-        borderWidth: Platform.OS === 'ios' ? 1 : 0,
-        borderColor: Platform.OS === 'ios' ? '#ccc' : undefined,
+        borderWidth: 1,
+        borderColor: '#000',
         borderRadius: Platform.OS === 'ios' ? 5 : 0,
         minHeight: Platform.OS === 'ios' ? 48 : 44,
         justifyContent: 'center',

@@ -1,0 +1,106 @@
+import AddIconModal from "@/components/modal/addModal/AddIconModal";
+import { IconType, Stop } from "@/src/types/Travels";
+import { useCallback, useState } from "react";
+import { Alert } from "react-native";
+import useModifyTravelData from "./useModifyTravelData";
+import AddVehicleTypeModal from "@/components/modal/addModal/AddVehicleTypeModal";
+import EditVehicleTypeModal from "@/components/modal/editModal/EditVehicleTypeModal";
+import { EditableRoute, EditableStop, EditableVehicleType } from "@/src/types/EditableTravels";
+import EditStopModal from "@/components/modal/editModal/EditStopModal";
+import useGetTravelData from "./useGetTravelData";
+import EditRouteModal from "@/components/modal/editModal/EditRouteModal";
+
+interface ModalConfig {
+    title: string;
+    content: any;
+    onSubmitDataHandler: (data: any) => void;
+}
+
+interface ModalConfigMap {
+    [key: string]: ModalConfig;
+}
+
+export default function useDatalistModal(refetch: () => void) {
+    const { 
+        editStop,
+        addIcon,
+        addVehicleType, editVehicleType,
+        editRoute
+    } = useModifyTravelData()
+
+    const [activeModalConfig, setActiveModalConfig] = useState<ModalConfig | undefined>(undefined);
+
+    const handleAddIcon = (data: IconType) => {
+        addIcon(data)
+        refetch()
+        Alert.alert('Icon Added', `Icon "${data.name}" has been saved.`);
+    };
+
+    const handleAddVehicleType = (data: EditableVehicleType) => {
+        addVehicleType(data)
+        refetch()
+        Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`);
+    };
+
+    const handleEditStops = (data: EditableStop) => {
+        editStop(data)
+        refetch()
+        Alert.alert('Stop Changed', `Stop "${data.name}" has been saved.`);
+    };
+
+    const handleEditVehicleType = (data: EditableVehicleType) => {
+        editVehicleType(data)
+        refetch()
+        Alert.alert('Vehicle Type Changed', `Vehicle Type "${data.name}" has been saved.`);
+    };
+
+    const handleEditRoute = (data: EditableRoute) => {
+        editRoute(data)
+        refetch()
+        Alert.alert('Route Changed', `Route "${data.name}" has been saved.`);
+    };
+
+    const addModalConfigs: ModalConfigMap = {
+        "Icons": {
+            title: 'Add Icons',
+            content: AddIconModal,
+            onSubmitDataHandler: handleAddIcon,
+        },
+        "VehicleTypes": {
+            title: 'Add Vehicle Type',
+            content: AddVehicleTypeModal,
+            onSubmitDataHandler: handleAddVehicleType
+        }
+    };
+
+    const editModalConfigs: ModalConfigMap = {
+        "Stops": {
+            title: 'Edit Stops',
+            content: EditStopModal,
+            onSubmitDataHandler: handleEditStops
+        },
+        "VehicleTypes": {
+            title: 'Edit Vehicle Type',
+            content: EditVehicleTypeModal,
+            onSubmitDataHandler: handleEditVehicleType
+        },
+        "Routes": {
+            title: 'Edit Routes',
+            content: EditRouteModal,
+            onSubmitDataHandler: handleEditRoute
+        }
+    };
+
+    const setActiveModal = useCallback((dataType: string) => {
+        setActiveModalConfig(addModalConfigs[dataType])
+    }, [])
+
+    const setActiveEditModal = useCallback((dataType: string) => {
+        setActiveModalConfig(editModalConfigs[dataType])
+    }, [])
+
+    return {
+        activeModalConfig, setActiveModalConfig,
+        setActiveModal, setActiveEditModal
+    }
+}

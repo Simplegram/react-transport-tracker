@@ -1,41 +1,42 @@
 import React, { useContext, useState } from 'react';
-import { View, Text, ScrollView, StyleSheet, Pressable } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Pressable, Dimensions } from 'react-native';
+// Import PagerView
+import PagerView from 'react-native-pager-view';
+
 import { DataItem } from '@/src/types/Travels'; // Import the interface from your specified path
 import { TravelContext, useTravelContext } from '@/context/PageContext';
 import { router, useNavigation } from 'expo-router';
+
+// Get screen dimensions for setting PagerView page width
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 interface GroupedDataDisplayProps {
   data: DataItem[];
 }
 
 function formatDate(
-  date: Date, 
-  custom_hours: number | null = null, 
-  custom_minutes: number | null = null, 
+  date: Date,
+  custom_hours: number | null = null,
+  custom_minutes: number | null = null,
   custom_seconds: number | null = null
 ) {
-  // Create a new Date object if one wasn't passed in
-  if (!date) {
-    date = new Date();
-  }
-
   // Ensure we're working with a Date object
-  if (!(date instanceof Date)) {
-    return "Invalid Date"; // Or handle the error in a way that suits your needs
+  if (!(date instanceof Date) || isNaN(date.getTime())) {
+    // Handle invalid date, perhaps return a placeholder or throw an error
+    return "Invalid Date";
   }
 
-  const hours = custom_hours ?? String(date.getHours()).padStart(2, '0');
-  const minutes = custom_minutes ?? String(date.getMinutes()).padStart(2, '0');
-  const seconds = custom_seconds ?? String(date.getSeconds()).padStart(2, '0');
+  const hours = custom_hours !== null ? String(custom_hours).padStart(2, '0') : String(date.getHours()).padStart(2, '0');
+  const minutes = custom_minutes !== null ? String(custom_minutes).padStart(2, '0') : String(date.getMinutes()).padStart(2, '0');
+  const seconds = custom_seconds !== null ? String(custom_seconds).padStart(2, '0') : String(date.getSeconds()).padStart(2, '0');
 
   return `${hours}:${minutes}:${seconds}`;
 }
 
 const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data }) => {
-  const { setSelectedItem } = useTravelContext()
-  const navigation = useNavigation()
+  const { setSelectedItem } = useTravelContext();
 
-  // Group the data by direction's name
+  // Grouping data remains the same
   const groupedData = data.reduce((acc, currentItem) => {
     const directionName = currentItem.directions?.name || 'Unassigned Direction';
     const directionKey = directionName;
@@ -47,137 +48,140 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data }) => {
     return acc;
   }, {} as Record<string, DataItem[]>);
 
-  // 2. Sort the items within each group by initial_arrival time
+  // Sorting items within each group remains the same (optional, but good practice)
   const sortedGroupedData: Record<string, DataItem[]> = {};
-
   Object.keys(groupedData).forEach(directionKey => {
       sortedGroupedData[directionKey] = groupedData[directionKey].sort((a, b) => {
-          // Convert times to Date objects for comparison.
-          // Handle potential null/undefined arrival times by placing them at the end.
-          const timeA = a.bus_initial_arrival ? new Date(a.bus_initial_arrival).getTime() : Infinity;
-          const timeB = b.bus_initial_departure ? new Date(b.bus_initial_departure).getTime() : Infinity;
+          // Use valid date checks and handle potential null/invalid dates gracefully
+          const timeA = (a.bus_initial_departure && new Date(a.bus_initial_departure).getTime()) || Infinity;
+          const timeB = (b.bus_initial_departure && new Date(b.bus_initial_departure).getTime()) || Infinity;
 
-          // Compare the times
           return timeA - timeB;
       });
   });
+   // Use the sorted data for rendering
+  const finalGroupedData = sortedGroupedData;
 
-  // Get the keys (direction names) and sort them
-  const directionNames = Object.keys(groupedData).sort();
 
-  const setIndexes = (directionNameKey: string, itemIndex: number) => {
-    setSelectedItem(groupedData[directionNameKey][itemIndex])
-    router.push("/(tabs)/editTravelItem")
-  }
+  // Get the keys (direction names) and sort them for consistent page order
+  const directionNames = Object.keys(finalGroupedData).sort();
+
+  const handleItemPress = (directionNameKey: string, itemIndex: number) => {
+    // Access the item from the correctly grouped/sorted data
+    const itemToSelect = finalGroupedData[directionNameKey][itemIndex];
+    if (itemToSelect) {
+       setSelectedItem(itemToSelect);
+       router.push("/(tabs)/editTravelItem");
+    }
+  };
 
   return (
-    <ScrollView style={styles.container} nestedScrollEnabled={true}>
+    // The main container now wraps the PagerView and takes up the screen height
+    <View style={styles.mainContainer}>
       {directionNames.length > 0 ? (
-        directionNames.map((directionNameKey) => (
-          <View key={directionNameKey} style={styles.groupContainer}>
-            {/* Display the direction name */}
-            <Text style={styles.groupTitle}>
-              Direction: {directionNameKey}
-            </Text>
-            <View style={styles.itemsListContainer}>
-              {/* Loop through items in this direction group */}
-              {groupedData[directionNameKey].map((item, itemIndex) => (
-                <View key={item.id} style={styles.itemContainer}>
-                  <Pressable onPress={() => setIndexes(directionNameKey, itemIndex)}>
-                    {/* Top section: Route and Vehicle Code */}
-                    <View style={styles.generalInfoContainer}>
-                      <Text style={styles.itemRouteText}>
-                        {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
-                      </Text>
-                      <Text style={styles.itemVehicleText}>
-                        {item.vehicle_code || 'N/A'}
-                      </Text>
-                    </View>
+        // Use PagerView for horizontal swiping
+        <PagerView style={styles.pagerView} initialPage={0} key={directionNames.length}>
+          {directionNames.map((directionNameKey, index) => (
+            // Each child of PagerView is a separate page (a direction)
+            <View key={directionNameKey} style={styles.page}>
+              {/* Direction Title */}
+              <Text style={styles.groupTitle}>
+                Direction: {directionNameKey} ({index + 1}/{directionNames.length})
+              </Text>
 
-                    {/* Middle section: Stops, Times, and Arrow */}
-                    <View style={styles.stopsAndTimeRow}>
-                      {/* First Stop and Initial Arrival */}
-                      <View style={styles.stopTimeBlock}>
-                        <Text style={styles.stopLabel}>From:</Text>
-                        <Text style={styles.stopNameText}>{item.first_stop_id?.name || 'N/A'}</Text>
-                        <Text style={styles.timeText}>{formatDate(new Date(item.bus_initial_departure)) || 'N/A'}</Text>
-                        {/* Note: Using initial_arrival/departure as per your interface names.
-                            If you need bus_initial_arrival/departure as per your sample output,
-                            update the interface and use those field names here. */}
-                      </View>
-
-                      {/* Arrow */}
-                      <View style={styles.arrowContainer}>
-                        {/* Unicode right arrow character */}
-                        <Text style={styles.arrowText}>➜</Text>
-                        {/* Or a simple ASCII arrow like '>' or '->' */}
-                        {/* <Text style={styles.arrowText}>--{'>'}</Text> */}
-                      </View>
-
-                      {/* Last Stop and Initial Departure */}
-                      <View style={styles.stopTimeBlock}>
-                        <Text style={styles.stopLabel}>To:</Text>
-                        <Text style={styles.stopNameText}>{item.last_stop_id?.name || 'N/A'}</Text>
-                        <Text style={styles.timeText}>{formatDate(new Date(item.bus_final_arrival)) || 'N/A'}</Text>
-                      </View>
-                    </View>
-
-                    {/* Bottom section: Notes (if any) */}
-                    {item.notes && (
-                      <View style={styles.notesContainer}>
-                          <Text style={styles.notesLabel}>Notes:</Text>
-                        <Text style={styles.notesText}>
-                          {item.notes}
+              {/* Vertical ScrollView for items within this direction */}
+              {/* This ScrollView needs flex: 1 to take up the remaining space */}
+              <ScrollView contentContainerStyle={styles.itemsListContainer} nestedScrollEnabled={true}>
+                {/* Map over items for this specific direction */}
+                {finalGroupedData[directionNameKey].map((item, itemIndex) => (
+                  <Pressable key={item.id} style={styles.itemContainer} onPress={() => handleItemPress(directionNameKey, itemIndex)}>
+                      <View style={styles.generalInfoContainer}>
+                        <Text style={styles.itemRouteText}>
+                          {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
+                        </Text>
+                        <Text style={styles.itemVehicleText}>
+                          {item.vehicle_code || 'N/A'}
                         </Text>
                       </View>
-                    )}
-                    {/* Item ID - maybe keep for debugging or remove in final design */}
-                    {/* <Text style={styles.itemIdText}>ID: {item.id}</Text> */}
+
+                      <View style={styles.stopsAndTimeRow}>
+                        <View style={styles.stopTimeBlock}>
+                          <Text style={styles.stopLabel}>From:</Text>
+                          <Text style={styles.stopNameText}>{item.first_stop_id?.name || 'N/A'}</Text>
+                          <Text style={styles.timeText}>
+                             {item.bus_initial_departure ? formatDate(new Date(item.bus_initial_departure)) : 'N/A'}
+                          </Text>
+                        </View>
+
+                        <View style={styles.arrowContainer}>
+                          <Text style={styles.arrowText}>➜</Text>
+                        </View>
+
+                        <View style={styles.stopTimeBlock}>
+                          <Text style={styles.stopLabel}>To:</Text>
+                          <Text style={styles.stopNameText}>{item.last_stop_id?.name || 'N/A'}</Text>
+                           <Text style={styles.timeText}>
+                             {item.bus_final_arrival ? formatDate(new Date(item.bus_final_arrival)) : 'N/A'}
+                           </Text>
+                        </View>
+                      </View>
+
+                      {item.notes && (
+                        <View style={styles.notesContainer}>
+                            <Text style={styles.notesLabel}>Notes:</Text>
+                          <Text style={styles.notesText}>
+                            {item.notes}
+                          </Text>
+                        </View>
+                      )}
                   </Pressable>
-                </View>
-              ))}
+                ))}
+              </ScrollView>
             </View>
-          </View>
-        ))
+          ))}
+        </PagerView>
       ) : (
-        // Handle case where data array is empty
-        <Text style={styles.noDataText}>No data available to display.</Text>
+        <View style={styles.noDataContainer}>
+            <Text style={styles.noDataText}>No data available to display.</Text>
+        </View>
       )}
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  // Main container for the entire component, should take up available space
+  mainContainer: {
     flex: 1,
   },
-  groupContainer: {
-    padding: 15,
-    backgroundColor: '#ffffff',
-    borderRadius: 12, // More rounded corners
-    borderWidth: 1,
-    borderColor: '#e0e0e0',
+  // PagerView takes up the full height of its parent (mainContainer)
+  pagerView: {
+    flex: 1,
+  },
+  // Each page inside the PagerView
+  page: {
+    flex: 1, // Each page takes up the full space of the PagerView
+    // Remove border/background styles that were on groupContainer
   },
   groupTitle: {
-    fontSize: 20, // Slightly larger title
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 20, // More space below title
-    color: '#2c3e50', // Darker title color
-    borderBottomWidth: 2, // Thicker underline
-    borderBottomColor: '#3498db', // Colored underline
+    color: '#2c3e50',
+    borderBottomWidth: 2,
+    borderBottomColor: '#3498db',
     paddingBottom: 10,
-    textAlign: 'center', // Center the title
+    textAlign: 'center',
+    marginBottom: 15, // Add space below the title
   },
-   itemsListContainer: {
-    gap: 20,
-    // No specific styles needed here, just holds the item containers
+   // This ScrollView within each page handles the vertical scrolling of items
+  itemsListContainer: {
+    gap: 15, // Space between items
+     // This contentContainerStyle doesn't need flex: 1, the ScrollView itself does
   },
   itemContainer: {
-    // marginBottom: 20, // Space between items
-    padding: 15, // More padding inside item
-    backgroundColor: '#ecf0f1', // Light grey background for items
+    padding: 15,
+    backgroundColor: '#ecf0f1',
     borderRadius: 8,
-    // Removed left border, maybe add a subtle all-around border
     borderWidth: 1,
     borderColor: '#bdc3c7',
     shadowColor: '#000',
@@ -188,34 +192,31 @@ const styles = StyleSheet.create({
   },
   // --- Item Details Layout ---
   generalInfoContainer: {
-      marginBottom: 10, // Space below general info
+      marginBottom: 10,
       borderBottomWidth: 1,
-      borderBottomColor: '#dcdcdc', // Separator line
+      borderBottomColor: '#dcdcdc',
       paddingBottom: 10,
   },
   itemRouteText: {
     fontSize: 16,
-    fontWeight: '600', // Semi-bold
-    color: '#34495e', // Dark text
+    fontWeight: '600',
+    color: '#34495e',
     marginBottom: 4,
   },
     itemVehicleText: {
     fontSize: 14,
-    color: '#7f8c8d', // Muted text
+    color: '#7f8c8d',
   },
   stopsAndTimeRow: {
-      flexDirection: 'row', // Arrange children horizontally
-      alignItems: 'center', // Vertically center items in the row
-      justifyContent: 'space-between', // Distribute space between items
-      marginBottom: 10, // Space below this section
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: 10,
   },
   stopTimeBlock: {
-      flex: 1, // Allow blocks to take up available space equally
+      flex: 1,
       paddingVertical: 8,
-      // backgroundColor: '#f0f0f0', // Optional: background for clarity
       borderRadius: 4,
-      // borderWidth: 1, // Optional: border for clarity
-      // borderColor: '#ccc',
   },
   stopLabel: {
       fontSize: 12,
@@ -227,33 +228,33 @@ const styles = StyleSheet.create({
       fontSize: 15,
       fontWeight: 'bold',
       color: '#2c3e50',
-      marginBottom: 5, // Space between stop name and time
+      marginBottom: 5,
   },
   timeLabel: {
-       fontSize: 12,
+      fontSize: 12,
       color: '#555',
       fontWeight: 'bold',
       marginBottom: 2,
   },
   timeText: {
       fontSize: 14,
-      color: '#3498db', // Blue color for times
+      color: '#3498db',
       fontWeight: '500',
   },
   arrowContainer: {
-      paddingHorizontal: 10, // Space around the arrow
-      justifyContent: 'center', // Center arrow vertically (redundant with alignItems on parent, but good practice)
-      alignItems: 'center', // Center arrow horizontally
+      paddingHorizontal: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
   },
   arrowText: {
-      fontSize: 20, // Size of the arrow
-      color: '#7f8c8d', // Muted color for the arrow
+      fontSize: 20,
+      color: '#7f8c8d',
   },
   notesContainer: {
-      marginTop: 10, // Space above notes
+      marginTop: 10,
       paddingTop: 10,
       borderTopWidth: 1,
-      borderTopColor: '#dcdcdc', // Separator line above notes
+      borderTopColor: '#dcdcdc',
   },
   notesLabel: {
        fontSize: 12,
@@ -267,15 +268,14 @@ const styles = StyleSheet.create({
       color: '#555',
   },
   // --- Other Styles ---
-  itemIdText: { // Retained but commented out in render
-    fontSize: 10,
-    color: '#aaa',
-    textAlign: 'right',
-  },
+   noDataContainer: {
+       flex: 1,
+       justifyContent: 'center',
+       alignItems: 'center',
+   },
   noDataText: {
     fontSize: 16,
     textAlign: 'center',
-    marginTop: 20,
     color: '#888',
   },
 });

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { DataItem, Stop, VehicleType } from "@/src/types/Travels";
+import { DataItem } from "@/src/types/Travels";
 import { supabase } from "@/lib/supabase";
 
 function formatDate(
@@ -33,13 +33,11 @@ function getDateToday() {
     return formatDate(dateToday)
 }
 
-export default function useTravels() {
+export default function useTravelCalendar() {
     const [travelAtDate, setTravelAtDate] = useState<DataItem[]>([])
     const [selectedDate, setSelectedDate] = useState<string>(getDateToday);
 
-    const [stops, setStops] = useState<Stop[]>([])
-
-    const [vehicleTypes, setVehicleTypes] = useState<VehicleType[]>([])
+    const [dates, setDates] = useState<string[]>([])
 
     async function getTravelAtDate() {
         const endDate = formatDate(new Date(selectedDate), 23, 59, 59)
@@ -50,29 +48,24 @@ export default function useTravels() {
             .lte('created_at', endDate.toString())
         
         if (error) console.log(error)
-
         if (data) setTravelAtDate(data)
     }
 
-    const getStops = useCallback(async () => {
+    const getDates = useCallback(async () => {
         const { data, error } = await supabase
-            .from("stops")
-            .select()
-            .order("name")
+            .from("travels")
+            .select("created_at")
+
+        const dates = data.map(item => {
+            const date = new Date(item.created_at);
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        });
 
         if (error) console.log(error)
-
-        if (data) setStops(data)
-    }, [])
-
-    const getVehicleTypes = useCallback(async () => {
-        const { data, error } = await supabase
-            .from("types")
-            .select()
-
-        if (error) console.log(error)
-
-        if (data) setVehicleTypes(data)
+        if (data) setDates(dates)
     }, [])
 
     useEffect(() => {
@@ -80,9 +73,11 @@ export default function useTravels() {
     }, [selectedDate])
 
     useEffect(() => {
-        getStops()
-        getVehicleTypes()
-    }, [getStops, getVehicleTypes])
+        getDates()
+    }, [getDates])
 
-    return { selectedDate, travelAtDate, stops, vehicleTypes, setSelectedDate }
+    return { 
+        travelAtDate, 
+        dates, selectedDate, setSelectedDate,
+    }
 }

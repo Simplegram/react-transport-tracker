@@ -12,7 +12,7 @@ type Props = {
   text?: String
 }
 
-export default function LoadingScreen({ text }: Props) {
+export default function LoadingScreen({ text = "Loading..." }: Props) {
     return (
       <Modal transparent animationType="fade" visible={true}>
         <View style={styles.modalOverlay}>
