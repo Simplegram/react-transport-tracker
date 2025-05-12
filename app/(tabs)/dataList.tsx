@@ -1,37 +1,82 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, TextInput } from 'react-native';
 import Button from '@/components/BaseButton';
 import LoadingScreen from '@/components/LoadingScreen';
 import useDataList from '@/hooks/useDataList';
+import ModalTemplate from '@/components/ModalTemplate';
+import useStopModal from '@/hooks/useStopModal';
+import useDatalistModal from '@/hooks/useDatalistModal';
+import Icon from 'react-native-vector-icons/FontAwesome6'
+import { useModalContext } from '@/context/ModalContext';
 
-interface DataItem {
+interface ItemTemplate {
   id: string | number; // Use a unique ID
   name: string; // Or title, description, etc.
   [key: string]: any; // Allow for other properties specific to the item type
 }
 
 const DataListScreen: React.FC = () => {
+  const { setModalData } = useModalContext()
+  
   const {
     dataType,
-    filteredData: data,
+    filteredData: data, refetchTravelData,
     searchQuery, setSearchQuery,
     loading,
   } = useDataList()
 
-  const handleModify = (item: DataItem) => {
-    console.log(`Modify ${dataType} item:`, item);
-    Alert.alert(`Modify ${dataType}`, `You pressed modify for: ${item.name}`);
+  const { 
+    showStopModal, 
+    openModal, closeStopModal 
+  } = useStopModal()
+
+  const { 
+    activeModalConfig, 
+    setActiveModal, setActiveEditModal
+  } = useDatalistModal(refetchTravelData)
+
+  const handleModify = (item: ItemTemplate) => {
+    setActiveEditModal(dataType)
+    setModalData(item)
+    openModal()
   };
 
   const handleAddNew = () => {
-    console.log(`Add New ${dataType}`);
-    Alert.alert(`Add New ${dataType}`, `You pressed Add New for: ${dataType}`);
+    setActiveModal(dataType)
+    openModal()
   };
 
-  const renderItem = ({ item }: { item: DataItem }) => (
+  useEffect(() => {
+    refetchTravelData()
+  }, [refetchTravelData])
+
+  const handleSubmitFromModal = (data: any) => {
+    if (activeModalConfig?.onSubmitDataHandler) {
+      // Call the specific handler defined in the config, passing the collected data
+      activeModalConfig.onSubmitDataHandler(data);
+    } else {
+        console.error("No data handler defined for this modal config.");
+        Alert.alert("Error", "Configuration error: Could not process data.");
+    }
+    // Always close the modal after handling submission
+    closeStopModal();
+  };
+
+  const renderItem = ({ item }: { item: ItemTemplate }) => (
     <View style={styles.itemContainer}>
       <View style={styles.textContainer}>
-        {item.code ? <Text style={[styles.itemName, {color: '#007bff'}]}>{item.code}</Text> : null}
+        {dataType === "Stops" ? (
+          <>
+            <Icon name={item.vehicle_type?.icon_id.name} size={20}></Icon>
+            <Text>{item.vehicle_type?.name}</Text>
+          </>
+        ) : null}
+        {dataType === "Routes" ? (
+          <>
+            <Icon name={item.vehicle_type_id?.icon_id.name} size={20}></Icon>
+            <Text style={[styles.itemName, {color: '#007bff'}]}>{item.code}</Text>
+          </>
+        ) : null}
         <Text style={styles.itemName}>{item.name}</Text>
       </View>
       <View style={styles.buttonContainer}>
@@ -53,6 +98,8 @@ const DataListScreen: React.FC = () => {
     );
   }
 
+  const ModalContentComponent = activeModalConfig?.content
+
   return (
     <View style={styles.container}>
       {data.length === 0 ? (
@@ -62,7 +109,10 @@ const DataListScreen: React.FC = () => {
 
       ) : (
         <FlatList
+          refreshing={loading}
+          onRefresh={refetchTravelData}
           data={data}
+          extraData={loading}
           renderItem={renderItem}
           keyExtractor={item => item.id.toString()} // Ensure key is a string
           contentContainerStyle={styles.listContent}
@@ -86,6 +136,21 @@ const DataListScreen: React.FC = () => {
           textStyle={styles.buttonText}
         />
       </View>
+
+      <ModalTemplate
+        isModalVisible={showStopModal}
+        handleCloseModal={closeStopModal}
+        title={activeModalConfig?.title}
+      >
+        {ModalContentComponent ? (
+            <ModalContentComponent 
+              onSubmit={handleSubmitFromModal}
+              onCancel={closeStopModal}
+            />
+        ) : (
+            <Text>Loading...</Text>
+        )}
+      </ModalTemplate>
     </View>
   );
 };

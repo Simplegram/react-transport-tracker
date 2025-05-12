@@ -1,17 +1,22 @@
 import { supabase } from "@/lib/supabase"
 import { Direction, IconType, Route, Stop, VehicleType } from "@/src/types/Travels"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 export default function useGetTravelData() {
     const [directions, setDirections] = useState<Direction[]>([])
     const [stops, setStops] = useState<Stop[]>([])
     const [routes, setRoutes] = useState<Route[]>([])
+    const [fullVehicleTypes, setFullVehicleTypes] = useState<VehicleType[]>([])
     const [vehicleTypes, setVehicleTypes] = useState<VehicleType[]>([])
     const [icons, setIcons] = useState<IconType[]>([])
 
     const [loading, setLoading] = useState<boolean>(false)
 
-    const getDirections = useCallback(async () => {
+    const stopLoading = () => {
+        setLoading(false)
+    }
+
+    const getDirections = async () => {
         setLoading(true)
 
         const { data, error } = await supabase
@@ -21,51 +26,65 @@ export default function useGetTravelData() {
         if (error) console.log(error)
         if (data) setDirections(data)
 
-        setLoading(false)
-    }, [])
+        stopLoading()
+    }
 
-    const getStops = useCallback(async () => {
+    const getStops = async () => {
         setLoading(true)
 
         const { data, error } = await supabase
             .from("stops")
-            .select("*, vehicle_type(id, name)")
+            .select("*, vehicle_type(id, name, icon_id(id, name))")
             .order("name")
 
         if (error) console.log(error)
         if (data) setStops(data)
 
-        setLoading(false)
-    }, [])
+        stopLoading()
+    }
 
-    const getRoutes = useCallback(async () => {
+    const getRoutes = async () => {
         setLoading(true)
 
         const { data, error } = await supabase
             .from("routes")
-            .select()
+            .select("*, first_stop_id(id, name), last_stop_id(id, name), vehicle_type_id(id, name, icon_id(id, name))")
             .order("code")
 
         if (error) console.log(error)
         if (data) setRoutes(data)
 
-        setLoading(false)
-    }, [])
+        stopLoading()
+    }
 
-    const getVehicleTypes = useCallback(async () => {
+    const getFullVehicletypes = async () => {
         setLoading(true)
 
         const { data, error } = await supabase
             .from("types")
-            .select()
+            .select("*, icon_id(id, name)")
+
+        if (error) console.log(error)
+        if (data) setFullVehicleTypes(data)
+
+        stopLoading()
+    }
+
+    const getVehicleTypes = async () => {
+        setLoading(true)
+
+        const { data, error } = await supabase
+            .from("types")
+            .select("*")
+            .order("id")
 
         if (error) console.log(error)
         if (data) setVehicleTypes(data)
 
-        setLoading(false)
-    }, [])
+        stopLoading()
+    }
 
-    const getIcons = useCallback(async () => {
+    const getIcons = async () => {
         setLoading(true)
 
         const { data, error } = await supabase
@@ -75,22 +94,29 @@ export default function useGetTravelData() {
         if (error) console.log(error)
         if (data) setIcons(data)
 
-        setLoading(false)
+        stopLoading()
+    }
+
+    const getTravelData = useCallback(() => {
+        getDirections()
+        getStops()
+        getRoutes()
+        getVehicleTypes()
+        getFullVehicletypes()
+        getIcons()
     }, [])
 
     useEffect(() => {
-        getDirections()
-        getStops()
-        getVehicleTypes()
-        getRoutes()
-    }, [getDirections, getStops, getVehicleTypes, getRoutes])
+        getTravelData()
+    }, [getTravelData])
 
     return {
         directions, getDirections,
         stops, getStops,
         routes, getRoutes,
-        vehicleTypes, getVehicleTypes,
+        vehicleTypes, fullVehicleTypes, getVehicleTypes,
         icons, getIcons,
-        loading, setLoading
+        loading, setLoading,
+        refetchTravelData: getTravelData,
     }
 }
