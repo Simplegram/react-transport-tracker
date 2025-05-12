@@ -46,10 +46,6 @@ const DataListScreen: React.FC = () => {
     openModal()
   };
 
-  useEffect(() => {
-    refetchTravelData()
-  }, [refetchTravelData])
-
   const handleSubmitFromModal = (data: any) => {
     if (activeModalConfig?.onSubmitDataHandler) {
       // Call the specific handler defined in the config, passing the collected data
