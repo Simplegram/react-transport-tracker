@@ -12,7 +12,7 @@ import { Picker } from '@react-native-picker/picker';
 import { useTravelContext } from '@/context/PageContext';
 import { DataItem, Stop } from '@/src/types/Travels';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
-import EditStopModal from '@/components/modal/editModal/EditStopModal';
+import EditTravelStopModal from '@/components/modal/editModal/EditTravelStopModal';
 import useStopModal from '@/hooks/useStopModal';
 import CustomDateTimePicker from '@/components/CustomDatetimePicker';
 import useGetTravelData from '@/hooks/useGetTravelData';
@@ -302,7 +302,7 @@ const EditTravelItemScreen = () => {
                 />
             </View>
 
-            <EditStopModal
+            <EditTravelStopModal
                 isModalVisible={showStopModal}
                 searchQuery={stopSearchQuery}
                 setSearchQuery={setStopSearchQuery}
