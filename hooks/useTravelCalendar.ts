@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { DataItem, Direction, Route, Stop, VehicleType, Icon } from "@/src/types/Travels";
+import { DataItem } from "@/src/types/Travels";
 import { supabase } from "@/lib/supabase";
 
 function formatDate(
