@@ -6,7 +6,7 @@ import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useRef, useState } from "react"
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
-import EditTravelStopModal from "./EditTravelStopModal"
+import EditTravelStopModal from "../editTravelModal/EditTravelStopModal"
 import useStopModal from "@/hooks/useStopModal"
 import { sortByIdToFront } from "@/src/utils/utils"
 import useLoading from "@/hooks/useLoading"
@@ -46,7 +46,7 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
         if (!editingStopField) {
             return
         }
-        
+
         setRoute({ ...route, [editingStopField]: stopId })
         closeStopModal();
     };
