@@ -5,8 +5,8 @@ export default function useStopModal() {
     const [editingStopField, setEditingStopField] = useState<string | undefined>(undefined); 
     const [stopSearchQuery, setStopSearchQuery] = useState('');
 
-    const openStopModal = (field: string) => {
-        setEditingStopField(field);
+    const openStopModal = (field?: string) => {
+        if (field) setEditingStopField(field);
         setStopSearchQuery(''); // Clear search query on opening
         setShowStopModal(true);
     };
