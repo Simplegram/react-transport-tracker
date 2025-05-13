@@ -1,0 +1,132 @@
+import Button from "@/components/BaseButton";
+import { useModalContext } from "@/context/ModalContext";
+import { AddableIconType } from "@/src/types/AddableTravels";
+import { BaseModalContentProps } from "@/src/types/ModalContentProps";
+import { useState } from "react";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome6'
+
+export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentProps) {
+    const { modalData: data } = useModalContext()
+
+    const [icon, setIcon] = useState<AddableIconType>(data)
+    const [iconQuery, setIconQuery] = useState<string>('')
+
+    const handleOnSubmit = () => {  
+        if (!icon.name?.trim()) {
+            Alert.alert('Input Required', 'Please enter an icon name.');
+            return
+        }
+        
+        onSubmit(icon);
+    };
+
+    const changeIcon = (text: string) => {
+        if (!text) {
+        setIconQuery(text)
+        setIcon({ ...icon, 'name': undefined })
+        }
+        else {
+        setIconQuery(text)
+        setIcon({ ...icon, 'name': text })
+        }
+    }
+
+    return (
+        <View style={styles.container}>
+            <Text style={styles.label}>Icon name (FontAwesome6):</Text>
+            <View style={styles.inputContainer}>
+                <Icon style={styles.icon} name={icon.name ? icon.name : 'xmark'} size={32} />
+                <TextInput
+                    style={styles.input}
+                    placeholder="e.g., train-subway"
+                    value={iconQuery}
+                    onChangeText={changeIcon}
+                    autoFocus={true}
+                />
+            </View>
+
+            <View style={buttonStyles.buttonRow}>
+                <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
+                <Button title='Edit Icon' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+            </View>
+        </View>
+    )
+}
+
+const styles = StyleSheet.create({
+    container: {},
+    label: {
+        fontSize: 16,
+        marginBottom: 8,
+        fontWeight: 'bold',
+    },
+    input: {
+        flex: 1,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 12,
+        fontSize: 16,
+    },
+    inputContainer: {
+        gap: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingVertical: 10,
+    },
+    icon: {
+        paddingLeft: 5,
+        alignItems: 'center',
+    },
+    iconScrollView: {
+        marginBottom: 20,
+    },
+    iconContainer: {
+        width: 55,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        paddingVertical: 5,
+        marginRight: 10, // Space between icons
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    selectedIconContainer: {
+        borderColor: '#0284f5', // Highlight selected icon
+        backgroundColor: '#e3f2fd', // Light background for selected
+    },
+});
+
+const buttonStyles = StyleSheet.create({
+    buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: 10,
+        gap: 10,
+    },
+    addButton: {
+        backgroundColor: '#1E88E5',
+        paddingVertical: 12,
+        borderRadius: 8,
+        flex: 1,
+        alignItems: 'center',
+    },
+    addButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    cancelButton: {
+        paddingVertical: 12,
+        borderRadius: 8,
+        flex: 1,
+        alignItems: 'center',
+    },
+    cancelButtonText: {
+        color: '#000',
+        fontSize: 16,
+        fontWeight: '600',
+    },
+})
