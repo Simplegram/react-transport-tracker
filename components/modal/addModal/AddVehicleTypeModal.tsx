@@ -59,10 +59,12 @@ export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalCon
         </View>
       </View>
 
-      <View style={styles.buttonRow}>
-        <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>
-        <Button title='Add Icon' color='#0284f5' onPress={handleOnSubmit} style={styles.addButton} textStyle={styles.addButtonText}></Button>
-      </View>
+          <View style={styles.buttonRow}>
+            <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>
+            <Button title='Add Type' color='#0284f5' onPress={handleOnSubmit} style={styles.addButton} textStyle={styles.addButtonText}></Button>
+          </View>
+        </>
+      )}
     </View>
   )
 }
