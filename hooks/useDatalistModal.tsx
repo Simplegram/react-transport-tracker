@@ -10,7 +10,8 @@ import EditStopModal from "@/components/modal/editModal/EditStopModal";
 import EditRouteModal from "@/components/modal/editModal/EditRouteModal";
 import EditDirectionModal from "@/components/modal/editModal/EditDirectionModal";
 import AddDirectionModal from "@/components/modal/addModal/AddDirectionModal";
-import { AddableDirection, AddableIconType, AddableVehicleType } from "@/src/types/AddableTravels";
+import { AddableDirection, AddableIconType, AddableStop, AddableVehicleType } from "@/src/types/AddableTravels";
+import AddStopModal from "@/components/modal/addModal/AddStopModal";
 
 interface ModalConfig {
     title: string;
@@ -25,7 +26,7 @@ interface ModalConfigMap {
 export default function useDatalistModal(refetch: () => void) {
     const { 
         addDirection, editDirection,
-        editStop,
+        addStop, editStop,
         addIcon,
         addVehicleType, editVehicleType,
         editRoute
@@ -35,6 +36,12 @@ export default function useDatalistModal(refetch: () => void) {
 
     const handleAddDirection = (data: AddableDirection) => {
         addDirection(data)
+        refetch()
+        Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`);
+    };
+
+    const handleAddStop = (data: AddableStop) => {
+        addStop(data)
         refetch()
         Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`);
     };
@@ -82,6 +89,11 @@ export default function useDatalistModal(refetch: () => void) {
             title: 'Add Direction',
             content: AddDirectionModal,
             onSubmitDataHandler: handleAddDirection
+        },
+        "Stops": {
+            title: 'Add Stop',
+            content: AddStopModal,
+            onSubmitDataHandler: handleAddStop
         },
         "VehicleTypes": {
             title: 'Add Vehicle Type',
