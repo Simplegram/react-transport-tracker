@@ -10,7 +10,7 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
     const { modalData: data } = useModalContext()
 
     const [icon, setIcon] = useState<AddableIconType>(data)
-    const [iconQuery, setIconQuery] = useState<string>('')
+    const [iconQuery, setIconQuery] = useState<string>(data.name)
 
     const handleOnSubmit = () => {  
         if (!icon.name?.trim()) {
