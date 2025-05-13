@@ -45,7 +45,12 @@ export default function useDatalistModal(refetch: () => void) {
         Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`);
     };
 
+    const handleAddIcon = (data: AddableIconType) => {
+        addIcon(data)
+        refetch()
         Alert.alert('Icon Added', `Icon "${data.name}" has been saved.`);
+    };
+
     // ---
 
     const handleEditDirection = (data: Direction) => {
