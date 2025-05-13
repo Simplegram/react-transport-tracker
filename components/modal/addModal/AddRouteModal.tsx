@@ -32,6 +32,10 @@ export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentPr
     })
 
     const handleStopSelect = (stopId: number) => {
+        if (!editingStopField) {
+            return
+        }
+        
         setRoute({ ...route, [editingStopField]: stopId })
         closeStopModal();
     };
