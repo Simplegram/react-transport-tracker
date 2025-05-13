@@ -38,19 +38,19 @@ export default function useDatalistModal(refetch: () => void) {
     const handleAddDirection = (data: AddableDirection) => {
         addDirection(data)
         refetch()
-        Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`);
+        Alert.alert('Direction Added', `Vehicle Type "${data.name}" has been saved.`);
     };
 
     const handleAddStop = (data: AddableStop) => {
         addStop(data)
         refetch()
-        Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`);
+        Alert.alert('Stop Added', `Vehicle Type "${data.name}" has been saved.`);
     };
 
     const handleAddRoute = (data: AddableRoute) => {
         addRoute(data)
         refetch()
-        Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`);
+        Alert.alert('Route Added', `Vehicle Type "${data.name}" has been saved.`);
     };
 
     const handleAddVehicleType = (data: AddableVehicleType) => {
@@ -70,7 +70,7 @@ export default function useDatalistModal(refetch: () => void) {
     const handleEditDirection = (data: Direction) => {
         editDirection(data)
         refetch()
-        Alert.alert('Stop Changed', `Stop "${data.name}" has been saved.`);
+        Alert.alert('Direction Changed', `Stop "${data.name}" has been saved.`);
     };
 
     const handleEditStop = (data: EditableStop) => {
