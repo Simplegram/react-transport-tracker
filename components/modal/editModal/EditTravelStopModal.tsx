@@ -42,7 +42,6 @@ export default function EditTravelStopModal({ searchQuery, isModalVisible, setSe
                             placeholder="Search stops..."
                             value={searchQuery}
                             onChangeText={setSearchQuery}
-                            autoFocus={true}
                         />
                         {filteredStops.length === 0 ? (
                             <View style={styles.emptyList}>

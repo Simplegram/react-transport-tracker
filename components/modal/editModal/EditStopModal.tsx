@@ -26,7 +26,6 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
           placeholder="Stop name..."
           value={stop.name}
           onChangeText={text => (setStop({ ...stop, "name": text }))}
-          autoFocus={true}
         />
         <Text style={styles.label}>Latitude:</Text>
         <TextInput
@@ -34,7 +33,6 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
           placeholder="Stop latitude..."
           value={stop.lat}
           onChangeText={text => (setStop({ ...stop, "name": text }))}
-          autoFocus={true}
         />
         <Text style={styles.label}>Longitude:</Text>
         <TextInput
@@ -42,7 +40,6 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
           placeholder="Stop longitude..."
           value={stop.lon}
           onChangeText={text => (setStop({ ...stop, "name": text }))}
-          autoFocus={true}
         />
         <Text style={styles.label}>Alternative name:</Text>
         <TextInput
@@ -50,7 +47,6 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
           placeholder="Alternative name..."
           value={stop.name_alt}
           onChangeText={text => (setStop({ ...stop, "name_alt": text }))}
-          autoFocus={true}
         />
       </View>
 

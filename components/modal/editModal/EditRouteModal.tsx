@@ -65,7 +65,6 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
                             placeholder="Route code..."
                             value={route.code}
                             onChangeText={text => (setRoute({ ...route, "code": text }))}
-                            autoFocus={true}
                         />
                         <Text style={styles.label}>Name:</Text>
                         <TextInput
@@ -73,7 +72,6 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
                             placeholder="Route name..."
                             value={route.name}
                             onChangeText={text => (setRoute({ ...route, "name": text }))}
-                            autoFocus={true}
                         />
 
                         <Text style={styles.label}>First Stop:</Text>

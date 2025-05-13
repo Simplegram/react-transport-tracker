@@ -34,7 +34,6 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
             placeholder="e.g., Standard Bus"
             value={vehicleType.name}
             onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}
-            autoFocus={true}
           />
         </View>
 
