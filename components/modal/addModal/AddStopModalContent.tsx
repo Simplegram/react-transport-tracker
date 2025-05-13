@@ -36,7 +36,6 @@ const AddStopModalContent: React.FC<BaseModalContentProps> = ({ onSubmit, onCanc
         onChangeText={setStopLocation}
       />
 
-      {/* Buttons for this specific content */}
       <View style={contentStyles.buttonRow}>
         <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={contentStyles.cancelButton} textStyle={contentStyles.cancelButtonText}></Button>
         <Button title='Add Stop' color='#0284f5' onPress={handleOnSubmit} style={contentStyles.addButton} textStyle={contentStyles.addButtonText}></Button>
@@ -47,9 +46,8 @@ const AddStopModalContent: React.FC<BaseModalContentProps> = ({ onSubmit, onCanc
 
 // Use the same contentStyles or define new ones if needed
 const contentStyles = StyleSheet.create({
-   container: {
     // No specific flex/dimensions needed usually, content wraps
-   },
+  },
   label: {
     fontSize: 16,
     marginBottom: 5,
@@ -64,7 +62,7 @@ const contentStyles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 15, // Space after each input
   },
-   buttonRow: {
+  buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginTop: 10,

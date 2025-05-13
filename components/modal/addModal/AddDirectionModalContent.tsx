@@ -40,7 +40,7 @@ const AddDirectionModalContent: React.FC<BaseModalContentProps> = ({ onSubmit, o
 
 const contentStyles = StyleSheet.create({
   container: {
-    
+
   },
   label: {
     fontSize: 16,
@@ -56,7 +56,7 @@ const contentStyles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 15, // Space after input
   },
-   buttonRow: {
+  buttonRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginTop: 10, // Space above buttons

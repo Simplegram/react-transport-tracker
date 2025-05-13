@@ -10,7 +10,7 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
     const { modalData: data } = useModalContext()
 
     const { loading } = useLoading()
-    
+
     const [direction, setDirection] = useState<Direction>(data)
 
     const handleOnSubmit = () => {
