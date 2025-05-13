@@ -18,19 +18,19 @@ interface ButtonConfig {
 const navigationButtons: ButtonConfig[] = [
   { 
     id: 'Directions', 
-    text: 'Manage direction',
+    text: 'Manage directions',
   },
   {
     id: 'Stops', 
-    text: 'Manage stop',
+    text: 'Manage stops',
   },
   {
     id: 'Routes', 
-    text: 'Manage route',
+    text: 'Manage routes',
   },
   {
     id: 'VehicleTypes', 
-    text: 'Manage vehicle type',
+    text: 'Manage vehicle types',
   },
   {
     id: 'Icons', 
