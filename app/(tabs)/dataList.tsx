@@ -129,7 +129,7 @@ const DataListScreen: React.FC = () => {
       <View style={styles.addButtonContainer}>
         <Button
           color='#007bff'
-          title={`Add New ${dataType}`}
+          title={`Add New ${dataType.slice(0, -1)}`}
           onPress={handleAddNew}
           style={styles.button}
           textStyle={styles.buttonText}
