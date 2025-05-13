@@ -15,10 +15,7 @@ import useLoading from "@/hooks/useLoading"
 export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { modalData: data } = useModalContext()
 
-    const {
-        stops,
-        fullVehicleTypes
-    } = useGetTravelData()
+    const { stops, fullVehicleTypes } = useGetTravelData()
 
     const {
         showStopModal,
