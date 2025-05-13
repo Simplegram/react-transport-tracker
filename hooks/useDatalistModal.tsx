@@ -10,8 +10,9 @@ import EditStopModal from "@/components/modal/editModal/EditStopModal";
 import EditRouteModal from "@/components/modal/editModal/EditRouteModal";
 import EditDirectionModal from "@/components/modal/editModal/EditDirectionModal";
 import AddDirectionModal from "@/components/modal/addModal/AddDirectionModal";
-import { AddableDirection, AddableIconType, AddableStop, AddableVehicleType } from "@/src/types/AddableTravels";
+import { AddableDirection, AddableIconType, AddableRoute, AddableStop, AddableVehicleType } from "@/src/types/AddableTravels";
 import AddStopModal from "@/components/modal/addModal/AddStopModal";
+import AddRouteModal from "@/components/modal/addModal/AddRouteModal";
 
 interface ModalConfig {
     title: string;
@@ -29,7 +30,7 @@ export default function useDatalistModal(refetch: () => void) {
         addStop, editStop,
         addIcon,
         addVehicleType, editVehicleType,
-        editRoute
+        addRoute, editRoute
     } = useModifyTravelData()
 
     const [activeModalConfig, setActiveModalConfig] = useState<ModalConfig | undefined>(undefined);
@@ -42,6 +43,12 @@ export default function useDatalistModal(refetch: () => void) {
 
     const handleAddStop = (data: AddableStop) => {
         addStop(data)
+        refetch()
+        Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`);
+    };
+
+    const handleAddRoute = (data: AddableRoute) => {
+        addRoute(data)
         refetch()
         Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`);
     };
@@ -95,6 +102,11 @@ export default function useDatalistModal(refetch: () => void) {
             content: AddStopModal,
             onSubmitDataHandler: handleAddStop
         },
+        "Routes": {
+            title: 'Add Route',
+            content: AddRouteModal,
+            onSubmitDataHandler: handleAddRoute
+        },
         "VehicleTypes": {
             title: 'Add Vehicle Type',
             content: AddVehicleTypeModal,
@@ -118,16 +130,16 @@ export default function useDatalistModal(refetch: () => void) {
             content: EditStopModal,
             onSubmitDataHandler: handleEditStop
         },
+        "Routes": {
+            title: 'Edit Routes',
+            content: EditRouteModal,
+            onSubmitDataHandler: handleEditRoute
+        },
         "VehicleTypes": {
             title: 'Edit Vehicle Type',
             content: EditVehicleTypeModal,
             onSubmitDataHandler: handleEditVehicleType
         },
-        "Routes": {
-            title: 'Edit Routes',
-            content: EditRouteModal,
-            onSubmitDataHandler: handleEditRoute
-        }
     };
 
     const setActiveModal = useCallback((dataType: string) => {
