@@ -28,15 +28,14 @@ interface AddableIconType {
 }
 
 interface AddableTravel {
-    created_at: string | undefined
-    bus_initial_arrival: string | undefined
-    bus_initial_departure: string | undefined
-    bus_final_arrival: string | undefined
+    bus_initial_arrival: string | null
+    bus_initial_departure: string | null
+    bus_final_arrival: string | null
     route_id: number | undefined
     first_stop_id: number | undefined
     last_stop_id: number | undefined
     notes: string | null
-    vehicle_code: number | undefined
+    vehicle_code: string | null
     direction_id: number | undefined
     type_id: number | undefined
 }
