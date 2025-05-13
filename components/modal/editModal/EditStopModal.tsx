@@ -1,6 +1,7 @@
 import Button from "@/components/BaseButton";
 import { useModalContext } from "@/context/ModalContext";
 import useGetTravelData from "@/hooks/useGetTravelData";
+import { EditableStop } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { Stop } from "@/src/types/Travels";
 import { useEffect, useMemo, useState } from "react";
@@ -11,9 +12,10 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
   const { modalData: data } = useModalContext()
 
   const { fullVehicleTypes } = useGetTravelData()
-  const [stop, setStop] = useState<Stop>({...data, vehicle_type: data.vehicle_type?.id})
+  const [stop, setStop] = useState<EditableStop>({ ...data, vehicle_type: data.vehicle_type?.id })
 
-  const handleAddPress = () => {
+  const { loading } = useLoading()
+
   const handleOnSubmit = () => {
     onSubmit(stop);
   };

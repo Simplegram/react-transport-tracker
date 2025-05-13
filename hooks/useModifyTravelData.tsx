@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { Direction, IconType, Stop } from "@/src/types/Travels";
 import { EditableRoute, EditableStop, EditableVehicleType } from "@/src/types/EditableTravels";
+import { AddableDirection, AddableIconType, AddableVehicleType } from "@/src/types/AddableTravels";
 
 export default function useModifyTravelData() {
     const addVehicleType = async (item: EditableVehicleType) => {
@@ -11,7 +12,7 @@ export default function useModifyTravelData() {
         if (error) console.log(error)
     }
     
-    const addIcon = async (item: IconType) => {
+    const addIcon = async (item: AddableIconType) => {
         const { error } = await supabase
             .from("icons")
             .insert(item)
@@ -21,7 +22,7 @@ export default function useModifyTravelData() {
 
     // ---
 
-    const editDirection = async (item: Direction) => {
+    const editDirection = async (item: AddableDirection) => {
         const { error } = await supabase
             .from("directions")
             .upsert(item)

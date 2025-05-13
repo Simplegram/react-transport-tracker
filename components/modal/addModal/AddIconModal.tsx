@@ -1,15 +1,13 @@
 import Button from "@/components/BaseButton";
-import ModalTemplate from "@/components/ModalTemplate";
-import useStopModal from "@/hooks/useStopModal";
+import { AddableIconType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
-import { IconType } from "@/src/types/Travels";
 import { useState } from "react";
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentProps) {
-    const [icon, setIcon] = useState<IconType>({'name': 'xmark'})
-    const [iconQuery, setIconQuery] = useState<string>('xmark')
+  const [icon, setIcon] = useState<AddableIconType>({ 'name': 'xmark' })
+  const [iconQuery, setIconQuery] = useState<string>('xmark')
 
   const handleOnSubmit = () => {
     onSubmit(icon);

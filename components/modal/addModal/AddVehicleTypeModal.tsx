@@ -1,19 +1,15 @@
 import Button from "@/components/BaseButton";
 import useGetTravelData from "@/hooks/useGetTravelData";
+import { AddableVehicleType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
-interface VehicleType {
-  name: string | undefined,
-  icon_id: number | undefined,
-}
-
 export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalContentProps) {
   const { icons, getIcons } = useGetTravelData()
 
-  const [vehicleType, setVehicleType] = useState<VehicleType>({ "name": undefined, "icon_id": undefined })
+  const [vehicleType, setVehicleType] = useState<AddableVehicleType>({ "name": undefined, "icon_id": undefined })
 
   useEffect(() => {
     getIcons()
