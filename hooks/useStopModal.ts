@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function useStopModal() {
     const [showStopModal, setShowStopModal] = useState(false);
-    const [editingStopField, setEditingStopField] = useState<string | null>(null); 
+    const [editingStopField, setEditingStopField] = useState<string | undefined>(undefined); 
     const [stopSearchQuery, setStopSearchQuery] = useState('');
 
     const openStopModal = (field: string) => {
@@ -17,7 +17,7 @@ export default function useStopModal() {
 
     const closeStopModal = () => {
         setShowStopModal(false);
-        setEditingStopField(null);
+        setEditingStopField(undefined);
         setStopSearchQuery('');
     };
 
