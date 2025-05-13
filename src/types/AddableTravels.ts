@@ -10,6 +10,14 @@ interface AddableStop {
     vehicle_type: number | undefined
 }
 
+interface AddableRoute {
+    first_stop_id: number | undefined
+    last_stop_id: number | undefined
+    code: string | undefined
+    name: string | undefined
+    vehicle_type: number | undefined
+}
+
 interface AddableVehicleType {
     name: string | undefined,
     icon_id: number | undefined,
@@ -22,6 +30,7 @@ interface AddableIconType {
 export {
     AddableDirection,
     AddableStop,
+    AddableRoute,
     AddableVehicleType,
     AddableIconType
 }
