@@ -13,6 +13,7 @@ import AddDirectionModal from "@/components/modal/addModal/AddDirectionModal";
 import { AddableDirection, AddableIconType, AddableRoute, AddableStop, AddableVehicleType } from "@/src/types/AddableTravels";
 import AddStopModal from "@/components/modal/addModal/AddStopModal";
 import AddRouteModal from "@/components/modal/addModal/AddRouteModal";
+import EditIconModal from "@/components/modal/editModal/EditIconModal";
 
 interface ModalConfig {
     title: string;
@@ -28,7 +29,7 @@ export default function useDatalistModal(refetch: () => void) {
     const { 
         addDirection, editDirection,
         addStop, editStop,
-        addIcon,
+        addIcon, editIcon,
         addVehicleType, editVehicleType,
         addRoute, editRoute
     } = useModifyTravelData()
@@ -91,6 +92,12 @@ export default function useDatalistModal(refetch: () => void) {
         Alert.alert('Route Changed', `Route "${data.name}" has been saved.`);
     };
 
+    const handleEditIcon = (data: IconType) => {
+        editIcon(data)
+        refetch()
+        Alert.alert('Route Changed', `Route "${data.name}" has been saved.`);
+    };
+
     const addModalConfigs: ModalConfigMap = {
         "Directions": {
             title: 'Add Direction',
@@ -121,17 +128,17 @@ export default function useDatalistModal(refetch: () => void) {
 
     const editModalConfigs: ModalConfigMap = {
         "Directions": {
-            title: 'Edit Directions',
+            title: 'Edit Direction',
             content: EditDirectionModal,
             onSubmitDataHandler: handleEditDirection
         },
         "Stops": {
-            title: 'Edit Stops',
+            title: 'Edit Stop',
             content: EditStopModal,
             onSubmitDataHandler: handleEditStop
         },
         "Routes": {
-            title: 'Edit Routes',
+            title: 'Edit Route',
             content: EditRouteModal,
             onSubmitDataHandler: handleEditRoute
         },
@@ -139,6 +146,11 @@ export default function useDatalistModal(refetch: () => void) {
             title: 'Edit Vehicle Type',
             content: EditVehicleTypeModal,
             onSubmitDataHandler: handleEditVehicleType
+        },
+        "Icons": {
+            title: 'Edit Icon',
+            content: EditIconModal,
+            onSubmitDataHandler: handleEditIcon
         },
     };
 

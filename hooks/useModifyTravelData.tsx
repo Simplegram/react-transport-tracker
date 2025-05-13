@@ -78,10 +78,18 @@ export default function useModifyTravelData() {
         if (error) console.log(error)
     }
 
+    const editIcon = async (item: IconType) => {
+        const { error } = await supabase
+            .from("icons")
+            .upsert(item)
+
+        if (error) console.log(error)
+    }
+
     return {
         addDirection, editDirection,
         addStop, editStop,
-        addIcon,
+        addIcon, editIcon,
         addVehicleType, editVehicleType,
         addRoute, editRoute
     }
