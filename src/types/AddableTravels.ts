@@ -15,7 +15,7 @@ interface AddableRoute {
     last_stop_id: number | undefined
     code: string | undefined
     name: string | undefined
-    vehicle_type: number | undefined
+    vehicle_type_id: number | undefined
 }
 
 interface AddableVehicleType {

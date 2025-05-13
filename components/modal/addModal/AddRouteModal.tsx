@@ -28,14 +28,14 @@ export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentPr
         first_stop_id: undefined,
         last_stop_id: undefined,
         name: undefined,
-        vehicle_type: undefined
+        vehicle_type_id: undefined
     })
 
     const handleStopSelect = (stopId: number) => {
         if (!editingStopField) {
             return
         }
-        
+
         setRoute({ ...route, [editingStopField]: stopId })
         closeStopModal();
     };
@@ -95,9 +95,9 @@ export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentPr
                                         key={type.id}
                                         style={[
                                             styles.iconContainer,
-                                            route.vehicle_type === type.id && styles.selectedIconContainer,
+                                            route.vehicle_type_id === type.id && styles.selectedIconContainer,
                                         ]}
-                                        onPress={() => setRoute({ ...route, vehicle_type: type.id })}
+                                        onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}
                                     >
                                         <Icon name={type.icon_id.name} size={20}></Icon>
                                         <Text style={styles.label}>{type.name.slice(0, 5)}</Text>
