@@ -27,10 +27,25 @@ interface AddableIconType {
     name: string | undefined
 }
 
+interface AddableTravel {
+    created_at: string | undefined
+    bus_initial_arrival: string | undefined
+    bus_initial_departure: string | undefined
+    bus_final_arrival: string | undefined
+    route_id: number | undefined
+    first_stop_id: number | undefined
+    last_stop_id: number | undefined
+    notes: string | null
+    vehicle_code: number | undefined
+    direction_id: number | undefined
+    type_id: number | undefined
+}
+
 export {
     AddableDirection,
     AddableStop,
     AddableRoute,
     AddableVehicleType,
-    AddableIconType
+    AddableIconType,
+    AddableTravel
 }
