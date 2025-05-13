@@ -9,6 +9,8 @@ import { EditableRoute, EditableStop, EditableVehicleType } from "@/src/types/Ed
 import EditStopModal from "@/components/modal/editModal/EditStopModal";
 import EditRouteModal from "@/components/modal/editModal/EditRouteModal";
 import EditDirectionModal from "@/components/modal/editModal/EditDirectionModal";
+import AddDirectionModal from "@/components/modal/addModal/AddDirectionModal";
+import { AddableDirection, AddableIconType, AddableVehicleType } from "@/src/types/AddableTravels";
 
 interface ModalConfig {
     title: string;
@@ -22,7 +24,7 @@ interface ModalConfigMap {
 
 export default function useDatalistModal(refetch: () => void) {
     const { 
-        editDirection,
+        addDirection, editDirection,
         editStop,
         addIcon,
         addVehicleType, editVehicleType,
@@ -31,18 +33,19 @@ export default function useDatalistModal(refetch: () => void) {
 
     const [activeModalConfig, setActiveModalConfig] = useState<ModalConfig | undefined>(undefined);
 
-    const handleAddIcon = (data: IconType) => {
-        addIcon(data)
+    const handleAddDirection = (data: AddableDirection) => {
+        addDirection(data)
         refetch()
-        Alert.alert('Icon Added', `Icon "${data.name}" has been saved.`);
+        Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`);
     };
 
-    const handleAddVehicleType = (data: EditableVehicleType) => {
+    const handleAddVehicleType = (data: AddableVehicleType) => {
         addVehicleType(data)
         refetch()
         Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`);
     };
 
+        Alert.alert('Icon Added', `Icon "${data.name}" has been saved.`);
     // ---
 
     const handleEditDirection = (data: Direction) => {
@@ -70,16 +73,21 @@ export default function useDatalistModal(refetch: () => void) {
     };
 
     const addModalConfigs: ModalConfigMap = {
-        "Icons": {
-            title: 'Add Icons',
-            content: AddIconModal,
-            onSubmitDataHandler: handleAddIcon,
+        "Directions": {
+            title: 'Add Direction',
+            content: AddDirectionModal,
+            onSubmitDataHandler: handleAddDirection
         },
         "VehicleTypes": {
             title: 'Add Vehicle Type',
             content: AddVehicleTypeModal,
             onSubmitDataHandler: handleAddVehicleType
-        }
+        },
+        "Icons": {
+            title: 'Add Icons',
+            content: AddIconModal,
+            onSubmitDataHandler: handleAddIcon,
+        },
     };
 
     const editModalConfigs: ModalConfigMap = {
