@@ -28,7 +28,7 @@ interface VehicleType {
 }
 
 interface IconType {
-    id?: number,
+    id: number,
     name: string
 }
 
