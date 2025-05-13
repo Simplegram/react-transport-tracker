@@ -120,9 +120,9 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
                         />
                     </View>
 
-                    <View style={styles.buttonRow}>
-                        <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>
-                        <Button title='Edit Route' color='#0284f5' onPress={handleOnSubmit} style={styles.addButton} textStyle={styles.addButtonText}></Button>
+                    <View style={buttonStyles.buttonRow}>
+                        <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
+                        <Button title='Edit Route' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                     </View>
                 </>
             )}
@@ -168,6 +168,19 @@ const styles = StyleSheet.create({
         borderColor: '#0284f5',
         backgroundColor: '#e3f2fd',
     },
+    pressableInput: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 12,
+        justifyContent: 'center',
+        minHeight: 44,
+        backgroundColor: '#fff',
+    },
+})
+
+const buttonStyles = StyleSheet.create({
     buttonRow: {
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -196,15 +209,5 @@ const styles = StyleSheet.create({
         color: '#000',
         fontSize: 16,
         fontWeight: '600',
-    },
-    pressableInput: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingVertical: 12,
-        justifyContent: 'center',
-        minHeight: 44,
-        backgroundColor: '#fff',
     },
 })
