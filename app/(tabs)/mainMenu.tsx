@@ -4,6 +4,7 @@ import React, { useEffect, useMemo } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
 import { Calendar } from 'react-native-calendars';
 import GroupedDataDisplay from "@/components/GroupedTravelsDisplay";
+import { useFocusEffect } from "expo-router";
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -58,6 +59,13 @@ export default function HomePage() {
   useEffect(() => {
     getDates()
   }, [])
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getDates()
+    }, [])
+  )
+
   return (
     <CollapsibleHeaderPage largeHeaderText="Public Transport Tracker">
       <View style={styles.container}>
