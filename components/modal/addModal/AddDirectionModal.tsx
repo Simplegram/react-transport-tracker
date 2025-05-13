@@ -3,7 +3,7 @@ import useLoading from "@/hooks/useLoading"
 import { AddableDirection } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { StyleSheet, Text, TextInput, View } from "react-native"
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native"
 
 export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const [direction, setDirection] = useState<AddableDirection>({ name: undefined })
@@ -11,6 +11,11 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
     const { loading } = useLoading()
 
     const handleOnSubmit = () => {
+        if (!direction.name?.trim()) {
+            Alert.alert('Input Required', 'Please enter a direction name.');
+            return
+        }
+
         onSubmit(direction);
     };
 

@@ -2,14 +2,19 @@ import Button from "@/components/BaseButton";
 import { AddableIconType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentProps) {
   const [icon, setIcon] = useState<AddableIconType>({ 'name': undefined })
   const [iconQuery, setIconQuery] = useState<string>('')
 
-  const handleOnSubmit = () => {
+  const handleOnSubmit = () => {  
+    if (!icon.name?.trim()) {
+      Alert.alert('Input Required', 'Please enter an icon name.');
+      return
+    }
+    
     onSubmit(icon);
   };
 
