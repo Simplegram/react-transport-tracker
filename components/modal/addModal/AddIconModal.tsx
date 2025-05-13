@@ -6,8 +6,8 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentProps) {
-  const [icon, setIcon] = useState<AddableIconType>({ 'name': 'xmark' })
-  const [iconQuery, setIconQuery] = useState<string>('xmark')
+  const [icon, setIcon] = useState<AddableIconType>({ 'name': undefined })
+  const [iconQuery, setIconQuery] = useState<string>('')
 
   const handleOnSubmit = () => {
     onSubmit(icon);
@@ -16,6 +16,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
   const changeIcon = (text: string) => {
     if (!text) {
       setIconQuery(text)
+      setIcon({ ...icon, 'name': undefined })
     }
     else {
       setIconQuery(text)
@@ -27,7 +28,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
     <View style={styles.container}>
       <Text style={styles.label}>Icon name (FontAwesome6):</Text>
       <View style={styles.inputContainer}>
-        <Icon style={styles.icon} name={icon.name} size={32} />
+        <Icon style={styles.icon} name={icon.name ? icon.name : 'xmark'} size={32} />
         <TextInput
           style={styles.input}
           placeholder="e.g., train-subway"
