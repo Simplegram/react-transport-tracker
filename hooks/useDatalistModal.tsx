@@ -1,5 +1,5 @@
 import AddIconModal from "@/components/modal/addModal/AddIconModal";
-import { IconType, Stop } from "@/src/types/Travels";
+import { Direction, IconType, Stop } from "@/src/types/Travels";
 import { useCallback, useState } from "react";
 import { Alert } from "react-native";
 import useModifyTravelData from "./useModifyTravelData";
@@ -7,8 +7,8 @@ import AddVehicleTypeModal from "@/components/modal/addModal/AddVehicleTypeModal
 import EditVehicleTypeModal from "@/components/modal/editModal/EditVehicleTypeModal";
 import { EditableRoute, EditableStop, EditableVehicleType } from "@/src/types/EditableTravels";
 import EditStopModal from "@/components/modal/editModal/EditStopModal";
-import useGetTravelData from "./useGetTravelData";
 import EditRouteModal from "@/components/modal/editModal/EditRouteModal";
+import EditDirectionModal from "@/components/modal/editModal/EditDirectionModal";
 
 interface ModalConfig {
     title: string;
@@ -22,6 +22,7 @@ interface ModalConfigMap {
 
 export default function useDatalistModal(refetch: () => void) {
     const { 
+        editDirection,
         editStop,
         addIcon,
         addVehicleType, editVehicleType,
@@ -42,7 +43,15 @@ export default function useDatalistModal(refetch: () => void) {
         Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`);
     };
 
-    const handleEditStops = (data: EditableStop) => {
+    // ---
+
+    const handleEditDirection = (data: Direction) => {
+        editDirection(data)
+        refetch()
+        Alert.alert('Stop Changed', `Stop "${data.name}" has been saved.`);
+    };
+
+    const handleEditStop = (data: EditableStop) => {
         editStop(data)
         refetch()
         Alert.alert('Stop Changed', `Stop "${data.name}" has been saved.`);
@@ -74,10 +83,15 @@ export default function useDatalistModal(refetch: () => void) {
     };
 
     const editModalConfigs: ModalConfigMap = {
+        "Directions": {
+            title: 'Edit Directions',
+            content: EditDirectionModal,
+            onSubmitDataHandler: handleEditDirection
+        },
         "Stops": {
             title: 'Edit Stops',
             content: EditStopModal,
-            onSubmitDataHandler: handleEditStops
+            onSubmitDataHandler: handleEditStop
         },
         "VehicleTypes": {
             title: 'Edit Vehicle Type',
