@@ -23,12 +23,12 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
 
     const changeIcon = (text: string) => {
         if (!text) {
-        setIconQuery(text)
-        setIcon({ ...icon, 'name': undefined })
+            setIconQuery(text)
+            setIcon({ ...icon, 'name': undefined })
         }
         else {
-        setIconQuery(text)
-        setIcon({ ...icon, 'name': text })
+            setIconQuery(text)
+            setIcon({ ...icon, 'name': text })
         }
     }
 
