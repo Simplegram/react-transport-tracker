@@ -30,7 +30,7 @@ const CollapsibleHeaderPage: React.FC<CollapsibleHeaderPageProps> = ({ // Not us
 }) => {
     return (
         <View style={[styles.container, containerStyle]}>
-            <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false}>
+            <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
                 <View style={styles.fillerContainer}></View>
                 {children}
             </ScrollView>

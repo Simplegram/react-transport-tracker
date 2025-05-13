@@ -33,7 +33,7 @@ export default function ModalTemplate({ children, isModalVisible, title = "Edito
           <Pressable style={modalStyles.backdrop} onPress={handleCloseModal}>
             <Pressable style={modalStyles.modalContent} onPress={(e) => e.stopPropagation()}>
               <Text style={modalStyles.modalTitle}>{title}</Text>
-              <KeyboardAwareScrollView enableOnAndroid={true}>
+              <KeyboardAwareScrollView enableOnAndroid={true} keyboardShouldPersistTaps={'always'}>
                 {children}
               </KeyboardAwareScrollView>
             </Pressable>
