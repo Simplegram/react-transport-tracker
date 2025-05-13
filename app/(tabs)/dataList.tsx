@@ -92,7 +92,7 @@ const DataListScreen: React.FC = () => {
     </View>
   );
 
-  if (loading) {
+  if (loading || !dataType) {
     return (
       <LoadingScreen />
     );
