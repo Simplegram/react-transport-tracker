@@ -21,8 +21,31 @@ interface EditableRoute {
   vehicle_type_id: number,
 }
 
+interface EditableTravel {
+  bus_initial_arrival: string
+  bus_initial_departure: string
+  bus_final_arrival: string
+  route_id: number
+  first_stop_id: number
+  last_stop_id: number
+  notes: string
+  vehicle_code: string
+  direction_id: number
+  type_id: number
+}
+
+interface EditableTravelModalProp {
+  isModalVisible: boolean
+  searchQuery: string
+  setSearchQuery: (query: string) => void
+  onClose: () => void
+  onSelect: (stopId: number) => void
+}
+
 export {
   EditableStop,
   EditableVehicleType,
-  EditableRoute
+  EditableRoute,
+  EditableTravel,
+  EditableTravelModalProp
 }
