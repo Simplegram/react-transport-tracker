@@ -52,9 +52,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
 }
 
 const styles = StyleSheet.create({
-  container: {
-
-  },
+  container: {},
   label: {
     fontSize: 16,
     marginBottom: 8,
