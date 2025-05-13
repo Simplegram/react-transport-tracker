@@ -8,7 +8,7 @@ const AddStopModalContent: React.FC<BaseModalContentProps> = ({ onSubmit, onCanc
   const [stopName, setStopName] = useState('');
   const [stopLocation, setStopLocation] = useState(''); // New state for location
 
-  const handleAddPress = () => {
+  const handleOnSubmit = () => {
     if (!stopName.trim() || !stopLocation.trim()) {
       Alert.alert('Input Required', 'Please enter both stop name and location.');
       return;
@@ -39,7 +39,7 @@ const AddStopModalContent: React.FC<BaseModalContentProps> = ({ onSubmit, onCanc
       {/* Buttons for this specific content */}
       <View style={contentStyles.buttonRow}>
         <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={contentStyles.cancelButton} textStyle={contentStyles.cancelButtonText}></Button>
-        <Button title='Add Stop' color='#0284f5' onPress={handleAddPress} style={contentStyles.addButton} textStyle={contentStyles.addButtonText}></Button>
+        <Button title='Add Stop' color='#0284f5' onPress={handleOnSubmit} style={contentStyles.addButton} textStyle={contentStyles.addButtonText}></Button>
       </View>
     </View>
   );

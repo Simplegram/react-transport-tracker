@@ -11,9 +11,9 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
     const [icon, setIcon] = useState<IconType>({'name': 'xmark'})
     const [iconQuery, setIconQuery] = useState<string>('xmark')
 
-    const handleAddPress = () => {
-        onSubmit(icon);
-    };
+  const handleOnSubmit = () => {
+    onSubmit(icon);
+  };
 
     const changeIcon = (text: string) => {
         if (!text) {
@@ -39,12 +39,12 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
                 />
             </View>
 
-            <View style={styles.buttonRow}>
-                <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>
-                <Button title='Add Icon' color='#0284f5' onPress={handleAddPress} style={styles.addButton} textStyle={styles.addButtonText}></Button>
-            </View>
-        </View>
-    )
+      <View style={styles.buttonRow}>
+        <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>
+        <Button title='Add Icon' color='#0284f5' onPress={handleOnSubmit} style={styles.addButton} textStyle={styles.addButtonText}></Button>
+      </View>
+    </View>
+  )
 }
 
 const styles = StyleSheet.create({

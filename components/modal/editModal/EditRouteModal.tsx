@@ -43,7 +43,7 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
         loading
     } = useLoading()
 
-    const handleAddPress = () => {
+    const handleOnSubmit = () => {
         onSubmit(route);
     };
 
@@ -125,7 +125,7 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
 
                     <View style={styles.buttonRow}>
                         <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>
-                        <Button title='Edit Route' color='#0284f5' onPress={handleAddPress} style={styles.addButton} textStyle={styles.addButtonText}></Button>
+                        <Button title='Edit Route' color='#0284f5' onPress={handleOnSubmit} style={styles.addButton} textStyle={styles.addButtonText}></Button>
                     </View>
                 </>
             )}

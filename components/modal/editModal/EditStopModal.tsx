@@ -14,6 +14,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
   const [stop, setStop] = useState<Stop>({...data, vehicle_type: data.vehicle_type?.id})
 
   const handleAddPress = () => {
+  const handleOnSubmit = () => {
     onSubmit(stop);
   };
 
@@ -76,10 +77,12 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
         </ScrollView>
       </View>
 
-      <View style={styles.buttonRow}>
-        <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>
-        <Button title='Edit Stop' color='#0284f5' onPress={handleAddPress} style={styles.addButton} textStyle={styles.addButtonText}></Button>
-      </View>
+          <View style={styles.buttonRow}>
+            <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>
+            <Button title='Edit Stop' color='#0284f5' onPress={handleOnSubmit} style={styles.addButton} textStyle={styles.addButtonText}></Button>
+          </View>
+        </>
+      )}
     </View>
   )
 }

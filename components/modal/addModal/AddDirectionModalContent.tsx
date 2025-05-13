@@ -9,7 +9,7 @@ import Button from '@/components/BaseButton';
 const AddDirectionModalContent: React.FC<BaseModalContentProps> = ({ onSubmit, onCancel }) => {
   const [directionName, setDirectionName] = useState('');
 
-  const handleAddPress = () => {
+  const handleOnSubmit = () => {
     if (!directionName.trim()) {
       Alert.alert('Input Required', 'Please enter a direction name.');
       return;
@@ -32,7 +32,7 @@ const AddDirectionModalContent: React.FC<BaseModalContentProps> = ({ onSubmit, o
 
       <View style={contentStyles.buttonRow}>
         <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={contentStyles.cancelButton} textStyle={contentStyles.cancelButtonText}></Button>
-        <Button title='Add Direction' color='#0284f5' onPress={handleAddPress} style={contentStyles.addButton} textStyle={contentStyles.addButtonText}></Button>
+        <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={contentStyles.addButton} textStyle={contentStyles.addButtonText}></Button>
       </View>
     </View>
   );

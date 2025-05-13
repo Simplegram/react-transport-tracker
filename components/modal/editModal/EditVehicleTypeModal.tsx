@@ -20,7 +20,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
     getIcons()
   }, [icons])
 
-  const handleAddPress = () => {
+  const handleOnSubmit = () => {
     onSubmit(vehicleType);
   };
 
@@ -63,10 +63,12 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
         </View>
       </View>
 
-      <View style={styles.buttonRow}>
-        <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>
-        <Button title='Edit Type' color='#0284f5' onPress={handleAddPress} style={styles.addButton} textStyle={styles.addButtonText}></Button>
-      </View>
+          <View style={styles.buttonRow}>
+            <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>
+            <Button title='Edit Type' color='#0284f5' onPress={handleOnSubmit} style={styles.addButton} textStyle={styles.addButtonText}></Button>
+          </View>
+        </>
+      )}
     </View>
   )
 }
