@@ -28,7 +28,6 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
     onConfirm,
     incrementSeconds = 5,
 }) => {
-    // String states for TextInputs
     const [year, setYear] = useState('');
     const [month, setMonth] = useState('');
     const [day, setDay] = useState('');
@@ -36,7 +35,6 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
     const [minutes, setMinutes] = useState('');
     const [seconds, setSeconds] = useState('');
 
-    // Function to update all string parts from a Date object
     const updateStringPartsFromDate = (date: Date) => {
         setYear(date.getFullYear().toString());
         setMonth((date.getMonth() + 1).toString().padStart(2, '0'));
@@ -71,7 +69,7 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
 
     const constructDateFromParts = (): Date | null => {
         const y = parseInt(year, 10);
-        const m = parseInt(month, 10); // User enters 1-12
+        const m = parseInt(month, 10);
         const d = parseInt(day, 10);
         const h = parseInt(hours, 10);
         const min = parseInt(minutes, 10);
@@ -112,8 +110,6 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
     const handleTimeAdjustment = (adjustmentInSeconds: number) => {
         let currentDate = constructDateFromParts();
         if (!currentDate) {
-            // If construction failed, an alert was already shown by constructDateFromParts.
-            // As a fallback, reset to initialDateTime or current time to allow adjustment.
             currentDate = initialDateTime instanceof Date && !isNaN(initialDateTime.getTime())
                 ? new Date(initialDateTime)
                 : new Date();
@@ -129,10 +125,7 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
         const newDate = constructDateFromParts();
         if (newDate) {
             onConfirm(newDate);
-            // Parent component (EditTravelItemScreen) will call its own onClose logic.
         }
-        // If newDate is null, an alert was already shown by constructDateFromParts.
-        // The modal remains open for correction.
     };
 
     const handleTimeNow = () => {
@@ -173,7 +166,6 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
                         <Text style={styles.modalTitle}>Set Date and Time</Text>
 
                         <View style={styles.dateTimeSection}>
-                            <Text style={styles.sectionTitle}>Date</Text>
                             <View style={styles.timePicker}>
                                 {inputRow('Year', year, (text) => handlePartChange('year', text), 'YYYY', 4)}
                                 {inputRow('Month', month, (text) => handlePartChange('month', text), 'MM', 2)}
@@ -182,7 +174,6 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
                         </View>
 
                         <View style={styles.dateTimeSection}>
-                            <Text style={styles.sectionTitle}>Time</Text>
                             <View style={styles.timePicker}>
                                 {inputRow('Hours', hours, (text) => handlePartChange('hours', text), 'HH', 2)}
                                 {inputRow('Minutes', minutes, (text) => handlePartChange('minutes', text), 'mm', 2)}

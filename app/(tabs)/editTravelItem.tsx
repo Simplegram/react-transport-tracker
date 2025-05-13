@@ -7,7 +7,6 @@ import {
     Platform,
     Pressable,
 } from 'react-native';
-// import DateTimePicker from '@react-native-community/datetimepicker'; // REMOVE
 import { Picker } from '@react-native-picker/picker';
 import { useTravelContext } from '@/context/PageContext';
 import { DataItem, Stop } from '@/src/types/Travels';
@@ -22,7 +21,6 @@ const mockDirections = [
     { id: 2, name: "Pulang" },
 ];
 
-// Helper to create a default/empty DataItem for "add" mode
 const getDefaultDataItem = (
     availableVehicleTypes: { id: any; name: string }[],
     availableDirections: { id: any; name: string }[]
@@ -53,8 +51,7 @@ const EditTravelItemScreen = () => {
     const isEditMode = useMemo(() => !!selectedItem, [selectedItem]);
 
     const [editableItem, setEditableItem] = useState<DataItem | null>(null);
-    // const [showDatePicker, setShowDatePicker] = useState(false); // REMOVE
-    const [showCustomPicker, setShowCustomPicker] = useState(false); // ADD
+    const [showCustomPicker, setShowCustomPicker] = useState(false);
     const [editingDateField, setEditingDateField] = useState<keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'> | null>(null);
 
 
@@ -84,7 +81,7 @@ const EditTravelItemScreen = () => {
         if (showStopModal) {
             closeStopModal();
         }
-        // Close custom date picker if open when item/mode changes
+
         if (showCustomPicker) {
             closeCustomPicker();
         }
@@ -106,16 +103,11 @@ const EditTravelItemScreen = () => {
         });
     };
 
-    // REMOVE old handleDateChange
-    // const handleDateChange = (event: any, selectedDate?: Date) => { ... };
-
-    // RENAME old showDatePickerModal and update logic
     const openCustomPickerModal = (field: keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'>) => {
         setEditingDateField(field);
         setShowCustomPicker(true);
     };
 
-    // ADD handler for custom picker confirmation
     const handleCustomDateConfirm = (selectedDate: Date) => {
         if (editingDateField) {
             setEditableItem(prev => prev ? ({ ...prev, [editingDateField]: selectedDate.toISOString() }) : null);
@@ -123,12 +115,10 @@ const EditTravelItemScreen = () => {
         closeCustomPicker();
     };
 
-    // ADD function to close custom picker
     const closeCustomPicker = () => {
         setShowCustomPicker(false);
         setEditingDateField(null);
     };
-
 
     const handleStopSelect = (selectedStop: Stop) => {
         if (editingStopField && editableItem) {
@@ -155,6 +145,7 @@ const EditTravelItemScreen = () => {
         try {
             const date = new Date(isoString);
             if (isNaN(date.getTime())) return 'Invalid Date';
+
             const year = date.getFullYear();
             const month = String(date.getMonth() + 1).padStart(2, '0');
             const day = String(date.getDate()).padStart(2, '0');
@@ -190,9 +181,6 @@ const EditTravelItemScreen = () => {
                 </Pressable>
             </View>
 
-            {/* REMOVE old DateTimePicker for Android and iOS Modal */}
-
-            {/* ADD Custom DateTime Picker Modal */}
             {showCustomPicker && editingDateField && (
                 <CustomDateTimePicker
                     visible={showCustomPicker}
@@ -314,7 +302,7 @@ const EditTravelItemScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    container: { // This style was defined but not used, can be kept or removed
+    container: {
         flex: 1,
     },
     centeredContainer: {

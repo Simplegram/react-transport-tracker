@@ -189,6 +189,8 @@ const EditTravelItemScreen = () => {
                 />
             </View>
 
+
+
             <View style={styles.inputGroup}>
                 <Text style={styles.label}>Type:</Text>
                 <Picker
