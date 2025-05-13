@@ -12,6 +12,8 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+
 interface Props {
     children: React.ReactNode
     isModalVisible: boolean
@@ -26,18 +28,16 @@ export default function ModalTemplate({ children, isModalVisible, title = "Edito
             transparent={true}
             visible={isModalVisible}
             onRequestClose={handleCloseModal}
+            statusBarTranslucent={true}
         >
-        <Pressable style={modalStyles.backdrop} onPress={handleCloseModal}>
-            <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-            style={modalStyles.keyboardAvoidingContainer}
-            >
+          <Pressable style={modalStyles.backdrop} onPress={handleCloseModal}>
             <Pressable style={modalStyles.modalContent} onPress={(e) => e.stopPropagation()}>
-                <Text style={modalStyles.modalTitle}>{title}</Text>
+              <Text style={modalStyles.modalTitle}>{title}</Text>
+              <KeyboardAwareScrollView enableOnAndroid={true}>
                 {children}
+              </KeyboardAwareScrollView>
             </Pressable>
-            </KeyboardAvoidingView>
-        </Pressable>
+          </Pressable>
         </Modal>
     )
 }
