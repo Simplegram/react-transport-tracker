@@ -10,6 +10,7 @@ import EditTravelStopModal from "./EditTravelStopModal"
 import useStopModal from "@/hooks/useStopModal"
 import { sortByIdToFront } from "@/src/utils/utils"
 import useLoading from "@/hooks/useLoading"
+import { VehicleType } from "@/src/types/Travels"
 
 
 export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {
@@ -96,7 +97,7 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
                                 contentContainerStyle={styles.iconScrollView}
                                 keyboardShouldPersistTaps={"always"}
                             >
-                                {sortByIdToFront(fullVehicleTypes, savedVehicleTypeId.current).map((type) => (
+                                {sortByIdToFront(fullVehicleTypes, savedVehicleTypeId.current).map((type: VehicleType) => (
                                     <TouchableOpacity
                                         key={type.id}
                                         style={[
