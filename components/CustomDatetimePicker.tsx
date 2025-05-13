@@ -149,6 +149,7 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
                 keyboardType="numeric"
                 maxLength={maxLength}
                 placeholder={placeholder}
+                textAlign='center'
             />
         </View>
     );
@@ -158,7 +159,7 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
             transparent={true}
             animationType="slide"
             visible={visible}
-            onRequestClose={onClose} // For Android back button
+            onRequestClose={onClose}
         >
             <Pressable style={styles.modalBackdrop} onPress={onClose}>
                 <Pressable onPress={(e) => e.stopPropagation()} style={styles.modalContainer}>
@@ -258,6 +259,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+        gap: 10,
     },
     inputRow: {
         flex: 1,
@@ -282,15 +284,16 @@ const styles = StyleSheet.create({
     },
     timeAdjustmentButtons: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginVertical: 20,
+        justifyContent: 'space-between',
+        marginVertical: 10,
+        gap: 10,
     },
     adjButton: {
+        flex: 1,
         backgroundColor: '#007AFF',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 5,
-        minWidth: 80,
         alignItems: 'center',
     },
     adjButtonText: {
