@@ -134,6 +134,17 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
         // If newDate is null, an alert was already shown by constructDateFromParts.
         // The modal remains open for correction.
     };
+
+    const handleTimeNow = () => {
+        const timeNow = new Date()
+
+        handlePartChange('year', timeNow.getFullYear().toString())
+        handlePartChange('month', (timeNow.getMonth() + 1).toString().padStart(2, '0'))
+        handlePartChange('day', timeNow.getDate().toString().padStart(2, '0'))
+        handlePartChange('hours', timeNow.getHours().toString().padStart(2, '0'))
+        handlePartChange('minutes', timeNow.getMinutes().toString().padStart(2, '0'))
+        handlePartChange('seconds', timeNow.getSeconds().toString().padStart(2, '0'))
+    }
     
     const inputRow = (label: string, value: string, onChangeText: (text: string) => void, placeholder: string, maxLength?: number) => (
         <View style={styles.inputRow}>
@@ -191,6 +202,12 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
                                 onPress={() => handleTimeAdjustment(incrementSeconds)}
                             >
                                 <Text style={styles.adjButtonText}>+{incrementSeconds}s</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.adjButton, {backgroundColor: '#4CAF50'}]}
+                                onPress={handleTimeNow}
+                            >
+                                <Text style={styles.adjButtonText}>Now</Text>
                             </TouchableOpacity>
                         </View>
 
