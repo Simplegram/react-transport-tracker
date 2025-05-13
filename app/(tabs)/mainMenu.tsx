@@ -1,6 +1,6 @@
 import CollapsibleHeaderPage from "@/components/CollapsibleHeaderPage";
 import useTravelCalendar from "@/hooks/useTravelCalendar";
-import { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
 import { Calendar } from 'react-native-calendars';
 import GroupedDataDisplay from "@/components/GroupedTravelsDisplay";
@@ -22,7 +22,10 @@ const getTodayString = () => {
 };
 
 export default function HomePage() {
-  const { dates, selectedDate, travelAtDate, setSelectedDate } = useTravelCalendar()
+  const { 
+    travelAtDate, getDates,
+    dates, selectedDate, setSelectedDate,
+  } = useTravelCalendar()
 
   // Generate marked dates for the calendar
   const markedDates = useMemo(() => {
@@ -52,6 +55,9 @@ export default function HomePage() {
     setSelectedDate(day.dateString);
   };
 
+  useEffect(() => {
+    getDates()
+  }, [])
   return (
     <CollapsibleHeaderPage largeHeaderText="Public Transport Tracker">
       <View style={styles.container}>

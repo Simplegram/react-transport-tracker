@@ -51,10 +51,15 @@ export default function useTravelCalendar() {
         if (data) setTravelAtDate(data)
     }
 
-    const getDates = useCallback(async () => {
+    const getDates = async () => {
         const { data, error } = await supabase
             .from("travels")
             .select("created_at")
+
+        if (!data) {
+            if (error) console.log(error)
+            return
+        }
 
         const dates = data.map(item => {
             const date = new Date(item.created_at);
@@ -66,18 +71,14 @@ export default function useTravelCalendar() {
 
         if (error) console.log(error)
         if (data) setDates(dates)
-    }, [])
+    }
 
     useEffect(() => {
         getTravelAtDate()
     }, [selectedDate])
 
-    useEffect(() => {
-        getDates()
-    }, [getDates])
-
     return { 
-        travelAtDate, 
+        travelAtDate, getDates,
         dates, selectedDate, setSelectedDate,
     }
 }
