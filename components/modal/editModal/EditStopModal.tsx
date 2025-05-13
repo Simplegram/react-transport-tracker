@@ -38,15 +38,15 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
             <TextInput
               style={styles.input}
               placeholder="Stop latitude..."
-              value={stop.lat}
-              onChangeText={text => (setStop({ ...stop, "name": text }))}
+              value={stop.lat?.toString()}
+              onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
             />
             <Text style={styles.label}>Longitude:</Text>
             <TextInput
               style={styles.input}
               placeholder="Stop longitude..."
-              value={stop.lon}
-              onChangeText={text => (setStop({ ...stop, "name": text }))}
+              value={stop.lon?.toString()}
+              onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
             />
             <Text style={styles.label}>Alternative name:</Text>
             <TextInput
