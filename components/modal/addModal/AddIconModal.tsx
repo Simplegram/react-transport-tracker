@@ -13,29 +13,29 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
     onSubmit(icon);
   };
 
-    const changeIcon = (text: string) => {
-        if (!text) {
-            setIconQuery(text)
-        }
-        else {
-            setIconQuery(text)
-            setIcon({...icon, 'name': text})
-        }
+  const changeIcon = (text: string) => {
+    if (!text) {
+      setIconQuery(text)
     }
+    else {
+      setIconQuery(text)
+      setIcon({ ...icon, 'name': text })
+    }
+  }
 
-    return (
-        <View style={styles.container}>
-            <Text style={styles.label}>Icon name (FontAwesome6):</Text>
-            <View style={styles.inputContainer}>
-                <Icon style={styles.icon} name={icon.name} size={32} />
-                <TextInput
-                    style={styles.input}
-                    placeholder="e.g., train-subway"
-                    value={iconQuery}
-                    onChangeText={changeIcon}
-                    autoFocus={true}
-                />
-            </View>
+  return (
+    <View style={styles.container}>
+      <Text style={styles.label}>Icon name (FontAwesome6):</Text>
+      <View style={styles.inputContainer}>
+        <Icon style={styles.icon} name={icon.name} size={32} />
+        <TextInput
+          style={styles.input}
+          placeholder="e.g., train-subway"
+          value={iconQuery}
+          onChangeText={changeIcon}
+          autoFocus={true}
+        />
+      </View>
 
       <View style={styles.buttonRow}>
         <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>

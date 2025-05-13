@@ -1,6 +1,7 @@
 import Button from "@/components/BaseButton";
 import { useModalContext } from "@/context/ModalContext";
 import useGetTravelData from "@/hooks/useGetTravelData";
+import useLoading from "@/hooks/useLoading";
 import { EditableVehicleType } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { sortByIdToFront } from "@/src/utils/utils";
@@ -16,6 +17,8 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
   const [vehicleType, setVehicleType] = useState<EditableVehicleType>(data)
   const savedVehicleTypeId = useRef(vehicleType.icon_id)
 
+  const { loading } = useLoading()
+
   useEffect(() => {
     getIcons()
   }, [icons])
@@ -26,42 +29,46 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <View>
-          <Text style={styles.label}>Name:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="e.g., Standard Bus"
-            value={vehicleType.name}
-            onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}
-          />
-        </View>
+      {loading ? (
+        <Text style={styles.label}>Loading...</Text>
+      ) : (
+        <>
+          <View style={styles.inputContainer}>
+            <View>
+              <Text style={styles.label}>Name:</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="e.g., Standard Bus"
+                value={vehicleType.name}
+                onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}
+              />
+            </View>
 
-        <View style={{
-          flexDirection: 'column',
-        }}>
-          <Text style={styles.label}>Icon:</Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.iconScrollView}
-            keyboardShouldPersistTaps={"always"}
-          >
-            {sortByIdToFront(icons, savedVehicleTypeId.current).map((icon) => (
-              <TouchableOpacity
-                key={icon.id}
-                style={[
-                  styles.iconContainer,
-                  vehicleType.icon_id === icon.id && styles.selectedIconContainer,
-                ]}
-                onPress={() => setVehicleType({ ...vehicleType, icon_id: icon.id })}
+            <View style={{
+              flexDirection: 'column',
+            }}>
+              <Text style={styles.label}>Icon:</Text>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.iconScrollView}
+                keyboardShouldPersistTaps={"always"}
               >
-                <Icon name={icon.name} size={20}></Icon>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </View>
-      </View>
+                {sortByIdToFront(icons, savedVehicleTypeId.current).map((icon) => (
+                  <TouchableOpacity
+                    key={icon.id}
+                    style={[
+                      styles.iconContainer,
+                      vehicleType.icon_id === icon.id && styles.selectedIconContainer,
+                    ]}
+                    onPress={() => setVehicleType({ ...vehicleType, icon_id: icon.id })}
+                  >
+                    <Icon name={icon.name} size={20}></Icon>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
+          </View>
 
           <View style={styles.buttonRow}>
             <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>

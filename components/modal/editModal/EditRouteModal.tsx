@@ -9,7 +9,6 @@ import Icon from 'react-native-vector-icons/FontAwesome6'
 import EditTravelStopModal from "./EditTravelStopModal"
 import useStopModal from "@/hooks/useStopModal"
 import { sortByIdToFront } from "@/src/utils/utils"
-import LoadingScreen from "@/components/LoadingScreen"
 import useLoading from "@/hooks/useLoading"
 
 
@@ -31,7 +30,7 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
     } = useStopModal();
 
     const [route, setRoute] = useState<EditableRoute>({
-        ...data, 
+        ...data,
         'first_stop_id': data.first_stop_id.id,
         'last_stop_id': data.last_stop_id.id,
         'vehicle_type_id': data.vehicle_type_id.id
@@ -39,23 +38,21 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
 
     const savedVehicleTypeId = useRef(route.vehicle_type_id)
 
-    const {
-        loading
-    } = useLoading()
+    const { loading } = useLoading()
 
     const handleOnSubmit = () => {
         onSubmit(route);
     };
 
     const handleStopSelect = (stopId: number) => {
-        setRoute({...route, [editingStopField]: stopId})
+        setRoute({ ...route, [editingStopField]: stopId })
         closeStopModal();
     };
-    
+
     return (
         <View style={styles.container}>
             {loading ? (
-                <LoadingScreen></LoadingScreen>
+                <Text style={styles.label}>Loading...</Text>
             ) : (
                 <>
                     <View style={styles.inputContainer}>
@@ -80,12 +77,12 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
                             onPress={() => openStopModal('first_stop_id')}>
                             <Text style={[styles.label, { marginBottom: 0 }]}>{stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}</Text>
                         </Pressable>
-            
+
                         <Text style={styles.label}>Last Stop:</Text>
                         <Pressable
                             style={styles.pressableInput}
                             onPress={() => openStopModal('last_stop_id')}>
-                            <Text style={[styles.label, { marginBottom: 0 }]}>{stops.find(item => item.id === route.last_stop_id)?.name  || 'Select Last Stop'}</Text>
+                            <Text style={[styles.label, { marginBottom: 0 }]}>{stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}</Text>
                         </Pressable>
 
                         <View style={{
@@ -98,19 +95,19 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
                                 contentContainerStyle={styles.iconScrollView}
                                 keyboardShouldPersistTaps={"always"}
                             >
-                            {sortByIdToFront(fullVehicleTypes, savedVehicleTypeId.current).map((type) => (
-                                <TouchableOpacity
-                                    key={type.id}
-                                    style={[
-                                        styles.iconContainer,
-                                        route.vehicle_type_id === type.id && styles.selectedIconContainer,
-                                    ]}
-                                    onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}
-                                >
-                                    <Icon name={type.icon_id.name} size={20}></Icon>
-                                    <Text style={styles.label}>{type.name.slice(0, 5)}</Text>
-                                </TouchableOpacity>
-                            ))}
+                                {sortByIdToFront(fullVehicleTypes, savedVehicleTypeId.current).map((type) => (
+                                    <TouchableOpacity
+                                        key={type.id}
+                                        style={[
+                                            styles.iconContainer,
+                                            route.vehicle_type_id === type.id && styles.selectedIconContainer,
+                                        ]}
+                                        onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}
+                                    >
+                                        <Icon name={type.icon_id.name} size={20}></Icon>
+                                        <Text style={styles.label}>{type.name.slice(0, 5)}</Text>
+                                    </TouchableOpacity>
+                                ))}
                             </ScrollView>
                         </View>
 

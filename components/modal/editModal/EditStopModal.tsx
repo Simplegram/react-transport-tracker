@@ -1,11 +1,11 @@
 import Button from "@/components/BaseButton";
 import { useModalContext } from "@/context/ModalContext";
 import useGetTravelData from "@/hooks/useGetTravelData";
+import useLoading from "@/hooks/useLoading";
 import { EditableStop } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
-import { Stop } from "@/src/types/Travels";
-import { useEffect, useMemo, useState } from "react";
-import { FlatList, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { useState } from "react";
+import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
@@ -22,62 +22,66 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Name:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Stop name..."
-          value={stop.name}
-          onChangeText={text => (setStop({ ...stop, "name": text }))}
-        />
-        <Text style={styles.label}>Latitude:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Stop latitude..."
-          value={stop.lat}
-          onChangeText={text => (setStop({ ...stop, "name": text }))}
-        />
-        <Text style={styles.label}>Longitude:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Stop longitude..."
-          value={stop.lon}
-          onChangeText={text => (setStop({ ...stop, "name": text }))}
-        />
-        <Text style={styles.label}>Alternative name:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Alternative name..."
-          value={stop.name_alt}
-          onChangeText={text => (setStop({ ...stop, "name_alt": text }))}
-        />
-      </View>
+      {loading ? (
+        <Text style={styles.label}>Loading...</Text>
+      ) : (
+        <>
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Name:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Stop name..."
+              value={stop.name}
+              onChangeText={text => (setStop({ ...stop, "name": text }))}
+            />
+            <Text style={styles.label}>Latitude:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Stop latitude..."
+              value={stop.lat}
+              onChangeText={text => (setStop({ ...stop, "name": text }))}
+            />
+            <Text style={styles.label}>Longitude:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Stop longitude..."
+              value={stop.lon}
+              onChangeText={text => (setStop({ ...stop, "name": text }))}
+            />
+            <Text style={styles.label}>Alternative name:</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Alternative name..."
+              value={stop.name_alt}
+              onChangeText={text => (setStop({ ...stop, "name_alt": text }))}
+            />
+          </View>
 
-      <View style={{
-        flexDirection: 'column',
-      }}>
-        <Text style={styles.label}>Icon:</Text>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.iconScrollView}
-          keyboardShouldPersistTaps={"always"}
-        >
-          {fullVehicleTypes.map((type) => (
-            <TouchableOpacity
-              key={type.id}
-              style={[
-                styles.iconContainer,
-                stop.vehicle_type === type.id && styles.selectedIconContainer,
-              ]}
-              onPress={() => setStop({ ...stop, vehicle_type: type.id })}
+          <View style={{
+            flexDirection: 'column',
+          }}>
+            <Text style={styles.label}>Icon:</Text>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.iconScrollView}
+              keyboardShouldPersistTaps={"always"}
             >
-              <Icon name={type.icon_id.name} size={20}></Icon>
-              <Text style={styles.label}>{type.name.slice(0, 5)}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-      </View>
+              {fullVehicleTypes.map((type) => (
+                <TouchableOpacity
+                  key={type.id}
+                  style={[
+                    styles.iconContainer,
+                    stop.vehicle_type === type.id && styles.selectedIconContainer,
+                  ]}
+                  onPress={() => setStop({ ...stop, vehicle_type: type.id })}
+                >
+                  <Icon name={type.icon_id.name} size={20}></Icon>
+                  <Text style={styles.label}>{type.name.slice(0, 5)}</Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
 
           <View style={styles.buttonRow}>
             <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>

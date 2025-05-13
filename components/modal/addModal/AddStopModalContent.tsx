@@ -46,6 +46,7 @@ const AddStopModalContent: React.FC<BaseModalContentProps> = ({ onSubmit, onCanc
 
 // Use the same contentStyles or define new ones if needed
 const contentStyles = StyleSheet.create({
+  container: {
     // No specific flex/dimensions needed usually, content wraps
   },
   label: {
