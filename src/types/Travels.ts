@@ -18,7 +18,7 @@ interface Route {
     last_stop_id: Stop
     code: string
     name: string
-    vehicle_type: VehicleType
+    vehicle_type_id: VehicleType
 }
 
 interface VehicleType {
