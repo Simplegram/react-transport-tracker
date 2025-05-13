@@ -1,5 +1,6 @@
 import Button from "@/components/BaseButton";
 import useGetTravelData from "@/hooks/useGetTravelData";
+import useLoading from "@/hooks/useLoading";
 import { AddableVehicleType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useEffect, useState } from "react";
@@ -7,13 +8,11 @@ import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalContentProps) {
-  const { icons, getIcons } = useGetTravelData()
+  const { icons } = useGetTravelData()
+
+  const { loading } = useLoading()
 
   const [vehicleType, setVehicleType] = useState<AddableVehicleType>({ "name": undefined, "icon_id": undefined })
-
-  useEffect(() => {
-    getIcons()
-  }, [icons])
 
   const handleOnSubmit = () => {
     onSubmit(vehicleType);
@@ -21,43 +20,46 @@ export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalCon
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <View>
-          <Text style={styles.label}>Name:</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="e.g., Standard Bus"
-            value={vehicleType.name}
-            onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}
-            autoFocus={true}
-          />
-        </View>
+      {loading ? (
+        <Text style={styles.label}>Loading...</Text>
+      ) : (
+        <>
+          <View style={styles.inputContainer}>
+            <View>
+              <Text style={styles.label}>Name:</Text>
+              <TextInput
+                style={styles.input}
+                placeholder="e.g., Standard Bus"
+                value={vehicleType.name}
+                onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}
+              />
+            </View>
 
-        <View style={{
-          flexDirection: 'column',
-        }}>
-          <Text style={styles.label}>Icon:</Text>
-          <ScrollView
-            horizontal
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.iconScrollView}
-            keyboardShouldPersistTaps={"always"}
-          >
-            {icons.map((icon) => (
-              <TouchableOpacity
-                key={icon.id}
-                style={[
-                  styles.iconContainer,
-                  vehicleType.icon_id === icon.id && styles.selectedIconContainer,
-                ]}
-                onPress={() => setVehicleType({ ...vehicleType, "icon_id": icon.id })}
+            <View style={{
+              flexDirection: 'column',
+            }}>
+              <Text style={styles.label}>Icon:</Text>
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.iconScrollView}
+                keyboardShouldPersistTaps={"always"}
               >
-                <Icon name={icon.name} size={20}></Icon>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </View>
-      </View>
+                {icons.map((icon) => (
+                  <TouchableOpacity
+                    key={icon.id}
+                    style={[
+                      styles.iconContainer,
+                      vehicleType.icon_id === icon.id && styles.selectedIconContainer,
+                    ]}
+                    onPress={() => setVehicleType({ ...vehicleType, "icon_id": icon.id })}
+                  >
+                    <Icon name={icon.name} size={20}></Icon>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
+            </View>
+          </View>
 
           <View style={styles.buttonRow}>
             <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>
