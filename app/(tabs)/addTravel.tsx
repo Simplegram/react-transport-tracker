@@ -6,50 +6,28 @@ import {
     StyleSheet,
     Platform,
     Pressable,
+    Alert,
 } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
-import { DataItem, Stop } from '@/src/types/Travels';
+import { DataItem } from '@/src/types/Travels';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
-import EditTravelStopModal from '@/components/modal/editModal/EditTravelStopModal';
+import EditTravelStopModal from '@/components/modal/editTravelModal/EditTravelStopModal';
 import useStopModal from '@/hooks/useStopModal';
 import CustomDateTimePicker from '@/components/CustomDatetimePicker';
 import useGetTravelData from '@/hooks/useGetTravelData';
+import { AddableTravel } from '@/src/types/AddableTravels';
+import EditTravelRouteModal from '@/components/modal/editTravelModal/EditTravelRouteModal';
+import Button from '@/components/BaseButton';
+import EditTravelDirectionModal from '@/components/modal/editTravelModal/EditTravelDirectionModal';
+import useModifyTravelData from '@/hooks/useModifyTravelData';
+import { router } from 'expo-router';
 
-const mockDirections = [
-    { id: 1, name: "Pergi" },
-    { id: 2, name: "Pulang" },
-];
+export default function AddTravel() {
+    const { stops, routes, directions, vehicleTypes } = useGetTravelData();
 
-// Helper to create a default/empty DataItem for "add" mode
-const getDefaultDataItem = (
-    availableVehicleTypes: { id: any; name: string }[],
-    availableDirections: { id: any; name: string }[]
-): DataItem => {
-    const defaultType = availableVehicleTypes.length > 0 ? availableVehicleTypes[0] : null;
-    const defaultDirection = availableDirections.length > 0 ? availableDirections[0] : null;
+    const { addTravel } = useModifyTravelData()
 
-    return {
-        id: undefined,
-        bus_initial_arrival: null,
-        bus_initial_departure: null,
-        bus_final_arrival: null,
-        routes: { id: null, name: '' },
-        types: defaultType,
-        directions: defaultDirection,
-        vehicle_code: '',
-        first_stop_id: null,
-        last_stop_id: null,
-        notes: '',
-    };
-};
-
-
-const EditTravelItemScreen = () => {
-    const { stops, vehicleTypes } = useGetTravelData();
-
-    const [editableItem, setEditableItem] = useState<DataItem | null>(null);
-    // const [showDatePicker, setShowDatePicker] = useState(false); // REMOVE
-    const [showCustomPicker, setShowCustomPicker] = useState(false); // ADD
+    const [travel, setTravel] = useState<AddableTravel | null>(null);
+    const [showCustomPicker, setShowCustomPicker] = useState(false);
     const [editingDateField, setEditingDateField] = useState<keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'> | null>(null);
 
     const {
@@ -61,28 +39,50 @@ const EditTravelItemScreen = () => {
         closeStopModal
     } = useStopModal();
 
+    const {
+        showStopModal: showRouteModal,
+        stopSearchQuery: routeSearchQuery,
+        setStopSearchQuery: setRouteSearchQuery,
+        openStopModal: openRouteModal,
+        closeStopModal: closeRouteModal
+    } = useStopModal();
+
+    const {
+        showStopModal: showDirectionModal,
+        stopSearchQuery: directionSearchQuery,
+        setStopSearchQuery: setDirectionSearchQuery,
+        openStopModal: openDirectionModal,
+        closeStopModal: closeDirectionModal
+    } = useStopModal();
+
+    const setDefaultTravel = () => {
+        setTravel({
+            direction_id: undefined,
+            first_stop_id: undefined,
+            last_stop_id: undefined,
+            route_id: undefined,
+            type_id: undefined,
+            bus_final_arrival: null,
+            bus_initial_arrival: null,
+            bus_initial_departure: null,
+            vehicle_code: null,
+            notes: null,
+        });
+    }
+
     useEffect(() => {
-        setEditableItem(getDefaultDataItem(vehicleTypes, mockDirections));
+        setDefaultTravel()
     }, [])
 
-    const handleChangeText = (field: keyof DataItem | 'route', value: string) => {
-        setEditableItem(prev => {
+    const handleChangeText = (field: keyof AddableTravel, value: string) => {
+        setTravel(prev => {
             if (!prev) return null;
-            if (field === 'route') {
-                return {
-                    ...prev,
-                    routes: { ...(prev.routes || { id: null }), name: value }
-                };
-            }
             if (field in prev) {
                 return { ...prev, [field]: value };
             }
             return prev;
         });
     };
-
-    // REMOVE old handleDateChange
-    // const handleDateChange = (event: any, selectedDate?: Date) => { ... };
 
     // RENAME old showDatePickerModal and update logic
     const openCustomPickerModal = (field: keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'>) => {
@@ -93,7 +93,7 @@ const EditTravelItemScreen = () => {
     // ADD handler for custom picker confirmation
     const handleCustomDateConfirm = (selectedDate: Date) => {
         if (editingDateField) {
-            setEditableItem(prev => prev ? ({ ...prev, [editingDateField]: selectedDate.toISOString() }) : null);
+            setTravel(prev => prev ? ({ ...prev, [editingDateField]: selectedDate.toISOString() }) : null);
         }
         closeCustomPicker();
     };
@@ -104,21 +104,10 @@ const EditTravelItemScreen = () => {
         setEditingDateField(null);
     };
 
-
-    const handleStopSelect = (selectedStop: Stop) => {
-        if (editingStopField && editableItem) {
-            setEditableItem(prev => prev ? ({
-                ...prev,
-                [editingStopField]: selectedStop
-            }) : null);
-        }
-        closeStopModal();
-    };
-
     const screenTitle = 'Add New Travel';
 
     const formatDateForDisplay = (isoString: string | undefined | null) => {
-        if (!isoString) return 'Select Date/Time';
+        if (!isoString) return 'Select Date/Time...';
         try {
             const date = new Date(isoString);
             if (isNaN(date.getTime())) return 'Invalid Date';
@@ -137,7 +126,7 @@ const EditTravelItemScreen = () => {
         }
     };
 
-    if (!editableItem) {
+    if (!travel) {
         return (
             <View style={styles.centeredContainer}>
                 <Text>Initializing new travel form...</Text>
@@ -145,26 +134,75 @@ const EditTravelItemScreen = () => {
         );
     }
 
+    const handleStopSelect = (stopId: number) => {
+        if (editingStopField && travel) {
+            setTravel(prev => prev ? ({
+                ...prev,
+                [editingStopField]: stopId
+            }) : null);
+        }
+        closeStopModal();
+    };
+
+    const handleRouteSelect = (routeId: number) => {
+        if (travel) {
+            setTravel(prev => prev ? ({
+                ...prev,
+                route_id: routeId,
+                type_id: routes.find(route => route.id === routeId)?.vehicle_type_id.id,
+                first_stop_id: routes.find(route => route.id === routeId)?.first_stop_id.id,
+                last_stop_id: routes.find(route => route.id === routeId)?.last_stop_id.id,
+            }) : null);
+        }
+        closeRouteModal();
+    };
+
+    const handleDirectionSelect = (directionId: number) => {
+        if (travel) {
+            setTravel({...travel, direction_id: directionId})
+        }
+
+        closeDirectionModal()
+    }
+
+    const handleOnSubmit = () => {
+        if (
+            !travel.direction_id ||
+            !travel.first_stop_id ||
+            !travel.last_stop_id ||
+            !travel.route_id ||
+            !travel.type_id
+        ) {
+            Alert.alert('Input Required', 'Please choose a route/direction/stops.');
+            return
+        }
+
+        addTravel(travel)
+        setDefaultTravel()
+
+        router.push('/(tabs)/mainMenu')
+    };
+
     return (
         <CollapsibleHeaderPage largeHeaderText={screenTitle}>
             <View style={styles.inputGroup}>
                 <Text style={styles.label}>Bus Initial Arrival:</Text>
                 <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={styles.pressableInput}>
-                    <Text>{formatDateForDisplay(editableItem.bus_initial_arrival)}</Text>
+                    <Text style={styles.insideLabel}>{formatDateForDisplay(travel.bus_initial_arrival)}</Text>
                 </Pressable>
             </View>
 
             <View style={styles.inputGroup}>
                 <Text style={styles.label}>Bus Initial Departure:</Text>
                 <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={styles.pressableInput}>
-                    <Text>{formatDateForDisplay(editableItem.bus_initial_departure)}</Text>
+                    <Text style={styles.insideLabel}>{formatDateForDisplay(travel.bus_initial_departure)}</Text>
                 </Pressable>
             </View>
 
-            <View style={styles.inputGroup}>
+            <View style={[styles.inputGroup, {paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}]}>
                 <Text style={styles.label}>Bus Final Arrival:</Text>
                 <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={styles.pressableInput}>
-                    <Text>{formatDateForDisplay(editableItem.bus_final_arrival)}</Text>
+                    <Text style={styles.insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
                 </Pressable>
             </View>
 
@@ -172,8 +210,8 @@ const EditTravelItemScreen = () => {
                 <CustomDateTimePicker
                     visible={showCustomPicker}
                     initialDateTime={
-                        editableItem && editableItem[editingDateField]
-                            ? new Date(editableItem[editingDateField] as string)
+                        travel && travel[editingDateField]
+                            ? new Date(travel[editingDateField] as string)
                             : new Date()
                     }
                     onClose={closeCustomPicker}
@@ -184,69 +222,34 @@ const EditTravelItemScreen = () => {
 
             <View style={styles.inputGroup}>
                 <Text style={styles.label}>Route:</Text>
-                <TextInput
-                    style={styles.input}
-                    value={editableItem.routes?.name || ''}
-                    onChangeText={(text) => handleChangeText('route', text)}
-                    placeholder="Enter route name"
-                />
+                <Pressable
+                    style={styles.pressableInput}
+                    onPress={() => openRouteModal()}>
+                    <Text style={styles.insideLabel}>
+                        {`${routes.find(route => route.id === travel.route_id)?.code || `Select`} | ${routes.find(route => route.id === travel.route_id)?.name || `Route...`}`}
+                    </Text>
+                </Pressable>
             </View>
-
-
 
             <View style={styles.inputGroup}>
                 <Text style={styles.label}>Type:</Text>
-                <Picker
-                    enabled={false}
-                    selectedValue={editableItem.types?.id || null}
-                    style={styles.picker}
-                    onValueChange={(itemValue) => {
-                        if (itemValue === null) {
-                            setEditableItem(prev => prev ? ({ ...prev, types: null }) : null);
-                        } else {
-                            const selectedType = vehicleTypes.find(type => type.id === itemValue);
-                            if (selectedType) {
-                                setEditableItem(prev => prev ? ({ ...prev, types: selectedType }) : null);
-                            }
-                        }
-                    }}>
-                    <Picker.Item label="Select Type..." value={null} />
-                    {vehicleTypes.map((type) => (
-                        <Picker.Item key={type.id} label={type.name} value={type.id} />
-                    ))}
-                </Picker>
+                <TextInput
+                    editable={false}
+                    style={styles.input}
+                    value={vehicleTypes.find(type => type.id === travel.type_id)?.name}
+                    placeholder="Vehicle type..."
+                />
             </View>
 
             <View style={styles.inputGroup}>
                 <Text style={styles.label}>Direction:</Text>
-                <Picker
-                    selectedValue={editableItem.directions?.id || null}
-                    style={styles.picker}
-                    onValueChange={(itemValue) => {
-                        if (itemValue === null) {
-                            setEditableItem(prev => prev ? ({ ...prev, directions: null }) : null);
-                        } else {
-                            const selectedDirection = mockDirections.find(dir => dir.id === itemValue);
-                            if (selectedDirection) {
-                                setEditableItem(prev => prev ? ({ ...prev, directions: selectedDirection }) : null);
-                            }
-                        }
-                    }}>
-                    <Picker.Item label="Select Direction..." value={null} />
-                    {mockDirections.map((dir) => (
-                        <Picker.Item key={dir.id} label={dir.name} value={dir.id} />
-                    ))}
-                </Picker>
-            </View>
-
-            <View style={styles.inputGroup}>
-                <Text style={styles.label}>Vehicle Code:</Text>
-                <TextInput
-                    style={styles.input}
-                    value={editableItem.vehicle_code || ''}
-                    onChangeText={(text) => handleChangeText('vehicle_code', text)}
-                    placeholder="Enter vehicle code"
-                />
+                <Pressable
+                    style={styles.pressableInput}
+                    onPress={() => openDirectionModal()}>
+                    <Text style={styles.insideLabel}>
+                        {directions.find(direction => direction.id === travel.direction_id)?.name || 'Select Direction...'}
+                    </Text>
+                </Pressable>
             </View>
 
             <View style={styles.inputGroup}>
@@ -254,7 +257,7 @@ const EditTravelItemScreen = () => {
                 <Pressable
                     style={styles.pressableInput}
                     onPress={() => openStopModal('first_stop_id')}>
-                    <Text>{editableItem.first_stop_id?.name || 'Select First Stop'}</Text>
+                    <Text style={styles.insideLabel}>{stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}</Text>
                 </Pressable>
             </View>
 
@@ -263,21 +266,47 @@ const EditTravelItemScreen = () => {
                 <Pressable
                     style={styles.pressableInput}
                     onPress={() => openStopModal('last_stop_id')}>
-                    <Text>{editableItem.last_stop_id?.name || 'Select Last Stop'}</Text>
+                    <Text style={styles.insideLabel}>{stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}</Text>
                 </Pressable>
+            </View>
+
+            <View style={styles.inputGroup}>
+                <Text style={styles.label}>Vehicle Code:</Text>
+                <TextInput
+                    style={styles.input}
+                    value={travel.vehicle_code || ''}
+                    onChangeText={(text) => handleChangeText('vehicle_code', text)}
+                    placeholder="Enter vehicle code"
+                />
             </View>
 
             <View style={styles.inputGroup}>
                 <Text style={styles.label}>Notes:</Text>
                 <TextInput
                     style={[styles.input, styles.multilineInput]}
-                    value={editableItem.notes || ''}
+                    value={travel.notes || ''}
                     onChangeText={(text) => handleChangeText('notes', text)}
                     multiline={true}
                     numberOfLines={4}
                     placeholder="Enter notes (optional)"
                 />
             </View>
+
+            <EditTravelDirectionModal 
+                isModalVisible={showDirectionModal}
+                searchQuery={directionSearchQuery}
+                setSearchQuery={setDirectionSearchQuery}
+                onSelect={handleDirectionSelect}
+                onClose={closeDirectionModal}
+            />
+
+            <EditTravelRouteModal
+                isModalVisible={showRouteModal}
+                searchQuery={routeSearchQuery}
+                setSearchQuery={setRouteSearchQuery}
+                onSelect={handleRouteSelect}
+                onClose={closeRouteModal}
+            />
 
             <EditTravelStopModal
                 isModalVisible={showStopModal}
@@ -286,6 +315,10 @@ const EditTravelItemScreen = () => {
                 onSelect={handleStopSelect}
                 onClose={closeStopModal}
             />
+
+            <View style={buttonStyles.buttonRow}>
+                <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+            </View>
         </CollapsibleHeaderPage>
     );
 };
@@ -305,9 +338,14 @@ const styles = StyleSheet.create({
     },
     label: {
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: 'bold',
+        color: '#000',
         marginBottom: 5,
-        color: '#333',
+    },
+    insideLabel: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#000',
     },
     input: {
         borderWidth: 1,
@@ -315,6 +353,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         paddingHorizontal: 10,
         paddingVertical: Platform.OS === 'ios' ? 12 : 10,
+        minHeight: Platform.OS === 'ios' ? 48 : 44,
         fontSize: 16,
         backgroundColor: '#fff',
     },
@@ -329,6 +368,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingVertical: 12,
         justifyContent: 'center',
+        alignItems: 'center',
         minHeight: Platform.OS === 'ios' ? 48 : 44,
         backgroundColor: '#fff',
     },
@@ -342,4 +382,36 @@ const styles = StyleSheet.create({
     },
 });
 
-export default EditTravelItemScreen;
+const buttonStyles = StyleSheet.create({
+    buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        marginTop: 10,
+        gap: 10,
+    },
+    addButton: {
+        backgroundColor: '#1E88E5',
+        paddingVertical: 12,
+        borderRadius: 8,
+        flex: 1,
+        alignItems: 'center',
+        borderWidth: 1,
+    },
+    addButtonText: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    cancelButton: {
+        paddingVertical: 12,
+        borderRadius: 8,
+        flex: 1,
+        alignItems: 'center',
+        borderWidth: 1,
+    },
+    cancelButtonText: {
+        color: '#000',
+        fontSize: 16,
+        fontWeight: '600',
+    },
+})
