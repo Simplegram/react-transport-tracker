@@ -78,7 +78,7 @@ export default function useTravelCalendar() {
     }, [selectedDate])
 
     return { 
-        travelAtDate, getDates,
+        travelAtDate, getTravelAtDate, getDates,
         dates, selectedDate, setSelectedDate,
     }
 }

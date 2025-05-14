@@ -24,7 +24,7 @@ const getTodayString = () => {
 
 export default function HomePage() {
   const { 
-    travelAtDate, getDates,
+    travelAtDate, getTravelAtDate, getDates,
     dates, selectedDate, setSelectedDate,
   } = useTravelCalendar()
 
@@ -58,12 +58,13 @@ export default function HomePage() {
 
   useEffect(() => {
     getDates()
-  }, [])
+  }, [dates])
 
   useFocusEffect(
     React.useCallback(() => {
       getDates()
-    }, [])
+      getTravelAtDate()
+    }, [dates])
   )
 
   return (
