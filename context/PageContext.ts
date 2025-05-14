@@ -4,9 +4,9 @@ import { createContext, useContext, useState } from "react";
 export const ScrollContext = createContext<boolean>(false)
 
 interface TravelContextValue {
-    selectedItem: DataItem | undefined
+    selectedItem: any | undefined
     selectedModification: string | undefined
-    setSelectedItem: (item: DataItem | undefined) => void
+    setSelectedItem: (item: any | undefined) => void
     setSelectedModification: (modification: string | undefined) => void
 }
 
