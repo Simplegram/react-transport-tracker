@@ -8,7 +8,7 @@ import LoadingScreen from '@/components/LoadingScreen'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   // Sign in with email and password
   const onSignInPress = async () => {
@@ -25,7 +25,7 @@ const Login = () => {
 
   return (
     <View style={styles.container}>
-      {loading === true ? (
+      {loading ? (
         <LoadingScreen text="Loading..."></LoadingScreen>
       ) : 
       (
