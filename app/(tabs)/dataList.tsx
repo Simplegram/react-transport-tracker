@@ -11,9 +11,9 @@ import { useModalContext } from '@/context/ModalContext';
 import { useLoading } from '@/hooks/useLoading';
 
 interface ItemTemplate {
-  id: string | number; // Use a unique ID
-  name: string; // Or title, description, etc.
-  [key: string]: any; // Allow for other properties specific to the item type
+  id: string | number;
+  name: string;
+  [key: string]: any;
 }
 
 const DataListScreen: React.FC = () => {
