@@ -9,6 +9,8 @@ import { router, useNavigation } from 'expo-router';
 
 // Get screen dimensions for setting PagerView page width
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+import { useTravelContext } from '@/context/PageContext';
+import { router } from 'expo-router';
 
 interface GroupedDataDisplayProps {
   data: DataItem[];
@@ -34,7 +36,7 @@ function formatDate(
 }
 
 const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data }) => {
-  const { setSelectedItem } = useTravelContext();
+  const { setSelectedItem, setSelectedTravelItems } = useTravelContext();
 
   // Grouping data remains the same
   const groupedData = data.reduce((acc, currentItem) => {
@@ -70,9 +72,14 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data }) => {
     // Access the item from the correctly grouped/sorted data
     const itemToSelect = finalGroupedData[directionNameKey][itemIndex];
     if (itemToSelect) {
-       setSelectedItem(itemToSelect);
-       router.push("/(tabs)/editTravel");
+      setSelectedItem(itemToSelect);
+      router.push("/(tabs)/editTravel");
     }
+  };
+
+  const handleViewTravelDetails = (directionNameKey: string) => {
+    setSelectedTravelItems(finalGroupedData[directionNameKey]);
+    router.push("/(tabs)/travelDetail");
   };
 
   return (
