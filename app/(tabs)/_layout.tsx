@@ -90,6 +90,20 @@ const TabsLayout = () => {
                     },
                 href: null
             }} />
+            <Tabs.Screen 
+                name="travelDetail" 
+                options={{ 
+                    title: "Add", 
+                    headerShown: false,
+                    tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
+                    tabBarStyle: {
+                      height: 60
+                    },
+                    tabBarLabelStyle: {
+                      fontSize: 13
+                    },
+                href: null
+            }} />
         </Tabs>
       </ModalContext.Provider>
     </TravelContext.Provider>
