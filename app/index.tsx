@@ -18,7 +18,10 @@ const Login = () => {
       password,
     })
 
-    if (error) Alert.alert(error.message)
+    if (error) Alert.alert(
+      error.name,
+      error.message
+    )
     setLoading(false)
   }
 
