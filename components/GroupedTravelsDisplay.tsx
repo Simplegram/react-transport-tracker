@@ -1,14 +1,9 @@
-import React, { useContext, useState } from 'react';
+import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Pressable, Dimensions } from 'react-native';
 // Import PagerView
 import PagerView from 'react-native-pager-view';
 
 import { DataItem } from '@/src/types/Travels'; // Import the interface from your specified path
-import { TravelContext, useTravelContext } from '@/context/PageContext';
-import { router, useNavigation } from 'expo-router';
-
-// Get screen dimensions for setting PagerView page width
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 import { useTravelContext } from '@/context/PageContext';
 import { router } from 'expo-router';
 import { calculateDuration } from '@/src/utils/utils';
@@ -84,31 +79,36 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data }) => {
   };
 
   return (
-    // The main container now wraps the PagerView and takes up the screen height
     <View style={styles.mainContainer}>
       {directionNames.length > 0 ? (
-        // Use PagerView for horizontal swiping
         <PagerView style={styles.pagerView} initialPage={0} key={directionNames.length}>
           {directionNames.map((directionNameKey, index) => (
-            // Each child of PagerView is a separate page (a direction)
             <View key={directionNameKey} style={styles.page}>
-              {/* Direction Title */}
-              <Text style={styles.groupTitle}>
-                Direction: {directionNameKey} ({index + 1}/{directionNames.length})
-              </Text>
+              <View>
+                <Pressable onPress={() => handleViewTravelDetails(directionNameKey)}>
+                  <Text style={styles.groupTitle}>
+                    Direction: {directionNameKey} ({index + 1}/{directionNames.length})
+                  </Text>
+                </Pressable>
+              </View>
 
-              {/* Vertical ScrollView for items within this direction */}
-              {/* This ScrollView needs flex: 1 to take up the remaining space */}
               <ScrollView contentContainerStyle={styles.itemsListContainer} nestedScrollEnabled={true}>
-                {/* Map over items for this specific direction */}
                 {finalGroupedData[directionNameKey].map((item, itemIndex) => (
                   <Pressable key={item.id} style={styles.itemContainer} onPress={() => handleItemPress(directionNameKey, itemIndex)}>
-                      <View style={styles.generalInfoContainer}>
-                        <Text style={styles.itemRouteText}>
-                          {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
-                        </Text>
-                        <Text style={styles.itemVehicleText}>
-                          {item.vehicle_code || 'N/A'}
+                    <View style={styles.generalInfoContainer}>
+                      <Text style={styles.itemRouteText}>
+                        {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
+                      </Text>
+                      <Text style={styles.itemVehicleText}>
+                        {item.vehicle_code || 'N/A'}
+                      </Text>
+                    </View>
+
+                    <View style={styles.stopsAndTimeRow}>
+                      <View style={styles.stopTimeBlock}>
+                        <Text style={styles.stopNameText}>{item.first_stop_id?.name || 'N/A'}</Text>
+                        <Text style={styles.timeText}>
+                            {item.bus_initial_departure ? formatDate(new Date(item.bus_initial_departure)) : 'N/A'}
                         </Text>
                       </View>
 
@@ -120,31 +120,19 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data }) => {
                       <View style={styles.stopTimeBlock}>
                         <Text style={styles.stopNameText}>{item.last_stop_id?.name || 'N/A'}</Text>
                           <Text style={styles.timeText}>
-                             {item.bus_initial_departure ? formatDate(new Date(item.bus_initial_departure)) : 'N/A'}
+                            {item.bus_final_arrival ? formatDate(new Date(item.bus_final_arrival)) : 'N/A'}
                           </Text>
-                        </View>
-
-                        <View style={styles.arrowContainer}>
-                          <Text style={styles.arrowText}>➜</Text>
-                        </View>
-
-                        <View style={styles.stopTimeBlock}>
-                          <Text style={styles.stopLabel}>To:</Text>
-                          <Text style={styles.stopNameText}>{item.last_stop_id?.name || 'N/A'}</Text>
-                           <Text style={styles.timeText}>
-                             {item.bus_final_arrival ? formatDate(new Date(item.bus_final_arrival)) : 'N/A'}
-                           </Text>
-                        </View>
                       </View>
+                    </View>
 
-                      {item.notes && (
-                        <View style={styles.notesContainer}>
-                            <Text style={styles.notesLabel}>Notes:</Text>
-                          <Text style={styles.notesText}>
-                            {item.notes}
-                          </Text>
-                        </View>
-                      )}
+                    {item.notes && (
+                      <View style={styles.notesContainer}>
+                          <Text style={styles.notesLabel}>Notes:</Text>
+                        <Text style={styles.notesText}>
+                          {item.notes}
+                        </Text>
+                      </View>
+                    )}
                   </Pressable>
                 ))}
               </ScrollView>
@@ -153,7 +141,7 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data }) => {
         </PagerView>
       ) : (
         <View style={styles.noDataContainer}>
-            <Text style={styles.noDataText}>No data available to display.</Text>
+          <Text style={styles.noDataText}>No data available to display.</Text>
         </View>
       )}
     </View>
