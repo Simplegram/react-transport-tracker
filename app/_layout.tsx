@@ -11,14 +11,11 @@ const InitialLayout = () => {
   useEffect(() => {
     if (!initialized) return
 
-    // Check if the path/url is in the (auth) group
     const inAuthGroup = segments[0] === '(tabs)'
 
     if (session && !inAuthGroup) {
-      // Redirect authenticated users to the list page
       router.replace('/mainMenu')
     } else if (!session) {
-      // Redirect unauthenticated users to the login page
       router.replace('/')
     }
   }, [session, initialized])

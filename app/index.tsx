@@ -10,7 +10,6 @@ const Login = () => {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
 
-  // Sign in with email and password
   const onSignInPress = async () => {
     setLoading(true)
 
@@ -61,13 +60,11 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 200,
     padding: 20,
-    // backgroundColor: '#151515',
   },
   header: {
     fontSize: 30,
     textAlign: 'center',
     margin: 50,
-    // color: '#fff',
   },
   inputField: {
     marginVertical: 4,
@@ -77,7 +74,6 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     padding: 10,
     color: '#fff',
-    // backgroundColor: '#363636',
   },
   button: {
     marginVertical: 15,
