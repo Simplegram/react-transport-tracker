@@ -92,8 +92,18 @@ export default function AddTravel() {
 
     // ADD handler for custom picker confirmation
     const handleCustomDateConfirm = (selectedDate: Date) => {
+        const convertedTZ = selectedDate.toLocaleString('en-US', {
+            timeZone: 'Asia/Jakarta',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        }).replace(", ", "T").replaceAll("/", "-").slice(0, 19)
+        
         if (editingDateField) {
-            setTravel(prev => prev ? ({ ...prev, [editingDateField]: selectedDate.toISOString() }) : null);
+            setTravel(prev => prev ? ({ ...prev, [editingDateField]: convertedTZ }) : null);
         }
         closeCustomPicker();
     };
@@ -231,7 +241,7 @@ export default function AddTravel() {
                 </Pressable>
             </View>
 
-            <View style={styles.inputGroup}>
+            <View style={[styles.inputGroup, {paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}]}>
                 <Text style={styles.label}>Type:</Text>
                 <TextInput
                     editable={false}
