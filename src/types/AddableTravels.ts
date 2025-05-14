@@ -40,11 +40,18 @@ interface AddableTravel {
     type_id: number | undefined
 }
 
+interface AddableLap {
+    time: string | undefined
+    stop_id: number | null
+    notes: string | null
+}
+
 export {
     AddableDirection,
     AddableStop,
     AddableRoute,
     AddableVehicleType,
     AddableIconType,
-    AddableTravel
+    AddableTravel,
+    AddableLap
 }
