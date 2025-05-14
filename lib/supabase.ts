@@ -13,5 +13,5 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
   },
   db: {
     schema: 'public_transport_tracker'
-  }
+  },
 })
