@@ -22,6 +22,7 @@ import { router, useFocusEffect } from 'expo-router';
 import { useTravelContext } from '@/context/PageContext';
 import { EditableTravel } from '@/src/types/EditableTravels';
 import { formatDateForDisplay } from '@/src/utils/utils';
+import moment from 'moment-timezone'
 
 export default function EditTravelItem() {
     const { selectedItem: data } = useTravelContext();
@@ -95,18 +96,10 @@ export default function EditTravelItem() {
 
     // ADD handler for custom picker confirmation
     const handleCustomDateConfirm = (selectedDate: Date) => {
-        const convertedTZ = selectedDate.toLocaleString('en-US', {
-            timeZone: 'Asia/Jakarta',
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-        }).replace(", ", "T").replaceAll("/", "-").slice(0, 19)
-
+        const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
+        
         if (editingDateField) {
-            setTravel(prev => ({ ...prev, [editingDateField]: convertedTZ }));
+            setTravel(prev => prev ? ({ ...prev, [editingDateField]: isoSelectedDate }) : null);
         }
         closeCustomPicker();
     };
