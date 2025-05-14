@@ -46,9 +46,17 @@ export default function TravelDetail() {
     )
 
     const sortedData = [...dataToUse].sort((a, b) => {
-        const dateA = new Date(a.created_at).getTime();
-        const dateB = new Date(b.created_at).getTime();
-        return dateA - dateB;
+        const dateAInitialArrival = a.bus_initial_arrival ? new Date(a.bus_initial_arrival).getTime() : null;
+        const dateBInitialArrival = b.bus_initial_arrival ? new Date(b.bus_initial_arrival).getTime() : null;
+
+        if (dateAInitialArrival !== null && dateBInitialArrival !== null) {
+            return dateAInitialArrival - dateBInitialArrival;
+        }
+
+        const dateACreatedAt = new Date(a.created_at).getTime();
+        const dateBCreatedAt = new Date(b.created_at).getTime();
+
+        return dateACreatedAt - dateBCreatedAt;
     });
 
     let totalOnRoadMilliseconds = 0;
