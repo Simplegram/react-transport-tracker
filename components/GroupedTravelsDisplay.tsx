@@ -71,7 +71,7 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data }) => {
     const itemToSelect = finalGroupedData[directionNameKey][itemIndex];
     if (itemToSelect) {
        setSelectedItem(itemToSelect);
-       router.push("/(tabs)/editTravelItem");
+       router.push("/(tabs)/editTravel");
     }
   };
 
