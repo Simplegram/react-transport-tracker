@@ -55,7 +55,7 @@ const TabsLayout = () => {
                     }
             }} />
             <Tabs.Screen 
-                name="editTravelItem" 
+                name="editTravel" 
                 options={{ 
                     title: "Add", 
                     headerShown: false,
