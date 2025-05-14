@@ -1,9 +1,9 @@
-import { Alert, View, Button, TextInput, StyleSheet, Text, TouchableOpacity } from 'react-native'
-import { useEffect, useState } from 'react'
+import { Alert, View, TextInput, StyleSheet, Text } from 'react-native'
+import { useState } from 'react'
 import React from 'react'
-import Spinner from 'react-native-loading-spinner-overlay'
 import { supabase } from '@/lib/supabase'
 import LoadingScreen from '@/components/LoadingScreen'
+import Button from '@/components/BaseButton'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -29,7 +29,7 @@ const Login = () => {
       ) : 
       (
         <>
-          <Text style={styles.header}>My Cloud</Text>
+          <Text style={styles.header}>Transport Tracker</Text>
 
           <TextInput
             autoCapitalize="none"
@@ -46,9 +46,7 @@ const Login = () => {
             style={styles.inputField}
           />
 
-          <TouchableOpacity onPress={onSignInPress} style={styles.button}>
-            <Text style={{ color: '#fff', fontWeight: 'bold', }}>Sign in</Text>
-          </TouchableOpacity>
+          <Button title='Sign in' color='#0284f5' onPress={onSignInPress} style={styles.button} textStyle={{color: '#fff'}}></Button>
         </>
       )}
     </View>
@@ -70,7 +68,7 @@ const styles = StyleSheet.create({
     marginVertical: 4,
     height: 50,
     borderWidth: 1,
-    borderColor: '#2b825b',
+    borderColor: '#0284f5',
     borderRadius: 4,
     padding: 10,
     color: '#fff',
@@ -78,9 +76,10 @@ const styles = StyleSheet.create({
   button: {
     marginVertical: 15,
     alignItems: 'center',
-    backgroundColor: '#2b825b',
+    backgroundColor: '#0284f5',
     padding: 12,
     borderRadius: 4,
+    borderWidth: 1,
   },
 })
 
