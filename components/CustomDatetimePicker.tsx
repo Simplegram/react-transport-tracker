@@ -129,14 +129,14 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
     };
 
     const handleTimeNow = () => {
-        const timeNow = new Date()
+        const now = new Date()
 
-        handlePartChange('year', timeNow.getFullYear().toString())
-        handlePartChange('month', (timeNow.getMonth() + 1).toString().padStart(2, '0'))
-        handlePartChange('day', timeNow.getDate().toString().padStart(2, '0'))
-        handlePartChange('hours', timeNow.getHours().toString().padStart(2, '0'))
-        handlePartChange('minutes', timeNow.getMinutes().toString().padStart(2, '0'))
-        handlePartChange('seconds', timeNow.getSeconds().toString().padStart(2, '0'))
+        handlePartChange('year', now.getFullYear().toString())
+        handlePartChange('month', (now.getMonth() + 1).toString().padStart(2, '0'))
+        handlePartChange('day', now.getDate().toString().padStart(2, '0'))
+        handlePartChange('hours', now.getHours().toString().padStart(2, '0'))
+        handlePartChange('minutes', now.getMinutes().toString().padStart(2, '0'))
+        handlePartChange('seconds', now.getSeconds().toString().padStart(2, '0'))
     }
     
     const inputRow = (label: string, value: string, onChangeText: (text: string) => void, placeholder: string, maxLength?: number) => (
