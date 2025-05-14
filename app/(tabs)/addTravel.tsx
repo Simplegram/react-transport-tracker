@@ -86,13 +86,11 @@ export default function AddTravel() {
         });
     };
 
-    // RENAME old showDatePickerModal and update logic
     const openCustomPickerModal = (field: keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'>) => {
         setEditingDateField(field);
         setShowCustomPicker(true);
     };
 
-    // ADD handler for custom picker confirmation
     // Date should be stored in the database as isoformat instead of timezone based for flexibility
     // With that said, parsing on code should always be timezone based
     const handleCustomDateConfirm = (selectedDate: Date) => {
@@ -104,7 +102,6 @@ export default function AddTravel() {
         closeCustomPicker();
     };
 
-    // ADD function to close custom picker
     const closeCustomPicker = () => {
         setShowCustomPicker(false);
         setEditingDateField(null);
