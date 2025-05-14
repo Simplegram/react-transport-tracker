@@ -5,6 +5,8 @@ import { StyleSheet, View, Dimensions } from "react-native";
 import { Calendar } from 'react-native-calendars';
 import GroupedDataDisplay from "@/components/GroupedTravelsDisplay";
 import { useFocusEffect } from "expo-router";
+import { useToggleLoading } from "@/hooks/useLoading";
+import LoadingScreen from "@/components/LoadingScreen";
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -27,6 +29,8 @@ export default function HomePage() {
     travelAtDate, getTravelAtDate, getDates,
     dates, selectedDate, setSelectedDate,
   } = useTravelCalendar()
+
+  const { loading, toggleLoading } = useToggleLoading()
 
   // Generate marked dates for the calendar
   const markedDates = useMemo(() => {
@@ -53,6 +57,7 @@ export default function HomePage() {
   }, [selectedDate, dates]);
 
   const onDayPress = (day: DateObject) => {
+    toggleLoading()
     setSelectedDate(day.dateString);
   };
 
@@ -94,7 +99,11 @@ export default function HomePage() {
         </View>
 
         <View style={styles.listContainer}>
-          <GroupedDataDisplay data={travelAtDate}></GroupedDataDisplay>
+          {loading == true ? (
+            <LoadingScreen></LoadingScreen>
+          ) : (
+            <GroupedDataDisplay data={travelAtDate}></GroupedDataDisplay>
+          )}
         </View>
       </View>
     </CollapsibleHeaderPage>
