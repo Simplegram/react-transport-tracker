@@ -21,6 +21,7 @@ import EditTravelDirectionModal from '@/components/modal/editTravelModal/EditTra
 import useModifyTravelData from '@/hooks/useModifyTravelData';
 import { router } from 'expo-router';
 import { formatDateForDisplay } from '@/src/utils/utils';
+import moment from 'moment-timezone'
 
 export default function AddTravel() {
     const { stops, routes, directions, vehicleTypes } = useGetTravelData();
@@ -92,19 +93,13 @@ export default function AddTravel() {
     };
 
     // ADD handler for custom picker confirmation
+    // Date should be stored in the database as isoformat instead of timezone based for flexibility
+    // With that said, parsing on code should always be timezone based
     const handleCustomDateConfirm = (selectedDate: Date) => {
-        const convertedTZ = selectedDate.toLocaleString('en-US', {
-            timeZone: 'Asia/Jakarta',
-            year: 'numeric',
-            month: '2-digit',
-            day: '2-digit',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-        }).replace(", ", "T").replaceAll("/", "-").slice(0, 19)
+        const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
         
         if (editingDateField) {
-            setTravel(prev => prev ? ({ ...prev, [editingDateField]: convertedTZ }) : null);
+            setTravel(prev => prev ? ({ ...prev, [editingDateField]: isoSelectedDate }) : null);
         }
         closeCustomPicker();
     };
