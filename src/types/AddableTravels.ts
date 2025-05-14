@@ -31,11 +31,11 @@ interface AddableTravel {
     bus_initial_arrival: string | null
     bus_initial_departure: string | null
     bus_final_arrival: string | null
+    notes: string | null
+    vehicle_code: string | null
     route_id: number | undefined
     first_stop_id: number | undefined
     last_stop_id: number | undefined
-    notes: string | null
-    vehicle_code: string | null
     direction_id: number | undefined
     type_id: number | undefined
 }

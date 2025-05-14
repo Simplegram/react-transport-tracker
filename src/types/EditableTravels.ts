@@ -22,16 +22,17 @@ interface EditableRoute {
 }
 
 interface EditableTravel {
+  id: number
   bus_initial_arrival: string
   bus_initial_departure: string
   bus_final_arrival: string
-  route_id: number
-  first_stop_id: number
-  last_stop_id: number
   notes: string
   vehicle_code: string
-  direction_id: number
-  type_id: number
+  route_id: number | undefined
+  first_stop_id: number | undefined
+  last_stop_id: number | undefined
+  direction_id: number | undefined
+  type_id: number | undefined
 }
 
 interface EditableTravelModalProp {
