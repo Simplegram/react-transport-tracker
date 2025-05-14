@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton"
 import useGetTravelData from "@/hooks/useGetTravelData"
-import useLoading from "@/hooks/useLoading"
+import { useLoading } from "@/hooks/useLoading"
 import { AddableStop } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
@@ -11,7 +11,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
     const { loading } = useLoading()
 
     const { fullVehicleTypes } = useGetTravelData()
-    
+
     const [stop, setStop] = useState<AddableStop>({
         name: undefined,
         lat: null,
@@ -65,7 +65,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             onChangeText={text => (setStop({ ...stop, "name_alt": text }))}
                         />
                     </View>
-            
+
                     <View style={{
                         flexDirection: 'column',
                     }}>
@@ -76,22 +76,22 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             contentContainerStyle={styles.iconScrollView}
                             keyboardShouldPersistTaps={"always"}
                         >
-                        {fullVehicleTypes.map((type) => (
-                            <TouchableOpacity
-                                key={type.id}
-                                style={[
-                                    styles.iconContainer,
-                                    stop.vehicle_type === type.id && styles.selectedIconContainer,
-                                ]}
-                                onPress={() => setStop({ ...stop, vehicle_type: type.id })}
-                            >
-                                <Icon name={type.icon_id.name} size={20}></Icon>
-                                <Text style={styles.label}>{type.name.slice(0, 5)}</Text>
-                            </TouchableOpacity>
-                        ))}
+                            {fullVehicleTypes.map((type) => (
+                                <TouchableOpacity
+                                    key={type.id}
+                                    style={[
+                                        styles.iconContainer,
+                                        stop.vehicle_type === type.id && styles.selectedIconContainer,
+                                    ]}
+                                    onPress={() => setStop({ ...stop, vehicle_type: type.id })}
+                                >
+                                    <Icon name={type.icon_id.name} size={20}></Icon>
+                                    <Text style={styles.label}>{type.name.slice(0, 5)}</Text>
+                                </TouchableOpacity>
+                            ))}
                         </ScrollView>
                     </View>
-            
+
                     <View style={buttonStyles.buttonRow}>
                         <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
                         <Button title='Add Stop' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>

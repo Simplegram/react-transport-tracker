@@ -1,7 +1,7 @@
 import Button from "@/components/BaseButton";
 import { useModalContext } from "@/context/ModalContext";
 import useGetTravelData from "@/hooks/useGetTravelData";
-import useLoading from "@/hooks/useLoading";
+import { useLoading } from "@/hooks/useLoading";
 import { EditableVehicleType } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { sortByIdToFront } from "@/src/utils/utils";

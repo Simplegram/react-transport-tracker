@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton"
 import { useModalContext } from "@/context/ModalContext"
-import useLoading from "@/hooks/useLoading"
+import { useLoading } from "@/hooks/useLoading"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { Direction } from "@/src/types/Travels"
 import { useState } from "react"

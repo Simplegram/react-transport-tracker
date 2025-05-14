@@ -8,7 +8,7 @@ import useStopModal from '@/hooks/useStopModal';
 import useDatalistModal from '@/hooks/useDatalistModal';
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import { useModalContext } from '@/context/ModalContext';
-import useLoading from '@/hooks/useLoading';
+import { useLoading } from '@/hooks/useLoading';
 
 interface ItemTemplate {
   id: string | number; // Use a unique ID

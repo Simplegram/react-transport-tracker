@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton";
 import useGetTravelData from "@/hooks/useGetTravelData";
-import useLoading from "@/hooks/useLoading";
+import { useLoading } from "@/hooks/useLoading";
 import { AddableVehicleType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useEffect, useState } from "react";
@@ -16,8 +16,8 @@ export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalCon
 
   const handleOnSubmit = () => {
     if (!vehicleType.name?.trim() || !vehicleType.icon_id) {
-        Alert.alert('Input Required', 'Please enter a type name and choose an icon.');
-        return
+      Alert.alert('Input Required', 'Please enter a type name and choose an icon.');
+      return
     }
 
     onSubmit(vehicleType);

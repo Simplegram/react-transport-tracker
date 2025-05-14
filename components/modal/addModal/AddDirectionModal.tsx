@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import useLoading from "@/hooks/useLoading"
+import { useLoading } from "@/hooks/useLoading"
 import { AddableDirection } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"

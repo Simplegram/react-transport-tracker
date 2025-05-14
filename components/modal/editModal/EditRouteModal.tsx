@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome6'
 import EditTravelStopModal from "../editTravelModal/EditTravelStopModal"
 import useStopModal from "@/hooks/useStopModal"
 import { sortByIdToFront } from "@/src/utils/utils"
-import useLoading from "@/hooks/useLoading"
+import { useLoading } from "@/hooks/useLoading"
 import { VehicleType } from "@/src/types/Travels"
 
 

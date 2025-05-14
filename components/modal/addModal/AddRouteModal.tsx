@@ -5,7 +5,7 @@ import EditTravelStopModal from "../editTravelModal/EditTravelStopModal"
 import Button from "@/components/BaseButton"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import useGetTravelData from "@/hooks/useGetTravelData"
-import useLoading from "@/hooks/useLoading"
+import { useLoading } from "@/hooks/useLoading"
 import useStopModal from "@/hooks/useStopModal"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 
