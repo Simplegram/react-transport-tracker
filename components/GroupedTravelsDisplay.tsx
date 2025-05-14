@@ -11,6 +11,7 @@ import { router, useNavigation } from 'expo-router';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 import { useTravelContext } from '@/context/PageContext';
 import { router } from 'expo-router';
+import { calculateDuration } from '@/src/utils/utils';
 
 interface GroupedDataDisplayProps {
   data: DataItem[];
@@ -111,10 +112,13 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data }) => {
                         </Text>
                       </View>
 
-                      <View style={styles.stopsAndTimeRow}>
-                        <View style={styles.stopTimeBlock}>
-                          <Text style={styles.stopLabel}>From:</Text>
-                          <Text style={styles.stopNameText}>{item.first_stop_id?.name || 'N/A'}</Text>
+                      <View style={styles.arrowContainer}>
+                        <Text style={styles.arrowText}>➜</Text>
+                        <Text style={styles.notesLabel}>{calculateDuration(item)}</Text>
+                      </View>
+
+                      <View style={styles.stopTimeBlock}>
+                        <Text style={styles.stopNameText}>{item.last_stop_id?.name || 'N/A'}</Text>
                           <Text style={styles.timeText}>
                              {item.bus_initial_departure ? formatDate(new Date(item.bus_initial_departure)) : 'N/A'}
                           </Text>
