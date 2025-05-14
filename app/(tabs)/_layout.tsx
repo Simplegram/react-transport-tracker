@@ -7,12 +7,20 @@ import { ModalContext } from "@/context/ModalContext";
 
 const TabsLayout = () => {
   const [selectedItem, setSelectedItem] = useState<DataItem | undefined>(undefined);
+  const [selectedTravelItems, setSelectedTravelItems] = useState<DataItem[] | undefined>(undefined);
   const [selectedModification, setSelectedModification] = useState<string | undefined>(undefined)
 
   const [modalData, setModalData] = useState<string | undefined>(undefined)
 
   return (
-    <TravelContext.Provider value={{ selectedItem, selectedModification, setSelectedItem, setSelectedModification }}>
+    <TravelContext.Provider value={{ 
+      selectedItem, 
+      setSelectedItem, 
+      selectedModification, 
+      setSelectedModification,
+      selectedTravelItems,
+      setSelectedTravelItems
+    }}>
       <ModalContext.Provider value={{ modalData, setModalData }}>
         <Tabs>
             <Tabs.Screen 

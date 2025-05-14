@@ -5,9 +5,11 @@ export const ScrollContext = createContext<boolean>(false)
 
 interface TravelContextValue {
     selectedItem: any | undefined
-    selectedModification: string | undefined
     setSelectedItem: (item: any | undefined) => void
+    selectedModification: string | undefined
     setSelectedModification: (modification: string | undefined) => void
+    selectedTravelItems: DataItem[] | undefined
+    setSelectedTravelItems: (travels: DataItem[] | undefined) => void
 }
 
 export const TravelContext = createContext<TravelContextValue | undefined>(undefined)
