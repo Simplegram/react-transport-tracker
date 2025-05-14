@@ -126,18 +126,12 @@ const styles = StyleSheet.create({
   },
   listContent: {
     flexGrow: 1,
-    // Add padding or margin if needed for FlatList content
   },
   listItem: {
     backgroundColor: 'white',
     padding: 15,
     borderRadius: 8,
     marginBottom: 10,
-    elevation: 1, // Android shadow
-    shadowColor: '#000', // iOS shadow
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 1,
   },
   itemText: {
     fontSize: 16,

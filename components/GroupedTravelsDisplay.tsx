@@ -150,18 +150,14 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data }) => {
 };
 
 const styles = StyleSheet.create({
-  // Main container for the entire component, should take up available space
   mainContainer: {
     flex: 1,
   },
-  // PagerView takes up the full height of its parent (mainContainer)
   pagerView: {
     flex: 1,
   },
-  // Each page inside the PagerView
   page: {
-    flex: 1, // Each page takes up the full space of the PagerView
-    // Remove border/background styles that were on groupContainer
+    flex: 1,
   },
   groupTitle: {
     fontSize: 20,
@@ -171,41 +167,36 @@ const styles = StyleSheet.create({
     borderBottomColor: '#3498db',
     paddingBottom: 10,
     textAlign: 'center',
-    marginBottom: 15, // Add space below the title
+    marginBottom: 15,
   },
-   // This ScrollView within each page handles the vertical scrolling of items
   itemsListContainer: {
-    gap: 15, // Space between items
-     // This contentContainerStyle doesn't need flex: 1, the ScrollView itself does
+    gap: 15,
   },
   itemContainer: {
     padding: 15,
+    marginHorizontal: 6,
     backgroundColor: '#ecf0f1',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: '#bdc3c7',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 2,
-    elevation: 1,
+    borderColor: '#000',
   },
-  // --- Item Details Layout ---
   generalInfoContainer: {
-      marginBottom: 10,
-      borderBottomWidth: 1,
-      borderBottomColor: '#dcdcdc',
-      paddingBottom: 10,
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#dcdcdc',
+    paddingBottom: 10,
   },
   itemRouteText: {
     fontSize: 16,
     fontWeight: '600',
     color: '#34495e',
     marginBottom: 4,
+    textAlign: 'center',
   },
     itemVehicleText: {
     fontSize: 14,
     color: '#7f8c8d',
+    textAlign: 'center',
   },
   stopsAndTimeRow: {
       flexDirection: 'row',
@@ -216,7 +207,7 @@ const styles = StyleSheet.create({
   stopTimeBlock: {
       flex: 1,
       paddingVertical: 8,
-      borderRadius: 4,
+      alignItems: 'center',
   },
   stopLabel: {
       fontSize: 12,
@@ -225,10 +216,11 @@ const styles = StyleSheet.create({
       marginBottom: 2,
   },
   stopNameText: {
-      fontSize: 15,
+      fontSize: 13,
       fontWeight: 'bold',
       color: '#2c3e50',
       marginBottom: 5,
+      textAlign: 'center',
   },
   timeLabel: {
       fontSize: 12,
@@ -267,8 +259,7 @@ const styles = StyleSheet.create({
       fontStyle: 'italic',
       color: '#555',
   },
-  // --- Other Styles ---
-   noDataContainer: {
+  noDataContainer: {
        flex: 1,
        justifyContent: 'center',
        alignItems: 'center',
