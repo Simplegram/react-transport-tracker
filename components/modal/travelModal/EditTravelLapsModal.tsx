@@ -3,6 +3,7 @@ import LoadingScreen from '@/components/LoadingScreen';
 import { colors } from '@/const/color';
 import useGetTravelData from '@/hooks/useGetTravelData';
 import { AddableLap } from '@/src/types/AddableTravels';
+import { EditableLap } from '@/src/types/EditableTravels';
 // import { EditableLapsModalProp } from '@/src/types/EditableTravels';
 import { Lap } from '@/src/types/Travels';
 import { formatDateForDisplay } from '@/src/utils/utils';
@@ -20,13 +21,13 @@ interface EditableLapsModalProp {
     currentLaps: Lap[]
     isModalVisible: boolean
     onClose: () => void
-    onSelect: (laps: AddableLap[]) => void
+    onSelect: (laps: EditableLap[]) => void
 }
 
 export default function EditTravelLapsModal({ currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { stops } = useGetTravelData()
 
-    const [laps, setLaps] = useState<Lap[]>([])
+    const [laps, setLaps] = useState<EditableLap[]>([])
 
     const handleOnSubmit = () => {
         onSelect(laps);
