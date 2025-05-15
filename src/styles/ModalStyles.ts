@@ -7,9 +7,7 @@ const modalStyles = StyleSheet.create({
         marginBottom: 5,
         color: '#333',
     },
-    inputGroup: {
-        marginBottom: 15,
-    },
+    inputGroup: {},
     pressableInput: {
         borderWidth: 1,
         borderColor: '#ccc',
