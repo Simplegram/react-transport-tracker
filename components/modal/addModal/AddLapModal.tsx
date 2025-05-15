@@ -16,7 +16,7 @@ import useGetTravelData from '@/hooks/useGetTravelData';
 import useStopModal from '@/hooks/useStopModal';
 import EditTravelStopModal from '../editTravelModal/EditTravelStopModal';
 
-export default function AddLapsModal({ onCancel, onSubmit }: BaseModalContentProps) {
+export default function AddLapModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { stops } = useGetTravelData()
 
     const {
