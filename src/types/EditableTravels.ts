@@ -1,6 +1,3 @@
-import { AddableLap } from "./AddableTravels"
-import { Lap } from "./Travels"
-
 interface EditableStop {
     id: number,
     name: string,
