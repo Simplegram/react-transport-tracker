@@ -1,4 +1,4 @@
-import { Alert, View, TextInput, StyleSheet, Text } from 'react-native'
+import { Alert, View, TextInput, StyleSheet, Text, KeyboardAvoidingView } from 'react-native'
 import { useState } from 'react'
 import React from 'react'
 import { supabase } from '@/lib/supabase'
@@ -26,49 +26,63 @@ const Login = () => {
     }
 
     return (
-        <View style={styles.container}>
-            {loading ? (
-                <LoadingScreen text="Loading..."></LoadingScreen>
-            ) :
-                (
-                    <>
-                        <Text style={styles.header}>Transport Tracker</Text>
+        <KeyboardAvoidingView
+            style={styles.keyboardView}
+        >
+            <View style={styles.container}>
+                {loading ? (
+                    <LoadingScreen text="Loading..."></LoadingScreen>
+                ) :
+                    (
+                        <>
+                            <Text style={styles.header}>Transport Tracker</Text>
+                            
+                            <View style={styles.inputContainer}>
+                                <TextInput
+                                    autoCapitalize="none"
+                                    placeholder="john@doe.com"
+                                    value={email}
+                                    onChangeText={setEmail}
+                                    style={styles.inputField}
+                                />
+                                <TextInput
+                                    placeholder="password"
+                                    value={password}
+                                    onChangeText={setPassword}
+                                    secureTextEntry
+                                    style={styles.inputField}
+                                />
+                            </View>
 
-                        <TextInput
-                            autoCapitalize="none"
-                            placeholder="john@doe.com"
-                            value={email}
-                            onChangeText={setEmail}
-                            style={styles.inputField}
-                        />
-                        <TextInput
-                            placeholder="password"
-                            value={password}
-                            onChangeText={setPassword}
-                            secureTextEntry
-                            style={styles.inputField}
-                        />
-
-                        <Button title='Sign in' color='#0284f5' onPress={onSignInPress} style={styles.button} textStyle={{ color: '#fff' }}></Button>
-                    </>
-                )}
-        </View>
+                            <Button title='Sign in' color='#0284f5' onPress={onSignInPress} style={styles.button} textStyle={{ color: '#fff' }}></Button>
+                        </>
+                    )}
+            </View>
+        </KeyboardAvoidingView>
     )
 }
 
 const styles = StyleSheet.create({
+    keyboardView: {
+        flex: 1,
+        padding: 15,
+    },
     container: {
         flex: 1,
-        paddingTop: 200,
-        padding: 20,
+        padding: 15,
+        justifyContent: 'center',
+        gap: 25,
     },
     header: {
         fontSize: 30,
         textAlign: 'center',
-        margin: 50,
+    },
+    inputContainer: {
+        gap: 10,
+        flexDirection: 'column',
+        paddingVertical: 10,
     },
     inputField: {
-        marginVertical: 4,
         height: 50,
         borderWidth: 1,
         borderColor: '#0284f5',
@@ -77,7 +91,6 @@ const styles = StyleSheet.create({
         color: '#000'
     },
     button: {
-        marginVertical: 15,
         alignItems: 'center',
         backgroundColor: '#0284f5',
         padding: 12,
