@@ -29,6 +29,7 @@ export default function AddTravel() {
     const { addTravel } = useModifyTravelData()
 
     const [travel, setTravel] = useState<AddableTravel | null>(null);
+
     const [showCustomPicker, setShowCustomPicker] = useState(false);
     const [editingDateField, setEditingDateField] = useState<keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'> | null>(null);
 
@@ -95,7 +96,7 @@ export default function AddTravel() {
     // With that said, parsing on code should always be timezone based
     const handleCustomDateConfirm = (selectedDate: Date) => {
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
-        
+
         if (editingDateField) {
             setTravel(prev => prev ? ({ ...prev, [editingDateField]: isoSelectedDate }) : null);
         }
@@ -142,7 +143,7 @@ export default function AddTravel() {
 
     const handleDirectionSelect = (directionId: number) => {
         if (travel) {
-            setTravel({...travel, direction_id: directionId})
+            setTravel({ ...travel, direction_id: directionId })
         }
 
         closeDirectionModal()
@@ -182,7 +183,7 @@ export default function AddTravel() {
                 </Pressable>
             </View>
 
-            <View style={[styles.inputGroup, {paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}]}>
+            <View style={[styles.inputGroup, { paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }]}>
                 <Text style={styles.label}>Bus Final Arrival:</Text>
                 <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={styles.pressableInput}>
                     <Text style={styles.insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
@@ -214,7 +215,7 @@ export default function AddTravel() {
                 </Pressable>
             </View>
 
-            <View style={[styles.inputGroup, {paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}]}>
+            <View style={[styles.inputGroup, { paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }]}>
                 <Text style={styles.label}>Type:</Text>
                 <TextInput
                     editable={false}
