@@ -16,10 +16,10 @@ import useGetTravelData from '@/hooks/useGetTravelData';
 import useStopModal from '@/hooks/useStopModal';
 import EditTravelStopModal from '../travelModal/EditTravelStopModal';
 import modalStyles from '@/src/styles/ModalStyles';
-import { EditableLap, EditableLapsModalProp } from '@/src/types/EditableTravels';
+import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels';
 import LoadingScreen from '@/components/LoadingScreen';
 
-export default function EditLapModal({ selectedLap, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
+export default function EditLapModal({ selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
     const { stops } = useGetTravelData()
 
     const {

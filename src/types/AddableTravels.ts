@@ -41,14 +41,22 @@ interface AddableTravel {
 }
 
 interface AddableLap {
-    travel_id: number | undefined
+    travel_id?: number | undefined
     time: string | undefined
     stop_id: number | null
     note: string | null
 }
 
-interface AddableLapModalProp {
+interface AddableLapsModalProp {
     travel_id: number
+    currentLaps: AddableLap[]
+    isModalVisible: boolean
+    onClose: () => void
+    onSelect: (lap: AddableLap) => void
+}
+
+interface AddableLapModalProp {
+    travel_id?: number
     isModalVisible: boolean
     onClose: () => void
     onSelect: (lap: AddableLap) => void
@@ -62,5 +70,5 @@ export {
     AddableIconType,
     AddableTravel,
     AddableLap,
-    AddableLapModalProp
+    AddableLapsModalProp, AddableLapModalProp
 }

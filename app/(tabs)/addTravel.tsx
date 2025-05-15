@@ -22,12 +22,15 @@ import useModifyTravelData from '@/hooks/useModifyTravelData';
 import { router } from 'expo-router';
 import { formatDateForDisplay } from '@/src/utils/utils';
 import moment from 'moment-timezone'
+import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModal';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 export default function AddTravel() {
     const { stops, routes, directions, vehicleTypes } = useGetTravelData();
 
-    const { addTravel } = useModifyTravelData()
+    const { addTravel, addLaps } = useModifyTravelData()
 
+    const [laps, setLaps] = useState<AddableLap[]>([])
     const [travel, setTravel] = useState<AddableTravel | null>(null);
 
     const [showCustomPicker, setShowCustomPicker] = useState(false);
@@ -56,6 +59,12 @@ export default function AddTravel() {
         setStopSearchQuery: setDirectionSearchQuery,
         openStopModal: openDirectionModal,
         closeStopModal: closeDirectionModal
+    } = useStopModal();
+
+    const {
+        showStopModal: showLapsModal,
+        openStopModal: openLapsModal,
+        closeStopModal: closeLapsModal
     } = useStopModal();
 
     const setDefaultTravel = () => {
@@ -149,7 +158,13 @@ export default function AddTravel() {
         closeDirectionModal()
     }
 
-    const handleOnSubmit = () => {
+    const handleLapsSelect = (laps: AddableLap[]) => {
+        if (laps) setLaps(laps)
+
+        closeLapsModal()
+    }
+
+    const handleOnSubmit = async () => {
         if (
             !travel.direction_id ||
             !travel.first_stop_id ||
@@ -161,10 +176,19 @@ export default function AddTravel() {
             return
         }
 
-        addTravel(travel)
+        const newTravel = await addTravel(travel, true)
+
+        let newLaps: AddableLap[] = []
+        if (newTravel) {
+            newLaps = laps.map(lap => {
+                return {...lap, travel_id: newTravel[0].id}
+            })
+        }
+
+        addLaps(newLaps)
         setDefaultTravel()
 
-        router.push('/(tabs)/mainMenu')
+        // router.push('/(tabs)/mainMenu')
     };
 
     return (
@@ -276,7 +300,23 @@ export default function AddTravel() {
                 />
             </View>
 
-            <EditTravelDirectionModal 
+            <View style={styles.inputGroup}>
+                <Text style={styles.label}>Laps:</Text>
+                <Pressable
+                    style={styles.pressableInput}
+                    onPress={() => openLapsModal()}>
+                    <Text style={styles.insideLabel}>{`${laps.length} laps`}</Text>
+                </Pressable>
+            </View>
+
+            <AddTravelLapsModal
+                currentLaps={laps}
+                isModalVisible={showLapsModal}
+                onSelect={handleLapsSelect}
+                onClose={closeLapsModal}
+            />
+
+            <EditTravelDirectionModal
                 isModalVisible={showDirectionModal}
                 searchQuery={directionSearchQuery}
                 setSearchQuery={setDirectionSearchQuery}

@@ -17,7 +17,7 @@ import useStopModal from '@/hooks/useStopModal';
 import EditTravelStopModal from '../travelModal/EditTravelStopModal';
 import modalStyles from '@/src/styles/ModalStyles';
 
-export default function AddLapModal({ travel_id, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
+export default function AddLapModal({ isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { stops } = useGetTravelData()
 
     const {
@@ -28,7 +28,7 @@ export default function AddLapModal({ travel_id, isModalVisible, onClose, onSele
         closeStopModal
     } = useStopModal();
 
-    const [lap, setLap] = useState<AddableLap>({ travel_id: travel_id, time: undefined, stop_id: null, note: null })
+    const [lap, setLap] = useState<AddableLap>({ time: undefined, stop_id: null, note: null })
 
     const [showDatetimePicker, setShowDatetimePicker] = useState(false);
 
