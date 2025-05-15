@@ -1,18 +1,15 @@
 import Button from '@/components/BaseButton';
-import LoadingScreen from '@/components/LoadingScreen';
 import { colors } from '@/const/color';
 import useGetTravelData from '@/hooks/useGetTravelData';
 import useStopModal from '@/hooks/useStopModal';
 import { AddableLap } from '@/src/types/AddableTravels';
 import { EditableLap, EditableLapsModalProp } from '@/src/types/EditableTravels';
-// import { EditableLapsModalProp } from '@/src/types/EditableTravels';
 import { formatDateForDisplay } from '@/src/utils/utils';
 import React, { useEffect, useState } from 'react';
 import {
     View,
     Text,
     StyleSheet,
-    Pressable,
     Modal,
     ScrollView,
 } from 'react-native';

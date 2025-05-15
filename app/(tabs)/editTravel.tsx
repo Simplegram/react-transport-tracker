@@ -24,7 +24,6 @@ import { EditableTravel } from '@/src/types/EditableTravels';
 import { formatDateForDisplay } from '@/src/utils/utils';
 import moment from 'moment-timezone'
 import EditTravelLapsModal from '@/components/modal/travelModal/EditTravelLapsModal';
-import { AddableLap } from '@/src/types/AddableTravels';
 import LoadingScreen from '@/components/LoadingScreen';
 
 export default function EditTravelItem() {

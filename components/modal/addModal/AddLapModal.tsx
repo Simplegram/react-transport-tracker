@@ -1,7 +1,6 @@
 import Button from '@/components/BaseButton';
 import CustomDateTimePicker from '@/components/CustomDatetimePicker';
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels';
-import { BaseModalContentProps } from '@/src/types/ModalContentProps';
 import React, { useState } from 'react';
 import {
     View,

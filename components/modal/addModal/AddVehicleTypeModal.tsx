@@ -3,7 +3,7 @@ import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
 import { AddableVehicleType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
