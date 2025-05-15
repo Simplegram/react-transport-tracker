@@ -331,7 +331,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: 10,
-        alignItems: 'flex-start', // Align items to the top if value wraps
+        alignItems: 'flex-start',
         borderWidth: 1,
         borderRadius: 10,
     },
