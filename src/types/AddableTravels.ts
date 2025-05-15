@@ -52,7 +52,7 @@ interface AddableLapsModalProp {
     currentLaps: AddableLap[]
     isModalVisible: boolean
     onClose: () => void
-    onSelect: (lap: AddableLap) => void
+    onSelect: (laps: AddableLap[]) => void
 }
 
 interface AddableLapModalProp {
