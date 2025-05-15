@@ -44,12 +44,14 @@ export default function useModifyTravelData() {
         if (error) console.log(error)
     }
 
-    const addTravel = async (item: AddableTravel) => {
-        const { error } = await supabase
+    const addTravel = async (item: AddableTravel, getData: boolean = false) => {
+        const { data, error } = await supabase
             .from("travels")
             .insert(item)
+            .select()
 
         if (error) console.log(error)
+        if (getData === true) return data
     }
 
     // ---
