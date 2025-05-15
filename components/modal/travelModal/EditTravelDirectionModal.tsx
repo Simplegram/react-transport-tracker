@@ -40,6 +40,7 @@ export default function EditTravelDirectionModal({ searchQuery, isModalVisible, 
                         </View>
                     ) : (
                         <FlatList
+                            inverted={true}
                             data={filteredItems}
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({ item }) => (

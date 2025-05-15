@@ -42,6 +42,7 @@ export default function EditTravelRouteModal({ searchQuery, isModalVisible, setS
                         </View>
                     ) : (
                         <FlatList
+                            inverted={true}
                             data={filteredItems}
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({ item }) => (

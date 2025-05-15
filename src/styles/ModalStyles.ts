@@ -23,11 +23,9 @@ const modalStyles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     modalContainer: {
-        height: 450,
+        height: 425,
         marginTop: 'auto',
-        paddingTop: 20,
-        paddingLeft: 20,
-        paddingRight: 20,
+        padding: 20,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         backgroundColor: '#fff',
