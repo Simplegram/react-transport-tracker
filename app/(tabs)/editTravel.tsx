@@ -8,7 +8,7 @@ import {
     Pressable,
     Alert,
 } from 'react-native';
-import { DataItem } from '@/src/types/Travels';
+import { DataItem, Lap } from '@/src/types/Travels';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
 import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal';
 import useStopModal from '@/hooks/useStopModal';
@@ -23,11 +23,20 @@ import { useTravelContext } from '@/context/PageContext';
 import { EditableTravel } from '@/src/types/EditableTravels';
 import { formatDateForDisplay } from '@/src/utils/utils';
 import moment from 'moment-timezone'
+import EditTravelLapsModal from '@/components/modal/travelModal/EditTravelLapsModal';
+import { AddableLap } from '@/src/types/AddableTravels';
+import LoadingScreen from '@/components/LoadingScreen';
 
 export default function EditTravelItem() {
     const { selectedItem: data } = useTravelContext();
-    
-    const { stops, routes, directions, vehicleTypes } = useGetTravelData();
+
+    const { 
+        stops, 
+        routes, 
+        directions, 
+        vehicleTypes, 
+        laps, getLaps 
+    } = useGetTravelData();
 
     const { editTravel } = useModifyTravelData()
 
@@ -37,7 +46,7 @@ export default function EditTravelItem() {
         React.useCallback(() => {
             setTravel({
                 id: data.id,
-                bus_final_arrival: data?.bus_final_arrival, 
+                bus_final_arrival: data?.bus_final_arrival,
                 bus_initial_arrival: data?.bus_initial_arrival,
                 bus_initial_departure: data?.bus_initial_departure,
                 notes: data?.notes,
@@ -48,6 +57,8 @@ export default function EditTravelItem() {
                 route_id: data.routes.id,
                 type_id: data.types.id
             })
+
+            getLaps(data.id)
         }, [data])
     )
 
@@ -79,6 +90,12 @@ export default function EditTravelItem() {
         closeStopModal: closeDirectionModal
     } = useStopModal();
 
+    const {
+        showStopModal: showLapsModal,
+        openStopModal: openLapsModal,
+        closeStopModal: closeLapsModal
+    } = useStopModal();
+
     const handleChangeText = (field: keyof EditableTravel, value: string) => {
         setTravel(prev => {
             if (field in prev) {
@@ -97,7 +114,7 @@ export default function EditTravelItem() {
     // ADD handler for custom picker confirmation
     const handleCustomDateConfirm = (selectedDate: Date) => {
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
-        
+
         if (editingDateField) {
             setTravel(prev => prev ? ({ ...prev, [editingDateField]: isoSelectedDate }) : null);
         }
@@ -112,7 +129,7 @@ export default function EditTravelItem() {
 
     const screenTitle = 'Add New Travel';
 
-    if (!travel) {
+    if (!travel || !laps) {
         return (
             <View style={styles.centeredContainer}>
                 <Text>Initializing new travel form...</Text>
@@ -145,8 +162,14 @@ export default function EditTravelItem() {
 
     const handleDirectionSelect = (directionId: number) => {
         if (travel) {
-            setTravel({...travel, direction_id: directionId})
+            setTravel({ ...travel, direction_id: directionId })
         }
+
+        closeDirectionModal()
+    }
+
+    const handleLapsSelect = (laps: Lap[]) => {
+        if (laps) setLaps(laps)
 
         closeDirectionModal()
     }
@@ -184,7 +207,7 @@ export default function EditTravelItem() {
                 </Pressable>
             </View>
 
-            <View style={[styles.inputGroup, {paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}]}>
+            <View style={[styles.inputGroup, { paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }]}>
                 <Text style={styles.label}>Bus Final Arrival:</Text>
                 <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={styles.pressableInput}>
                     <Text style={styles.insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
@@ -216,7 +239,7 @@ export default function EditTravelItem() {
                 </Pressable>
             </View>
 
-            <View style={[styles.inputGroup, {paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}]}>
+            <View style={[styles.inputGroup, { paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }]}>
                 <Text style={styles.label}>Type:</Text>
                 <TextInput
                     editable={false}
@@ -277,7 +300,23 @@ export default function EditTravelItem() {
                 />
             </View>
 
-            <EditTravelDirectionModal 
+            <View style={styles.inputGroup}>
+                <Text style={styles.label}>Laps:</Text>
+                <Pressable
+                    style={styles.pressableInput}
+                    onPress={() => openLapsModal()}>
+                    <Text style={styles.insideLabel}>{`${laps.length} laps`}</Text>
+                </Pressable>
+            </View>
+
+            <EditTravelLapsModal
+                currentLaps={laps ? laps : []}
+                isModalVisible={showLapsModal}
+                onSelect={handleLapsSelect}
+                onClose={closeLapsModal}
+            />
+
+            <EditTravelDirectionModal
                 isModalVisible={showDirectionModal}
                 searchQuery={directionSearchQuery}
                 setSearchQuery={setDirectionSearchQuery}
