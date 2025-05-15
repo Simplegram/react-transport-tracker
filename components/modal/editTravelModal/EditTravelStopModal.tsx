@@ -1,6 +1,5 @@
 import { Modal, Pressable, View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet } from "react-native"
 import Button from "@/components/BaseButton"
-import { Stop } from "@/src/types/Travels";
 import Icon from "react-native-vector-icons/FontAwesome6";
 import { useMemo } from "react";
 import useGetTravelData from "@/hooks/useGetTravelData";
