@@ -26,6 +26,8 @@ export default function useDataList() {
         const filteredData = data.filter(item => {
             if (dataType === "Routes") {
                 return item.name.toLowerCase().includes(query) || item.code.toLowerCase().includes(query)
+            } else if (dataType === "Stops") {
+                return item.name.toLowerCase().includes(query) || item.vehicle_type.name.toLowerCase().includes(query)
             } else {
                 return item.name.toLowerCase().includes(query)
             }
