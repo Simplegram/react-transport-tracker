@@ -23,7 +23,6 @@ import { router } from 'expo-router';
 import { formatDateForDisplay } from '@/src/utils/utils';
 import moment from 'moment-timezone'
 import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModal';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 export default function AddTravel() {
     const { stops, routes, directions, vehicleTypes } = useGetTravelData();
@@ -80,6 +79,7 @@ export default function AddTravel() {
             vehicle_code: null,
             notes: null,
         });
+        setLaps([])
     }
 
     useEffect(() => {
@@ -188,7 +188,7 @@ export default function AddTravel() {
         addLaps(newLaps)
         setDefaultTravel()
 
-        // router.push('/(tabs)/mainMenu')
+        router.push('/(tabs)/mainMenu')
     };
 
     return (
