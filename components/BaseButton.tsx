@@ -32,11 +32,11 @@ export default function Button({ title, onPress, style, textStyle, color = '#f3f
         return `#${darkenRHex}${darkenGHex}${darkenBHex}`;
     };
 
-    const buttonStyle = ({ pressed } : {pressed: boolean}) => {
+    const buttonStyle = ({ pressed }: { pressed: boolean }) => {
         const backgroundColor = pressed ? darkenColor(color, darkenAmount) : color;
         return [styles.buttonContainer, style, { backgroundColor }];
     };
-    
+
     return (
         <Pressable style={buttonStyle} onPress={onPress}>
             <Text style={[styles.buttonText, textStyle]}>{title}</Text>

@@ -4,32 +4,32 @@ import { AuthProvider, useAuth } from '@/provider/AuthProvider'
 
 // Makes sure the user is authenticated before accessing protected pages
 const InitialLayout = () => {
-  const { session, initialized } = useAuth()
-  const segments = useSegments()
-  const router = useRouter()
+    const { session, initialized } = useAuth()
+    const segments = useSegments()
+    const router = useRouter()
 
-  useEffect(() => {
-    if (!initialized) return
+    useEffect(() => {
+        if (!initialized) return
 
-    const inAuthGroup = segments[0] === '(tabs)'
+        const inAuthGroup = segments[0] === '(tabs)'
 
-    if (session && !inAuthGroup) {
-      router.replace('/mainMenu')
-    } else if (!session) {
-      router.replace('/')
-    }
-  }, [session, initialized])
+        if (session && !inAuthGroup) {
+            router.replace('/mainMenu')
+        } else if (!session) {
+            router.replace('/')
+        }
+    }, [session, initialized])
 
-  return <Slot />
+    return <Slot />
 }
 
 // Wrap the app with the AuthProvider
 const RootLayout = () => {
-  return (
-    <AuthProvider>
-      <InitialLayout />
-    </AuthProvider>
-  )
+    return (
+        <AuthProvider>
+            <InitialLayout />
+        </AuthProvider>
+    )
 }
 
 export default RootLayout

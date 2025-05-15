@@ -6,7 +6,7 @@ import { FlatList, Modal, Pressable, StyleSheet, Text, TextInput, TouchableOpaci
 
 export default function EditTravelDirectionModal({ searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelModalProp) {
     const { directions } = useGetTravelData()
-    
+
     const filteredItems = useMemo(() => {
         if (!directions) return [];
         const query = searchQuery.toLowerCase();
@@ -14,7 +14,7 @@ export default function EditTravelDirectionModal({ searchQuery, isModalVisible, 
             direction.name.toLowerCase().includes(query)
         );
     }, [directions, searchQuery]);
-    
+
     return (
         <Modal
             visible={isModalVisible}

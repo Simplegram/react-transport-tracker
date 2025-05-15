@@ -43,12 +43,12 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
         setMinutes(date.getMinutes().toString().padStart(2, '0'));
         setSeconds(date.getSeconds().toString().padStart(2, '0'));
     };
-    
+
     useEffect(() => {
         if (visible) {
             const dateToUse = initialDateTime instanceof Date && !isNaN(initialDateTime.getTime())
                 ? new Date(initialDateTime) // Use a copy
-                : new Date(); 
+                : new Date();
             updateStringPartsFromDate(dateToUse);
         }
     }, [visible, initialDateTime]);
@@ -97,7 +97,7 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
             Alert.alert("Invalid Input", errorMessage);
             return null;
         }
-        
+
         const date = new Date(y, m - 1, d, h, min, s); // Month is 0-indexed
 
         if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) {
@@ -114,9 +114,9 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
                 ? new Date(initialDateTime)
                 : new Date();
             updateStringPartsFromDate(currentDate);
-             Alert.alert("Input Corrected", "Some date/time inputs were invalid and have been reset. Please try adjusting again.");
+            Alert.alert("Input Corrected", "Some date/time inputs were invalid and have been reset. Please try adjusting again.");
         }
-        
+
         currentDate.setSeconds(currentDate.getSeconds() + adjustmentInSeconds);
         updateStringPartsFromDate(currentDate);
     };
@@ -138,7 +138,7 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
         handlePartChange('minutes', now.getMinutes().toString().padStart(2, '0'))
         handlePartChange('seconds', now.getSeconds().toString().padStart(2, '0'))
     }
-    
+
     const inputRow = (label: string, value: string, onChangeText: (text: string) => void, placeholder: string, maxLength?: number) => (
         <View style={styles.inputRow}>
             <Text style={styles.inputLabel}>{label}</Text>
@@ -196,7 +196,7 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
                                 <Text style={styles.adjButtonText}>+{incrementSeconds}s</Text>
                             </TouchableOpacity>
                             <TouchableOpacity
-                                style={[styles.adjButton, {backgroundColor: '#4CAF50'}]}
+                                style={[styles.adjButton, { backgroundColor: '#4CAF50' }]}
                                 onPress={handleTimeNow}
                             >
                                 <Text style={styles.adjButtonText}>Now</Text>
@@ -267,9 +267,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     inputLabel: {
-        flex: 1, 
+        flex: 1,
         fontSize: 16,
-        minWidth: 70, 
+        minWidth: 70,
         textAlign: 'center',
     },
     textInput: {
@@ -316,10 +316,10 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     confirmButton: {
-        backgroundColor: '#4CAF50', 
+        backgroundColor: '#4CAF50',
     },
     cancelButton: {
-        backgroundColor: '#D32F2F', 
+        backgroundColor: '#D32F2F',
     },
     buttonText: {
         color: 'white',

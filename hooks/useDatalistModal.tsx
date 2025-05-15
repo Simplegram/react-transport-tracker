@@ -26,7 +26,7 @@ interface ModalConfigMap {
 }
 
 export default function useDatalistModal(refetch: () => void) {
-    const { 
+    const {
         addDirection, editDirection,
         addStop, editStop,
         addIcon, editIcon,

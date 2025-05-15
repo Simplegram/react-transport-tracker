@@ -11,223 +11,229 @@ import { useModalContext } from '@/context/ModalContext';
 import { useLoading } from '@/hooks/useLoading';
 
 interface ItemTemplate {
-  id: string | number;
-  name: string;
-  [key: string]: any;
+    id: string | number;
+    name: string;
+    [key: string]: any;
 }
 
 const DataListScreen: React.FC = () => {
-  const { setModalData } = useModalContext()
-  
-  const {
-    dataType,
-    filteredData: data, refetchTravelData,
-    searchQuery, setSearchQuery,
-  } = useDataList()
+    const { setModalData } = useModalContext()
 
-  const { 
-    showStopModal, 
-    openModal, closeStopModal 
-  } = useStopModal()
+    const {
+        dataType,
+        filteredData: data, refetchTravelData,
+        searchQuery, setSearchQuery,
+    } = useDataList()
 
-  const { 
-    activeModalConfig, 
-    setActiveModal, setActiveEditModal
-  } = useDatalistModal(refetchTravelData)
+    const {
+        showStopModal,
+        openModal, closeStopModal
+    } = useStopModal()
 
-  const {
-    loading
-  } = useLoading()
+    const {
+        activeModalConfig,
+        setActiveModal, setActiveEditModal
+    } = useDatalistModal(refetchTravelData)
 
-  const handleModify = (item: ItemTemplate) => {
-    setActiveEditModal(dataType)
-    setModalData(item)
-    openModal()
-  };
+    const {
+        loading
+    } = useLoading()
 
-  const handleAddNew = () => {
-    setActiveModal(dataType)
-    openModal()
-  };
-
-  const handleSubmitFromModal = (data: any) => {
-    if (activeModalConfig?.onSubmitDataHandler) {
-      // Call the specific handler defined in the config, passing the collected data
-      activeModalConfig.onSubmitDataHandler(data);
-    } else {
-        console.error("No data handler defined for this modal config.");
-        Alert.alert("Error", "Configuration error: Could not process data.");
+    if (!dataType) {
+        return (
+            <LoadingScreen></LoadingScreen>
+        )
     }
-    // Always close the modal after handling submission
-    closeStopModal();
-  };
 
-  const renderItem = ({ item }: { item: ItemTemplate }) => (
-    <View style={styles.itemContainer}>
-      <View style={styles.textContainer}>
-        {dataType === "Stops" ? (
-          <>
-            <Icon name={item.vehicle_type?.icon_id.name} size={20}></Icon>
-            <Text>{item.vehicle_type?.name}</Text>
-          </>
-        ) : null}
-        {dataType === "Routes" ? (
-          <>
-            <Icon name={item.vehicle_type_id?.icon_id.name} size={20}></Icon>
-            <Text style={[styles.itemName, {color: '#007bff'}]}>{item.code}</Text>
-          </>
-        ) : null}
-        <Text style={styles.itemName}>{item.name}</Text>
-      </View>
-      <View style={styles.buttonContainer}>
-        <View style={styles.fillerContainer}></View>
-        <TouchableOpacity
-          style={styles.modifyButton}
-          onPress={() => handleModify(item)}
-          activeOpacity={0.8}
-        >
-          <Text style={styles.modifyButtonText}>Modify</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
-  );
+    const handleModify = (item: ItemTemplate) => {
+        setActiveEditModal(dataType)
+        setModalData(item)
+        openModal()
+    };
 
-  if (loading || !dataType) {
-    return (
-      <LoadingScreen />
-    );
-  }
+    const handleAddNew = () => {
+        setActiveModal(dataType)
+        openModal()
+    };
 
-  const ModalContentComponent = activeModalConfig?.content
+    const handleSubmitFromModal = (data: any) => {
+        if (activeModalConfig?.onSubmitDataHandler) {
+            // Call the specific handler defined in the config, passing the collected data
+            activeModalConfig.onSubmitDataHandler(data);
+        } else {
+            console.error("No data handler defined for this modal config.");
+            Alert.alert("Error", "Configuration error: Could not process data.");
+        }
+        // Always close the modal after handling submission
+        closeStopModal();
+    };
 
-  return (
-    <View style={styles.container}>
-      {data.length === 0 ? (
-        <View style={styles.emptyContainer}>
-          <Text style={styles.emptyText}>No {dataType} found.</Text>
+    const renderItem = ({ item }: { item: ItemTemplate }) => (
+        <View style={styles.itemContainer}>
+            <View style={styles.textContainer}>
+                {dataType === "Stops" ? (
+                    <>
+                        <Icon name={item.vehicle_type?.icon_id.name} size={20}></Icon>
+                        <Text>{item.vehicle_type?.name}</Text>
+                    </>
+                ) : null}
+                {dataType === "Routes" ? (
+                    <>
+                        <Icon name={item.vehicle_type_id?.icon_id.name} size={20}></Icon>
+                        <Text style={[styles.itemName, { color: '#007bff' }]}>{item.code}</Text>
+                    </>
+                ) : null}
+                <Text style={styles.itemName}>{item.name}</Text>
+            </View>
+            <View style={styles.buttonContainer}>
+                <View style={styles.fillerContainer}></View>
+                <TouchableOpacity
+                    style={styles.modifyButton}
+                    onPress={() => handleModify(item)}
+                    activeOpacity={0.8}
+                >
+                    <Text style={styles.modifyButtonText}>Modify</Text>
+                </TouchableOpacity>
+            </View>
         </View>
+    );
 
-      ) : (
-        <FlatList
-          refreshing={loading}
-          onRefresh={refetchTravelData}
-          data={data}
-          renderItem={renderItem}
-          keyExtractor={item => item.id.toString()} // Ensure key is a string
-          contentContainerStyle={styles.listContent}
-        />
-      )}
+    if (loading || !dataType) {
+        return (
+            <LoadingScreen />
+        );
+    }
 
-      <TextInput
-        style={styles.modalSearchInput}
-        placeholder={`Search ${dataType}...`}
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-        autoFocus={true}
-      />
+    const ModalContentComponent = activeModalConfig?.content
 
-      <View style={styles.addButtonContainer}>
-        <Button
-          color='#007bff'
-          title={`Add New ${dataType.slice(0, -1)}`}
-          onPress={handleAddNew}
-          style={styles.button}
-          textStyle={styles.buttonText}
-        />
-      </View>
+    return (
+        <View style={styles.container}>
+            {data.length === 0 ? (
+                <View style={styles.emptyContainer}>
+                    <Text style={styles.emptyText}>No {dataType} found.</Text>
+                </View>
 
-      <ModalTemplate
-        isModalVisible={showStopModal}
-        handleCloseModal={closeStopModal}
-        title={activeModalConfig?.title}
-      >
-        {ModalContentComponent ? (
-            <ModalContentComponent 
-              onSubmit={handleSubmitFromModal}
-              onCancel={closeStopModal}
+            ) : (
+                <FlatList
+                    refreshing={loading}
+                    onRefresh={refetchTravelData}
+                    data={data}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id.toString()} // Ensure key is a string
+                    contentContainerStyle={styles.listContent}
+                />
+            )}
+
+            <TextInput
+                style={styles.modalSearchInput}
+                placeholder={`Search ${dataType}...`}
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                autoFocus={true}
             />
-        ) : (
-            <Text>Loading...</Text>
-        )}
-      </ModalTemplate>
-    </View>
-  );
+
+            <View style={styles.addButtonContainer}>
+                <Button
+                    color='#007bff'
+                    title={`Add New ${dataType.slice(0, -1)}`}
+                    onPress={handleAddNew}
+                    style={styles.button}
+                    textStyle={styles.buttonText}
+                />
+            </View>
+
+            <ModalTemplate
+                isModalVisible={showStopModal}
+                handleCloseModal={closeStopModal}
+                title={activeModalConfig?.title}
+            >
+                {ModalContentComponent ? (
+                    <ModalContentComponent
+                        onSubmit={handleSubmitFromModal}
+                        onCancel={closeStopModal}
+                    />
+                ) : (
+                    <Text>Loading...</Text>
+                )}
+            </ModalTemplate>
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 15,
-    gap: 10,
-    backgroundColor: '#fff',
-  },
-  fillerContainer: {
-    flex: 1,
-  },
-  buttonContainer: {
-    flexDirection: 'column',
-  },
-  itemContainer: {
-    padding: 10,
-    flexDirection: 'column',
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderRadius: 8,
-    borderColor: '#000',
-    gap: 10,
-  },
-  textContainer: {
-    flexDirection: 'column',
-  },
-  itemName: {
-    flex: 1,
-    fontSize: 16,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  modifyButton: {
-    backgroundColor: '#007bff',
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-  },
-  modifyButtonText: {
-    color: '#fff',
-    fontSize: 14,
-    fontWeight: 'bold',
-  },
-  listContent: {
-    gap: 10,
-  },
-  addButtonContainer: {
+    container: {
+        flex: 1,
+        padding: 15,
+        gap: 10,
+        backgroundColor: '#fff',
+    },
+    fillerContainer: {
+        flex: 1,
+    },
+    buttonContainer: {
+        flexDirection: 'column',
+    },
+    itemContainer: {
+        padding: 10,
+        flexDirection: 'column',
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderRadius: 8,
+        borderColor: '#000',
+        gap: 10,
+    },
+    textContainer: {
+        flexDirection: 'column',
+    },
+    itemName: {
+        flex: 1,
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+    },
+    modifyButton: {
+        backgroundColor: '#007bff',
+        paddingVertical: 8,
+        paddingHorizontal: 15,
+        borderRadius: 5,
+    },
+    modifyButtonText: {
+        color: '#fff',
+        fontSize: 14,
+        fontWeight: 'bold',
+    },
+    listContent: {
+        gap: 10,
+    },
+    addButtonContainer: {
 
-  },
-  emptyContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  emptyText: {
-    fontSize: 18,
-    color: '#666',
-  },
-  button: {
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: '#fff',
-    fontSize: 17,
-    fontWeight: '700',
-  },
-  modalSearchInput: {
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 5,
-    padding: 10,
-    fontSize: 16,
-    backgroundColor: '#fff',
-  },
+    },
+    emptyContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    emptyText: {
+        fontSize: 18,
+        color: '#666',
+    },
+    button: {
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    buttonText: {
+        color: '#fff',
+        fontSize: 17,
+        fontWeight: '700',
+    },
+    modalSearchInput: {
+        borderWidth: 1,
+        borderColor: '#000',
+        borderRadius: 5,
+        padding: 10,
+        fontSize: 16,
+        backgroundColor: '#fff',
+    },
 });
 
 export default DataListScreen;

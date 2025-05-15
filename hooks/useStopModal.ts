@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function useStopModal() {
     const [showStopModal, setShowStopModal] = useState(false);
-    const [editingStopField, setEditingStopField] = useState<string | undefined>(undefined); 
+    const [editingStopField, setEditingStopField] = useState<string | undefined>(undefined);
     const [stopSearchQuery, setStopSearchQuery] = useState('');
 
     const openStopModal = (field?: string) => {

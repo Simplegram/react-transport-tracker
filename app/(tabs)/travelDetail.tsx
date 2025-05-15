@@ -330,7 +330,7 @@ const styles = StyleSheet.create({
     detailRow: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: 10, 
+        padding: 10,
         alignItems: 'flex-start', // Align items to the top if value wraps
         borderWidth: 1,
         borderRadius: 10,

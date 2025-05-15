@@ -35,7 +35,7 @@ export default function useModifyTravelData() {
 
         if (error) console.log(error)
     }
-    
+
     const addIcon = async (item: AddableIconType) => {
         const { error } = await supabase
             .from("icons")

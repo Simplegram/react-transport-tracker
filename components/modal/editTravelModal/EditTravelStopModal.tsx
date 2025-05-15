@@ -49,11 +49,11 @@ export default function EditTravelStopModal({ searchQuery, isModalVisible, setSe
                                         style={styles.stopListItem}
                                         onPress={() => onSelect(item.id)}>
                                         {
-                                            item.vehicle_type?.name 
-                                            ? 
-                                            <Icon name={item.vehicle_type.icon_id.name.toLocaleLowerCase()} size={16} style={{width: 20}}></Icon> 
-                                            : 
-                                            <Icon name="train" size={16}></Icon>
+                                            item.vehicle_type?.name
+                                                ?
+                                                <Icon name={item.vehicle_type.icon_id.name.toLocaleLowerCase()} size={16} style={{ width: 20 }}></Icon>
+                                                :
+                                                <Icon name="train" size={16}></Icon>
                                         }
                                         <Text style={styles.label}>{item.name}</Text>
                                     </TouchableOpacity>

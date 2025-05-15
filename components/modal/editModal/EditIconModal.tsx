@@ -12,12 +12,12 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
     const [icon, setIcon] = useState<AddableIconType>(data)
     const [iconQuery, setIconQuery] = useState<string>(data.name)
 
-    const handleOnSubmit = () => {  
+    const handleOnSubmit = () => {
         if (!icon.name?.trim()) {
             Alert.alert('Input Required', 'Please enter an icon name.');
             return
         }
-        
+
         onSubmit(icon);
     };
 

@@ -33,8 +33,8 @@ export default function AddLapsModal({ onCancel, onSubmit }: BaseModalContentPro
 
     const handleCustomDateConfirm = (selectedDate: Date) => {
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
-        
-        setLap({...lap, time: isoSelectedDate})
+
+        setLap({ ...lap, time: isoSelectedDate })
 
         setShowDatetimePicker(false)
     };
@@ -52,7 +52,7 @@ export default function AddLapsModal({ onCancel, onSubmit }: BaseModalContentPro
         <View style={styles.container}>
             <View style={styles.inputContainer}>
                 <View style={styles.inputGroup}>
-                    <View style={[styles.inputGroup, {paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc'}]}>
+                    <View style={[styles.inputGroup, { paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }]}>
                         <Text style={styles.label}>Bus Final Arrival:</Text>
                         <Pressable onPress={() => setShowDatetimePicker(true)} style={styles.pressableInput}>
                             <Text style={styles.insideLabel}>{formatDateForDisplay(lap.time)}</Text>
@@ -83,7 +83,7 @@ export default function AddLapsModal({ onCancel, onSubmit }: BaseModalContentPro
                     <TextInput
                         placeholder="Optional notes"
                         value={lap.notes || ''}
-                        onChangeText={text => setLap({...lap, notes: text })}
+                        onChangeText={text => setLap({ ...lap, notes: text })}
                         keyboardType="default"
                         returnKeyType="done"
                         multiline={true}

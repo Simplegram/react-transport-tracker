@@ -47,4 +47,11 @@ interface DataItem {
     types: VehicleType;
 }
 
-export { Direction, Stop, Route, VehicleType, IconType, DataItem }
+export {
+    Direction,
+    Stop,
+    Route,
+    VehicleType,
+    IconType,
+    DataItem
+}
