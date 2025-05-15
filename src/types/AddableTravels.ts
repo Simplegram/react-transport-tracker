@@ -47,6 +47,13 @@ interface AddableLap {
     note: string | null
 }
 
+interface AddableLapModalProp {
+    travel_id: number
+    isModalVisible: boolean
+    onClose: () => void
+    onSelect: (lap: AddableLap) => void
+}
+
 export {
     AddableDirection,
     AddableStop,
@@ -54,5 +61,6 @@ export {
     AddableVehicleType,
     AddableIconType,
     AddableTravel,
-    AddableLap
+    AddableLap,
+    AddableLapModalProp
 }
