@@ -1,3 +1,5 @@
+import { AddableLap } from "./AddableTravels"
+
 interface EditableStop {
     id: number,
     name: string,
@@ -43,10 +45,17 @@ interface EditableTravelModalProp {
     onSelect: (stopId: number) => void
 }
 
+interface EditableLapsModalProp {
+    isModalVisible: boolean
+    onClose: () => void
+    onSelect: (laps: AddableLap[]) => void
+}
+
 export {
     EditableStop,
     EditableVehicleType,
     EditableRoute,
     EditableTravel,
-    EditableTravelModalProp
+    EditableTravelModalProp,
+    EditableLapsModalProp
 }
