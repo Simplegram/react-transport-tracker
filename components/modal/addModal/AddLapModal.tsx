@@ -27,7 +27,7 @@ export default function AddLapModal({ onCancel, onSubmit }: BaseModalContentProp
         closeStopModal
     } = useStopModal();
 
-    const [lap, setLap] = useState<AddableLap>({ travel_id: undefined, time: undefined, stop_id: null, notes: null })
+    const [lap, setLap] = useState<AddableLap>({ travel_id: undefined, time: undefined, stop_id: null, note: null })
 
     const [showDatetimePicker, setShowDatetimePicker] = useState(false);
 
