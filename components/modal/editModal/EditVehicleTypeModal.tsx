@@ -2,6 +2,7 @@ import Button from "@/components/BaseButton";
 import { useModalContext } from "@/context/ModalContext";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
+import modalStyles from "@/src/styles/ModalStyles";
 import { EditableVehicleType } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { sortByIdToFront } from "@/src/utils/utils";
@@ -37,7 +38,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                         <View>
                             <Text style={styles.label}>Name:</Text>
                             <TextInput
-                                style={styles.input}
+                                style={modalStyles.input}
                                 placeholder="e.g., Standard Bus"
                                 value={vehicleType.name}
                                 onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}
@@ -81,21 +82,11 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
 }
 
 const styles = StyleSheet.create({
-    container: {
-
-    },
+    container: {},
     label: {
         fontSize: 16,
         marginBottom: 8,
         fontWeight: 'bold',
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingVertical: 12,
-        fontSize: 16,
     },
     inputContainer: {
         gap: 10,

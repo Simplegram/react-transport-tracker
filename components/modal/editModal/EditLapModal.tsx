@@ -104,7 +104,7 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
                                 returnKeyType="done"
                                 multiline={true}
                                 numberOfLines={3}
-                                style={[styles.input, { height: 80, textAlignVertical: 'top' }]}
+                                style={[modalStyles.input, { height: 80, textAlignVertical: 'top' }]}
                             />
                         </View>
 
@@ -141,15 +141,6 @@ const styles = StyleSheet.create({
         gap: 10,
         flexDirection: 'column',
         paddingVertical: 10,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 5,
-        padding: 10,
-        fontSize: 16,
-        color: '#333',
-        backgroundColor: '#f9f9f9',
     },
     saveButton: {
         backgroundColor: '#007bff',

@@ -8,6 +8,7 @@ import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import useStopModal from "@/hooks/useStopModal"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
+import modalStyles from "@/src/styles/ModalStyles"
 
 export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { stops, fullVehicleTypes } = useGetTravelData()
@@ -53,14 +54,14 @@ export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentPr
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Code:</Text>
                         <TextInput
-                            style={styles.input}
+                            style={modalStyles.input}
                             placeholder="Route code..."
                             value={route.code}
                             onChangeText={text => (setRoute({ ...route, "code": text }))}
                         />
                         <Text style={styles.label}>Name:</Text>
                         <TextInput
-                            style={styles.input}
+                            style={modalStyles.input}
                             placeholder="Route name..."
                             value={route.name}
                             onChangeText={text => (setRoute({ ...route, "name": text }))}
@@ -136,14 +137,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 8
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingBottom: 12,
-        fontSize: 16,
     },
     iconScrollView: {
         marginBottom: 20,

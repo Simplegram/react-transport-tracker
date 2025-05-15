@@ -1,5 +1,6 @@
 import Button from "@/components/BaseButton"
 import { useLoading } from "@/hooks/useLoading"
+import modalStyles from "@/src/styles/ModalStyles"
 import { AddableDirection } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
@@ -28,7 +29,7 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Name:</Text>
                         <TextInput
-                            style={styles.input}
+                            style={modalStyles.input}
                             placeholder="Direction name..."
                             value={direction.name}
                             onChangeText={text => (setDirection({ ...direction, "name": text }))}
@@ -56,14 +57,6 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 8
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingBottom: 12,
-        fontSize: 16,
     },
 })
 

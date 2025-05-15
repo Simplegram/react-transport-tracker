@@ -2,6 +2,7 @@ import Button from "@/components/BaseButton";
 import { useModalContext } from "@/context/ModalContext";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
+import modalStyles from "@/src/styles/ModalStyles";
 import { EditableStop } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
@@ -29,28 +30,28 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Name:</Text>
                         <TextInput
-                            style={styles.input}
+                            style={modalStyles.input}
                             placeholder="Stop name..."
                             value={stop.name}
                             onChangeText={text => (setStop({ ...stop, "name": text }))}
                         />
                         <Text style={styles.label}>Latitude:</Text>
                         <TextInput
-                            style={styles.input}
+                            style={modalStyles.input}
                             placeholder="Stop latitude..."
                             value={stop.lat?.toString()}
                             onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
                         />
                         <Text style={styles.label}>Longitude:</Text>
                         <TextInput
-                            style={styles.input}
+                            style={modalStyles.input}
                             placeholder="Stop longitude..."
                             value={stop.lon?.toString()}
                             onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
                         />
                         <Text style={styles.label}>Alternative name:</Text>
                         <TextInput
-                            style={styles.input}
+                            style={modalStyles.input}
                             placeholder="Alternative name..."
                             value={stop.name_alt}
                             onChangeText={text => (setStop({ ...stop, "name_alt": text }))}
@@ -94,21 +95,11 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
 }
 
 const styles = StyleSheet.create({
-    container: {
-
-    },
+    container: {},
     label: {
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 8
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingBottom: 12,
-        fontSize: 16,
     },
     inputContainer: {
         gap: 10,

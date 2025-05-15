@@ -75,7 +75,15 @@ const modalStyles = StyleSheet.create({
     emptyList: {
         padding: 20,
         alignItems: 'center',
-    }
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
+        paddingHorizontal: 10,
+        paddingVertical: 10,
+        fontSize: 16,
+    },
 })
 
 export default modalStyles
