@@ -98,7 +98,7 @@ export default function useGetTravelData() {
         routes, getRoutes,
         vehicleTypes, fullVehicleTypes, getVehicleTypes,
         icons, getIcons,
-        laps, getLaps,
+        laps, setLaps, getLaps,
         refetchTravelData: getTravelData,
     }
 }
