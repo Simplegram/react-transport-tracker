@@ -9,6 +9,7 @@ import {
     StyleSheet,
     Pressable,
     Modal,
+    Alert,
 } from 'react-native';
 import moment from 'moment-timezone'
 import { formatDateForDisplay } from '@/src/utils/utils';
@@ -41,17 +42,44 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
     const handleCustomDateConfirm = (selectedDate: Date) => {
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
 
+        if (!lap) {
+            Alert.alert(
+                "Unexpected Error",
+                `Lap is null which is not supposed to happen. Try again.\nSelected date is ${isoSelectedDate}`
+            )
+
+            return
+        }
+
         setLap({ ...lap, time: isoSelectedDate })
 
         setShowDatetimePicker(false)
     };
 
     const handleStopSelect = (stopId: number) => {
+        if (!lap) {
+            Alert.alert(
+                "Unexpected Error",
+                "Lap is null which is not supposed to happen. Try again."
+            )
+
+            return
+        }
+
         setLap({ ...lap, stop_id: stopId })
         closeStopModal();
     };
 
     const handleOnSubmit = () => {
+        if (!lap) {
+            Alert.alert(
+                "Unexpected Error",
+                "Lap is null which is not supposed to happen. Try again."
+            )
+
+            return
+        }
+        
         onSelect(lap);
     };
 

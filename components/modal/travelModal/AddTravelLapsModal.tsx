@@ -105,7 +105,7 @@ export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClos
                         <Button title='Save Laps' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                     </View>
                 </View>
-
+                
                 <EditLapModal 
                     selectedLap={selectedLap}
                     isModalVisible={showEditLapModal}
