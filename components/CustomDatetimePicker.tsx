@@ -1,4 +1,5 @@
 // components/CustomDateTimePicker.tsx
+import { useLoading } from '@/hooks/useLoading';
 import React, { useState, useEffect } from 'react';
 import {
     Modal,
@@ -12,6 +13,7 @@ import {
     ScrollView,
     Alert,
 } from 'react-native';
+import LoadingScreen from './LoadingScreen';
 
 interface CustomDateTimePickerProps {
     visible: boolean;
@@ -28,6 +30,8 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
     onConfirm,
     incrementSeconds = 5,
 }) => {
+    const { loading } = useLoading(250)
+
     const [year, setYear] = useState('');
     const [month, setMonth] = useState('');
     const [day, setDay] = useState('');
@@ -157,63 +161,67 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
     return (
         <Modal
             transparent={true}
-            animationType="slide"
+            animationType="fade"
             visible={visible}
             onRequestClose={onClose}
         >
-            <Pressable style={styles.modalBackdrop} onPress={onClose}>
-                <Pressable onPress={(e) => e.stopPropagation()} style={styles.modalContainer}>
-                    <ScrollView keyboardShouldPersistTaps="handled">
-                        <Text style={styles.modalTitle}>Set Date and Time</Text>
+            {loading ? (
+                <LoadingScreen></LoadingScreen>
+            ) : (
+                <Pressable style={styles.modalBackdrop} onPress={onClose}>
+                    <Pressable onPress={(e) => e.stopPropagation()} style={styles.modalContainer}>
+                        <ScrollView keyboardShouldPersistTaps="handled">
+                            <Text style={styles.modalTitle}>Set Date and Time</Text>
 
-                        <View style={styles.dateTimeSection}>
-                            <View style={styles.timePicker}>
-                                {inputRow('Year', year, (text) => handlePartChange('year', text), 'YYYY', 4)}
-                                {inputRow('Month', month, (text) => handlePartChange('month', text), 'MM', 2)}
-                                {inputRow('Day', day, (text) => handlePartChange('day', text), 'DD', 2)}
+                            <View style={styles.dateTimeSection}>
+                                <View style={styles.timePicker}>
+                                    {inputRow('Year', year, (text) => handlePartChange('year', text), 'YYYY', 4)}
+                                    {inputRow('Month', month, (text) => handlePartChange('month', text), 'MM', 2)}
+                                    {inputRow('Day', day, (text) => handlePartChange('day', text), 'DD', 2)}
+                                </View>
                             </View>
-                        </View>
 
-                        <View style={styles.dateTimeSection}>
-                            <View style={styles.timePicker}>
-                                {inputRow('Hours', hours, (text) => handlePartChange('hours', text), 'HH', 2)}
-                                {inputRow('Minutes', minutes, (text) => handlePartChange('minutes', text), 'mm', 2)}
-                                {inputRow('Seconds', seconds, (text) => handlePartChange('seconds', text), 'ss', 2)}
+                            <View style={styles.dateTimeSection}>
+                                <View style={styles.timePicker}>
+                                    {inputRow('Hours', hours, (text) => handlePartChange('hours', text), 'HH', 2)}
+                                    {inputRow('Minutes', minutes, (text) => handlePartChange('minutes', text), 'mm', 2)}
+                                    {inputRow('Seconds', seconds, (text) => handlePartChange('seconds', text), 'ss', 2)}
+                                </View>
                             </View>
-                        </View>
 
-                        <View style={styles.timeAdjustmentButtons}>
-                            <TouchableOpacity
-                                style={styles.adjButton}
-                                onPress={() => handleTimeAdjustment(-incrementSeconds)}
-                            >
-                                <Text style={styles.adjButtonText}>-{incrementSeconds}s</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={styles.adjButton}
-                                onPress={() => handleTimeAdjustment(incrementSeconds)}
-                            >
-                                <Text style={styles.adjButtonText}>+{incrementSeconds}s</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity
-                                style={[styles.adjButton, { backgroundColor: '#4CAF50' }]}
-                                onPress={handleTimeNow}
-                            >
-                                <Text style={styles.adjButtonText}>Now</Text>
-                            </TouchableOpacity>
-                        </View>
+                            <View style={styles.timeAdjustmentButtons}>
+                                <TouchableOpacity
+                                    style={styles.adjButton}
+                                    onPress={() => handleTimeAdjustment(-incrementSeconds)}
+                                >
+                                    <Text style={styles.adjButtonText}>-{incrementSeconds}s</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={styles.adjButton}
+                                    onPress={() => handleTimeAdjustment(incrementSeconds)}
+                                >
+                                    <Text style={styles.adjButtonText}>+{incrementSeconds}s</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[styles.adjButton, { backgroundColor: '#4CAF50' }]}
+                                    onPress={handleTimeNow}
+                                >
+                                    <Text style={styles.adjButtonText}>Now</Text>
+                                </TouchableOpacity>
+                            </View>
 
-                        <View style={styles.actionButtons}>
-                            <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={onClose}>
-                                <Text style={styles.buttonText}>Cancel</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={[styles.button, styles.confirmButton]} onPress={handleConfirm}>
-                                <Text style={styles.buttonText}>Confirm</Text>
-                            </TouchableOpacity>
-                        </View>
-                    </ScrollView>
+                            <View style={styles.actionButtons}>
+                                <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={onClose}>
+                                    <Text style={styles.buttonText}>Cancel</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.button, styles.confirmButton]} onPress={handleConfirm}>
+                                    <Text style={styles.buttonText}>Confirm</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </ScrollView>
+                    </Pressable>
                 </Pressable>
-            </Pressable>
+            )}
         </Modal>
     );
 };
