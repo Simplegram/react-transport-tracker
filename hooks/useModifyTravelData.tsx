@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import { Direction, IconType, Stop } from "@/src/types/Travels";
-import { EditableRoute, EditableStop, EditableTravel, EditableVehicleType } from "@/src/types/EditableTravels";
-import { AddableDirection, AddableIconType, AddableRoute, AddableStop, AddableTravel, AddableVehicleType } from "@/src/types/AddableTravels";
+import { EditableLap, EditableRoute, EditableStop, EditableTravel, EditableVehicleType } from "@/src/types/EditableTravels";
+import { AddableDirection, AddableIconType, AddableLap, AddableRoute, AddableStop, AddableTravel, AddableVehicleType } from "@/src/types/AddableTravels";
 
 export default function useModifyTravelData() {
     const addDirection = async (item: AddableDirection) => {
@@ -54,6 +54,14 @@ export default function useModifyTravelData() {
         if (getData === true) return data
     }
 
+    const addLaps = async (items: AddableLap[]) => {
+        const { error } = await supabase
+            .from("laps")
+            .insert(items)
+
+        if (error) console.log(error)
+    }
+
     // ---
 
     const editDirection = async (item: AddableDirection) => {
@@ -104,12 +112,21 @@ export default function useModifyTravelData() {
         if (error) console.log(error)
     }
 
+    const editLaps = async (items: EditableLap[]) => {
+        const { error } = await supabase
+            .from("laps")
+            .upsert(items)
+
+        if (error) console.log(error)
+    }
+
     return {
         addDirection, editDirection,
         addStop, editStop,
         addIcon, editIcon,
         addVehicleType, editVehicleType,
         addRoute, editRoute,
-        addTravel, editTravel
+        addTravel, editTravel,
+        addLaps, editLaps
     }
 }
