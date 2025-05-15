@@ -47,11 +47,20 @@ interface DataItem {
     types: VehicleType;
 }
 
+interface Lap {
+    id: number
+    travel_id: number
+    time: string
+    stop_id: number | null
+    note: string | null
+}
+
 export {
     Direction,
     Stop,
     Route,
     VehicleType,
     IconType,
+    Lap,
     DataItem
 }
