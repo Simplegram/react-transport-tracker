@@ -10,14 +10,14 @@ import {
 } from 'react-native';
 import { DataItem } from '@/src/types/Travels';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
-import EditTravelStopModal from '@/components/modal/editTravelModal/EditTravelStopModal';
+import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal';
 import useStopModal from '@/hooks/useStopModal';
 import CustomDateTimePicker from '@/components/CustomDatetimePicker';
 import useGetTravelData from '@/hooks/useGetTravelData';
-import { AddableTravel } from '@/src/types/AddableTravels';
-import EditTravelRouteModal from '@/components/modal/editTravelModal/EditTravelRouteModal';
+import { AddableLap, AddableTravel } from '@/src/types/AddableTravels';
+import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal';
 import Button from '@/components/BaseButton';
-import EditTravelDirectionModal from '@/components/modal/editTravelModal/EditTravelDirectionModal';
+import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal';
 import useModifyTravelData from '@/hooks/useModifyTravelData';
 import { router } from 'expo-router';
 import { formatDateForDisplay } from '@/src/utils/utils';

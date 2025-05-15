@@ -1,7 +1,7 @@
 import { AddableRoute } from "@/src/types/AddableTravels"
 import { useState } from "react"
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
-import EditTravelStopModal from "../editTravelModal/EditTravelStopModal"
+import EditTravelStopModal from "../travelModal/EditTravelStopModal"
 import Button from "@/components/BaseButton"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import useGetTravelData from "@/hooks/useGetTravelData"

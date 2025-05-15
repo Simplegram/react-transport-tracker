@@ -14,7 +14,7 @@ import moment from 'moment-timezone'
 import { formatDateForDisplay } from '@/src/utils/utils';
 import useGetTravelData from '@/hooks/useGetTravelData';
 import useStopModal from '@/hooks/useStopModal';
-import EditTravelStopModal from '../editTravelModal/EditTravelStopModal';
+import EditTravelStopModal from '../travelModal/EditTravelStopModal';
 
 export default function AddLapModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { stops } = useGetTravelData()
