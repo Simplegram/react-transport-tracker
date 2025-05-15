@@ -41,6 +41,7 @@ interface AddableTravel {
 }
 
 interface AddableLap {
+    travel_id: number | undefined
     time: string | undefined
     stop_id: number | null
     notes: string | null
