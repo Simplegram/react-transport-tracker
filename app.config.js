@@ -1,16 +1,17 @@
 const IS_DEV = process.env.APP_VARIANT === 'development';
 const IS_PREVIEW = process.env.APP_VARIANT === 'preview';
+const USERNAME = process.env.USERNAME || 'username'
 
 const getUniqueIdentifier = () => {
     if (IS_DEV) {
-        return 'com.hgloow.TransportTracker.dev';
+        return `com.${USERNAME}.TransportTracker.dev`;
     }
 
     if (IS_PREVIEW) {
-        return 'com.hgloow.TransportTracker.preview';
+        return `com.${USERNAME}.TransportTracker.preview`;
     }
 
-    return 'com.hgloow.TransportTracker';
+    return `com.${USERNAME}.TransportTracker`;
 };
 
 const getAppName = () => {
@@ -39,7 +40,7 @@ export default {
             usesCleartextTraffic: true,
         },
         updates: {
-            url: `https://u.expo.dev/e8e4f24c-2007-4cad-a12f-7310de360390`
+            url: 'https://u.expo.dev/e8e4f24c-2007-4cad-a12f-7310de360390'
         },
         runtimeVersion: {
             policy: "appVersion"
