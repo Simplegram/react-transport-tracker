@@ -63,7 +63,7 @@ export default function HomePage() {
 
     useEffect(() => {
         getDates()
-    }, [dates])
+    }, [])
 
     useFocusEffect(
         React.useCallback(() => {
