@@ -37,6 +37,14 @@ interface EditableTravel {
     type_id: number | undefined
 }
 
+interface EditableLap {
+    id: number
+    travel_id: number
+    time: string
+    stop_id: number | null
+    note: string | null
+}
+
 interface EditableTravelModalProp {
     isModalVisible: boolean
     searchQuery: string
@@ -56,6 +64,7 @@ export {
     EditableVehicleType,
     EditableRoute,
     EditableTravel,
+    EditableLap,
     EditableTravelModalProp,
     EditableLapsModalProp
 }
