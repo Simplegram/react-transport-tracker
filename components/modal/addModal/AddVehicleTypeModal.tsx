@@ -26,7 +26,7 @@ export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalCon
 
     return (
         <View style={styles.container}>
-            {loading ? (
+            {(loading || icons.length === 0) ? (
                 <Text style={styles.label}>Loading...</Text>
             ) : (
                 <>
