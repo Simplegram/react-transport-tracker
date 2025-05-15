@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { Direction, IconType, Stop } from "@/src/types/Travels";
+import { IconType } from "@/src/types/Travels";
 import { EditableLap, EditableRoute, EditableStop, EditableTravel, EditableVehicleType } from "@/src/types/EditableTravels";
 import { AddableDirection, AddableIconType, AddableLap, AddableRoute, AddableStop, AddableTravel, AddableVehicleType } from "@/src/types/AddableTravels";
 
