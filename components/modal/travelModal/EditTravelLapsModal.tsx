@@ -2,10 +2,10 @@ import Button from '@/components/BaseButton';
 import LoadingScreen from '@/components/LoadingScreen';
 import { colors } from '@/const/color';
 import useGetTravelData from '@/hooks/useGetTravelData';
+import useStopModal from '@/hooks/useStopModal';
 import { AddableLap } from '@/src/types/AddableTravels';
-import { EditableLap } from '@/src/types/EditableTravels';
+import { EditableLap, EditableLapsModalProp } from '@/src/types/EditableTravels';
 // import { EditableLapsModalProp } from '@/src/types/EditableTravels';
-import { Lap } from '@/src/types/Travels';
 import { formatDateForDisplay } from '@/src/utils/utils';
 import React, { useEffect, useState } from 'react';
 import {
@@ -16,22 +16,28 @@ import {
     Modal,
     ScrollView,
 } from 'react-native';
+import AddLapModal from '../addModal/AddLapModal';
 
-interface EditableLapsModalProp {
-    currentLaps: Lap[]
-    isModalVisible: boolean
-    onClose: () => void
-    onSelect: (laps: EditableLap[]) => void
-}
-
-export default function EditTravelLapsModal({ currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
+export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { stops } = useGetTravelData()
+
+    const {
+        showStopModal: showLapModal,
+        openStopModal: openLapModal,
+        closeStopModal: closeLapModal
+    } = useStopModal();
 
     const [laps, setLaps] = useState<EditableLap[]>([])
 
     const handleOnSubmit = () => {
         onSelect(laps);
     };
+
+    const handleLapAdd = (lap: AddableLap) => {
+        if (laps) setLaps([...laps, lap])
+
+        closeLapModal()
+    }
 
     useEffect(() => {
         setLaps(currentLaps)
@@ -57,10 +63,10 @@ export default function EditTravelLapsModal({ currentLaps, isModalVisible, onClo
                                     gap: 10,
                                 }}
                             >
-                                {laps.map((lap: AddableLap) => (
-                                    <View style={styles.detailRow}>
+                                {laps.map((lap: EditableLap, index) => (
+                                    <View key={index} style={styles.detailRow}>
                                         <Text style={styles.label}>{formatDateForDisplay(lap.time)}</Text>
-                                        <Text style={styles.label}>{stops.find(stop => stop.id === lap.stop_id)?.name}</Text>
+                                        <Text style={[styles.label, {color: colors.appBlue}]}>{stops.find(stop => stop.id === lap.stop_id)?.name}</Text>
                                         <Text style={styles.label}>{lap.note}</Text>
                                     </View>
                                 ))}
@@ -69,7 +75,7 @@ export default function EditTravelLapsModal({ currentLaps, isModalVisible, onClo
                     </View>
                     
                     <View style={{paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
-                        <Button color={colors.appBlue} title='Add lap' style={addButtonStyles.buttonContainer} textStyle={addButtonStyles.plusText}></Button>
+                        <Button title='Add lap' color={colors.appBlue} onPress={openLapModal} style={addButtonStyles.buttonContainer} textStyle={addButtonStyles.plusText}></Button>
                     </View>
 
                     <View style={buttonStyles.buttonRow}>
@@ -77,6 +83,12 @@ export default function EditTravelLapsModal({ currentLaps, isModalVisible, onClo
                         <Button title='Save Laps' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                     </View>
                 </View>
+                <AddLapModal 
+                    travel_id={travel_id}
+                    isModalVisible={showLapModal}
+                    onSelect={handleLapAdd}
+                    onClose={closeLapModal}
+                />
             </View>
         </Modal>
     );
@@ -145,6 +157,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         borderWidth: 1,
         borderRadius: 10,
+        gap: 5,
     },
 });
 
