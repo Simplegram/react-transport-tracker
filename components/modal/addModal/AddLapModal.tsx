@@ -1,6 +1,6 @@
 import Button from '@/components/BaseButton';
 import CustomDateTimePicker from '@/components/CustomDatetimePicker';
-import { AddableLap } from '@/src/types/AddableTravels';
+import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels';
 import { BaseModalContentProps } from '@/src/types/ModalContentProps';
 import React, { useState } from 'react';
 import {
@@ -9,14 +9,16 @@ import {
     TextInput,
     StyleSheet,
     Pressable,
+    Modal,
 } from 'react-native';
 import moment from 'moment-timezone'
 import { formatDateForDisplay } from '@/src/utils/utils';
 import useGetTravelData from '@/hooks/useGetTravelData';
 import useStopModal from '@/hooks/useStopModal';
 import EditTravelStopModal from '../travelModal/EditTravelStopModal';
+import modalStyles from '@/src/styles/ModalStyles';
 
-export default function AddLapModal({ onCancel, onSubmit }: BaseModalContentProps) {
+export default function AddLapModal({ travel_id, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { stops } = useGetTravelData()
 
     const {
@@ -27,7 +29,7 @@ export default function AddLapModal({ onCancel, onSubmit }: BaseModalContentProp
         closeStopModal
     } = useStopModal();
 
-    const [lap, setLap] = useState<AddableLap>({ travel_id: undefined, time: undefined, stop_id: null, note: null })
+    const [lap, setLap] = useState<AddableLap>({ travel_id: travel_id, time: undefined, stop_id: null, note: null })
 
     const [showDatetimePicker, setShowDatetimePicker] = useState(false);
 
@@ -45,51 +47,63 @@ export default function AddLapModal({ onCancel, onSubmit }: BaseModalContentProp
     };
 
     const handleOnSubmit = () => {
-        onSubmit(lap);
+        onSelect(lap);
     };
 
     return (
-        <View style={styles.container}>
-            <View style={styles.inputContainer}>
-                <View style={styles.inputGroup}>
-                    <View style={[styles.inputGroup, { paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }]}>
-                        <Text style={styles.label}>Bus Final Arrival:</Text>
-                        <Pressable onPress={() => setShowDatetimePicker(true)} style={styles.pressableInput}>
-                            <Text style={styles.insideLabel}>{formatDateForDisplay(lap.time)}</Text>
+        <Modal
+            visible={isModalVisible}
+            transparent={true}
+            animationType="slide"
+            onRequestClose={onClose}
+        >
+            <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
+                <View style={[modalStyles.modalContainer, {height: 400}]}>
+                    <View style={styles.inputGroup}>
+                        <View style={styles.inputGroup}>
+                            <Text style={styles.label}>Time:</Text>
+                            <Pressable onPress={() => setShowDatetimePicker(true)} style={styles.pressableInput}>
+                                <Text style={styles.label}>{formatDateForDisplay(lap.time)}</Text>
+                            </Pressable>
+                        </View>
+                    </View>
+
+                    <View style={styles.inputGroup}>
+                        <Text style={styles.label}>Stop:</Text>
+                        <Pressable
+                            style={styles.pressableInput}
+                            onPress={() => openStopModal('last_stop_id')}>
+                            <Text style={[styles.label, { marginBottom: 0 }]}>{stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}</Text>
                         </Pressable>
                     </View>
-                </View>
 
-                <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Stop:</Text>
-                    <Pressable
-                        style={styles.pressableInput}
-                        onPress={() => openStopModal('last_stop_id')}>
-                        <Text style={[styles.label, { marginBottom: 0 }]}>{stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}</Text>
-                    </Pressable>
-                </View>
+                    {showDatetimePicker && (
+                        <CustomDateTimePicker
+                            visible={showDatetimePicker}
+                            initialDateTime={new Date()}
+                            onClose={() => setShowDatetimePicker(false)}
+                            onConfirm={handleCustomDateConfirm}
+                        />
+                    )}
 
-                {showDatetimePicker && (
-                    <CustomDateTimePicker
-                        visible={showDatetimePicker}
-                        initialDateTime={new Date()}
-                        onClose={() => setShowDatetimePicker(false)}
-                        onConfirm={handleCustomDateConfirm}
-                    />
-                )}
+                    <View style={styles.inputGroup}>
+                        <Text style={styles.label}>Note:</Text>
+                        <TextInput
+                            placeholder="Optional notes"
+                            value={lap.note || ''}
+                            onChangeText={text => setLap({ ...lap, note: text })}
+                            keyboardType="default"
+                            returnKeyType="done"
+                            multiline={true}
+                            numberOfLines={3}
+                            style={[styles.input, { height: 80, textAlignVertical: 'top' }]}
+                        />
+                    </View>
 
-                <View style={styles.inputGroup}>
-                    <Text style={styles.label}>Note:</Text>
-                    <TextInput
-                        placeholder="Optional notes"
-                        value={lap.notes || ''}
-                        onChangeText={text => setLap({ ...lap, notes: text })}
-                        keyboardType="default"
-                        returnKeyType="done"
-                        multiline={true}
-                        numberOfLines={3}
-                        style={[styles.input, { height: 80, textAlignVertical: 'top' }]}
-                    />
+                    <View style={buttonStyles.buttonRow}>
+                        <Button title='Cancel' color='#E0E0E0' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
+                        <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                    </View>
                 </View>
 
                 <EditTravelStopModal
@@ -99,13 +113,8 @@ export default function AddLapModal({ onCancel, onSubmit }: BaseModalContentProp
                     onSelect={handleStopSelect}
                     onClose={closeStopModal}
                 />
-            </View>
-
-            <View style={buttonStyles.buttonRow}>
-                <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
-            </View>
-        </View>
+            </Pressable>
+        </Modal>
     );
 };
 
