@@ -163,7 +163,6 @@ export default function EditTravelItem() {
     }
 
     const handleLapsSelect = (laps: Lap[]) => {
-        console.log(laps)
         if (laps) setLaps(laps)
 
         closeLapsModal()

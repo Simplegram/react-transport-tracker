@@ -12,8 +12,10 @@ import {
     StyleSheet,
     Modal,
     ScrollView,
+    Pressable,
 } from 'react-native';
 import AddLapModal from '../addModal/AddLapModal';
+import EditLapModal from '../editModal/EditLapModal';
 
 export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { stops } = useGetTravelData()
@@ -24,16 +26,40 @@ export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVis
         closeStopModal: closeLapModal
     } = useStopModal();
 
+    const {
+        showStopModal: showEditLapModal,
+        openStopModal: openEditLapModal,
+        closeStopModal: closeEditLapModal
+    } = useStopModal();
+
     const [laps, setLaps] = useState<EditableLap[]>([])
+    const [selectedLap, setSelectedLap] = useState<EditableLap | undefined>(undefined)
 
     const handleOnSubmit = () => {
         onSelect(laps);
     };
 
+    const handleLapSelect = (lap: EditableLap) => {
+        setSelectedLap(lap)
+        openEditLapModal()
+    }
+
     const handleLapAdd = (lap: AddableLap) => {
         if (laps) setLaps([...laps, lap])
 
         closeLapModal()
+    }
+
+    const handleLapEdit = (lap: EditableLap) => {
+        const updatedLaps = laps.map(item => {
+            if (item.id === lap.id) {
+                return lap;
+            }
+            return item;
+        });
+
+        setLaps(updatedLaps)
+        closeEditLapModal()
     }
 
     useEffect(() => {
@@ -61,11 +87,11 @@ export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVis
                                 }}
                             >
                                 {laps.map((lap: EditableLap, index) => (
-                                    <View key={index} style={styles.detailRow}>
+                                    <Pressable key={index} style={styles.detailRow} onPress={() => handleLapSelect(lap)}>
                                         <Text style={styles.label}>{formatDateForDisplay(lap.time)}</Text>
                                         <Text style={[styles.label, {color: colors.appBlue}]}>{stops.find(stop => stop.id === lap.stop_id)?.name}</Text>
                                         <Text style={styles.label}>{lap.note}</Text>
-                                    </View>
+                                    </Pressable>
                                 ))}
                             </ScrollView>
                         )}
@@ -80,6 +106,14 @@ export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVis
                         <Button title='Save Laps' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                     </View>
                 </View>
+
+                <EditLapModal 
+                    selectedLap={selectedLap}
+                    isModalVisible={showEditLapModal}
+                    onSelect={handleLapEdit}
+                    onClose={closeEditLapModal}
+                />
+
                 <AddLapModal 
                     travel_id={travel_id}
                     isModalVisible={showLapModal}

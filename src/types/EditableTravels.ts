@@ -55,11 +55,10 @@ interface EditableTravelModalProp {
 }
 
 interface EditableLapsModalProp {
-    travel_id: number
-    currentLaps: Lap[]
+    selectedLap: EditableLap
     isModalVisible: boolean
     onClose: () => void
-    onSelect: (laps: EditableLap[]) => void
+    onSelect: (lap: EditableLap) => void
 }
 
 export {
