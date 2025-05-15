@@ -39,14 +39,14 @@ export default {
             usesCleartextTraffic: true,
         },
         updates: {
-            url: `https://u.expo.dev/${process.env.EAS_PROJECT_ID}`
+            url: `https://u.expo.dev/e8e4f24c-2007-4cad-a12f-7310de360390`
         },
         runtimeVersion: {
             policy: "appVersion"
         },
         extra: {
             eas: {
-                projectId: process.env.EAS_PROJECT_ID
+                projectId: "e8e4f24c-2007-4cad-a12f-7310de360390"
             }
         },
         plugins: [
