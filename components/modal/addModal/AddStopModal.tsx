@@ -48,21 +48,21 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         <TextInput
                             style={modalStyles.input}
                             placeholder="Stop latitude..."
-                            value={stop.lat}
+                            value={stop.lat ? stop.lat.toString() : ''}
                             onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
                         />
                         <Text style={styles.label}>Longitude:</Text>
                         <TextInput
                             style={modalStyles.input}
                             placeholder="Stop longitude..."
-                            value={stop.lon}
+                            value={stop.lon ? stop.lon.toString() : ''}
                             onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
                         />
                         <Text style={styles.label}>Alternative name:</Text>
                         <TextInput
                             style={modalStyles.input}
                             placeholder="Alternative name..."
-                            value={stop.name_alt}
+                            value={stop.name_alt ? stop.name_alt : ''}
                             onChangeText={text => (setStop({ ...stop, "name_alt": text }))}
                         />
                     </View>

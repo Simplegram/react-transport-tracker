@@ -5,6 +5,7 @@ import { useLoading } from "@/hooks/useLoading";
 import modalStyles from "@/src/styles/ModalStyles";
 import { EditableVehicleType } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
+import { IconType } from "@/src/types/Travels";
 import { sortByIdToFront } from "@/src/utils/utils";
 import { useEffect, useRef, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
@@ -55,7 +56,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                                 contentContainerStyle={styles.iconScrollView}
                                 keyboardShouldPersistTaps={"always"}
                             >
-                                {sortByIdToFront(icons, savedVehicleTypeId.current).map((icon) => (
+                                {sortByIdToFront(icons, savedVehicleTypeId.current).map((icon: IconType) => (
                                     <TouchableOpacity
                                         key={icon.id}
                                         style={[
