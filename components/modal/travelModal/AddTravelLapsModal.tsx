@@ -16,6 +16,7 @@ import useStopModal from '@/hooks/useStopModal';
 import EditLapModal from '../editModal/EditLapModal';
 import { Pressable } from 'react-native';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
+import { inputElementStyles } from '@/src/styles/Styles';
 
 export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
     const { stops } = useGetTravelData()
@@ -74,7 +75,7 @@ export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClos
             onRequestClose={onClose}
         >
             <View style={styles.modalBackdrop}>
-                <View style={styles.modalContainer}>
+                <View style={[styles.modalContainer, inputElementStyles.inputContainer]}>
                     <View style={styles.inputContainer}>
                         {laps.length === 0 ? (
                             <View style={styles.emptyList}>
@@ -106,7 +107,7 @@ export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClos
                         <Button title='Save Laps' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                     </View>
                 </View>
-                
+
                 <EditLapModal 
                     selectedLap={selectedLap}
                     isModalVisible={showEditLapModal}

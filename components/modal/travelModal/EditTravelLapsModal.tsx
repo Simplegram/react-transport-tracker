@@ -17,6 +17,7 @@ import {
 import AddLapModal from '../addModal/AddLapModal';
 import EditLapModal from '../editModal/EditLapModal';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
+import { inputElementStyles } from '@/src/styles/Styles';
 
 export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { stops } = useGetTravelData()
@@ -75,7 +76,7 @@ export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVis
             onRequestClose={onClose}
         >
             <View style={styles.modalBackdrop}>
-                <View style={styles.modalContainer}>
+                <View style={[styles.modalContainer, inputElementStyles.inputContainer]}>
                     <View style={styles.inputContainer}>
                         {laps.length === 0 ? (
                             <View style={styles.emptyList}>
