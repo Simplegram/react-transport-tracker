@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
         flex: 1,
         minHeight: screenHeight * 0.48,
         maxHeight: screenHeight * 0.9,
-        paddingTop: 15,
+        paddingTop: 10,
     },
     listTitle: {
         fontSize: 18,

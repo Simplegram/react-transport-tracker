@@ -162,11 +162,8 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: '#2c3e50',
-        borderBottomWidth: 2,
-        borderBottomColor: '#3498db',
-        paddingBottom: 10,
+        paddingBottom: 8,
         textAlign: 'center',
-        marginBottom: 15,
     },
     itemsListContainer: {
         gap: 15,
