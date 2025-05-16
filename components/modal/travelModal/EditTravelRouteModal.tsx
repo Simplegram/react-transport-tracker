@@ -4,7 +4,7 @@ import { EditableTravelModalProp } from "@/src/types/EditableTravels";
 import { useMemo } from "react";
 import { FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
-import { modalStyles } from "@/src/styles/ModalStyles";
+import { flatlistStyles, modalStyles } from "@/src/styles/ModalStyles";
 
 export default function EditTravelRouteModal({ searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelModalProp) {
     const { routes } = useGetTravelData()
@@ -47,7 +47,7 @@ export default function EditTravelRouteModal({ searchQuery, isModalVisible, setS
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({ item }) => (
                                 <TouchableOpacity
-                                    style={modalStyles.listItem}
+                                    style={flatlistStyles.item}
                                     onPress={() => onSelect(item.id)}>
                                     {
                                         item.vehicle_type_id?.name ? <Icon name={item.vehicle_type_id.icon_id.name.toLocaleLowerCase()} size={16}></Icon> : <Icon name="train" size={16}></Icon>

@@ -1,5 +1,19 @@
 import { StyleSheet } from "react-native";
 
+const flatlistStyles = StyleSheet.create({
+    item: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+        paddingVertical: 15,
+        paddingHorizontal: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+        backgroundColor: '#fff',
+    },
+})
+
 const modalStyles = StyleSheet.create({
     label: {
         fontSize: 16,
