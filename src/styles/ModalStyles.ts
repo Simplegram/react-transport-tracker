@@ -29,7 +29,11 @@ const modalStyles = StyleSheet.create({
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
         backgroundColor: '#fff',
+        justifyContent: 'space-between',
         gap: 10,
+    },
+    lapModalContainer : {
+        height: 380
     },
     modalHeader: {
         flexDirection: 'row',
@@ -76,7 +80,7 @@ const modalStyles = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#000',
         borderRadius: 5,
         paddingHorizontal: 10,
         paddingVertical: 10,

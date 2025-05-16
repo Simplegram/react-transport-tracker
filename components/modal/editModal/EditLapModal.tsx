@@ -95,7 +95,7 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
                 <LoadingScreen></LoadingScreen>
             ) : (
                 <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
-                    <View style={[modalStyles.modalContainer, { height: 400 }]}>
+                    <View style={[modalStyles.modalContainer, modalStyles.lapModalContainer]}>
                         <View style={styles.inputGroup}>
                             <View style={styles.inputGroup}>
                                 <Text style={styles.label}>Time:</Text>
@@ -142,6 +142,7 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
                             <Button title='Edit Lap' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                         </View>
                     </View>
+
 
                     <EditTravelStopModal
                         isModalVisible={showStopModal}

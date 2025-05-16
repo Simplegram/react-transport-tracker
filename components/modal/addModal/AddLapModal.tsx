@@ -58,7 +58,7 @@ export default function AddLapModal({ isModalVisible, onClose, onSelect }: Addab
             onRequestClose={onClose}
         >
             <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
-                <View style={[modalStyles.modalContainer, { height: 400 }]}>
+                <View style={[modalStyles.modalContainer, modalStyles.lapModalContainer]}>
                     <View style={styles.inputGroup}>
                         <View style={styles.inputGroup}>
                             <Text style={styles.label}>Time:</Text>
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     },
     input: {
         borderWidth: 1,
-        borderColor: '#ddd',
+        borderColor: '#000',
         borderRadius: 5,
         padding: 10,
         fontSize: 16,
