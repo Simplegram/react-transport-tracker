@@ -1,6 +1,7 @@
 import Button from "@/components/BaseButton"
 import { useLoading } from "@/hooks/useLoading"
 import modalStyles from "@/src/styles/ModalStyles"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { AddableDirection } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
@@ -57,37 +58,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 8
-    },
-})
-
-const buttonStyles = StyleSheet.create({
-    buttonRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginTop: 10,
-        gap: 10,
-    },
-    addButton: {
-        backgroundColor: '#1E88E5',
-        paddingVertical: 12,
-        borderRadius: 8,
-        flex: 1,
-        alignItems: 'center',
-    },
-    addButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    cancelButton: {
-        paddingVertical: 12,
-        borderRadius: 8,
-        flex: 1,
-        alignItems: 'center',
-    },
-    cancelButtonText: {
-        color: '#000',
-        fontSize: 16,
-        fontWeight: '600',
     },
 })

@@ -19,6 +19,7 @@ import EditTravelStopModal from '../travelModal/EditTravelStopModal';
 import modalStyles from '@/src/styles/ModalStyles';
 import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels';
 import LoadingScreen from '@/components/LoadingScreen';
+import { buttonStyles } from '@/src/styles/ButtonStyles';
 
 export default function EditLapModal({ selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
     const { stops } = useGetTravelData()
@@ -79,7 +80,7 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
 
             return
         }
-        
+
         onSelect(lap);
     };
 
@@ -94,7 +95,7 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
                 <LoadingScreen></LoadingScreen>
             ) : (
                 <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
-                    <View style={[modalStyles.modalContainer, {height: 400}]}>
+                    <View style={[modalStyles.modalContainer, { height: 400 }]}>
                         <View style={styles.inputGroup}>
                             <View style={styles.inputGroup}>
                                 <Text style={styles.label}>Time:</Text>
@@ -202,36 +203,3 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
 });
-
-const buttonStyles = StyleSheet.create({
-    buttonRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginTop: 10,
-        gap: 10,
-    },
-    addButton: {
-        backgroundColor: '#1E88E5',
-        paddingVertical: 12,
-        borderRadius: 8,
-        flex: 1,
-        alignItems: 'center',
-    },
-    addButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    cancelButton: {
-        paddingVertical: 12,
-        borderRadius: 8,
-        flex: 1,
-        alignItems: 'center',
-        borderWidth: 1,
-    },
-    cancelButtonText: {
-        color: '#000',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-})

@@ -1,5 +1,6 @@
 import Button from "@/components/BaseButton";
 import modalStyles from "@/src/styles/ModalStyles";
+import { buttonStyles } from "@/src/styles/ButtonStyles";
 import { AddableIconType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
@@ -44,9 +45,9 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
                 />
             </View>
 
-            <View style={styles.buttonRow}>
-                <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={styles.cancelButton} textStyle={styles.cancelButtonText}></Button>
-                <Button title='Add Icon' color='#0284f5' onPress={handleOnSubmit} style={styles.addButton} textStyle={styles.addButtonText}></Button>
+            <View style={buttonStyles.buttonRow}>
+                <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
+                <Button title='Add Icon' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
             </View>
         </View>
     )
@@ -85,34 +86,5 @@ const styles = StyleSheet.create({
     selectedIconContainer: {
         borderColor: '#0284f5', // Highlight selected icon
         backgroundColor: '#e3f2fd', // Light background for selected
-    },
-    buttonRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginTop: 10,
-        gap: 10,
-    },
-    addButton: {
-        backgroundColor: '#1E88E5',
-        paddingVertical: 12,
-        borderRadius: 8,
-        flex: 1,
-        alignItems: 'center',
-    },
-    addButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    cancelButton: {
-        paddingVertical: 12,
-        borderRadius: 8,
-        flex: 1,
-        alignItems: 'center',
-    },
-    cancelButtonText: {
-        color: '#000',
-        fontSize: 16,
-        fontWeight: '600',
     },
 });

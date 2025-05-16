@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import AddLapModal from '../addModal/AddLapModal';
 import EditLapModal from '../editModal/EditLapModal';
+import { buttonStyles } from '@/src/styles/ButtonStyles';
 
 export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { stops } = useGetTravelData()
@@ -200,38 +201,5 @@ const addButtonStyles = StyleSheet.create({
     plusText: {
         color: 'white',
         fontWeight: 'bold',
-    },
-})
-
-const buttonStyles = StyleSheet.create({
-    buttonRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginTop: 10,
-        gap: 10,
-    },
-    addButton: {
-        backgroundColor: '#1E88E5',
-        paddingVertical: 12,
-        borderRadius: 8,
-        flex: 1,
-        alignItems: 'center',
-    },
-    addButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    cancelButton: {
-        paddingVertical: 12,
-        borderRadius: 8,
-        flex: 1,
-        alignItems: 'center',
-        borderWidth: 1,
-    },
-    cancelButtonText: {
-        color: '#000',
-        fontSize: 16,
-        fontWeight: '600',
     },
 })

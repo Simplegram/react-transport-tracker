@@ -9,6 +9,7 @@ import { useLoading } from "@/hooks/useLoading"
 import useStopModal from "@/hooks/useStopModal"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import modalStyles from "@/src/styles/ModalStyles"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
 
 export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { stops, fullVehicleTypes } = useGetTravelData()
@@ -165,37 +166,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         minHeight: 44,
         backgroundColor: '#fff',
-    },
-})
-
-const buttonStyles = StyleSheet.create({
-    buttonRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        marginTop: 10,
-        gap: 10,
-    },
-    addButton: {
-        backgroundColor: '#1E88E5',
-        paddingVertical: 12,
-        borderRadius: 8,
-        flex: 1,
-        alignItems: 'center',
-    },
-    addButtonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '600',
-    },
-    cancelButton: {
-        paddingVertical: 12,
-        borderRadius: 8,
-        flex: 1,
-        alignItems: 'center',
-    },
-    cancelButtonText: {
-        color: '#000',
-        fontSize: 16,
-        fontWeight: '600',
     },
 })
