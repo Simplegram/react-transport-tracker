@@ -2,7 +2,7 @@ import Button from "@/components/BaseButton";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { inputStyles } from "@/src/styles/Styles"
+import { inputElementStyles, inputStyles } from "@/src/styles/Styles"
 import { AddableVehicleType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
@@ -31,9 +31,9 @@ export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalCon
                 <Text style={styles.label}>Loading...</Text>
             ) : (
                 <>
-                    <View style={styles.inputContainer}>
-                        <View>
-                            <Text style={styles.label}>Name:</Text>
+                    <View style={inputElementStyles.inputContainer}>
+                        <View style={inputElementStyles.inputGroup}>
+                            <Text style={inputElementStyles.inputLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles.pressableInput}
                                 placeholder="e.g., Standard Bus"
@@ -42,29 +42,30 @@ export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalCon
                             />
                         </View>
 
-                        <View style={{
-                            flexDirection: 'column',
-                        }}>
-                            <Text style={styles.label}>Icon:</Text>
-                            <ScrollView
-                                horizontal
-                                showsHorizontalScrollIndicator={false}
-                                contentContainerStyle={styles.iconScrollView}
-                                keyboardShouldPersistTaps={"always"}
-                            >
-                                {icons.map((icon) => (
-                                    <TouchableOpacity
-                                        key={icon.id}
-                                        style={[
-                                            styles.iconContainer,
-                                            vehicleType.icon_id === icon.id && styles.selectedIconContainer,
-                                        ]}
-                                        onPress={() => setVehicleType({ ...vehicleType, "icon_id": icon.id })}
-                                    >
-                                        <Icon name={icon.name} size={20}></Icon>
-                                    </TouchableOpacity>
-                                ))}
-                            </ScrollView>
+                        <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                            <View style={{
+                                flexDirection: 'column',
+                            }}>
+                                <Text style={inputElementStyles.inputLabel}>Icon:</Text>
+                                <ScrollView
+                                    horizontal
+                                    showsHorizontalScrollIndicator={false}
+                                    keyboardShouldPersistTaps={"always"}
+                                >
+                                    {icons.map((icon) => (
+                                        <TouchableOpacity
+                                            key={icon.id}
+                                            style={[
+                                                styles.iconContainer,
+                                                vehicleType.icon_id === icon.id && styles.selectedIconContainer,
+                                            ]}
+                                            onPress={() => setVehicleType({ ...vehicleType, "icon_id": icon.id })}
+                                        >
+                                            <Icon name={icon.name} size={20}></Icon>
+                                        </TouchableOpacity>
+                                    ))}
+                                </ScrollView>
+                            </View>
                         </View>
                     </View>
 
@@ -91,9 +92,6 @@ const styles = StyleSheet.create({
     icon: {
         paddingLeft: 5,
         alignItems: 'center',
-    },
-    iconScrollView: {
-        marginBottom: 20,
     },
     iconContainer: {
         width: 55,

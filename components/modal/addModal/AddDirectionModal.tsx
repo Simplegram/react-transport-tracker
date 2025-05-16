@@ -1,7 +1,7 @@
 import Button from "@/components/BaseButton"
 import { useLoading } from "@/hooks/useLoading"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputStyles } from "@/src/styles/Styles"
+import { inputElementStyles, inputStyles } from "@/src/styles/Styles"
 import { AddableDirection } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
@@ -24,19 +24,21 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
     return (
         <View style={styles.container}>
             {loading ? (
-                <Text style={styles.label}>Loading...</Text>
+                <Text style={inputElementStyles.inputLabel}>Loading...</Text>
             ) : (
                 <>
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.label}>Name:</Text>
-                        <TextInput
-                            style={inputStyles.pressableInput}
-                            placeholder="Direction name..."
-                            value={direction.name}
-                            onChangeText={text => (setDirection({ ...direction, "name": text }))}
-                        />
+                    <View style={inputElementStyles.inputContainer}>
+                        <View style={inputElementStyles.inputGroup}>
+                            <Text style={inputElementStyles.inputLabel}>Name:</Text>
+                            <TextInput
+                                style={inputStyles.pressableInput}
+                                placeholder="Direction name..."
+                                value={direction.name}
+                                onChangeText={text => (setDirection({ ...direction, "name": text }))}
+                            />
+                        </View>
                     </View>
-
+                    
                     <View style={buttonStyles.buttonRow}>
                         <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
                         <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>

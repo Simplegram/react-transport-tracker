@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { inputStyles } from "@/src/styles/Styles"
+import { inputElementStyles, inputStyles } from "@/src/styles/Styles"
 import { AddableIconType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
@@ -33,16 +33,18 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
 
     return (
         <View style={styles.container}>
-            <Text style={styles.label}>Icon name (FontAwesome6):</Text>
-            <View style={styles.inputContainer}>
-                <Icon style={styles.icon} name={icon.name ? icon.name : 'xmark'} size={32} />
-                <TextInput
-                    style={[inputStyles.pressableInput, { flex: 1 }]}
-                    placeholder="e.g., train-subway"
-                    value={iconQuery}
-                    onChangeText={changeIcon}
-                    autoFocus={true}
-                />
+            <Text style={inputElementStyles.inputLabel}>Icon name (FontAwesome6):</Text>
+            <View style={inputElementStyles.inputContainer}>
+                <View style={inputElementStyles.inputGroup}>
+                    <Icon style={styles.icon} name={icon.name ? icon.name : 'xmark'} size={32} />
+                    <TextInput
+                        style={[inputStyles.pressableInput, { flex: 1 }]}
+                        placeholder="e.g., train-subway"
+                        value={iconQuery}
+                        onChangeText={changeIcon}
+                        autoFocus={true}
+                    />
+                </View>
             </View>
 
             <View style={buttonStyles.buttonRow}>
