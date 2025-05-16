@@ -81,19 +81,15 @@ export default function TravelDetail() {
             const departureValid = !isNaN(departureDate.getTime());
             const finalArrivalValid = !isNaN(finalArrivalDate.getTime());
 
-            // --- Calculate Trip Duration and Update Overall Span ---
             if (departureValid && finalArrivalValid) {
-                // Ensure arrival is not before departure (basic data integrity check)
                 if (finalArrivalDate.getTime() >= departureDate.getTime()) {
                     totalOnRoadMilliseconds += finalArrivalDate.getTime() - departureDate.getTime();
-                    validTripCount++; // Count this trip as valid for averaging durations
+                    validTripCount++;
 
-                    // Find earliest start across all valid trips
                     if (earliestStartMillis === null || departureDate.getTime() < earliestStartMillis) {
                         earliestStartMillis = departureDate.getTime();
                     }
 
-                    // Find latest end across all valid trips
                     if (latestEndMillis === null || finalArrivalDate.getTime() > latestEndMillis) {
                         latestEndMillis = finalArrivalDate.getTime();
                     }
@@ -106,7 +102,6 @@ export default function TravelDetail() {
             }
 
 
-            // --- Calculate Time at Initial Stop ---
             if (initialArrivalValid && departureValid) {
                 if (departureDate.getTime() >= initialArrivalDate.getTime()) {
                     sumInitialStopDurationMilliseconds += departureDate.getTime() - initialArrivalDate.getTime();
@@ -118,7 +113,6 @@ export default function TravelDetail() {
             }
 
 
-            // --- Collect Unique Items ---
             if (trip.vehicle_code) {
                 uniqueVehicles.add(trip.vehicle_code);
             }
@@ -132,7 +126,6 @@ export default function TravelDetail() {
                 uniqueDestinations.add(trip.last_stop_id.name);
             }
 
-            // --- Count Trips by Type ---
             if (trip.types?.name) {
                 tripsByType[trip.types.name] = (tripsByType[trip.types.name] || 0) + 1;
             }
@@ -143,7 +136,6 @@ export default function TravelDetail() {
         }
     });
 
-    // --- Final Calculations ---
 
     let totalCalendarSpanMilliseconds = 0;
     if (earliestStartMillis !== null && latestEndMillis !== null && latestEndMillis > earliestStartMillis) {
@@ -155,7 +147,6 @@ export default function TravelDetail() {
         efficiencyPercentage = (totalOnRoadMilliseconds / totalCalendarSpanMilliseconds) * 100;
     }
 
-    // Convert Sets to Arrays for rendering
     const uniqueVehiclesList = [...uniqueVehicles.values()];
     const uniqueRoutesList = [...uniqueRoutes.values()];
     const uniqueOriginsList = [...uniqueOrigins.values()];
@@ -195,7 +186,6 @@ export default function TravelDetail() {
                                 const durationMillis = finalArrivalDate.getTime() - departureDate.getTime();
                                 const durationString = formatDurationHoursMinutes(durationMillis);
 
-                                // Display trip identifier (e.g., Vehicle Code - Route Name)
                                 const tripIdentifier = `${trip.vehicle_code || 'N/A'} - ${trip.routes?.name || 'N/A'}`;
 
                                 return (
