@@ -8,6 +8,11 @@ const inputElementStyles = StyleSheet.create({
     inputGroup: {
         // flexDirection: 'column',
     },
+    inputGroupCoord: {
+        flex: 1,
+        gap: 8,
+        flexDirection: 'row',
+    },
     inputGroupIcon: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -63,6 +68,9 @@ const inputStyles = StyleSheet.create({
         fontSize: 16,
         backgroundColor: '#fff',
     },
+    pressableInputCoord: {
+        flex: 1,
+    }
 })
 
 const iconPickerStyles = StyleSheet.create({

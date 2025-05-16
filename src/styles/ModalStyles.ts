@@ -55,6 +55,9 @@ const modalStyles = StyleSheet.create({
     lapModalContainer : {
         height: 400
     },
+    coordModalContainer : {
+        height: 475
+    },
     modalSearchInput: {
         borderWidth: 1,
         borderColor: '#ccc',

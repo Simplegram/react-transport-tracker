@@ -7,9 +7,13 @@ import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/
 import { EditableStop } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Pressable } from "react-native";
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
+import AddCoordModal from "../addModal/AddCoordModal";
+import useStopModal from "@/hooks/useStopModal";
+import { AddableCoordinates, AddableCoordModalProp } from "@/src/types/AddableTravels";
+import { colors } from "@/const/color";
 
 export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { modalData: data } = useModalContext()
@@ -18,6 +22,17 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
     const [stop, setStop] = useState<EditableStop>({ ...data, vehicle_type: data.vehicle_type?.id })
 
     const { loading } = useLoading()
+
+    const {
+        showStopModal: showCoordModal,
+        openStopModal: openCoordModal,
+        closeStopModal: closeCoordModal
+    } = useStopModal();
+
+    const handleCoordSelect = (coordinates: AddableCoordinates) => {
+        setStop({ ...stop, lat: coordinates.lat, lon: coordinates.lon })
+        closeCoordModal();
+    };
 
     const handleOnSubmit = () => {
         if (!stop.name.trim() || !stop.vehicle_type) {
@@ -46,23 +61,26 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                         </View>
 
                         <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Latitude:</Text>
-                            <TextInput
-                                style={inputStyles.pressableInput}
-                                placeholder="Stop latitude..."
-                                value={stop.lat?.toString()}
-                                onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
-                            />
-                        </View>
-
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Longitude:</Text>
-                            <TextInput
-                                style={inputStyles.pressableInput}
-                                placeholder="Stop longitude..."
-                                value={stop.lon?.toString()}
-                                onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
-                            />
+                            <Text style={inputElementStyles.inputLabel}>Latitude and Longitude:</Text>
+                            <View style={inputElementStyles.inputGroupCoord}>
+                                <TextInput
+                                    style={[inputStyles.pressableInput, inputStyles.pressableInputCoord]}
+                                    placeholder="Stop latitude..."
+                                    value={stop.lat?.toString()}
+                                    onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
+                                />
+                                <TextInput
+                                    style={[inputStyles.pressableInput, inputStyles.pressableInputCoord]}
+                                    placeholder="Stop longitude..."
+                                    value={stop.lon?.toString()}
+                                    onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
+                                />
+                            </View>
+                            <Pressable
+                                style={[inputStyles.pressableInput, {marginTop: 10}]}
+                                onPress={() => openCoordModal()}>
+                                <Text style={inputElementStyles.insideLabel}>Pick Latitude and Longitude...</Text>
+                            </Pressable>
                         </View>
 
                         <View style={inputElementStyles.inputGroup}>
@@ -103,6 +121,16 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                         </View>
                     </View>
 
+                    <AddCoordModal 
+                        currentCoordinates={{
+                            lat: stop.lat,
+                            lon: stop.lon
+                        }}
+                        isModalVisible={showCoordModal}
+                        onClose={closeCoordModal}
+                        onSelect={handleCoordSelect}
+                    />
+
                     <View style={buttonStyles.buttonRow}>
                         <Button title='Cancel' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
                         <Button title='Edit Stop' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
@@ -112,3 +140,15 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
         </View>
     )
 }
+
+const addButtonStyles = StyleSheet.create({
+    buttonContainer: {
+        borderColor: 'black',
+        borderRadius: 10,
+        backgroundColor: colors.appBlue,
+    },
+    plusText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+})

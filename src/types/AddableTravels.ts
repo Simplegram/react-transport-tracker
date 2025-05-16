@@ -47,6 +47,18 @@ interface AddableLap {
     note: string | null
 }
 
+interface AddableCoordinates {
+    lon: number | null
+    lat: number | null
+}
+
+interface AddableCoordModalProp {
+    currentCoordinates: AddableCoordinates | undefined
+    isModalVisible: boolean
+    onClose: () => void
+    onSelect: (coordinates: AddableCoordinates) => void
+}
+
 interface AddableLapsModalProp {
     currentLaps: AddableLap[]
     isModalVisible: boolean
@@ -69,5 +81,6 @@ export {
     AddableIconType,
     AddableTravel,
     AddableLap,
+    AddableCoordinates, AddableCoordModalProp,
     AddableLapsModalProp, AddableLapModalProp
 }
