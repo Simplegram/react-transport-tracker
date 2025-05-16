@@ -2,7 +2,7 @@ import useGetTravelData from "@/hooks/useGetTravelData";
 import { EditableTravelModalProp } from "@/src/types/EditableTravels";
 import { useMemo } from "react";
 import { FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { flatlistStyles, modalStyles } from "@/src/styles/ModalStyles";
+import { flatlistStyles, modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
 
 export default function EditTravelDirectionModal({ searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelModalProp) {
     const { directions } = useGetTravelData()
@@ -24,9 +24,9 @@ export default function EditTravelDirectionModal({ searchQuery, isModalVisible, 
         >
             <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
                 <View style={modalStyles.modalContainer}>
-                    <View style={modalStyles.modalHeader}>
-                        <Text style={modalStyles.modalTitle}>Select a Direction</Text>
-                        <Text style={modalStyles.closeLabel}>Close</Text>
+                    <View style={modalElementStyles.header}>
+                        <Text style={modalElementStyles.title}>Select a Direction</Text>
+                        <Text style={modalElementStyles.closeLabel}>Close</Text>
                     </View>
                     <TextInput
                         style={modalStyles.modalSearchInput}
@@ -48,7 +48,7 @@ export default function EditTravelDirectionModal({ searchQuery, isModalVisible, 
                                     style={flatlistStyles.item}
                                     onPress={() => onSelect(item.id)}
                                 >
-                                    <Text style={modalStyles.label}>{item.name}</Text>
+                                    <Text style={modalElementStyles.label}>{item.name}</Text>
                                 </TouchableOpacity>
                             )}
                             keyboardShouldPersistTaps={'always'}

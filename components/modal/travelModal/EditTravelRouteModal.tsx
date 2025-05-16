@@ -4,7 +4,7 @@ import { EditableTravelModalProp } from "@/src/types/EditableTravels";
 import { useMemo } from "react";
 import { FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
-import { flatlistStyles, modalStyles } from "@/src/styles/ModalStyles";
+import { flatlistStyles, modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
 
 export default function EditTravelRouteModal({ searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelModalProp) {
     const { routes } = useGetTravelData()
@@ -26,9 +26,9 @@ export default function EditTravelRouteModal({ searchQuery, isModalVisible, setS
         >
             <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
                 <View style={modalStyles.modalContainer}>
-                    <View style={modalStyles.modalHeader}>
-                        <Text style={modalStyles.modalTitle}>Select a Route</Text>
-                        <Text style={modalStyles.closeLabel}>Close</Text>
+                    <View style={modalElementStyles.header}>
+                        <Text style={modalElementStyles.title}>Select a Route</Text>
+                        <Text style={modalElementStyles.closeLabel}>Close</Text>
                     </View>
                     <TextInput
                         style={modalStyles.modalSearchInput}
@@ -52,7 +52,7 @@ export default function EditTravelRouteModal({ searchQuery, isModalVisible, setS
                                     {
                                         item.vehicle_type_id?.name ? <Icon name={item.vehicle_type_id.icon_id.name.toLocaleLowerCase()} size={16}></Icon> : <Icon name="train" size={16}></Icon>
                                     }
-                                    <Text style={modalStyles.label}>{`${item.code} | ${item.name}`}</Text>
+                                    <Text style={modalElementStyles.label}>{`${item.code} | ${item.name}`}</Text>
                                 </TouchableOpacity>
                             )}
                             keyboardShouldPersistTaps={'always'}

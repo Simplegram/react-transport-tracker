@@ -14,13 +14,29 @@ const flatlistStyles = StyleSheet.create({
     },
 })
 
-const modalStyles = StyleSheet.create({
+const modalElementStyles = StyleSheet.create({
     label: {
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 5,
         color: '#333',
     },
+    closeLabel: {
+        fontSize: 16,
+        fontWeight: '500',
+    },
+    header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+})
+
+const modalStyles = StyleSheet.create({
     modalBackdrop: {
         flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -39,22 +55,6 @@ const modalStyles = StyleSheet.create({
     lapModalContainer : {
         height: 400
     },
-    modalHeader: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-    },
-    modalTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-    closeLabel: {
-        fontSize: 16,
-        fontWeight: '500',
-    },
-    modalCloseButton: {
-        padding: 10,
-    },
     modalSearchInput: {
         borderWidth: 1,
         borderColor: '#ccc',
@@ -63,31 +63,14 @@ const modalStyles = StyleSheet.create({
         fontSize: 16,
         backgroundColor: '#fff',
     },
-    listItem: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
-        paddingVertical: 15,
-        paddingHorizontal: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-        backgroundColor: '#fff',
-    },
     emptyList: {
         padding: 20,
         alignItems: 'center',
     },
-    input: {
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingVertical: 10,
-        fontSize: 16,
-    },
 })
 
 export {
+    flatlistStyles,
+    modalElementStyles,
     modalStyles
 }

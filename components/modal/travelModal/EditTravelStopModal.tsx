@@ -3,7 +3,7 @@ import Icon from "react-native-vector-icons/FontAwesome6";
 import { useMemo } from "react";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { EditableTravelModalProp } from "@/src/types/EditableTravels";
-import { flatlistStyles, modalStyles } from "@/src/styles/ModalStyles";
+import { flatlistStyles, modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
 
 export default function EditTravelStopModal({ searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelModalProp) {
     const { stops } = useGetTravelData();
@@ -26,9 +26,9 @@ export default function EditTravelStopModal({ searchQuery, isModalVisible, setSe
             >
                 <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
                     <View style={modalStyles.modalContainer}>
-                        <View style={modalStyles.modalHeader}>
-                            <Text style={modalStyles.modalTitle}>Select a Stop</Text>
-                            <Text style={modalStyles.closeLabel}>Close</Text>
+                        <View style={modalElementStyles.header}>
+                            <Text style={modalElementStyles.title}>Select a Stop</Text>
+                            <Text style={modalElementStyles.closeLabel}>Close</Text>
                         </View>
                         <TextInput
                             style={modalStyles.modalSearchInput}
@@ -56,7 +56,7 @@ export default function EditTravelStopModal({ searchQuery, isModalVisible, setSe
                                                 :
                                                 <Icon name="train" size={16}></Icon>
                                         }
-                                        <Text style={modalStyles.label}>{item.name}</Text>
+                                        <Text style={modalElementStyles.label}>{item.name}</Text>
                                     </TouchableOpacity>
                                 )}
                                 keyboardShouldPersistTaps={'always'}
