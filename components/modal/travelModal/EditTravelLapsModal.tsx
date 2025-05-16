@@ -104,7 +104,7 @@ export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVis
                     </View>
 
                     <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' color='#ffffff' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
+                        <Button title='Cancel' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
                         <Button title='Save Laps' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                     </View>
                 </View>

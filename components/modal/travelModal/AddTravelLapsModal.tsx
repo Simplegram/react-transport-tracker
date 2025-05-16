@@ -103,7 +103,7 @@ export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClos
                     </View>
 
                     <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' color='#ffffff' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
+                        <Button title='Cancel' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
                         <Button title='Save Laps' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                     </View>
                 </View>
@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     label: {
-        fontSize: 14,
+        fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
         flexShrink: 0,

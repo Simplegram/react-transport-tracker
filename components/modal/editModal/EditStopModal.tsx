@@ -98,7 +98,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                     </View>
 
                     <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
+                        <Button title='Cancel' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
                         <Button title='Edit Stop' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                     </View>
                 </>

@@ -25,6 +25,7 @@ const buttonStyles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         borderWidth: 1,
+        backgroundColor: '#ffffff'
     },
     cancelButtonText: {
         color: '#000',

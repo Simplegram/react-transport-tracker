@@ -102,7 +102,7 @@ export default function AddLapModal({ isModalVisible, onClose, onSelect }: Addab
                     </View>
 
                     <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' color='#E0E0E0' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
+                        <Button title='Cancel' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
                         <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                     </View>
                 </View>

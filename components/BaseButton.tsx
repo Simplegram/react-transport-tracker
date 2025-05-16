@@ -1,15 +1,22 @@
-import { Pressable, StyleProp, StyleSheet, Text, TextStyle } from "react-native"
+import { Pressable, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
 
 type Props = {
-    title: string,
-    onPress?: () => void,
-    style?: StyleProp<TextStyle>,
-    textStyle?: StyleProp<TextStyle>,
-    color?: string,
-    darkenAmount?: number,
-}
+    title: string;
+    onPress?: () => void;
+    style?: StyleProp<ViewStyle>; // Change to ViewStyle as the container will have background color
+    textStyle?: StyleProp<TextStyle>;
+    color?: string; // Keep for fallback
+    darkenAmount?: number;
+};
 
-export default function Button({ title, onPress, style, textStyle, color = '#f3f3f3', darkenAmount = 0.3 }: Props) {
+export default function Button({
+    title,
+    onPress,
+    style,
+    textStyle,
+    color = '#f3f3f3',
+    darkenAmount = 0.3,
+}: Props) {
     const darkenColor = (hexColor: string, amount: number) => {
         // Remove the '#' if it exists
         hexColor = hexColor.replace('#', '');
@@ -32,9 +39,45 @@ export default function Button({ title, onPress, style, textStyle, color = '#f3f
         return `#${darkenRHex}${darkenGHex}${darkenBHex}`;
     };
 
+    const getBackgroundColorFromStyle = (buttonStyle: StyleProp<ViewStyle>): string | undefined => {
+        if (!buttonStyle) {
+            return undefined;
+        }
+
+        if (Array.isArray(buttonStyle)) {
+            // If it's an array of styles, iterate and find the last one with backgroundColor
+            for (let i = buttonStyle.length - 1; i >= 0; i--) {
+                const styleObject = buttonStyle[i];
+                if (styleObject && typeof styleObject === 'object' && 'backgroundColor' in styleObject) {
+                    return styleObject.backgroundColor as string;
+                }
+            }
+        } else if (typeof buttonStyle === 'object' && buttonStyle !== null && 'backgroundColor' in buttonStyle) {
+            // If it's a single style object
+            return (buttonStyle as ViewStyle).backgroundColor as string;
+        }
+
+        return undefined;
+    };
+
     const buttonStyle = ({ pressed }: { pressed: boolean }) => {
-        const backgroundColor = pressed ? darkenColor(color, darkenAmount) : color;
-        return [styles.buttonContainer, style, { backgroundColor }];
+        const styleBackgroundColor = getBackgroundColorFromStyle(style);
+        const baseColor = styleBackgroundColor || color; // Prioritize color from style, fallback to color prop
+
+        const backgroundColor = pressed ? darkenColor(baseColor, darkenAmount) : baseColor;
+
+        // Create a new style object to override the background color if it was in the original style
+        const effectiveStyle = Array.isArray(style) ? [...style] : style ? { ...style } : {};
+
+        if (typeof effectiveStyle === 'object' && effectiveStyle !== null) {
+             // Remove the original backgroundColor if it exists to avoid conflicts with the pressed state
+            if ('backgroundColor' in effectiveStyle) {
+                delete (effectiveStyle as ViewStyle).backgroundColor;
+            }
+        }
+
+
+        return [styles.buttonContainer, effectiveStyle, { backgroundColor }];
     };
 
     return (
@@ -59,4 +102,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
-})
+});
