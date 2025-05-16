@@ -16,7 +16,7 @@ import { formatDateForDisplay } from '@/src/utils/utils';
 import useGetTravelData from '@/hooks/useGetTravelData';
 import useStopModal from '@/hooks/useStopModal';
 import EditTravelStopModal from '../travelModal/EditTravelStopModal';
-import modalStyles from '@/src/styles/ModalStyles';
+import { modalStyles } from '@/src/styles/ModalStyles';
 import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels';
 import LoadingScreen from '@/components/LoadingScreen';
 import { buttonStyles } from '@/src/styles/ButtonStyles';

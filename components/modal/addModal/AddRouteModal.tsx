@@ -8,7 +8,7 @@ import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import useStopModal from "@/hooks/useStopModal"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
-import modalStyles from "@/src/styles/ModalStyles"
+import { modalStyles } from "@/src/styles/ModalStyles"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 
 export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {

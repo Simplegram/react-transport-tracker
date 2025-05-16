@@ -2,7 +2,7 @@ import useGetTravelData from "@/hooks/useGetTravelData";
 import { EditableTravelModalProp } from "@/src/types/EditableTravels";
 import { useMemo } from "react";
 import { FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
-import modalStyles from "@/src/styles/ModalStyles";
+import { modalStyles } from "@/src/styles/ModalStyles";
 
 export default function EditTravelDirectionModal({ searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelModalProp) {
     const { directions } = useGetTravelData()

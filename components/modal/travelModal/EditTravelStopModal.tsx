@@ -3,7 +3,7 @@ import Icon from "react-native-vector-icons/FontAwesome6";
 import { useMemo } from "react";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { EditableTravelModalProp } from "@/src/types/EditableTravels";
-import modalStyles from "@/src/styles/ModalStyles";
+import { modalStyles } from "@/src/styles/ModalStyles";
 
 export default function EditTravelStopModal({ searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelModalProp) {
     const { stops } = useGetTravelData();

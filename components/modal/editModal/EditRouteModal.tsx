@@ -11,8 +11,8 @@ import useStopModal from "@/hooks/useStopModal"
 import { sortByIdToFront } from "@/src/utils/utils"
 import { useLoading } from "@/hooks/useLoading"
 import { VehicleType } from "@/src/types/Travels"
-import modalStyles from "@/src/styles/ModalStyles"
 import { modalStyles } from "@/src/styles/ModalStyles"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
 
 
 export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {

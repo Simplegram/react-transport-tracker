@@ -4,7 +4,7 @@ import { EditableTravelModalProp } from "@/src/types/EditableTravels";
 import { useMemo } from "react";
 import { FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
-import modalStyles from "@/src/styles/ModalStyles";
+import { modalStyles } from "@/src/styles/ModalStyles";
 
 export default function EditTravelRouteModal({ searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelModalProp) {
     const { routes } = useGetTravelData()

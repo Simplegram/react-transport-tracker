@@ -84,4 +84,6 @@ const modalStyles = StyleSheet.create({
     },
 })
 
-export default modalStyles
+export {
+    modalStyles
+}

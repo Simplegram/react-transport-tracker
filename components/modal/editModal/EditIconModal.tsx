@@ -1,7 +1,7 @@
 import Button from "@/components/BaseButton";
 import { useModalContext } from "@/context/ModalContext";
-import modalStyles from "@/src/styles/ModalStyles";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
+import { modalStyles } from "@/src/styles/ModalStyles";
 import { AddableIconType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";

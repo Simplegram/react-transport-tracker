@@ -15,7 +15,7 @@ import { formatDateForDisplay } from '@/src/utils/utils';
 import useGetTravelData from '@/hooks/useGetTravelData';
 import useStopModal from '@/hooks/useStopModal';
 import EditTravelStopModal from '../travelModal/EditTravelStopModal';
-import modalStyles from '@/src/styles/ModalStyles';
+import { modalStyles } from '@/src/styles/ModalStyles';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 
 export default function AddLapModal({ isModalVisible, onClose, onSelect }: AddableLapModalProp) {
