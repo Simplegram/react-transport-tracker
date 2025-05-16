@@ -38,7 +38,7 @@ export default function EditTravelRouteModal({ searchQuery, isModalVisible, setS
                     />
                     {filteredItems.length === 0 ? (
                         <View style={modalStyles.emptyList}>
-                            <Text>No route found.</Text>
+                            <Text style={modalElementStyles.label}>No route found</Text>
                         </View>
                     ) : (
                         <FlatList

@@ -64,7 +64,9 @@ const modalStyles = StyleSheet.create({
         backgroundColor: '#fff',
     },
     emptyList: {
+        flex: 1,
         padding: 20,
+        justifyContent: 'center',
         alignItems: 'center',
     },
 })

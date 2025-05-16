@@ -38,7 +38,7 @@ export default function EditTravelStopModal({ searchQuery, isModalVisible, setSe
                         />
                         {filteredStops.length === 0 ? (
                             <View style={modalStyles.emptyList}>
-                                <Text>No stop found.</Text>
+                                <Text style={modalElementStyles.label}>No stop found</Text>
                             </View>
                         ) : (
                             <FlatList
