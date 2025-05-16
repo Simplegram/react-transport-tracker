@@ -2,7 +2,7 @@ import Button from "@/components/BaseButton"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles, inputStyles } from "@/src/styles/Styles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/Styles"
 import { AddableStop } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
@@ -32,7 +32,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
     };
 
     return (
-        <View style={styles.container}>
+        <View>
             {loading ? (
                 <Text style={inputElementStyles.inputLabel}>Loading...</Text>
             ) : (
@@ -82,7 +82,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={styles.label}>Icon:</Text>
+                                <Text style={inputElementStyles.inputLabel}>Icon:</Text>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
@@ -92,8 +92,8 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                                         <TouchableOpacity
                                             key={type.id}
                                             style={[
-                                                styles.iconContainer,
-                                                stop.vehicle_type === type.id && styles.selectedIconContainer,
+                                                iconPickerStyles.iconContainer,
+                                                stop.vehicle_type === type.id && iconPickerStyles.selectedIconContainer,
                                             ]}
                                             onPress={() => setStop({ ...stop, vehicle_type: type.id })}
                                         >
@@ -115,50 +115,3 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {},
-    label: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 8
-    },
-    inputContainer: {
-        gap: 10,
-        flexDirection: 'column',
-        paddingVertical: 10,
-    },
-    icon: {
-        paddingLeft: 5,
-        alignItems: 'center',
-    },
-    iconContainer: {
-        width: 75,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        paddingTop: 10,
-        flexDirection: 'column',
-        marginRight: 10, // Space between icons
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    selectedIconContainer: {
-        borderColor: '#0284f5', // Highlight selected icon
-        backgroundColor: '#e3f2fd', // Light background for selected
-    },
-    stopListItem: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
-        padding: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-        backgroundColor: '#fff',
-    },
-    emptyList: {
-        padding: 20,
-        alignItems: 'center',
-    }
-});

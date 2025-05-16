@@ -2,7 +2,7 @@ import Button from "@/components/BaseButton";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { inputElementStyles, inputStyles } from "@/src/styles/Styles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/Styles"
 import { AddableVehicleType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
@@ -26,9 +26,9 @@ export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalCon
     };
 
     return (
-        <View style={styles.container}>
+        <View>
             {(loading || icons.length === 0) ? (
-                <Text style={styles.label}>Loading...</Text>
+                <Text style={inputElementStyles.inputLabel}>Loading...</Text>
             ) : (
                 <>
                     <View style={inputElementStyles.inputContainer}>
@@ -56,8 +56,8 @@ export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalCon
                                         <TouchableOpacity
                                             key={icon.id}
                                             style={[
-                                                styles.iconContainer,
-                                                vehicleType.icon_id === icon.id && styles.selectedIconContainer,
+                                                iconPickerStyles.iconContainer,
+                                                vehicleType.icon_id === icon.id && iconPickerStyles.selectedIconContainer,
                                             ]}
                                             onPress={() => setVehicleType({ ...vehicleType, "icon_id": icon.id })}
                                         >
@@ -78,33 +78,3 @@ export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalCon
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {},
-    label: {
-        fontSize: 16,
-        marginBottom: 8,
-        fontWeight: 'bold',
-    },
-    inputContainer: {
-        gap: 10,
-    },
-    icon: {
-        paddingLeft: 5,
-        alignItems: 'center',
-    },
-    iconContainer: {
-        width: 55,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        paddingVertical: 5,
-        marginRight: 10, // Space between icons
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    selectedIconContainer: {
-        borderColor: '#0284f5', // Highlight selected icon
-        backgroundColor: '#e3f2fd', // Light background for selected
-    },
-});

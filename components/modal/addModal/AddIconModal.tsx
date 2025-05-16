@@ -32,7 +32,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
     }
 
     return (
-        <View style={styles.container}>
+        <View>
             <Text style={inputElementStyles.inputLabel}>Icon name (FontAwesome6):</Text>
             <View style={inputElementStyles.inputContainer}>
                 <View style={inputElementStyles.inputGroup}>
@@ -56,37 +56,8 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
 }
 
 const styles = StyleSheet.create({
-    container: {},
-    label: {
-        fontSize: 16,
-        marginBottom: 8,
-        fontWeight: 'bold',
-    },
-    inputContainer: {
-        gap: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: 10,
-    },
     icon: {
         paddingLeft: 5,
         alignItems: 'center',
-    },
-    iconScrollView: {
-        marginBottom: 20,
-    },
-    iconContainer: {
-        width: 55,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        paddingVertical: 5,
-        marginRight: 10, // Space between icons
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    selectedIconContainer: {
-        borderColor: '#0284f5', // Highlight selected icon
-        backgroundColor: '#e3f2fd', // Light background for selected
     },
 });

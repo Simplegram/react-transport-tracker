@@ -54,7 +54,26 @@ const inputStyles = StyleSheet.create({
     },
 })
 
+const iconPickerStyles = StyleSheet.create({
+    iconContainer: {
+        width: 75,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 8,
+        paddingTop: 10,
+        flexDirection: 'column',
+        marginRight: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    selectedIconContainer: {
+        borderColor: '#0284f5',
+        backgroundColor: '#e3f2fd',
+    },
+})
+
 export {
     inputStyles,
-    inputElementStyles
+    inputElementStyles,
+    iconPickerStyles
 }

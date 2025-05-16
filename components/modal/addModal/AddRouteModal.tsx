@@ -9,7 +9,7 @@ import { useLoading } from "@/hooks/useLoading"
 import useStopModal from "@/hooks/useStopModal"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles, inputStyles } from "@/src/styles/Styles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/Styles"
 
 export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { stops, fullVehicleTypes } = useGetTravelData()
@@ -47,7 +47,7 @@ export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentPr
     };
 
     return (
-        <View style={styles.container}>
+        <View>
             {loading ? (
                 <Text style={inputElementStyles.inputLabel}>Loading...</Text>
             ) : (
@@ -105,8 +105,8 @@ export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentPr
                                         <TouchableOpacity
                                             key={type.id}
                                             style={[
-                                                styles.iconContainer,
-                                                route.vehicle_type_id === type.id && styles.selectedIconContainer,
+                                                iconPickerStyles.iconContainer,
+                                                route.vehicle_type_id === type.id && iconPickerStyles.selectedIconContainer,
                                             ]}
                                             onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}
                                         >
@@ -136,32 +136,3 @@ export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentPr
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {},
-    inputContainer: {
-        gap: 10,
-        flexDirection: 'column',
-        paddingVertical: 10,
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 8
-    },
-    iconContainer: {
-        width: 75,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        paddingTop: 10,
-        flexDirection: 'column',
-        marginRight: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    selectedIconContainer: {
-        borderColor: '#0284f5',
-        backgroundColor: '#e3f2fd',
-    },
-})

@@ -22,7 +22,7 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
     };
 
     return (
-        <View style={styles.container}>
+        <View>
             {loading ? (
                 <Text style={inputElementStyles.inputLabel}>Loading...</Text>
             ) : (
@@ -48,17 +48,3 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {},
-    inputContainer: {
-        gap: 10,
-        flexDirection: 'column',
-        paddingVertical: 10,
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 8
-    },
-})
