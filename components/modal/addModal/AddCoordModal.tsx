@@ -58,7 +58,7 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
 
                     <View style={buttonStyles.buttonRow}>
                         <Button title='Cancel' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                        <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                        <Button title='Pick Coordinate' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                     </View>
                 </View>
             </Pressable>

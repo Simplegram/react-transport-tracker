@@ -1,7 +1,9 @@
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
 import LoadingScreen from '@/components/LoadingScreen';
 import { useTravelContext } from '@/context/PageContext';
+import useGetTravelData from '@/hooks/useGetTravelData';
 import { DataItem } from '@/src/types/Travels';
+import { MapView, MarkerView } from '@maplibre/maplibre-react-native';
 import { useFocusEffect } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
@@ -26,6 +28,8 @@ const formatDurationHoursMinutes = (milliseconds: number): string => {
 
 export default function TravelDetail() {
     const { selectedTravelItems } = useTravelContext()
+
+    const { stops } = useGetTravelData()
 
     const [dataToUse, setDataToUse] = useState<DataItem[]>([])
 
@@ -57,6 +61,22 @@ export default function TravelDetail() {
         const dateBCreatedAt = new Date(b.created_at).getTime();
 
         return dateACreatedAt - dateBCreatedAt;
+    });
+
+    const stopLatLon = sortedData.flatMap(travel => {
+        const coords = [];
+
+        // Check if first_stop_id and its coordinates exist
+        if (travel.first_stop_id && travel.first_stop_id.lat && travel.first_stop_id.lon) {
+            coords.push({ id: travel.first_stop_id.id, coords: [travel.first_stop_id.lon, travel.first_stop_id.lat] });
+        }
+
+        // Check if last_stop_id and its coordinates exist
+        if (travel.last_stop_id && travel.last_stop_id.lat && travel.last_stop_id.lon) {
+            coords.push({ id: travel.last_stop_id.id, coords: [travel.last_stop_id.lon, travel.last_stop_id.lat] });
+        }
+
+        return coords; // Return an array (which might be empty)
     });
 
     let totalOnRoadMilliseconds = 0;
@@ -206,6 +226,20 @@ export default function TravelDetail() {
                         })}
                     </View>
                 )}
+
+                <View style={[styles.card, { height: 360 }]}>
+                    <MapView
+                        style={{ flex: 1, overflow: 'hidden' }}
+                        rotateEnabled={false}
+                        mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
+                    >
+                        {stopLatLon.map((stop, index) => (
+                            <MarkerView key={index} coordinate={stop.coords}>
+                                <View style={{ width: 12, aspectRatio: 1, backgroundColor: 'limegreen', zIndex: -1, borderWidth: 2, borderRadius: 8 }}></View>
+                            </MarkerView>
+                        ))}
+                    </MapView>
+                </View>
 
                 <View style={styles.card}>
                     <Text style={styles.cardTitle}>Activity Counts</Text>

@@ -43,7 +43,7 @@ export default function useTravelCalendar() {
         const endDate = formatDate(new Date(selectedDate), 23, 59, 59)
         const { data, error } = await supabase
             .from('travels')
-            .select("id, created_at, types(id, name), routes(id, code, name), directions(id, name), first_stop_id(id, name, vehicle_type), last_stop_id(id, name, vehicle_type), bus_initial_arrival, bus_initial_departure, bus_final_arrival, vehicle_code, notes")
+            .select("id, created_at, types(id, name), routes(id, code, name), directions(id, name), first_stop_id(*), last_stop_id(*), bus_initial_arrival, bus_initial_departure, bus_final_arrival, vehicle_code, notes")
             .gte('created_at', selectedDate)
             .lte('created_at', endDate.toString())
 
