@@ -11,7 +11,6 @@ import useStopModal from "@/hooks/useStopModal"
 import { sortByIdToFront } from "@/src/utils/utils"
 import { useLoading } from "@/hooks/useLoading"
 import { VehicleType } from "@/src/types/Travels"
-import { modalStyles } from "@/src/styles/ModalStyles"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { inputStyles } from "@/src/styles/Styles"
 
@@ -63,14 +62,14 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Code:</Text>
                         <TextInput
-                            style={modalStyles.input}
+                            style={inputStyles.pressableInput}
                             placeholder="Route code..."
                             value={route.code}
                             onChangeText={text => (setRoute({ ...route, "code": text }))}
                         />
                         <Text style={styles.label}>Name:</Text>
                         <TextInput
-                            style={modalStyles.input}
+                            style={inputStyles.pressableInput}
                             placeholder="Route name..."
                             value={route.name}
                             onChangeText={text => (setRoute({ ...route, "name": text }))}

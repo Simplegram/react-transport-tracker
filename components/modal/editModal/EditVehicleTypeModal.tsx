@@ -3,7 +3,7 @@ import { useModalContext } from "@/context/ModalContext";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { modalStyles } from "@/src/styles/ModalStyles";
+import { inputStyles } from "@/src/styles/Styles"
 import { EditableVehicleType } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { IconType } from "@/src/types/Travels";
@@ -40,7 +40,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                         <View>
                             <Text style={styles.label}>Name:</Text>
                             <TextInput
-                                style={modalStyles.input}
+                                style={inputStyles.pressableInput}
                                 placeholder="e.g., Standard Bus"
                                 value={vehicleType.name}
                                 onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}

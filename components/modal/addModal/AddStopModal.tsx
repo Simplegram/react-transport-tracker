@@ -2,7 +2,7 @@ import Button from "@/components/BaseButton"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { modalStyles } from "@/src/styles/ModalStyles"
+import { inputStyles } from "@/src/styles/Styles"
 import { AddableStop } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
@@ -40,28 +40,28 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Name:</Text>
                         <TextInput
-                            style={modalStyles.input}
+                            style={inputStyles.pressableInput}
                             placeholder="Stop name..."
                             value={stop.name}
                             onChangeText={text => (setStop({ ...stop, "name": text }))}
                         />
                         <Text style={styles.label}>Latitude:</Text>
                         <TextInput
-                            style={modalStyles.input}
+                            style={inputStyles.pressableInput}
                             placeholder="Stop latitude..."
                             value={stop.lat ? stop.lat.toString() : ''}
                             onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
                         />
                         <Text style={styles.label}>Longitude:</Text>
                         <TextInput
-                            style={modalStyles.input}
+                            style={inputStyles.pressableInput}
                             placeholder="Stop longitude..."
                             value={stop.lon ? stop.lon.toString() : ''}
                             onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
                         />
                         <Text style={styles.label}>Alternative name:</Text>
                         <TextInput
-                            style={modalStyles.input}
+                            style={inputStyles.pressableInput}
                             placeholder="Alternative name..."
                             value={stop.name_alt ? stop.name_alt : ''}
                             onChangeText={text => (setStop({ ...stop, "name_alt": text }))}

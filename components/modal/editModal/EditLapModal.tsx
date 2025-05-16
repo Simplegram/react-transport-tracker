@@ -134,7 +134,7 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
                                 returnKeyType="done"
                                 multiline={true}
                                 numberOfLines={3}
-                                style={[modalStyles.input, { height: 80, textAlignVertical: 'top' }]}
+                                style={[inputStyles.pressableInput, { height: 80, textAlignVertical: 'top' }]}
                             />
                         </View>
 

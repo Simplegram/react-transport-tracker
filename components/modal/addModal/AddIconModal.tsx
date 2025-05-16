@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { modalStyles } from "@/src/styles/ModalStyles";
+import { inputStyles } from "@/src/styles/Styles"
 import { AddableIconType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
@@ -37,7 +37,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
             <View style={styles.inputContainer}>
                 <Icon style={styles.icon} name={icon.name ? icon.name : 'xmark'} size={32} />
                 <TextInput
-                    style={[modalStyles.input, { flex: 1 }]}
+                    style={[inputStyles.pressableInput, { flex: 1 }]}
                     placeholder="e.g., train-subway"
                     value={iconQuery}
                     onChangeText={changeIcon}

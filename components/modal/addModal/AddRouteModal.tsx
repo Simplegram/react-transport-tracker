@@ -8,7 +8,6 @@ import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import useStopModal from "@/hooks/useStopModal"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
-import { modalStyles } from "@/src/styles/ModalStyles"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { inputStyles } from "@/src/styles/Styles"
 
@@ -56,14 +55,14 @@ export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentPr
                     <View style={styles.inputContainer}>
                         <Text style={styles.label}>Code:</Text>
                         <TextInput
-                            style={modalStyles.input}
+                            style={inputStyles.pressableInput}
                             placeholder="Route code..."
                             value={route.code}
                             onChangeText={text => (setRoute({ ...route, "code": text }))}
                         />
                         <Text style={styles.label}>Name:</Text>
                         <TextInput
-                            style={modalStyles.input}
+                            style={inputStyles.pressableInput}
                             placeholder="Route name..."
                             value={route.name}
                             onChangeText={text => (setRoute({ ...route, "name": text }))}

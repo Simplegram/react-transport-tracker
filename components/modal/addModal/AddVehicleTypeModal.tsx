@@ -2,7 +2,7 @@ import Button from "@/components/BaseButton";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { modalStyles } from "@/src/styles/ModalStyles";
+import { inputStyles } from "@/src/styles/Styles"
 import { AddableVehicleType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
@@ -35,7 +35,7 @@ export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalCon
                         <View>
                             <Text style={styles.label}>Name:</Text>
                             <TextInput
-                                style={modalStyles.input}
+                                style={inputStyles.pressableInput}
                                 placeholder="e.g., Standard Bus"
                                 value={vehicleType.name}
                                 onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}
