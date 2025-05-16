@@ -79,7 +79,7 @@ export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClos
                     <View style={styles.inputContainer}>
                         {laps.length === 0 ? (
                             <View style={styles.emptyList}>
-                                <Text style={styles.label}>No lap found.</Text>
+                                <Text style={inputElementStyles.inputLabel}>No lap found</Text>
                             </View>
                         ) : (
                             <ScrollView
