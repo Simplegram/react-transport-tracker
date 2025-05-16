@@ -4,7 +4,6 @@ const buttonStyles = StyleSheet.create({
     buttonRow: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        marginTop: 10,
         gap: 10,
     },
     addButton: {

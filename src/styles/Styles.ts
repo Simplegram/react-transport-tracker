@@ -1,8 +1,12 @@
 import { Platform, StyleSheet } from "react-native";
 
 const inputElementStyles = StyleSheet.create({
+    inputContainer: {
+        gap: 15,
+        paddingBottom: 15,
+    },
     inputGroup: {
-        marginBottom: 15,
+        flexDirection: 'column',
     },
     inputGroupEnd: {
         paddingBottom: 20, 
@@ -45,6 +49,7 @@ const inputStyles = StyleSheet.create({
         paddingVertical: 12,
         justifyContent: 'center',
         minHeight: 44,
+        fontSize: 16,
         backgroundColor: '#fff',
     },
 })
