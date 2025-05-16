@@ -9,7 +9,7 @@ import { useLoading } from "@/hooks/useLoading"
 import useStopModal from "@/hooks/useStopModal"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/Styles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 
 export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { stops, fullVehicleTypes } = useGetTravelData()
@@ -105,7 +105,7 @@ export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentPr
                                         <TouchableOpacity
                                             key={type.id}
                                             style={[
-                                                iconPickerStyles.iconContainer,
+                                                iconPickerStyles.iconTextContainer,
                                                 route.vehicle_type_id === type.id && iconPickerStyles.selectedIconContainer,
                                             ]}
                                             onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}

@@ -1,6 +1,7 @@
 import Button from "@/components/BaseButton";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { inputElementStyles, inputStyles } from "@/src/styles/Styles"
+import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import styles from "@/src/styles/Styles";
 import { AddableIconType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
@@ -35,7 +36,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
         <View>
             <Text style={inputElementStyles.inputLabel}>Icon name (FontAwesome6):</Text>
             <View style={inputElementStyles.inputContainer}>
-                <View style={inputElementStyles.inputGroup}>
+                <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupIcon]}>
                     <Icon style={styles.icon} name={icon.name ? icon.name : 'xmark'} size={32} />
                     <TextInput
                         style={[inputStyles.pressableInput, { flex: 1 }]}
@@ -54,10 +55,3 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    icon: {
-        paddingLeft: 5,
-        alignItems: 'center',
-    },
-});

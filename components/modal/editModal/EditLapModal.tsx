@@ -20,7 +20,7 @@ import { modalStyles } from '@/src/styles/ModalStyles';
 import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels';
 import LoadingScreen from '@/components/LoadingScreen';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputStyles } from '@/src/styles/Styles';
+import { inputStyles } from '@/src/styles/InputStyles';
 
 export default function EditLapModal({ selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
     const { stops } = useGetTravelData()

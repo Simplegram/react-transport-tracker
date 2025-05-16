@@ -24,7 +24,7 @@ import { formatDateForDisplay } from '@/src/utils/utils';
 import moment from 'moment-timezone'
 import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModal';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputElementStyles, inputStyles } from '@/src/styles/Styles';
+import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
 import LoadingScreen from '@/components/LoadingScreen';
 
 export default function AddTravel() {
@@ -182,7 +182,7 @@ export default function AddTravel() {
         let newLaps: AddableLap[] = []
         if (newTravel) {
             newLaps = laps.map(lap => {
-                return {...lap, travel_id: newTravel[0].id}
+                return { ...lap, travel_id: newTravel[0].id }
             })
         }
 

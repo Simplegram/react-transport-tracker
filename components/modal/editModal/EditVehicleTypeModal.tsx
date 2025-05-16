@@ -3,7 +3,7 @@ import { useModalContext } from "@/context/ModalContext";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { inputStyles } from "@/src/styles/Styles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { EditableVehicleType } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { IconType } from "@/src/types/Travels";
@@ -31,14 +31,14 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
     };
 
     return (
-        <View style={styles.container}>
+        <View>
             {loading ? (
-                <Text style={styles.label}>Loading...</Text>
+                <Text style={inputElementStyles.inputLabel}>Loading...</Text>
             ) : (
                 <>
-                    <View style={styles.inputContainer}>
-                        <View>
-                            <Text style={styles.label}>Name:</Text>
+                    <View style={inputElementStyles.inputContainer}>
+                        <View style={inputElementStyles.inputGroup}>
+                            <Text style={inputElementStyles.inputLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles.pressableInput}
                                 placeholder="e.g., Standard Bus"
@@ -47,29 +47,30 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                             />
                         </View>
 
-                        <View style={{
-                            flexDirection: 'column',
-                        }}>
-                            <Text style={styles.label}>Icon:</Text>
-                            <ScrollView
-                                horizontal
-                                showsHorizontalScrollIndicator={false}
-                                contentContainerStyle={styles.iconScrollView}
-                                keyboardShouldPersistTaps={"always"}
-                            >
-                                {sortByIdToFront(icons, savedVehicleTypeId.current).map((icon: IconType) => (
-                                    <TouchableOpacity
-                                        key={icon.id}
-                                        style={[
-                                            styles.iconContainer,
-                                            vehicleType.icon_id === icon.id && styles.selectedIconContainer,
-                                        ]}
-                                        onPress={() => setVehicleType({ ...vehicleType, icon_id: icon.id })}
-                                    >
-                                        <Icon name={icon.name} size={20}></Icon>
-                                    </TouchableOpacity>
-                                ))}
-                            </ScrollView>
+                        <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                            <View style={{
+                                flexDirection: 'column',
+                            }}>
+                                <Text style={inputElementStyles.inputLabel}>Icon:</Text>
+                                <ScrollView
+                                    horizontal
+                                    showsHorizontalScrollIndicator={false}
+                                    keyboardShouldPersistTaps={"always"}
+                                >
+                                    {sortByIdToFront(icons, savedVehicleTypeId.current).map((icon: IconType) => (
+                                        <TouchableOpacity
+                                            key={icon.id}
+                                            style={[
+                                                iconPickerStyles.iconContainer,
+                                                vehicleType.icon_id === icon.id && iconPickerStyles.selectedIconContainer,
+                                            ]}
+                                            onPress={() => setVehicleType({ ...vehicleType, icon_id: icon.id })}
+                                        >
+                                            <Icon name={icon.name} size={20}></Icon>
+                                        </TouchableOpacity>
+                                    ))}
+                                </ScrollView>
+                            </View>
                         </View>
                     </View>
 
@@ -82,37 +83,3 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {},
-    label: {
-        fontSize: 16,
-        marginBottom: 8,
-        fontWeight: 'bold',
-    },
-    inputContainer: {
-        gap: 10,
-        paddingVertical: 10,
-    },
-    icon: {
-        paddingLeft: 5,
-        alignItems: 'center',
-    },
-    iconScrollView: {
-        marginBottom: 20,
-    },
-    iconContainer: {
-        width: 55,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        paddingVertical: 5,
-        marginRight: 10, // Space between icons
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    selectedIconContainer: {
-        borderColor: '#0284f5', // Highlight selected icon
-        backgroundColor: '#e3f2fd', // Light background for selected
-    },
-});

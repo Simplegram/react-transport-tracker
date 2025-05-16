@@ -1,7 +1,7 @@
 import Button from "@/components/BaseButton"
 import { useLoading } from "@/hooks/useLoading"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles, inputStyles } from "@/src/styles/Styles"
+import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { AddableDirection } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
@@ -38,7 +38,7 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
                             />
                         </View>
                     </View>
-                    
+
                     <View style={buttonStyles.buttonRow}>
                         <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
                         <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>

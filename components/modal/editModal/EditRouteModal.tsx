@@ -12,7 +12,7 @@ import { sortByIdToFront } from "@/src/utils/utils"
 import { useLoading } from "@/hooks/useLoading"
 import { VehicleType } from "@/src/types/Travels"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputStyles } from "@/src/styles/Styles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 
 
 export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {
@@ -54,75 +54,85 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
     };
 
     return (
-        <View style={styles.container}>
+        <View>
             {loading ? (
-                <Text style={styles.label}>Loading...</Text>
+                <Text style={inputElementStyles.inputLabel}>Loading...</Text>
             ) : (
                 <>
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.label}>Code:</Text>
-                        <TextInput
-                            style={inputStyles.pressableInput}
-                            placeholder="Route code..."
-                            value={route.code}
-                            onChangeText={text => (setRoute({ ...route, "code": text }))}
-                        />
-                        <Text style={styles.label}>Name:</Text>
-                        <TextInput
-                            style={inputStyles.pressableInput}
-                            placeholder="Route name..."
-                            value={route.name}
-                            onChangeText={text => (setRoute({ ...route, "name": text }))}
-                        />
-
-                        <Text style={styles.label}>First Stop:</Text>
-                        <Pressable
-                            style={inputStyles.pressableInput}
-                            onPress={() => openStopModal('first_stop_id')}>
-                            <Text style={[styles.label, { marginBottom: 0 }]}>{stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}</Text>
-                        </Pressable>
-
-                        <Text style={styles.label}>Last Stop:</Text>
-                        <Pressable
-                            style={inputStyles.pressableInput}
-                            onPress={() => openStopModal('last_stop_id')}>
-                            <Text style={[styles.label, { marginBottom: 0 }]}>{stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}</Text>
-                        </Pressable>
-
-                        <View style={{
-                            flexDirection: 'column',
-                        }}>
-                            <Text style={styles.label}>Type:</Text>
-                            <ScrollView
-                                horizontal
-                                showsHorizontalScrollIndicator={false}
-                                contentContainerStyle={styles.iconScrollView}
-                                keyboardShouldPersistTaps={"always"}
-                            >
-                                {sortByIdToFront(fullVehicleTypes, savedVehicleTypeId.current).map((type: VehicleType) => (
-                                    <TouchableOpacity
-                                        key={type.id}
-                                        style={[
-                                            styles.iconContainer,
-                                            route.vehicle_type_id === type.id && styles.selectedIconContainer,
-                                        ]}
-                                        onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}
-                                    >
-                                        <Icon name={type.icon_id.name} size={20}></Icon>
-                                        <Text style={styles.label}>{type.name.slice(0, 5)}</Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </ScrollView>
+                    <View style={inputElementStyles.inputContainer}>
+                        <View style={inputElementStyles.inputGroup}>
+                            <Text style={inputElementStyles.inputLabel}>Code:</Text>
+                            <TextInput
+                                style={inputStyles.pressableInput}
+                                placeholder="Route code..."
+                                value={route.code}
+                                onChangeText={text => (setRoute({ ...route, "code": text }))}
+                            />
                         </View>
 
-                        <EditTravelStopModal
-                            isModalVisible={showStopModal}
-                            searchQuery={stopSearchQuery}
-                            setSearchQuery={setStopSearchQuery}
-                            onSelect={handleStopSelect}
-                            onClose={closeStopModal}
-                        />
+                        <View style={inputElementStyles.inputGroup}>
+                            <Text style={inputElementStyles.inputLabel}>Name:</Text>
+                            <TextInput
+                                style={inputStyles.pressableInput}
+                                placeholder="Route name..."
+                                value={route.name}
+                                onChangeText={text => (setRoute({ ...route, "name": text }))}
+                            />
+                        </View>
+
+                        <View style={inputElementStyles.inputGroup}>
+                            <Text style={inputElementStyles.inputLabel}>First Stop:</Text>
+                            <Pressable
+                                style={inputStyles.pressableInput}
+                                onPress={() => openStopModal('first_stop_id')}>
+                                <Text style={[inputElementStyles.inputLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}</Text>
+                            </Pressable>
+                        </View>
+
+                        <View style={inputElementStyles.inputGroup}>
+                            <Text style={inputElementStyles.inputLabel}>Last Stop:</Text>
+                            <Pressable
+                                style={inputStyles.pressableInput}
+                                onPress={() => openStopModal('last_stop_id')}>
+                                <Text style={[inputElementStyles.inputLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}</Text>
+                            </Pressable>
+                        </View>
+
+                        <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                            <View style={{
+                                flexDirection: 'column',
+                            }}>
+                                <Text style={inputElementStyles.inputLabel}>Type:</Text>
+                                <ScrollView
+                                    horizontal
+                                    showsHorizontalScrollIndicator={false}
+                                    keyboardShouldPersistTaps={"always"}
+                                >
+                                    {sortByIdToFront(fullVehicleTypes, savedVehicleTypeId.current).map((type: VehicleType) => (
+                                        <TouchableOpacity
+                                            key={type.id}
+                                            style={[
+                                                iconPickerStyles.iconTextContainer,
+                                                route.vehicle_type_id === type.id && iconPickerStyles.selectedIconContainer,
+                                            ]}
+                                            onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}
+                                        >
+                                            <Icon name={type.icon_id.name} size={20}></Icon>
+                                            <Text style={inputElementStyles.inputLabel}>{type.name.slice(0, 5)}</Text>
+                                        </TouchableOpacity>
+                                    ))}
+                                </ScrollView>
+                            </View>
+                        </View>
                     </View>
+
+                    <EditTravelStopModal
+                        isModalVisible={showStopModal}
+                        searchQuery={stopSearchQuery}
+                        setSearchQuery={setStopSearchQuery}
+                        onSelect={handleStopSelect}
+                        onClose={closeStopModal}
+                    />
 
                     <View style={buttonStyles.buttonRow}>
                         <Button title='Cancel' color='#E0E0E0' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
@@ -133,35 +143,3 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {},
-    inputContainer: {
-        gap: 10,
-        flexDirection: 'column',
-        paddingVertical: 10,
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 8
-    },
-    iconScrollView: {
-        marginBottom: 20,
-    },
-    iconContainer: {
-        width: 75,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        paddingTop: 10,
-        flexDirection: 'column',
-        marginRight: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    selectedIconContainer: {
-        borderColor: '#0284f5',
-        backgroundColor: '#e3f2fd',
-    },
-})

@@ -2,7 +2,7 @@ import Button from "@/components/BaseButton"
 import { useModalContext } from "@/context/ModalContext"
 import { useLoading } from "@/hooks/useLoading"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputStyles } from "@/src/styles/Styles"
+import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { Direction } from "@/src/types/Travels"
 import { useState } from "react"
@@ -20,19 +20,21 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
     };
 
     return (
-        <View style={styles.container}>
+        <View>
             {loading ? (
-                <Text style={styles.label}>Loading...</Text>
+                <Text style={inputElementStyles.inputLabel}>Loading...</Text>
             ) : (
                 <>
-                    <View style={styles.inputContainer}>
-                        <Text style={styles.label}>Name:</Text>
-                        <TextInput
-                            style={inputStyles.pressableInput}
-                            placeholder="Direction name..."
-                            value={direction.name}
-                            onChangeText={text => (setDirection({ ...direction, "name": text }))}
-                        />
+                    <View style={inputElementStyles.inputContainer}>
+                        <View style={inputElementStyles.inputGroup}>
+                            <Text style={inputElementStyles.inputLabel}>Name:</Text>
+                            <TextInput
+                                style={inputStyles.pressableInput}
+                                placeholder="Direction name..."
+                                value={direction.name}
+                                onChangeText={text => (setDirection({ ...direction, "name": text }))}
+                            />
+                        </View>
                     </View>
 
                     <View style={buttonStyles.buttonRow}>
@@ -44,17 +46,3 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {},
-    inputContainer: {
-        gap: 10,
-        flexDirection: 'column',
-        paddingVertical: 10,
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 8
-    },
-})

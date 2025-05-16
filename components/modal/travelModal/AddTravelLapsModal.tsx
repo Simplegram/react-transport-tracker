@@ -16,7 +16,7 @@ import useStopModal from '@/hooks/useStopModal';
 import EditLapModal from '../editModal/EditLapModal';
 import { Pressable } from 'react-native';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputElementStyles } from '@/src/styles/Styles';
+import { inputElementStyles } from '@/src/styles/InputStyles';
 
 export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
     const { stops } = useGetTravelData()
@@ -82,7 +82,7 @@ export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClos
                                 <Text style={styles.label}>No lap found.</Text>
                             </View>
                         ) : (
-                            <ScrollView 
+                            <ScrollView
                                 contentContainerStyle={{
                                     gap: 10,
                                 }}
@@ -90,15 +90,15 @@ export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClos
                                 {laps.map((lap: AddableLap, index) => (
                                     <Pressable key={index} style={styles.detailRow} onPress={() => handleLapSelect(lap)}>
                                         <Text style={styles.label}>{formatDateForDisplay(lap.time)}</Text>
-                                        <Text style={[styles.label, {color: colors.appBlue}]}>{stops.find(stop => stop.id === lap.stop_id)?.name}</Text>
+                                        <Text style={[styles.label, { color: colors.appBlue }]}>{stops.find(stop => stop.id === lap.stop_id)?.name}</Text>
                                         <Text style={styles.label}>{lap.note}</Text>
                                     </Pressable>
                                 ))}
                             </ScrollView>
                         )}
                     </View>
-                    
-                    <View style={{paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#ccc'}}>
+
+                    <View style={{ paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
                         <Button title='Add lap' color={colors.appBlue} onPress={openLapModal} style={addButtonStyles.buttonContainer} textStyle={addButtonStyles.plusText}></Button>
                     </View>
 
@@ -108,14 +108,14 @@ export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClos
                     </View>
                 </View>
 
-                <EditLapModal 
+                <EditLapModal
                     selectedLap={selectedLap}
                     isModalVisible={showEditLapModal}
                     onSelect={handleLapEdit}
                     onClose={closeEditLapModal}
                 />
 
-                <AddLapModal 
+                <AddLapModal
                     isModalVisible={showLapModal}
                     onSelect={handleLapAdd}
                     onClose={closeLapModal}

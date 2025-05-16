@@ -2,7 +2,7 @@ import Button from "@/components/BaseButton"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/Styles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { AddableStop } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
@@ -92,7 +92,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                                         <TouchableOpacity
                                             key={type.id}
                                             style={[
-                                                iconPickerStyles.iconContainer,
+                                                iconPickerStyles.iconTextContainer,
                                                 stop.vehicle_type === type.id && iconPickerStyles.selectedIconContainer,
                                             ]}
                                             onPress={() => setStop({ ...stop, vehicle_type: type.id })}

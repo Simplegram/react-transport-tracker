@@ -17,7 +17,7 @@ import useStopModal from '@/hooks/useStopModal';
 import EditTravelStopModal from '../travelModal/EditTravelStopModal';
 import { modalStyles } from '@/src/styles/ModalStyles';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputStyles } from '@/src/styles/Styles';
+import { inputStyles } from '@/src/styles/InputStyles';
 
 export default function AddLapModal({ isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { stops } = useGetTravelData()

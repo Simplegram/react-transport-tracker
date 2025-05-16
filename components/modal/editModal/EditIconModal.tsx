@@ -1,7 +1,8 @@
 import Button from "@/components/BaseButton";
 import { useModalContext } from "@/context/ModalContext";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { inputStyles } from "@/src/styles/Styles"
+import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import styles from "@/src/styles/Styles";
 import { AddableIconType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
@@ -35,17 +36,19 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
     }
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.label}>Icon name (FontAwesome6):</Text>
-            <View style={styles.inputContainer}>
-                <Icon style={styles.icon} name={icon.name ? icon.name : 'xmark'} size={32} />
-                <TextInput
-                    style={[inputStyles.pressableInput, { flex: 1 }]}
-                    placeholder="e.g., train-subway"
-                    value={iconQuery}
-                    onChangeText={changeIcon}
-                    autoFocus={true}
-                />
+        <View>
+            <Text style={inputElementStyles.inputLabel}>Icon name (FontAwesome6):</Text>
+            <View style={inputElementStyles.inputContainer}>
+                <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupIcon]}>
+                    <Icon style={styles.icon} name={icon.name ? icon.name : 'xmark'} size={32} />
+                    <TextInput
+                        style={[inputStyles.pressableInput, { flex: 1 }]}
+                        placeholder="e.g., train-subway"
+                        value={iconQuery}
+                        onChangeText={changeIcon}
+                        autoFocus={true}
+                    />
+                </View>
             </View>
 
             <View style={buttonStyles.buttonRow}>
@@ -55,39 +58,3 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
         </View>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {},
-    label: {
-        fontSize: 16,
-        marginBottom: 8,
-        fontWeight: 'bold',
-    },
-    inputContainer: {
-        gap: 10,
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingVertical: 10,
-    },
-    icon: {
-        paddingLeft: 5,
-        alignItems: 'center',
-    },
-    iconScrollView: {
-        marginBottom: 20,
-    },
-    iconContainer: {
-        width: 55,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
-        paddingVertical: 5,
-        marginRight: 10, // Space between icons
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    selectedIconContainer: {
-        borderColor: '#0284f5', // Highlight selected icon
-        backgroundColor: '#e3f2fd', // Light background for selected
-    },
-});

@@ -26,22 +26,22 @@ import moment from 'moment-timezone'
 import EditTravelLapsModal from '@/components/modal/travelModal/EditTravelLapsModal';
 import LoadingScreen from '@/components/LoadingScreen';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputElementStyles, inputStyles } from '@/src/styles/Styles';
+import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
 
 export default function EditTravelItem() {
     const { selectedItem: data } = useTravelContext();
 
-    const { 
-        stops, 
-        routes, 
-        directions, 
-        vehicleTypes, 
+    const {
+        stops,
+        routes,
+        directions,
+        vehicleTypes,
         laps, getLaps, setLaps
     } = useGetTravelData();
 
-    const { 
-        editTravel, 
-        addLaps, editLaps 
+    const {
+        editTravel,
+        addLaps, editLaps
     } = useModifyTravelData()
 
     const [travel, setTravel] = useState<EditableTravel>()
@@ -192,7 +192,7 @@ export default function EditTravelItem() {
         }
 
         if (lapsToAdd.length > 0) {
-            addLaps(lapsToAdd); 
+            addLaps(lapsToAdd);
         }
 
         router.push('/(tabs)/mainMenu')
