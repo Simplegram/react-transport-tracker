@@ -44,10 +44,10 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
                             rotateEnabled={false}
                             mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
                         >
-                            {currentCoordinates && currentCoordinates.lon && currentCoordinates.lat && 
+                            {currentCoordinates && 
                                 <Camera 
-                                    zoomLevel={17}
-                                    centerCoordinate={[currentCoordinates.lon, currentCoordinates.lat]}
+                                    zoomLevel={currentCoordinates.lon && currentCoordinates.lat ? 17: 12}
+                                    centerCoordinate={currentCoordinates.lon && currentCoordinates.lat ? [currentCoordinates.lon, currentCoordinates.lat] : [106.827192, -6.175415]}
                                 />
                             }
                         </MapView>
