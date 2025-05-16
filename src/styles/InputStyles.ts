@@ -24,6 +24,12 @@ const inputElementStyles = StyleSheet.create({
         color: '#000',
         marginBottom: 5,
     },
+    inputLabelLight: {
+        fontSize: 15,
+        fontWeight: '500',
+        color: '#000',
+        marginBottom: 5,
+    },
     insideLabel: {
         fontSize: 16,
         fontWeight: 'bold',

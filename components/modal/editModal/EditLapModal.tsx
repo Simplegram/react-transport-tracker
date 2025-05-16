@@ -20,7 +20,7 @@ import { modalStyles } from '@/src/styles/ModalStyles';
 import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels';
 import LoadingScreen from '@/components/LoadingScreen';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputStyles } from '@/src/styles/InputStyles';
+import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
 
 export default function EditLapModal({ selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
     const { stops } = useGetTravelData()
@@ -97,21 +97,21 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
             ) : (
                 <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
                     <View style={[modalStyles.modalContainer, modalStyles.lapModalContainer]}>
-                        <View style={styles.inputGroup}>
-                            <View style={styles.inputGroup}>
-                                <Text style={styles.label}>Time:</Text>
-                                <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles.pressableInput}>
-                                    <Text style={styles.label}>{formatDateForDisplay(lap.time)}</Text>
-                                </Pressable>
-                            </View>
+                        <View style={inputElementStyles.inputGroup}>
+                            <Text style={inputElementStyles.inputLabel}>Time:</Text>
+                            <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles.pressableInput}>
+                                <Text style={inputElementStyles.inputLabel}>{formatDateForDisplay(lap.time)}</Text>
+                            </Pressable>
                         </View>
 
-                        <View style={styles.inputGroup}>
-                            <Text style={styles.label}>Stop:</Text>
+                        <View style={inputElementStyles.inputGroup}>
+                            <Text style={inputElementStyles.inputLabel}>Stop:</Text>
                             <Pressable
                                 style={inputStyles.pressableInput}
                                 onPress={() => openStopModal('last_stop_id')}>
-                                <Text style={[styles.label, { marginBottom: 0 }]}>{stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}</Text>
+                                <Text style={[inputElementStyles.inputLabel, { marginBottom: 0 }]}>
+                                    {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
+                                </Text>
                             </Pressable>
                         </View>
 
@@ -124,8 +124,8 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
                             />
                         )}
 
-                        <View style={styles.inputGroup}>
-                            <Text style={styles.label}>Note:</Text>
+                        <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                            <Text style={inputElementStyles.inputLabel}>Note:</Text>
                             <TextInput
                                 placeholder="Optional notes"
                                 value={lap.note || ''}
@@ -134,7 +134,7 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
                                 returnKeyType="done"
                                 multiline={true}
                                 numberOfLines={3}
-                                style={[inputStyles.pressableInput, { height: 80, textAlignVertical: 'top' }]}
+                                style={[inputStyles.textInput, inputStyles.multilineTextInput, inputElementStyles.inputLabel]}
                             />
                         </View>
 
@@ -157,40 +157,3 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
         </Modal>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        gap: 15,
-    },
-    label: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: '#333',
-        flexShrink: 0,
-    },
-    inputContainer: {
-        gap: 10,
-        flexDirection: 'column',
-        paddingVertical: 10,
-    },
-    saveButton: {
-        backgroundColor: '#007bff',
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-        alignItems: 'center',
-    },
-    saveButtonText: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    inputGroup: {
-        gap: 5,
-    },
-    insideLabel: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#000',
-    },
-});

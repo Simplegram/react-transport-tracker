@@ -23,7 +23,7 @@ const modalStyles = StyleSheet.create({
         gap: 10,
     },
     lapModalContainer : {
-        height: 380
+        height: 400
     },
     modalHeader: {
         flexDirection: 'row',
