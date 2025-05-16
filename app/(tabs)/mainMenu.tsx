@@ -1,4 +1,3 @@
-import CollapsibleHeaderPage from "@/components/CollapsibleHeaderPage";
 import useTravelCalendar from "@/hooks/useTravelCalendar";
 import React, { useEffect, useMemo } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
@@ -73,40 +72,38 @@ export default function HomePage() {
     )
 
     return (
-        <CollapsibleHeaderPage largeHeaderText="Public Transport Tracker">
-            <View style={styles.container}>
-                <View style={styles.calendarContainer}>
-                    <Calendar
-                        markedDates={markedDates}
-                        onDayPress={onDayPress}
-                        initialDate={getTodayString()}
-                        enableSwipeMonths={true}
-                        theme={{
-                            // Customize calendar theme if needed
-                            selectedDayBackgroundColor: '#00adf5',
-                            selectedDayTextColor: '#ffffff',
-                            todayTextColor: '#00adf5',
-                            arrowColor: '#00adf5',
-                            indicatorColor: '#00adf5',
-                            textDayFontWeight: '300',
-                            textMonthFontWeight: 'bold',
-                            textDayHeaderFontWeight: '300',
-                            textDayFontSize: 16,
-                            textMonthFontSize: 16,
-                            textDayHeaderFontSize: 16,
-                        }}
-                    />
-                </View>
-
-                <View style={styles.listContainer}>
-                    {loading == true ? (
-                        <LoadingScreen></LoadingScreen>
-                    ) : (
-                        <GroupedDataDisplay data={travelAtDate}></GroupedDataDisplay>
-                    )}
-                </View>
+        <View style={styles.container}>
+            <View style={styles.calendarContainer}>
+                <Calendar
+                    markedDates={markedDates}
+                    onDayPress={onDayPress}
+                    initialDate={getTodayString()}
+                    enableSwipeMonths={true}
+                    theme={{
+                        // Customize calendar theme if needed
+                        selectedDayBackgroundColor: '#00adf5',
+                        selectedDayTextColor: '#ffffff',
+                        todayTextColor: '#00adf5',
+                        arrowColor: '#00adf5',
+                        indicatorColor: '#00adf5',
+                        textDayFontWeight: '300',
+                        textMonthFontWeight: 'bold',
+                        textDayHeaderFontWeight: '300',
+                        textDayFontSize: 16,
+                        textMonthFontSize: 16,
+                        textDayHeaderFontSize: 16,
+                    }}
+                />
             </View>
-        </CollapsibleHeaderPage>
+
+            <View style={styles.listContainer}>
+                {loading == true ? (
+                    <LoadingScreen></LoadingScreen>
+                ) : (
+                    <GroupedDataDisplay data={travelAtDate}></GroupedDataDisplay>
+                )}
+            </View>
+        </View>
     );
 };
 
@@ -114,6 +111,8 @@ const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         justifyContent: 'center',
+        padding: 10,
+        backgroundColor: '#fff'
     },
     calendarContainer: {
         backgroundColor: 'white',
