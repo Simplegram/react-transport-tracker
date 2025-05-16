@@ -17,6 +17,7 @@ import useStopModal from '@/hooks/useStopModal';
 import EditTravelStopModal from '../travelModal/EditTravelStopModal';
 import { modalStyles } from '@/src/styles/ModalStyles';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
+import { inputStyles } from '@/src/styles/Styles';
 
 export default function AddLapModal({ isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { stops } = useGetTravelData()
@@ -62,7 +63,7 @@ export default function AddLapModal({ isModalVisible, onClose, onSelect }: Addab
                     <View style={styles.inputGroup}>
                         <View style={styles.inputGroup}>
                             <Text style={styles.label}>Time:</Text>
-                            <Pressable onPress={() => setShowDatetimePicker(true)} style={styles.pressableInput}>
+                            <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles.pressableInput}>
                                 <Text style={styles.label}>{formatDateForDisplay(lap.time)}</Text>
                             </Pressable>
                         </View>
@@ -71,7 +72,7 @@ export default function AddLapModal({ isModalVisible, onClose, onSelect }: Addab
                     <View style={styles.inputGroup}>
                         <Text style={styles.label}>Stop:</Text>
                         <Pressable
-                            style={styles.pressableInput}
+                            style={inputStyles.pressableInput}
                             onPress={() => openStopModal('last_stop_id')}>
                             <Text style={[styles.label, { marginBottom: 0 }]}>{stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}</Text>
                         </Pressable>
@@ -161,16 +162,5 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#000',
-    },
-    pressableInput: {
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingVertical: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: 44,
-        backgroundColor: '#fff',
     },
 });

@@ -24,6 +24,8 @@ import { formatDateForDisplay } from '@/src/utils/utils';
 import moment from 'moment-timezone'
 import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModal';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
+import { inputElementStyles, inputStyles } from '@/src/styles/Styles';
+import LoadingScreen from '@/components/LoadingScreen';
 
 export default function AddTravel() {
     const { stops, routes, directions, vehicleTypes } = useGetTravelData();
@@ -122,9 +124,7 @@ export default function AddTravel() {
 
     if (!travel) {
         return (
-            <View style={styles.centeredContainer}>
-                <Text>Initializing new travel form...</Text>
-            </View>
+            <LoadingScreen></LoadingScreen>
         );
     }
 
@@ -194,24 +194,24 @@ export default function AddTravel() {
 
     return (
         <CollapsibleHeaderPage largeHeaderText={screenTitle}>
-            <View style={styles.inputGroup}>
-                <Text style={styles.label}>Bus Initial Arrival:</Text>
-                <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={styles.pressableInput}>
-                    <Text style={styles.insideLabel}>{formatDateForDisplay(travel.bus_initial_arrival)}</Text>
+            <View style={inputElementStyles.inputGroup}>
+                <Text style={inputElementStyles.inputLabel}>Bus Initial Arrival:</Text>
+                <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={inputStyles.pressableInput}>
+                    <Text style={inputElementStyles.insideLabel}>{formatDateForDisplay(travel.bus_initial_arrival)}</Text>
                 </Pressable>
             </View>
 
-            <View style={styles.inputGroup}>
-                <Text style={styles.label}>Bus Initial Departure:</Text>
-                <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={styles.pressableInput}>
-                    <Text style={styles.insideLabel}>{formatDateForDisplay(travel.bus_initial_departure)}</Text>
+            <View style={inputElementStyles.inputGroup}>
+                <Text style={inputElementStyles.inputLabel}>Bus Initial Departure:</Text>
+                <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={inputStyles.pressableInput}>
+                    <Text style={inputElementStyles.insideLabel}>{formatDateForDisplay(travel.bus_initial_departure)}</Text>
                 </Pressable>
             </View>
 
-            <View style={[styles.inputGroup, { paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }]}>
-                <Text style={styles.label}>Bus Final Arrival:</Text>
-                <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={styles.pressableInput}>
-                    <Text style={styles.insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
+            <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                <Text style={inputElementStyles.inputLabel}>Bus Final Arrival:</Text>
+                <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={inputStyles.pressableInput}>
+                    <Text style={inputElementStyles.insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
                 </Pressable>
             </View>
 
@@ -229,70 +229,70 @@ export default function AddTravel() {
                 />
             )}
 
-            <View style={styles.inputGroup}>
-                <Text style={styles.label}>Route:</Text>
+            <View style={inputElementStyles.inputGroup}>
+                <Text style={inputElementStyles.inputLabel}>Route:</Text>
                 <Pressable
-                    style={styles.pressableInput}
+                    style={inputStyles.pressableInput}
                     onPress={() => openRouteModal()}>
-                    <Text style={styles.insideLabel}>
+                    <Text style={inputElementStyles.insideLabel}>
                         {`${routes.find(route => route.id === travel.route_id)?.code || `Select`} | ${routes.find(route => route.id === travel.route_id)?.name || `Route...`}`}
                     </Text>
                 </Pressable>
             </View>
 
-            <View style={[styles.inputGroup, { paddingBottom: 20, borderBottomWidth: 1, borderBottomColor: '#ccc' }]}>
-                <Text style={styles.label}>Type:</Text>
+            <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                <Text style={inputElementStyles.inputLabel}>Type:</Text>
                 <TextInput
                     editable={false}
-                    style={styles.input}
+                    style={inputStyles.textInput}
                     value={vehicleTypes.find(type => type.id === travel.type_id)?.name}
                     placeholder="Vehicle type..."
                 />
             </View>
 
-            <View style={styles.inputGroup}>
-                <Text style={styles.label}>Direction:</Text>
+            <View style={inputElementStyles.inputGroup}>
+                <Text style={inputElementStyles.inputLabel}>Direction:</Text>
                 <Pressable
-                    style={styles.pressableInput}
+                    style={inputStyles.pressableInput}
                     onPress={() => openDirectionModal()}>
-                    <Text style={styles.insideLabel}>
+                    <Text style={inputElementStyles.insideLabel}>
                         {directions.find(direction => direction.id === travel.direction_id)?.name || 'Select Direction...'}
                     </Text>
                 </Pressable>
             </View>
 
-            <View style={styles.inputGroup}>
-                <Text style={styles.label}>First Stop:</Text>
+            <View style={inputElementStyles.inputGroup}>
+                <Text style={inputElementStyles.inputLabel}>First Stop:</Text>
                 <Pressable
-                    style={styles.pressableInput}
+                    style={inputStyles.pressableInput}
                     onPress={() => openStopModal('first_stop_id')}>
-                    <Text style={styles.insideLabel}>{stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}</Text>
+                    <Text style={inputElementStyles.insideLabel}>{stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}</Text>
                 </Pressable>
             </View>
 
-            <View style={styles.inputGroup}>
-                <Text style={styles.label}>Last Stop:</Text>
+            <View style={inputElementStyles.inputGroup}>
+                <Text style={inputElementStyles.inputLabel}>Last Stop:</Text>
                 <Pressable
-                    style={styles.pressableInput}
+                    style={inputStyles.pressableInput}
                     onPress={() => openStopModal('last_stop_id')}>
-                    <Text style={styles.insideLabel}>{stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}</Text>
+                    <Text style={inputElementStyles.insideLabel}>{stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}</Text>
                 </Pressable>
             </View>
 
-            <View style={styles.inputGroup}>
-                <Text style={styles.label}>Vehicle Code:</Text>
+            <View style={inputElementStyles.inputGroup}>
+                <Text style={inputElementStyles.inputLabel}>Vehicle Code:</Text>
                 <TextInput
-                    style={styles.input}
+                    style={inputStyles.textInput}
                     value={travel.vehicle_code || ''}
                     onChangeText={(text) => handleChangeText('vehicle_code', text)}
                     placeholder="Enter vehicle code"
                 />
             </View>
 
-            <View style={styles.inputGroup}>
-                <Text style={styles.label}>Notes:</Text>
+            <View style={inputElementStyles.inputGroup}>
+                <Text style={inputElementStyles.inputLabel}>Notes:</Text>
                 <TextInput
-                    style={[styles.input, styles.multilineInput]}
+                    style={[inputStyles.textInput, inputStyles.multilineTextInput]}
                     value={travel.notes || ''}
                     onChangeText={(text) => handleChangeText('notes', text)}
                     multiline={true}
@@ -301,12 +301,12 @@ export default function AddTravel() {
                 />
             </View>
 
-            <View style={styles.inputGroup}>
-                <Text style={styles.label}>Laps:</Text>
+            <View style={inputElementStyles.inputGroup}>
+                <Text style={inputElementStyles.inputLabel}>Laps:</Text>
                 <Pressable
-                    style={styles.pressableInput}
+                    style={inputStyles.pressableInput}
                     onPress={() => openLapsModal()}>
-                    <Text style={styles.insideLabel}>{`${laps.length} laps`}</Text>
+                    <Text style={inputElementStyles.insideLabel}>{`${laps.length} laps`}</Text>
                 </Pressable>
             </View>
 
@@ -347,62 +347,3 @@ export default function AddTravel() {
         </CollapsibleHeaderPage>
     );
 };
-
-const styles = StyleSheet.create({
-    container: { // This style was defined but not used, can be kept or removed
-        flex: 1,
-    },
-    centeredContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        padding: 20,
-    },
-    inputGroup: {
-        marginBottom: 15,
-    },
-    label: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#000',
-        marginBottom: 5,
-    },
-    insideLabel: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#000',
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingVertical: Platform.OS === 'ios' ? 12 : 10,
-        minHeight: Platform.OS === 'ios' ? 48 : 44,
-        fontSize: 16,
-        backgroundColor: '#fff',
-    },
-    multilineInput: {
-        minHeight: 80,
-        textAlignVertical: 'top',
-    },
-    pressableInput: {
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingVertical: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-        minHeight: Platform.OS === 'ios' ? 48 : 44,
-        backgroundColor: '#fff',
-    },
-    picker: {
-        backgroundColor: Platform.OS === 'ios' ? '#fff' : '#E0E0E0',
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: Platform.OS === 'ios' ? 5 : 0,
-        minHeight: Platform.OS === 'ios' ? 48 : 44,
-        justifyContent: 'center',
-    },
-});

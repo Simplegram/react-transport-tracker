@@ -10,6 +10,7 @@ import useStopModal from "@/hooks/useStopModal"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { modalStyles } from "@/src/styles/ModalStyles"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
+import { inputStyles } from "@/src/styles/Styles"
 
 export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { stops, fullVehicleTypes } = useGetTravelData()
@@ -70,14 +71,14 @@ export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentPr
 
                         <Text style={styles.label}>First Stop:</Text>
                         <Pressable
-                            style={styles.pressableInput}
+                            style={inputStyles.pressableInput}
                             onPress={() => openStopModal('first_stop_id')}>
                             <Text style={[styles.label, { marginBottom: 0 }]}>{stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}</Text>
                         </Pressable>
 
                         <Text style={styles.label}>Last Stop:</Text>
                         <Pressable
-                            style={styles.pressableInput}
+                            style={inputStyles.pressableInput}
                             onPress={() => openStopModal('last_stop_id')}>
                             <Text style={[styles.label, { marginBottom: 0 }]}>{stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}</Text>
                         </Pressable>
@@ -156,15 +157,5 @@ const styles = StyleSheet.create({
     selectedIconContainer: {
         borderColor: '#0284f5',
         backgroundColor: '#e3f2fd',
-    },
-    pressableInput: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingVertical: 12,
-        justifyContent: 'center',
-        minHeight: 44,
-        backgroundColor: '#fff',
     },
 })
