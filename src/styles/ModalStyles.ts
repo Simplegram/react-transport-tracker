@@ -7,16 +7,6 @@ const modalStyles = StyleSheet.create({
         marginBottom: 5,
         color: '#333',
     },
-    inputGroup: {},
-    pressableInput: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        padding: 10,
-        justifyContent: 'center',
-        minHeight: 44,
-        backgroundColor: '#fff',
-    },
     modalBackdrop: {
         flex: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -50,10 +40,6 @@ const modalStyles = StyleSheet.create({
     },
     modalCloseButton: {
         padding: 10,
-    },
-    modalCloseButtonText: {
-        fontSize: 18,
-        color: '#666',
     },
     modalSearchInput: {
         borderWidth: 1,
