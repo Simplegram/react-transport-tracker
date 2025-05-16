@@ -48,7 +48,6 @@ interface AddableLap {
 }
 
 interface AddableLapsModalProp {
-    travel_id: number
     currentLaps: AddableLap[]
     isModalVisible: boolean
     onClose: () => void
