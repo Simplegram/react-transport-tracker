@@ -90,9 +90,11 @@ export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVis
                             >
                                 {laps.map((lap: EditableLap, index) => (
                                     <Pressable key={index} style={styles.detailRow} onPress={() => handleLapSelect(lap)}>
-                                        <Text style={styles.label}>{formatDateForDisplay(lap.time)}</Text>
-                                        <Text style={[styles.label, { color: colors.appBlue }]}>{stops.find(stop => stop.id === lap.stop_id)?.name}</Text>
-                                        <Text style={styles.label}>{lap.note}</Text>
+                                        <Text style={inputElementStyles.inputLabel}>{formatDateForDisplay(lap.time)}</Text>
+                                        <Text style={[inputElementStyles.inputLabel, { color: colors.appBlue }]}>
+                                            {stops.find(stop => stop.id === lap.stop_id)?.name}
+                                        </Text>
+                                        <Text style={inputElementStyles.inputLabelLight}>{lap.note}</Text>
                                     </Pressable>
                                 ))}
                             </ScrollView>
@@ -147,41 +149,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
-    label: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: '#333',
-        flexShrink: 0,
-    },
     inputContainer: {
         flex: 1,
         gap: 10,
         flexDirection: 'column',
         paddingVertical: 10,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 5,
-        padding: 10,
-        fontSize: 16,
-        color: '#333',
-        backgroundColor: '#f9f9f9',
-    },
-    saveButton: {
-        backgroundColor: '#007bff',
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-        alignItems: 'center',
-    },
-    saveButtonText: {
-        color: '#fff',
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    inputGroup: {
-        gap: 5,
     },
     detailRow: {
         flexDirection: 'column',
