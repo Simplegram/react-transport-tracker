@@ -90,9 +90,11 @@ export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClos
                                 {laps.map((lap: AddableLap, index) => (
                                     <Pressable key={index} style={styles.detailRow} onPress={() => handleLapSelect(lap)}>
                                         <Text style={inputElementStyles.inputLabel}>{formatDateForDisplay(lap.time)}</Text>
-                                        <Text style={[inputElementStyles.inputLabel, { color: colors.appBlue }]}>
-                                            {stops.find(stop => stop.id === lap.stop_id)?.name}
-                                        </Text>
+                                        {stops.find(stop => stop.id === lap.stop_id) ? (
+                                            <Text style={[inputElementStyles.inputLabel, { color: colors.appBlue }]}>
+                                                {stops.find(stop => stop.id === lap.stop_id)?.name}
+                                            </Text>
+                                        ) : null}
                                         <Text style={inputElementStyles.inputLabelLight}>{lap.note}</Text>
                                     </Pressable>
                                 ))}
