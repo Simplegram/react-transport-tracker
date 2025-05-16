@@ -121,6 +121,7 @@ const DataListScreen: React.FC = () => {
                     renderItem={renderItem}
                     keyExtractor={item => item.id.toString()} // Ensure key is a string
                     contentContainerStyle={styles.listContent}
+                    keyboardShouldPersistTaps={'always'}
                 />
             )}
 
