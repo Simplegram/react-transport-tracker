@@ -14,7 +14,7 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
 
     const handleOnSubmit = () => {
         if (!direction.name?.trim()) {
-            Alert.alert('Input Required', 'Please enter a direction name.');
+            Alert.alert('Input Required', 'Please enter a direction name');
             return
         }
 

@@ -9,6 +9,7 @@ import {
     StyleSheet,
     Pressable,
     Modal,
+    Alert,
 } from 'react-native';
 import moment from 'moment-timezone'
 import { formatDateForDisplay } from '@/src/utils/utils';
@@ -48,6 +49,11 @@ export default function AddLapModal({ isModalVisible, onClose, onSelect }: Addab
     };
 
     const handleOnSubmit = () => {
+        if (!lap.time) {
+            Alert.alert('Input Required', 'Please select time');
+            return
+        }
+
         onSelect(lap);
     };
 

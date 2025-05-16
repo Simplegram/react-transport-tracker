@@ -7,6 +7,7 @@ import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/
 import { EditableStop } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
+import { Alert } from "react-native";
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
@@ -19,6 +20,11 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
     const { loading } = useLoading()
 
     const handleOnSubmit = () => {
+        if (!stop.name.trim() || !stop.vehicle_type) {
+            Alert.alert('Input Required', 'Please enter a stop name and choose a vehicle type.');
+            return
+        }
+
         onSubmit(stop);
     };
 

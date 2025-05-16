@@ -14,7 +14,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
 
     const handleOnSubmit = () => {
         if (!icon.name?.trim()) {
-            Alert.alert('Input Required', 'Please enter an icon name.');
+            Alert.alert('Input Required', 'Please enter icon name');
             return
         }
 

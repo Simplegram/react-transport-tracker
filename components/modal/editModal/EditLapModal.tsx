@@ -49,7 +49,11 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
                 "Unexpected Error",
                 `Lap is null which is not supposed to happen. Try again.\nSelected date is ${isoSelectedDate}`
             )
+            return
+        }
 
+        if (!lap.time) {
+            Alert.alert('Input Required', 'Please select time');
             return
         }
 

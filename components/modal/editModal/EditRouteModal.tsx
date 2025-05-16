@@ -4,7 +4,7 @@ import useGetTravelData from "@/hooks/useGetTravelData"
 import { EditableRoute } from "@/src/types/EditableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useRef, useState } from "react"
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import EditTravelStopModal from "../travelModal/EditTravelStopModal"
 import useStopModal from "@/hooks/useStopModal"
@@ -40,10 +40,6 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
 
     const { loading } = useLoading()
 
-    const handleOnSubmit = () => {
-        onSubmit(route);
-    };
-
     const handleStopSelect = (stopId: number) => {
         if (!editingStopField) {
             return
@@ -51,6 +47,15 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
 
         setRoute({ ...route, [editingStopField]: stopId })
         closeStopModal();
+    };
+
+    const handleOnSubmit = () => {
+        if (!route.name || !route.first_stop_id || !route.last_stop_id || !route.vehicle_type_id) {
+            Alert.alert('Input Required', 'Please add route name/stops/vehicle type');
+            return
+        }
+
+        onSubmit(route);
     };
 
     return (

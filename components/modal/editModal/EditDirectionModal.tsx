@@ -6,7 +6,7 @@ import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { Direction } from "@/src/types/Travels"
 import { useState } from "react"
-import { StyleSheet, Text, TextInput, View } from "react-native"
+import { Alert, StyleSheet, Text, TextInput, View } from "react-native"
 
 export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { modalData: data } = useModalContext()
@@ -16,6 +16,11 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
     const [direction, setDirection] = useState<Direction>(data)
 
     const handleOnSubmit = () => {
+        if (!direction.name?.trim()) {
+            Alert.alert('Input Required', 'Please enter a direction name');
+            return
+        }
+
         onSubmit(direction);
     };
 

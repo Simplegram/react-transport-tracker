@@ -1,6 +1,6 @@
 import { AddableRoute } from "@/src/types/AddableTravels"
 import { useState } from "react"
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import EditTravelStopModal from "../travelModal/EditTravelStopModal"
 import Button from "@/components/BaseButton"
 import Icon from 'react-native-vector-icons/FontAwesome6'
@@ -43,6 +43,11 @@ export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentPr
     };
 
     const handleOnSubmit = () => {
+        if (!route.name || !route.first_stop_id || !route.last_stop_id || !route.vehicle_type_id) {
+            Alert.alert('Input Required', 'Please add route name/stops/vehicle type');
+            return
+        }
+
         onSubmit(route);
     };
 

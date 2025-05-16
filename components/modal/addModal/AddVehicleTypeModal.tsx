@@ -17,7 +17,7 @@ export default function AddVehicleTypeModal({ onSubmit, onCancel }: BaseModalCon
     const [vehicleType, setVehicleType] = useState<AddableVehicleType>({ "name": undefined, "icon_id": undefined })
 
     const handleOnSubmit = () => {
-        if (!vehicleType.name?.trim() || !vehicleType.icon_id) {
+        if (!vehicleType.name || !vehicleType.icon_id) {
             Alert.alert('Input Required', 'Please enter a type name and choose an icon.');
             return
         }

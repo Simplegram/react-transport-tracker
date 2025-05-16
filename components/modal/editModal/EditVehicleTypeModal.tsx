@@ -9,7 +9,7 @@ import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { IconType } from "@/src/types/Travels";
 import { sortByIdToFront } from "@/src/utils/utils";
 import { useEffect, useRef, useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalContentProps) {
@@ -27,6 +27,11 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
     }, [icons])
 
     const handleOnSubmit = () => {
+        if (!vehicleType.name || !vehicleType.icon_id) {
+            Alert.alert('Input Required', 'Please enter a type name and choose an icon.');
+            return
+        }
+
         onSubmit(vehicleType);
     };
 
