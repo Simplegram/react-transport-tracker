@@ -1,5 +1,4 @@
-import { DataItem } from "../types/Travels";
-import moment from 'moment'
+import { Coordinates, DataItem } from "../types/Travels";
 
 const sortByIdToFront = (arr: any, targetId: number) => {
     // Find the index of the object with the targetId
@@ -47,13 +46,13 @@ function calculateDuration(item: DataItem): string | null {
     if (hours > 0) {
         durationString += `${hours}h`;
         if (minutes > 0 || seconds > 0) {
-        durationString += ' ';
+            durationString += ' ';
         }
     }
     if (minutes > 0) {
         durationString += `${minutes}m`;
         if (seconds > 0) {
-        durationString += ' ';
+            durationString += ' ';
         }
     }
 
@@ -87,5 +86,5 @@ const formatDateForDisplay = (isoString: string | undefined | null) => {
 export {
     sortByIdToFront,
     calculateDuration,
-    formatDateForDisplay
+    formatDateForDisplay,
 }

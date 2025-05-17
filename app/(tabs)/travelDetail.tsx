@@ -3,7 +3,8 @@ import LoadingScreen from '@/components/LoadingScreen';
 import { useTravelContext } from '@/context/PageContext';
 import useGetTravelData from '@/hooks/useGetTravelData';
 import { DataItem } from '@/src/types/Travels';
-import { MapView, MarkerView } from '@maplibre/maplibre-react-native';
+import { getSimpleCentroid } from '@/src/utils/mapUtils';
+import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native';
 import { useFocusEffect } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
@@ -85,6 +86,7 @@ export default function TravelDetail() {
     })
 
     const fullLatLon = [...stopLatLon, ...(lapLatLon || [])]
+    const centerLatLon = getSimpleCentroid(fullLatLon.map(data => data?.coords))
 
     let totalOnRoadMilliseconds = 0;
     let earliestStartMillis: number | null = null;
@@ -240,6 +242,12 @@ export default function TravelDetail() {
                         rotateEnabled={false}
                         mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
                     >
+                        {centerLatLon && (
+                            <Camera 
+                                centerCoordinate={[centerLatLon?.center.lon, centerLatLon?.center.lat]}
+                                zoomLevel={centerLatLon?.zoom}
+                            />
+                        )}
                         {fullLatLon && fullLatLon.map((stop, index) => (
                             <MarkerView key={index} coordinate={stop.coords}>
                                 <View style={{ width: 12, aspectRatio: 1, backgroundColor: stop.id === "stop" ? 'limegreen' : 'yellow', zIndex: -1, borderWidth: 2, borderRadius: 8 }}></View>

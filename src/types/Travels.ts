@@ -55,12 +55,26 @@ interface Lap {
     note: string | null
 }
 
+interface FullLap {
+    id: number
+    travel_id: number
+    time: string
+    stop_id: Stop | null
+    note: string | null
+}
+
+interface Coordinates {
+    lon: number
+    lat: number
+}
+
 export {
     Direction,
     Stop,
     Route,
     VehicleType,
     IconType,
-    Lap,
+    Lap, FullLap,
+    Coordinates,
     DataItem
 }
