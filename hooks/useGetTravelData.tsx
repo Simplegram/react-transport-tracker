@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase"
-import { Direction, IconType, Lap, Route, Stop, VehicleType } from "@/src/types/Travels"
+import { Direction, FullLap, IconType, Lap, Route, Stop, VehicleType } from "@/src/types/Travels"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 export default function useGetTravelData() {
@@ -10,8 +10,8 @@ export default function useGetTravelData() {
     const [vehicleTypes, setVehicleTypes] = useState<VehicleType[]>([])
     const [icons, setIcons] = useState<IconType[]>([])
 
-    const [laps, setLaps] = useState<Lap[] | undefined>(undefined)
-    const [travelLaps, setTravelLaps] = useState<Lap[] | undefined>(undefined)
+    const [laps, setLaps] = useState<Lap[]>([])
+    const [travelLaps, setTravelLaps] = useState<FullLap[] | undefined>(undefined)
 
     const getDirections = async () => {
         const { data, error } = await supabase

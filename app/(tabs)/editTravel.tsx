@@ -36,7 +36,8 @@ export default function EditTravelItem() {
         routes,
         directions,
         vehicleTypes,
-        laps, getLaps, setLaps
+        laps, getLaps, setLaps,
+        refetchTravelData
     } = useGetTravelData();
 
     const {
@@ -61,7 +62,7 @@ export default function EditTravelItem() {
                 route_id: data.routes.id,
                 type_id: data.types.id
             })
-
+            
             getLaps(data.id)
         }, [data])
     )

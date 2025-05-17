@@ -81,10 +81,10 @@ export default function TravelDetail() {
     });
 
     const lapLatLon = travelLaps?.filter(laps => laps.stop_id !== null).map(lap => {
-        return { id: "lap", coords: [lap.stop_id.lon, lap.stop_id.lat] }
+        if (lap.stop_id) return { id: "lap", coords: [lap.stop_id.lon, lap.stop_id.lat] }
     })
 
-    const fullLatLon = [...stopLatLon, ...lapLatLon]
+    const fullLatLon = [...stopLatLon, ...(lapLatLon || [])]
 
     let totalOnRoadMilliseconds = 0;
     let earliestStartMillis: number | null = null;
