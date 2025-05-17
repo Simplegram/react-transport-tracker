@@ -171,6 +171,11 @@ export default function EditTravelItem() {
     }
 
     const handleOnSubmit = () => {
+        if (!travel) {
+            Alert.alert('Input Required', 'Data is broken.');
+            return
+        }
+
         if (
             !travel.direction_id ||
             !travel.first_stop_id ||
@@ -184,15 +189,19 @@ export default function EditTravelItem() {
 
         editTravel(travel)
 
-        const lapsToEdit = laps.filter(lap => lap.id);
-        const lapsToAdd = laps.filter(lap => !lap.id);
+        if (laps) {
+            const idedLaps = laps.map(lap => {return {...lap, travel_id: travel.id}})
 
-        if (lapsToEdit.length > 0) {
-            editLaps(lapsToEdit);
-        }
-
-        if (lapsToAdd.length > 0) {
-            addLaps(lapsToAdd);
+            const lapsToEdit = idedLaps.filter(lap => lap.id);
+            const lapsToAdd = idedLaps.filter(lap => !lap.id);
+    
+            if (lapsToEdit.length > 0) {
+                editLaps(lapsToEdit);
+            }
+    
+            if (lapsToAdd.length > 0) {
+                addLaps(lapsToAdd);
+            }
         }
 
         router.push('/(tabs)/mainMenu')
