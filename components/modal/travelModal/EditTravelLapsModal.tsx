@@ -96,7 +96,10 @@ export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVis
                                                 {stops.find(stop => stop.id === lap.stop_id)?.name}
                                             </Text>
                                         ) : null}
-                                        <Text style={inputElementStyles.inputLabelLight}>{lap.note}</Text>
+
+                                        {lap.note && (
+                                            <Text style={inputElementStyles.inputLabelLight}>{lap.note}</Text>
+                                        )}
                                     </Pressable>
                                 ))}
                             </ScrollView>
