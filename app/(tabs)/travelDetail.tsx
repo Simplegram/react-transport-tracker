@@ -29,7 +29,7 @@ const formatDurationHoursMinutes = (milliseconds: number): string => {
 export default function TravelDetail() {
     const { selectedTravelItems } = useTravelContext()
 
-    const { stops } = useGetTravelData()
+    const { travelLaps, getTravelLaps } = useGetTravelData()
 
     const [dataToUse, setDataToUse] = useState<DataItem[]>([])
 
@@ -41,6 +41,9 @@ export default function TravelDetail() {
 
     useEffect(() => {
         setDataToUse(selectedTravelItems)
+
+        const allLaps = selectedTravelItems.map(travel => travel.id)
+        getTravelLaps(allLaps)
     }, [selectedTravelItems])
 
     useFocusEffect(
@@ -66,18 +69,22 @@ export default function TravelDetail() {
     const stopLatLon = sortedData.flatMap(travel => {
         const coords = [];
 
-        // Check if first_stop_id and its coordinates exist
         if (travel.first_stop_id && travel.first_stop_id.lat && travel.first_stop_id.lon) {
-            coords.push({ id: travel.first_stop_id.id, coords: [travel.first_stop_id.lon, travel.first_stop_id.lat] });
+            coords.push({ id: "stop", coords: [travel.first_stop_id.lon, travel.first_stop_id.lat] });
         }
 
-        // Check if last_stop_id and its coordinates exist
         if (travel.last_stop_id && travel.last_stop_id.lat && travel.last_stop_id.lon) {
-            coords.push({ id: travel.last_stop_id.id, coords: [travel.last_stop_id.lon, travel.last_stop_id.lat] });
+            coords.push({ id: "stop", coords: [travel.last_stop_id.lon, travel.last_stop_id.lat] });
         }
 
-        return coords; // Return an array (which might be empty)
+        return coords;
     });
+
+    const lapLatLon = travelLaps?.filter(laps => laps.stop_id !== null).map(lap => {
+        return { id: "lap", coords: [lap.stop_id.lon, lap.stop_id.lat] }
+    })
+
+    const fullLatLon = [...stopLatLon, ...lapLatLon]
 
     let totalOnRoadMilliseconds = 0;
     let earliestStartMillis: number | null = null;
@@ -233,9 +240,9 @@ export default function TravelDetail() {
                         rotateEnabled={false}
                         mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
                     >
-                        {stopLatLon.map((stop, index) => (
+                        {fullLatLon && fullLatLon.map((stop, index) => (
                             <MarkerView key={index} coordinate={stop.coords}>
-                                <View style={{ width: 12, aspectRatio: 1, backgroundColor: 'limegreen', zIndex: -1, borderWidth: 2, borderRadius: 8 }}></View>
+                                <View style={{ width: 12, aspectRatio: 1, backgroundColor: stop.id === "stop" ? 'limegreen' : 'yellow', zIndex: -1, borderWidth: 2, borderRadius: 8 }}></View>
                             </MarkerView>
                         ))}
                     </MapView>

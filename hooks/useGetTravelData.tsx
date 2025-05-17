@@ -11,6 +11,7 @@ export default function useGetTravelData() {
     const [icons, setIcons] = useState<IconType[]>([])
 
     const [laps, setLaps] = useState<Lap[] | undefined>(undefined)
+    const [travelLaps, setTravelLaps] = useState<Lap[] | undefined>(undefined)
 
     const getDirections = async () => {
         const { data, error } = await supabase
@@ -76,8 +77,46 @@ export default function useGetTravelData() {
             .eq("travel_id", travelId)
 
         if (error) console.log(error)
-        return setLaps(data)
+        if (data) {
+            setLaps(data)
+            return data
+        }
+
+        return null
     }
+
+    const getFullLaps = async (travelId: number) => {
+        const { data, error } = await supabase
+            .from("laps")
+            .select("*, stop_id(*)")
+            .eq("travel_id", travelId)
+
+        if (error) console.log(error)
+        if (data) {
+            setLaps(data)
+            return data
+        }
+
+        return null
+    }
+
+    const getTravelLaps = async (travelIds: number[]) => {
+        try {
+            const lapPromises = travelIds.map(travelId => {
+                return getFullLaps(travelId);
+            });
+
+            const allLapsData = await Promise.all(lapPromises);
+
+            const validLapsData = allLapsData.filter(laps => laps !== null)
+            const flattenedLaps = validLapsData.flat()
+
+            setTravelLaps(flattenedLaps);
+
+        } catch (error) {
+            console.error("Error fetching travel laps:", error);
+        }
+    };
 
     const getTravelData = async () => {
         await getDirections()
@@ -98,7 +137,8 @@ export default function useGetTravelData() {
         routes, getRoutes,
         vehicleTypes, fullVehicleTypes, getVehicleTypes,
         icons, getIcons,
-        laps, setLaps, getLaps,
+        laps, setLaps, getLaps, 
+        travelLaps, getTravelLaps,
         refetchTravelData: getTravelData,
     }
 }
