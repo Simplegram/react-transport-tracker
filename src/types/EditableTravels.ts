@@ -1,3 +1,5 @@
+import { Direction, Route, Stop } from "./Travels"
+
 interface EditableStop {
     id: number,
     name: string,
@@ -51,15 +53,44 @@ interface EditableTravelModalProp {
     onSelect: (stopId: number) => void
 }
 
+export interface EditableTravelRouteModalProp {
+    routes: Route[]
+    isModalVisible: boolean
+    searchQuery: string
+    setSearchQuery: (query: string) => void
+    onClose: () => void
+    onSelect: (stopId: number) => void
+}
+
+export interface EditableTravelDirectionModalProp {
+    directions: Direction[]
+    isModalVisible: boolean
+    searchQuery: string
+    setSearchQuery: (query: string) => void
+    onClose: () => void
+    onSelect: (stopId: number) => void
+}
+
+interface EditableTravelStopModalProp {
+    stops: Stop[]
+    isModalVisible: boolean
+    searchQuery: string
+    setSearchQuery: (query: string) => void
+    onClose: () => void
+    onSelect: (stopId: number) => void
+}
+
 interface EditableLapsModalProp {
     travel_id: number
     currentLaps: EditableLap[]
+    stops: Stop[]
     isModalVisible: boolean
     onClose: () => void
     onSelect: (lap: EditableLap) => void
 }
 
 interface EditableLapModalProp {
+    stops: Stop[]
     selectedLap: EditableLap
     isModalVisible: boolean
     onClose: () => void
@@ -72,6 +103,6 @@ export {
     EditableRoute,
     EditableTravel,
     EditableLap,
-    EditableTravelModalProp,
+    EditableTravelModalProp, EditableTravelStopModalProp,
     EditableLapsModalProp, EditableLapModalProp
 }

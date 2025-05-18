@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import moment from 'moment-timezone'
 import { formatDateForDisplay } from '@/src/utils/utils';
-import useGetTravelData from '@/hooks/useGetTravelData';
 import useStopModal from '@/hooks/useStopModal';
 import EditTravelStopModal from '../travelModal/EditTravelStopModal';
 import { modalStyles } from '@/src/styles/ModalStyles';
@@ -22,9 +21,7 @@ import LoadingScreen from '@/components/LoadingScreen';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
 
-export default function EditLapModal({ selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
-    const { stops } = useGetTravelData()
-
+export default function EditLapModal({ stops, selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
     const {
         showStopModal,
         stopSearchQuery,
@@ -150,6 +147,7 @@ export default function EditLapModal({ selectedLap, isModalVisible, onClose, onS
 
 
                     <EditTravelStopModal
+                        stops={stops}
                         isModalVisible={showStopModal}
                         searchQuery={stopSearchQuery}
                         setSearchQuery={setStopSearchQuery}

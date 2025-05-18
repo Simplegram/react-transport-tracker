@@ -1,14 +1,10 @@
-import Button from "@/components/BaseButton";
-import useGetTravelData from "@/hooks/useGetTravelData";
-import { EditableTravelModalProp } from "@/src/types/EditableTravels";
+import { EditableTravelRouteModalProp } from "@/src/types/EditableTravels";
 import { useMemo } from "react";
 import { FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import { flatlistStyles, modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
 
-export default function EditTravelRouteModal({ searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelModalProp) {
-    const { routes } = useGetTravelData()
-
+export default function EditTravelRouteModal({ routes, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelRouteModalProp) {
     const filteredItems = useMemo(() => {
         if (!routes) return [];
         const query = searchQuery.toLowerCase();

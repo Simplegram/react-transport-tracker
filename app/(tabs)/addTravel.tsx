@@ -19,7 +19,7 @@ import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRoute
 import Button from '@/components/BaseButton';
 import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal';
 import useModifyTravelData from '@/hooks/useModifyTravelData';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { formatDateForDisplay } from '@/src/utils/utils';
 import moment from 'moment-timezone'
 import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModal';
@@ -69,6 +69,8 @@ export default function AddTravel() {
         closeStopModal: closeLapsModal
     } = useStopModal();
 
+    const { refetchTravelData } = useGetTravelData()
+
     const setDefaultTravel = () => {
         setTravel({
             direction_id: undefined,
@@ -88,6 +90,12 @@ export default function AddTravel() {
     useEffect(() => {
         setDefaultTravel()
     }, [])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            refetchTravelData()
+        }, [])
+    )
 
     const handleChangeText = (field: keyof AddableTravel, value: string) => {
         setTravel(prev => {
@@ -313,6 +321,7 @@ export default function AddTravel() {
             </View>
 
             <AddTravelLapsModal
+                stops={stops}
                 currentLaps={laps}
                 isModalVisible={showLapsModal}
                 onSelect={handleLapsSelect}
@@ -320,6 +329,7 @@ export default function AddTravel() {
             />
 
             <EditTravelDirectionModal
+                directions={directions}
                 isModalVisible={showDirectionModal}
                 searchQuery={directionSearchQuery}
                 setSearchQuery={setDirectionSearchQuery}
@@ -328,6 +338,7 @@ export default function AddTravel() {
             />
 
             <EditTravelRouteModal
+                routes={routes}
                 isModalVisible={showRouteModal}
                 searchQuery={routeSearchQuery}
                 setSearchQuery={setRouteSearchQuery}
@@ -336,6 +347,7 @@ export default function AddTravel() {
             />
 
             <EditTravelStopModal
+                stops={stops}
                 isModalVisible={showStopModal}
                 searchQuery={stopSearchQuery}
                 setSearchQuery={setStopSearchQuery}

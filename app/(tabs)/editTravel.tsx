@@ -49,6 +49,8 @@ export default function EditTravelItem() {
 
     useFocusEffect(
         React.useCallback(() => {
+            refetchTravelData()
+
             setTravel({
                 id: data.id,
                 bus_final_arrival: data?.bus_final_arrival,
@@ -335,12 +337,14 @@ export default function EditTravelItem() {
                     <EditTravelLapsModal
                         travel_id={travel.id}
                         currentLaps={laps ? laps : []}
+                        stops={stops}
                         isModalVisible={showLapsModal}
                         onSelect={handleLapsSelect}
                         onClose={closeLapsModal}
                     />
 
                     <EditTravelDirectionModal
+                        directions={directions}
                         isModalVisible={showDirectionModal}
                         searchQuery={directionSearchQuery}
                         setSearchQuery={setDirectionSearchQuery}
@@ -349,6 +353,7 @@ export default function EditTravelItem() {
                     />
 
                     <EditTravelRouteModal
+                        routes={routes}
                         isModalVisible={showRouteModal}
                         searchQuery={routeSearchQuery}
                         setSearchQuery={setRouteSearchQuery}
@@ -357,6 +362,7 @@ export default function EditTravelItem() {
                     />
 
                     <EditTravelStopModal
+                        stops={stops}
                         isModalVisible={showStopModal}
                         searchQuery={stopSearchQuery}
                         setSearchQuery={setStopSearchQuery}

@@ -7,12 +7,12 @@ import Icon from 'react-native-vector-icons/FontAwesome6'
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import useStopModal from "@/hooks/useStopModal"
-import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { ModalProp } from "@/src/types/TravelModal"
 
-export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {
-    const { stops, fullVehicleTypes } = useGetTravelData()
+export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: ModalProp) {
+    const { fullVehicleTypes } = useGetTravelData()
 
     const { loading } = useLoading()
 
@@ -125,6 +125,7 @@ export default function AddRouteModal({ onCancel, onSubmit }: BaseModalContentPr
                     </View>
 
                     <EditTravelStopModal
+                        stops={stops}
                         isModalVisible={showStopModal}
                         searchQuery={stopSearchQuery}
                         setSearchQuery={setStopSearchQuery}

@@ -13,16 +13,13 @@ import {
 } from 'react-native';
 import moment from 'moment-timezone'
 import { formatDateForDisplay } from '@/src/utils/utils';
-import useGetTravelData from '@/hooks/useGetTravelData';
 import useStopModal from '@/hooks/useStopModal';
 import EditTravelStopModal from '../travelModal/EditTravelStopModal';
 import { modalStyles } from '@/src/styles/ModalStyles';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
 
-export default function AddLapModal({ isModalVisible, onClose, onSelect }: AddableLapModalProp) {
-    const { stops } = useGetTravelData()
-
+export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const {
         showStopModal,
         stopSearchQuery,
@@ -114,6 +111,7 @@ export default function AddLapModal({ isModalVisible, onClose, onSelect }: Addab
                 </View>
 
                 <EditTravelStopModal
+                    stops={stops}
                     isModalVisible={showStopModal}
                     searchQuery={stopSearchQuery}
                     setSearchQuery={setStopSearchQuery}

@@ -9,6 +9,7 @@ import useDatalistModal from '@/hooks/useDatalistModal';
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import { useModalContext } from '@/context/ModalContext';
 import { useLoading } from '@/hooks/useLoading';
+import useGetTravelData from '@/hooks/useGetTravelData';
 
 interface ItemTemplate {
     id: string | number;
@@ -34,6 +35,8 @@ const DataListScreen: React.FC = () => {
         activeModalConfig,
         setActiveModal, setActiveEditModal
     } = useDatalistModal(refetchTravelData)
+
+    const { stops } = useGetTravelData()
 
     const {
         loading
@@ -150,6 +153,7 @@ const DataListScreen: React.FC = () => {
             >
                 {ModalContentComponent ? (
                     <ModalContentComponent
+                        stops={stops}
                         onSubmit={handleSubmitFromModal}
                         onCancel={closeStopModal}
                     />

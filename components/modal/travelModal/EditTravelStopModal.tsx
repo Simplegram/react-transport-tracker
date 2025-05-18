@@ -1,13 +1,10 @@
 import { Modal, Pressable, View, Text, TextInput, FlatList, TouchableOpacity } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome6";
 import { useMemo } from "react";
-import useGetTravelData from "@/hooks/useGetTravelData";
-import { EditableTravelModalProp } from "@/src/types/EditableTravels";
+import { EditableTravelStopModalProp } from "@/src/types/EditableTravels";
 import { flatlistStyles, modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
 
-export default function EditTravelStopModal({ searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelModalProp) {
-    const { stops } = useGetTravelData();
-
+export default function EditTravelStopModal({ stops, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelStopModalProp) {
     const filteredStops = useMemo(() => {
         if (!stops) return [];
         const query = searchQuery.toLowerCase();

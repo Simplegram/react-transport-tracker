@@ -2,7 +2,6 @@ import Button from "@/components/BaseButton"
 import { useModalContext } from "@/context/ModalContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { EditableRoute } from "@/src/types/EditableTravels"
-import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useRef, useState } from "react"
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
@@ -13,12 +12,13 @@ import { useLoading } from "@/hooks/useLoading"
 import { VehicleType } from "@/src/types/Travels"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { ModalProp } from "@/src/types/TravelModal"
 
 
-export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentProps) {
+export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: ModalProp) {
     const { modalData: data } = useModalContext()
 
-    const { stops, fullVehicleTypes } = useGetTravelData()
+    const { fullVehicleTypes } = useGetTravelData()
 
     const {
         showStopModal,
@@ -132,6 +132,7 @@ export default function EditRouteModal({ onCancel, onSubmit }: BaseModalContentP
                     </View>
 
                     <EditTravelStopModal
+                        stops={stops}
                         isModalVisible={showStopModal}
                         searchQuery={stopSearchQuery}
                         setSearchQuery={setStopSearchQuery}
