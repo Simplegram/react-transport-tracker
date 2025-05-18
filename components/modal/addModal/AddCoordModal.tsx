@@ -1,14 +1,14 @@
 import Button from "@/components/BaseButton";
+import useLocation from "@/hooks/useLocation";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles";
+import { inputElementStyles } from "@/src/styles/InputStyles";
 import { modalStyles } from "@/src/styles/ModalStyles";
 import { AddableCoordModalProp } from "@/src/types/AddableTravels";
 import { MapView, Camera } from "@maplibre/maplibre-react-native";
-import { useRef, useState } from "react";
-import { Dimensions, Modal, Pressable, StyleSheet, Text } from "react-native";
+import { LocationObject } from "expo-location";
+import { useEffect, useRef, useState } from "react";
+import { Alert, Modal, Pressable, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
-
-const { height: screenHeight, width: screenWidth } = Dimensions.get('window')
 
 const pointSize = {
     width: 8,
@@ -18,6 +18,34 @@ const pointSize = {
 export default function AddCoordModal({ currentCoordinates, isModalVisible, onClose, onSelect }: AddableCoordModalProp) {
     const mapRef = useRef(null)
 
+    const { location } = useLocation()
+    const [userLocation, setUserLocation] = useState<LocationObject | null>(null)
+
+    useEffect(() => {
+        setUserLocation(location)
+    }, [location])
+
+    const getInitialCameraState = () => {
+        if (currentCoordinates?.lon && currentCoordinates?.lat) {
+            return {
+                centerCoordinate: [currentCoordinates.lon, currentCoordinates.lat],
+                zoomLevel: 15
+            };
+        } else if (userLocation) {
+            return {
+                centerCoordinate: [userLocation.coords.longitude, userLocation.coords.latitude],
+                zoomLevel: 14
+            };
+        } else {
+            return {
+                centerCoordinate: [0, 0],
+                zoomLevel: 0
+            };
+        }
+    };
+
+    const { centerCoordinate, zoomLevel } = getInitialCameraState();
+
     const handleOnSubmit = async () => {
         const currentMapRef = await mapRef.current
 
@@ -25,7 +53,7 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
             Alert.alert('MapRef not available', 'There is a problem obtaining current map ref');
             return
         }
-        
+
         const currentCoordinates = currentMapRef.getCenter()
         const roundedCoordinate = {
             lon: Number(currentCoordinates[0].toFixed(6)),
@@ -42,8 +70,8 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
             animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles.modalBackdrop}>
-                <View style={[modalStyles.modalContainer, modalStyles.coordModalContainer]}>
+            <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
+                <View style={[modalStyles.modalContainer, modalStyles.coordModalContainer]} onStartShouldSetResponder={() => true}>
                     <View style={[inputElementStyles.inputGroup, { flex: 1 }]}>
                         <MapView
                             ref={mapRef}
@@ -51,12 +79,10 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
                             rotateEnabled={false}
                             mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
                         >
-                            {currentCoordinates &&
-                                <Camera
-                                    zoomLevel={currentCoordinates.lon && currentCoordinates.lat ? 17 : 12}
-                                    centerCoordinate={currentCoordinates.lon && currentCoordinates.lat ? [currentCoordinates.lon, currentCoordinates.lat] : [106.827192, -6.175415]}
-                                />
-                            }
+                            <Camera
+                                zoomLevel={zoomLevel}
+                                centerCoordinate={centerCoordinate}
+                            />
                         </MapView>
                         <View style={styles.container}>
                             <View style={styles.point} />
