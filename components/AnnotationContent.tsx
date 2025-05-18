@@ -20,7 +20,7 @@ export default function AnnotationContent({ data_id, title, stop }: AnnotationCo
         <TouchableOpacity style={styles.touchableContainer} onPress={() => setEnableTitle(!enableTitle)}>
             <View style={[styles.marker, { backgroundColor: data_id === "stop" ? 'limegreen' : 'yellow' }]}>
                 {stop && (
-                    <Icon size={9} name={fullVehicleTypes.find(type => type.id === stop.vehicle_type)?.icon_id.name} />
+                    <Icon size={10} name={fullVehicleTypes.find(type => type.id === stop.vehicle_type)?.icon_id.name} />
                 )}
             </View>
             {enableTitle && (
@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     marker: {
-        width: 18,
+        width: 19,
         aspectRatio: 1,
         borderWidth: 2,
         borderRadius: 12,
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontSize: 8,
+        fontSize: 10,
         textAlign: 'center',
         fontWeight: 'bold'
     },
