@@ -10,6 +10,8 @@ import Icon from 'react-native-vector-icons/FontAwesome6'
 import { useModalContext } from '@/context/ModalContext';
 import { useLoading } from '@/hooks/useLoading';
 import useGetTravelData from '@/hooks/useGetTravelData';
+import { useFocusEffect } from 'expo-router';
+import { LocationModuleEventEmitter } from '@maplibre/maplibre-react-native/lib/typescript/commonjs/src/modules/location/LocationManager';
 
 interface ItemTemplate {
     id: string | number;
@@ -36,17 +38,17 @@ const DataListScreen: React.FC = () => {
         setActiveModal, setActiveEditModal
     } = useDatalistModal(refetchTravelData)
 
-    const { stops } = useGetTravelData()
+    const { stops, icons } = useGetTravelData()
 
     const {
         loading
     } = useLoading()
 
-    if (!dataType) {
-        return (
-            <LoadingScreen></LoadingScreen>
-        )
-    }
+    useFocusEffect(
+        React.useCallback(() => {
+            refetchTravelData()
+        }, [])
+    )
 
     const handleModify = (item: ItemTemplate) => {
         setActiveEditModal(dataType)
@@ -101,66 +103,66 @@ const DataListScreen: React.FC = () => {
         </View>
     );
 
-    if (loading || !dataType) {
-        return (
-            <LoadingScreen />
-        );
-    }
-
     const ModalContentComponent = activeModalConfig?.content
 
     return (
         <View style={styles.container}>
-            {data.length === 0 ? (
-                <View style={styles.emptyContainer}>
-                    <Text style={styles.emptyText}>No {dataType} found.</Text>
-                </View>
-
+            {loading || !dataType ? (
+                <LoadingScreen />
             ) : (
-                <FlatList
-                    refreshing={loading}
-                    onRefresh={refetchTravelData}
-                    data={data}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id.toString()} // Ensure key is a string
-                    contentContainerStyle={styles.listContent}
-                    keyboardShouldPersistTaps={'always'}
-                />
-            )}
+                <>
+                    {data.length === 0 ? (
+                        <View style={styles.emptyContainer}>
+                            <Text style={styles.emptyText}>No {dataType} found.</Text>
+                        </View>
+                    ) : (
+                        <FlatList
+                            refreshing={loading}
+                            onRefresh={refetchTravelData}
+                            data={data}
+                            renderItem={renderItem}
+                            keyExtractor={item => item.id.toString()} // Ensure key is a string
+                            contentContainerStyle={styles.listContent}
+                            keyboardShouldPersistTaps={'always'}
+                        />
+                    )}
 
-            <TextInput
-                style={styles.modalSearchInput}
-                placeholder={`Search ${dataType}...`}
-                value={searchQuery}
-                onChangeText={setSearchQuery}
-                autoFocus={true}
-            />
-
-            <View style={styles.addButtonContainer}>
-                <Button
-                    color='#007bff'
-                    title={`Add New ${dataType.slice(0, -1)}`}
-                    onPress={handleAddNew}
-                    style={styles.button}
-                    textStyle={styles.buttonText}
-                />
-            </View>
-
-            <ModalTemplate
-                isModalVisible={showStopModal}
-                handleCloseModal={closeStopModal}
-                title={activeModalConfig?.title}
-            >
-                {ModalContentComponent ? (
-                    <ModalContentComponent
-                        stops={stops}
-                        onSubmit={handleSubmitFromModal}
-                        onCancel={closeStopModal}
+                    <TextInput
+                        style={styles.modalSearchInput}
+                        placeholder={`Search ${dataType}...`}
+                        value={searchQuery}
+                        onChangeText={setSearchQuery}
+                        autoFocus={true}
                     />
-                ) : (
-                    <Text>Loading...</Text>
-                )}
-            </ModalTemplate>
+
+                    <View style={styles.addButtonContainer}>
+                        <Button
+                            color='#007bff'
+                            title={`Add New ${dataType.slice(0, -1)}`}
+                            onPress={handleAddNew}
+                            style={styles.button}
+                            textStyle={styles.buttonText}
+                        />
+                    </View>
+
+                    <ModalTemplate
+                        isModalVisible={showStopModal}
+                        handleCloseModal={closeStopModal}
+                        title={activeModalConfig?.title}
+                    >
+                        {ModalContentComponent ? (
+                            <ModalContentComponent
+                                stops={stops}
+                                icons={icons}
+                                onSubmit={handleSubmitFromModal}
+                                onCancel={closeStopModal}
+                            />
+                        ) : (
+                            <Text>Loading...</Text>
+                        )}
+                    </ModalTemplate>
+                </>
+            )}
         </View>
     );
 };
@@ -220,6 +222,7 @@ const styles = StyleSheet.create({
     },
     emptyText: {
         fontSize: 18,
+        fontWeight: 'bold',
         color: '#666',
     },
     button: {

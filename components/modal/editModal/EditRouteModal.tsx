@@ -60,7 +60,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
 
     return (
         <View>
-            {loading ? (
+            {loading || !stops ? (
                 <Text style={inputElementStyles.inputLabel}>Loading...</Text>
             ) : (
                 <>

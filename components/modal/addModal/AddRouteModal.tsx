@@ -53,7 +53,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
 
     return (
         <View>
-            {loading ? (
+            {loading || !stops ? (
                 <Text style={inputElementStyles.inputLabel}>Loading...</Text>
             ) : (
                 <>

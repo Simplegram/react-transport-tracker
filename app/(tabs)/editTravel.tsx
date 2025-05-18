@@ -212,8 +212,8 @@ export default function EditTravelItem() {
 
     return (
         <CollapsibleHeaderPage largeHeaderText={screenTitle}>
-            {(!travel || !laps) ? (
-                <LoadingScreen></LoadingScreen>
+            {(!travel || !laps || !travel) ? (
+                <LoadingScreen />
             ) : (
                 <>
                     <View style={inputElementStyles.inputContainer}>
