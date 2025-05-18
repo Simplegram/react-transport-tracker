@@ -47,14 +47,14 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
     const { centerCoordinate, zoomLevel } = getInitialCameraState();
 
     const handleOnSubmit = async () => {
-        const currentMapRef = await mapRef.current
+        const currentMapRef = mapRef.current
 
         if (currentMapRef === null) {
             Alert.alert('MapRef not available', 'There is a problem obtaining current map ref');
             return
         }
 
-        const currentCoordinates = currentMapRef.getCenter()
+        const currentCoordinates = await currentMapRef.getCenter()
         const roundedCoordinate = {
             lon: Number(currentCoordinates[0].toFixed(6)),
             lat: Number(currentCoordinates[1].toFixed(6))
