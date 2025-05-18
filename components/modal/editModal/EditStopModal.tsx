@@ -30,13 +30,18 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
     } = useStopModal();
 
     const handleCoordSelect = (coordinates: AddableCoordinates) => {
+        if (!coordinates.lat || !coordinates.lon) {
+            Alert.alert('Input Required', 'Please pick the right coordinates');
+            return
+        }
+
         setStop({ ...stop, lat: coordinates.lat, lon: coordinates.lon })
         closeCoordModal();
     };
 
     const handleOnSubmit = () => {
         if (!stop.name.trim() || !stop.vehicle_type) {
-            Alert.alert('Input Required', 'Please enter a stop name and choose a vehicle type.');
+            Alert.alert('Input Required', 'Please enter a stop name and choose a vehicle type');
             return
         }
 
