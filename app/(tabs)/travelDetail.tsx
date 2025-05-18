@@ -1,3 +1,4 @@
+import AnnotationContent from '@/components/AnnotationContent';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
 import LoadingScreen from '@/components/LoadingScreen';
 import { useTravelContext } from '@/context/PageContext';
@@ -8,7 +9,6 @@ import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native';
 import { useFocusEffect } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { FullWindowOverlay } from 'react-native-screens';
 
 const formatDurationMinutes = (milliseconds: number): string => {
     if (isNaN(milliseconds) || milliseconds < 0) {
@@ -72,11 +72,11 @@ export default function TravelDetail() {
         const coords = [];
 
         if (travel.first_stop_id && travel.first_stop_id.lat && travel.first_stop_id.lon) {
-            coords.push({ id: "stop", coords: [travel.first_stop_id.lon, travel.first_stop_id.lat] });
+            coords.push({ id: "stop", name: travel.first_stop_id.name, coords: [travel.first_stop_id.lon, travel.first_stop_id.lat] });
         }
 
         if (travel.last_stop_id && travel.last_stop_id.lat && travel.last_stop_id.lon) {
-            coords.push({ id: "stop", coords: [travel.last_stop_id.lon, travel.last_stop_id.lat] });
+            coords.push({ id: "stop", name: travel.last_stop_id.name, coords: [travel.last_stop_id.lon, travel.last_stop_id.lat] });
         }
 
         return coords;
@@ -84,7 +84,7 @@ export default function TravelDetail() {
 
     const lapLatLon = travelLaps
         ?.filter(lap => lap.stop_id !== null && lap.stop_id.lon && lap.stop_id.lat)
-        .map(lap => ({ id: "lap", coords: [lap.stop_id.lon, lap.stop_id.lat] })) || [];
+        .map(lap => ({ id: "lap", name: lap.stop_id?.name, coords: [lap.stop_id.lon, lap.stop_id.lat] })) || [];
 
     const fullLatLon = [...stopLatLon, ...lapLatLon]; // Removed the extra || [] here
 
@@ -242,7 +242,7 @@ export default function TravelDetail() {
                     </View>
                 )}
 
-                <View style={[styles.card, { height: 360 }]}>
+                <View style={[styles.card, { height: 360, padding: 0, overflow: 'hidden' }]}>
                     <MapView
                         style={{ flex: 1, overflow: 'hidden' }}
                         rotateEnabled={false}
@@ -255,8 +255,11 @@ export default function TravelDetail() {
                             />
                         )}
                         {fullLatLon && fullLatLon.map((stop, index) => (
-                            <MarkerView key={index} coordinate={stop.coords}>
-                                <View style={{ width: 12, aspectRatio: 1, backgroundColor: stop.id === "stop" ? 'limegreen' : 'yellow', zIndex: -1, borderWidth: 2, borderRadius: 8 }}></View>
+                            <MarkerView
+                                key={index} 
+                                coordinate={stop.coords}
+                            >
+                                <AnnotationContent stop_id={stop.id} title={stop.name || ''} />
                             </MarkerView>
                         ))}
                     </MapView>
