@@ -8,7 +8,9 @@ import { getSimpleCentroid } from '@/src/utils/mapUtils';
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native';
 import { useFocusEffect } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+
+const { width: screenWidth } = Dimensions.get("screen")
 
 const formatDurationMinutes = (milliseconds: number): string => {
     if (isNaN(milliseconds) || milliseconds < 0) {
@@ -242,7 +244,7 @@ export default function TravelDetail() {
                     </View>
                 )}
 
-                <View style={[styles.card, { height: 360, padding: 0, overflow: 'hidden' }]}>
+                <View style={[styles.card, { height: screenWidth * 0.95, padding: 0, overflow: 'hidden' }]}>
                     <MapView
                         style={{ flex: 1, overflow: 'hidden' }}
                         rotateEnabled={false}
