@@ -254,14 +254,20 @@ export default function TravelDetail() {
                                 zoomLevel={centerLatLon?.zoom}
                             />
                         )}
-                        {fullLatLon && fullLatLon.map((stop, index) => (
-                            <MarkerView
-                                key={index} 
-                                coordinate={stop.coords}
-                            >
-                                <AnnotationContent stop_id={stop.id} title={stop.name || ''} />
-                            </MarkerView>
-                        ))}
+                        {fullLatLon && fullLatLon
+                            .filter(stop =>
+                                stop.coords !== undefined && // Check if coords exists
+                                Array.isArray(stop.coords) && // Check if it's an array
+                                stop.coords.every(coord => typeof coord === 'number') // Check if all elements are numbers
+                            )
+                            .map((stop, index) => (
+                                <MarkerView
+                                    key={index}
+                                    coordinate={stop.coords as [number, number]} // Assert the type after filtering
+                                >
+                                    <AnnotationContent stop_id={stop.id} title={stop.name || ''} />
+                                </MarkerView>
+                            ))}
                     </MapView>
                 </View>
 
