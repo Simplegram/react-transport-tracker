@@ -3,7 +3,7 @@ import { buttonStyles } from "@/src/styles/ButtonStyles";
 import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles";
 import { modalStyles } from "@/src/styles/ModalStyles";
 import { AddableCoordModalProp } from "@/src/types/AddableTravels";
-import { MapView } from "@maplibre/maplibre-react-native";
+import { Camera, MapView } from "@maplibre/maplibre-react-native";
 import { useRef, useState } from "react";
 import { Dimensions, Modal, Pressable, StyleSheet, Text } from "react-native";
 import { View } from "react-native";
@@ -15,7 +15,7 @@ const pointSize = {
     height: 8
 }
 
-export default function AddCoordModal({ isModalVisible, onClose, onSelect }: AddableCoordModalProp) {
+export default function EditCoordModal({ currentCoordinates, isModalVisible, onClose, onSelect }: AddableCoordModalProp) {
     const mapRef = useRef(null)
 
     const handleOnSubmit = async () => {
