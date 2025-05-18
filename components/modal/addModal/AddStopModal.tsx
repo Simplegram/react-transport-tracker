@@ -9,7 +9,7 @@ import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
-import EditCoordModal from "../editModal/EditCoordModal"
+import AddCoordModal from "./AddCoordModal"
 
 export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { fullVehicleTypes } = useGetTravelData()
@@ -127,7 +127,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         </View>
                     </View>
 
-                    <EditCoordModal 
+                    <AddCoordModal 
                         currentCoordinates={{
                             lat: stop.lat,
                             lon: stop.lon

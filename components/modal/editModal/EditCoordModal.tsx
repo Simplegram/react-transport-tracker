@@ -44,9 +44,9 @@ export default function EditCoordModal({ currentCoordinates, isModalVisible, onC
                             rotateEnabled={false}
                             mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
                         >
-                            {currentCoordinates && 
-                                <Camera 
-                                    zoomLevel={currentCoordinates.lon && currentCoordinates.lat ? 17: 12}
+                            {currentCoordinates &&
+                                <Camera
+                                    zoomLevel={currentCoordinates.lon && currentCoordinates.lat ? 17 : 12}
                                     centerCoordinate={currentCoordinates.lon && currentCoordinates.lat ? [currentCoordinates.lon, currentCoordinates.lat] : [106.827192, -6.175415]}
                                 />
                             }

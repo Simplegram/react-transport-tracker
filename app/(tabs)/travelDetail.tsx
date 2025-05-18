@@ -1,3 +1,4 @@
+import AnnotationContent from '@/components/AnnotationContent';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
 import LoadingScreen from '@/components/LoadingScreen';
 import { useTravelContext } from '@/context/PageContext';
@@ -7,8 +8,9 @@ import { getSimpleCentroid } from '@/src/utils/mapUtils';
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native';
 import { useFocusEffect } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { FullWindowOverlay } from 'react-native-screens';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
+
+const { width: screenWidth } = Dimensions.get("screen")
 
 const formatDurationMinutes = (milliseconds: number): string => {
     if (isNaN(milliseconds) || milliseconds < 0) {
@@ -72,11 +74,11 @@ export default function TravelDetail() {
         const coords = [];
 
         if (travel.first_stop_id && travel.first_stop_id.lat && travel.first_stop_id.lon) {
-            coords.push({ id: "stop", coords: [travel.first_stop_id.lon, travel.first_stop_id.lat] });
+            coords.push({ id: "stop", stop: travel.first_stop_id, name: travel.first_stop_id.name, coords: [travel.first_stop_id.lon, travel.first_stop_id.lat] });
         }
 
         if (travel.last_stop_id && travel.last_stop_id.lat && travel.last_stop_id.lon) {
-            coords.push({ id: "stop", coords: [travel.last_stop_id.lon, travel.last_stop_id.lat] });
+            coords.push({ id: "stop", stop: travel.last_stop_id, name: travel.last_stop_id.name, coords: [travel.last_stop_id.lon, travel.last_stop_id.lat] });
         }
 
         return coords;
@@ -84,9 +86,9 @@ export default function TravelDetail() {
 
     const lapLatLon = travelLaps
         ?.filter(lap => lap.stop_id !== null && lap.stop_id.lon && lap.stop_id.lat)
-        .map(lap => ({ id: "lap", coords: [lap.stop_id.lon, lap.stop_id.lat] })) || [];
+        .map(lap => ({ id: "lap", stop: lap.stop_id, name: lap.stop_id?.name, coords: [lap.stop_id.lon, lap.stop_id.lat] })) || [];
 
-    const fullLatLon = [...stopLatLon, ...lapLatLon]; // Removed the extra || [] here
+    const fullLatLon = [...stopLatLon, ...lapLatLon];
 
     const validCoords = fullLatLon
         .map(data => data?.coords)
@@ -242,7 +244,7 @@ export default function TravelDetail() {
                     </View>
                 )}
 
-                <View style={[styles.card, { height: 360 }]}>
+                <View style={[styles.card, { height: screenWidth * 0.95, padding: 0, overflow: 'hidden' }]}>
                     <MapView
                         style={{ flex: 1, overflow: 'hidden' }}
                         rotateEnabled={false}
@@ -254,11 +256,20 @@ export default function TravelDetail() {
                                 zoomLevel={centerLatLon?.zoom}
                             />
                         )}
-                        {fullLatLon && fullLatLon.map((stop, index) => (
-                            <MarkerView key={index} coordinate={stop.coords}>
-                                <View style={{ width: 12, aspectRatio: 1, backgroundColor: stop.id === "stop" ? 'limegreen' : 'yellow', zIndex: -1, borderWidth: 2, borderRadius: 8 }}></View>
-                            </MarkerView>
-                        ))}
+                        {fullLatLon && fullLatLon
+                            .filter(data =>
+                                data.coords !== undefined && // Check if coords exists
+                                Array.isArray(data.coords) && // Check if it's an array
+                                data.coords.every(coord => typeof coord === 'number') // Check if all elements are numbers
+                            )
+                            .map((data, index) => (
+                                <MarkerView
+                                    key={index}
+                                    coordinate={data.coords as [number, number]} // Assert the type after filtering
+                                >
+                                    <AnnotationContent data_id={data.id} title={data.name || ''} stop={data.stop} />
+                                </MarkerView>
+                            ))}
                     </MapView>
                 </View>
 
