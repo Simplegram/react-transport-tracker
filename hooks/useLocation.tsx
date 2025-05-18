@@ -14,7 +14,9 @@ export default function useLocation() {
             return;
         }
 
-        let location = await Location.getCurrentPositionAsync({});
+        let location = await Location.getCurrentPositionAsync({
+            accuracy: Location.LocationAccuracy.Highest
+        });
         setLocation(location);
     }
 

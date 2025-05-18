@@ -38,6 +38,11 @@ export default {
         android: {
             package: getUniqueIdentifier(),
             usesCleartextTraffic: true,
+            permissions: [
+                "android.permission.ACCESS_COARSE_LOCATION", 
+                "android.permission.ACCESS_FINE_LOCATION", 
+                "android.permission.FOREGROUND_SERVICE"
+            ]
         },
         updates: {
             url: 'https://u.expo.dev/e8e4f24c-2007-4cad-a12f-7310de360390'
