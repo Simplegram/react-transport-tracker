@@ -72,11 +72,11 @@ export default function TravelDetail() {
         const coords = [];
 
         if (travel.first_stop_id && travel.first_stop_id.lat && travel.first_stop_id.lon) {
-            coords.push({ id: "stop", name: travel.first_stop_id.name, coords: [travel.first_stop_id.lon, travel.first_stop_id.lat] });
+            coords.push({ id: "stop", stop: travel.first_stop_id, name: travel.first_stop_id.name, coords: [travel.first_stop_id.lon, travel.first_stop_id.lat] });
         }
 
         if (travel.last_stop_id && travel.last_stop_id.lat && travel.last_stop_id.lon) {
-            coords.push({ id: "stop", name: travel.last_stop_id.name, coords: [travel.last_stop_id.lon, travel.last_stop_id.lat] });
+            coords.push({ id: "stop", stop: travel.last_stop_id, name: travel.last_stop_id.name, coords: [travel.last_stop_id.lon, travel.last_stop_id.lat] });
         }
 
         return coords;
@@ -84,9 +84,9 @@ export default function TravelDetail() {
 
     const lapLatLon = travelLaps
         ?.filter(lap => lap.stop_id !== null && lap.stop_id.lon && lap.stop_id.lat)
-        .map(lap => ({ id: "lap", name: lap.stop_id?.name, coords: [lap.stop_id.lon, lap.stop_id.lat] })) || [];
+        .map(lap => ({ id: "lap", stop: lap.stop_id, name: lap.stop_id?.name, coords: [lap.stop_id.lon, lap.stop_id.lat] })) || [];
 
-    const fullLatLon = [...stopLatLon, ...lapLatLon]; // Removed the extra || [] here
+    const fullLatLon = [...stopLatLon, ...lapLatLon];
 
     const validCoords = fullLatLon
         .map(data => data?.coords)
@@ -255,17 +255,17 @@ export default function TravelDetail() {
                             />
                         )}
                         {fullLatLon && fullLatLon
-                            .filter(stop =>
-                                stop.coords !== undefined && // Check if coords exists
-                                Array.isArray(stop.coords) && // Check if it's an array
-                                stop.coords.every(coord => typeof coord === 'number') // Check if all elements are numbers
+                            .filter(data =>
+                                data.coords !== undefined && // Check if coords exists
+                                Array.isArray(data.coords) && // Check if it's an array
+                                data.coords.every(coord => typeof coord === 'number') // Check if all elements are numbers
                             )
-                            .map((stop, index) => (
+                            .map((data, index) => (
                                 <MarkerView
                                     key={index}
-                                    coordinate={stop.coords as [number, number]} // Assert the type after filtering
+                                    coordinate={data.coords as [number, number]} // Assert the type after filtering
                                 >
-                                    <AnnotationContent stop_id={stop.id} title={stop.name || ''} />
+                                    <AnnotationContent data_id={data.id} title={data.name || ''} stop={data.stop} />
                                 </MarkerView>
                             ))}
                     </MapView>
