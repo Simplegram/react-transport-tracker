@@ -16,16 +16,24 @@ export default function AnnotationContent({ fullVehicleTypes, data_id, title, st
     const [enableTitle, setEnableTitle] = useState<boolean>(false)
 
     return (
-        <TouchableOpacity style={styles.touchableContainer} onPress={() => setEnableTitle(!enableTitle)}>
-            <View style={[styles.marker, { backgroundColor: data_id === "stop" ? 'limegreen' : 'yellow' }]}>
+        <TouchableOpacity style={styles.touchableContainer} disabled={true}>
+            <TouchableOpacity 
+                style={[
+                    styles.marker, 
+                    { backgroundColor: data_id === "stop" ? 'limegreen' : 'yellow' }
+                ]}
+                onPress={() => setEnableTitle(!enableTitle)}
+            >
                 {stop && (
-                    <Icon size={10} name={fullVehicleTypes.find(type => type.id === stop.vehicle_type)?.icon_id.name} />
+                    <Icon size={10} name={fullVehicleTypes.find(type => type.id === Number(stop.vehicle_type))?.icon_id.name} />
                 )}
-            </View>
+            </TouchableOpacity>
             {enableTitle && (
-                <Text style={styles.title}>
-                    {title}
-                </Text>
+                <TouchableOpacity onPress={() => setEnableTitle(!enableTitle)}>
+                    <Text style={styles.title}>
+                        {title}
+                    </Text>
+                </TouchableOpacity>
             )}
         </TouchableOpacity>
     );
@@ -33,8 +41,7 @@ export default function AnnotationContent({ fullVehicleTypes, data_id, title, st
 
 const styles = StyleSheet.create({
     touchableContainer: {
-        width: 60,
-        justifyContent: 'center',
+        width: 70,
         alignItems: 'center',
     },
     marker: {
@@ -48,6 +55,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 10,
         textAlign: 'center',
-        fontWeight: 'bold'
+        fontWeight: 'bold',
+        flexWrap: 'wrap'
     },
 });
