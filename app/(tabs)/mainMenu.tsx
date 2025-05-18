@@ -62,6 +62,7 @@ export default function HomePage() {
 
     useEffect(() => {
         getDates()
+        setSelectedDate(getTodayString())
     }, [])
 
     useFocusEffect(
