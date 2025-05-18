@@ -1,19 +1,19 @@
 import Button from "@/components/BaseButton"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
+import useStopModal from "@/hooks/useStopModal"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
-import { AddableStop } from "@/src/types/AddableTravels"
+import { AddableCoordinates, AddableStop } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
+import AddCoordModal from "../editModal/EditCoordModal"
 
 export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
-    const { loading } = useLoading()
-
     const { fullVehicleTypes } = useGetTravelData()
-
+    
     const [stop, setStop] = useState<AddableStop>({
         name: undefined,
         lat: null,
@@ -21,6 +21,24 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
         name_alt: null,
         vehicle_type: undefined
     })
+    
+    const { loading } = useLoading()
+
+    const {
+        showStopModal: showCoordModal,
+        openStopModal: openCoordModal,
+        closeStopModal: closeCoordModal
+    } = useStopModal();
+
+    const handleCoordSelect = (coordinates: AddableCoordinates) => {
+        if (!coordinates.lat || !coordinates.lon) {
+            Alert.alert('Input Required', 'Please pick the right coordinates');
+            return
+        }
+
+        setStop({ ...stop, lat: coordinates.lat, lon: coordinates.lon })
+        closeCoordModal();
+    };
 
     const handleOnSubmit = () => {
         if (!stop.name?.trim() || !stop.vehicle_type) {
@@ -49,23 +67,26 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         </View>
 
                         <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Latitude:</Text>
-                            <TextInput
-                                style={inputStyles.pressableInput}
-                                placeholder="Stop latitude..."
-                                value={stop.lat ? stop.lat.toString() : ''}
-                                onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
-                            />
-                        </View>
-
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Longitude:</Text>
-                            <TextInput
-                                style={inputStyles.pressableInput}
-                                placeholder="Stop longitude..."
-                                value={stop.lon ? stop.lon.toString() : ''}
-                                onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
-                            />
+                            <Text style={inputElementStyles.inputLabel}>Latitude and Longitude:</Text>
+                            <View style={inputElementStyles.inputGroupCoord}>
+                                <TextInput
+                                    style={[inputStyles.pressableInput, inputStyles.pressableInputCoord]}
+                                    placeholder="Stop latitude..."
+                                    value={stop.lat?.toString()}
+                                    onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
+                                />
+                                <TextInput
+                                    style={[inputStyles.pressableInput, inputStyles.pressableInputCoord]}
+                                    placeholder="Stop longitude..."
+                                    value={stop.lon?.toString()}
+                                    onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
+                                />
+                            </View>
+                            <Pressable
+                                style={[inputStyles.pressableInput, {marginTop: 10}]}
+                                onPress={() => openCoordModal()}>
+                                <Text style={inputElementStyles.insideLabel}>Pick Latitude and Longitude...</Text>
+                            </Pressable>
                         </View>
 
                         <View style={inputElementStyles.inputGroup}>
@@ -105,6 +126,16 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             </View>
                         </View>
                     </View>
+
+                    <AddCoordModal 
+                        currentCoordinates={{
+                            lat: stop.lat,
+                            lon: stop.lon
+                        }}
+                        isModalVisible={showCoordModal}
+                        onClose={closeCoordModal}
+                        onSelect={handleCoordSelect}
+                    />
 
                     <View style={buttonStyles.buttonRow}>
                         <Button title='Cancel' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
