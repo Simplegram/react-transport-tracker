@@ -86,8 +86,13 @@ export default function TravelDetail() {
         ?.filter(lap => lap.stop_id !== null && lap.stop_id.lon && lap.stop_id.lat)
         .map(lap => ({ id: "lap", coords: [lap.stop_id.lon, lap.stop_id.lat] })) || [];
 
-    const fullLatLon = [...stopLatLon, ...(lapLatLon || [])]
-    const centerLatLon = getSimpleCentroid(fullLatLon.map(data => data?.coords))
+    const fullLatLon = [...stopLatLon, ...lapLatLon]; // Removed the extra || [] here
+
+    const validCoords = fullLatLon
+        .map(data => data?.coords)
+        .filter((coords): coords is number[] => coords !== undefined && coords !== null);
+
+    const centerLatLon = getSimpleCentroid(validCoords);
 
     let totalOnRoadMilliseconds = 0;
     let earliestStartMillis: number | null = null;
@@ -244,7 +249,7 @@ export default function TravelDetail() {
                         mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
                     >
                         {centerLatLon && (
-                            <Camera 
+                            <Camera
                                 centerCoordinate={[centerLatLon?.center.lon, centerLatLon?.center.lat]}
                                 zoomLevel={centerLatLon?.zoom}
                             />
