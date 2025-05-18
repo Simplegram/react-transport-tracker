@@ -33,7 +33,6 @@ export default function EditCoordModal({ currentCoordinates, isModalVisible, onC
             visible={isModalVisible}
             transparent={true}
             animationType="slide"
-            onRequestClose={onClose}
         >
             <Pressable style={modalStyles.modalBackdrop}>
                 <View style={[modalStyles.modalContainer, modalStyles.coordModalContainer]}>

@@ -68,9 +68,8 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
             visible={isModalVisible}
             transparent={true}
             animationType="slide"
-            onRequestClose={onClose}
         >
-            <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
+            <Pressable style={modalStyles.modalBackdrop}>
                 <View style={[modalStyles.modalContainer, modalStyles.coordModalContainer]} onStartShouldSetResponder={() => true}>
                     <View style={[inputElementStyles.inputGroup, { flex: 1 }]}>
                         <MapView
