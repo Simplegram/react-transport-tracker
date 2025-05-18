@@ -1,6 +1,5 @@
 import Button from '@/components/BaseButton';
 import { colors } from '@/const/color';
-import useGetTravelData from '@/hooks/useGetTravelData';
 import { AddableLap, AddableLapsModalProp } from '@/src/types/AddableTravels';
 import { formatDateForDisplay } from '@/src/utils/utils';
 import React, { useEffect, useState } from 'react';
@@ -18,9 +17,7 @@ import { Pressable } from 'react-native';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles } from '@/src/styles/InputStyles';
 
-export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
-    const { stops } = useGetTravelData()
-
+export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
     const {
         showStopModal: showLapModal,
         openStopModal: openLapModal,
@@ -116,6 +113,7 @@ export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClos
                 </View>
 
                 <EditLapModal
+                    stops={stops}
                     selectedLap={selectedLap}
                     isModalVisible={showEditLapModal}
                     onSelect={handleLapEdit}
@@ -123,6 +121,7 @@ export default function AddTravelLapsModal({ currentLaps, isModalVisible, onClos
                 />
 
                 <AddLapModal
+                    stops={stops}
                     isModalVisible={showLapModal}
                     onSelect={handleLapAdd}
                     onClose={closeLapModal}

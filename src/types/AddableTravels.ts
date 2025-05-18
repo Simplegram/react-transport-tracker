@@ -1,3 +1,5 @@
+import { Stop } from "./Travels"
+
 interface AddableDirection {
     name: string | undefined
 }
@@ -61,6 +63,7 @@ interface AddableCoordModalProp {
 
 interface AddableLapsModalProp {
     currentLaps: AddableLap[]
+    stops: Stop[]
     isModalVisible: boolean
     onClose: () => void
     onSelect: (laps: AddableLap[]) => void
@@ -68,6 +71,7 @@ interface AddableLapsModalProp {
 
 interface AddableLapModalProp {
     travel_id?: number
+    stops: Stop[]
     isModalVisible: boolean
     onClose: () => void
     onSelect: (lap: AddableLap) => void

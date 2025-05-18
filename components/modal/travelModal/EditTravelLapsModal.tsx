@@ -1,6 +1,5 @@
 import Button from '@/components/BaseButton';
 import { colors } from '@/const/color';
-import useGetTravelData from '@/hooks/useGetTravelData';
 import useStopModal from '@/hooks/useStopModal';
 import { AddableLap } from '@/src/types/AddableTravels';
 import { EditableLap, EditableLapsModalProp } from '@/src/types/EditableTravels';
@@ -19,9 +18,7 @@ import EditLapModal from '../editModal/EditLapModal';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles } from '@/src/styles/InputStyles';
 
-export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
-    const { stops } = useGetTravelData()
-
+export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const {
         showStopModal: showLapModal,
         openStopModal: openLapModal,
@@ -117,6 +114,7 @@ export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVis
                 </View>
 
                 <EditLapModal
+                    stops={stops}
                     selectedLap={selectedLap}
                     isModalVisible={showEditLapModal}
                     onSelect={handleLapEdit}
@@ -124,6 +122,7 @@ export default function EditTravelLapsModal({ travel_id, currentLaps, isModalVis
                 />
 
                 <AddLapModal
+                    stops={stops}
                     travel_id={travel_id}
                     isModalVisible={showLapModal}
                     onSelect={handleLapAdd}
