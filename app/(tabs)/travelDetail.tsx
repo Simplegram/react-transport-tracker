@@ -8,6 +8,7 @@ import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native';
 import { useFocusEffect } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { FullWindowOverlay } from 'react-native-screens';
 
 const formatDurationMinutes = (milliseconds: number): string => {
     if (isNaN(milliseconds) || milliseconds < 0) {
@@ -81,9 +82,9 @@ export default function TravelDetail() {
         return coords;
     });
 
-    const lapLatLon = travelLaps?.filter(laps => laps.stop_id !== null).map(lap => {
-        if (lap.stop_id) return { id: "lap", coords: [lap.stop_id.lon, lap.stop_id.lat] }
-    })
+    const lapLatLon = travelLaps
+        ?.filter(lap => lap.stop_id !== null && lap.stop_id.lon && lap.stop_id.lat)
+        .map(lap => ({ id: "lap", coords: [lap.stop_id.lon, lap.stop_id.lat] })) || [];
 
     const fullLatLon = [...stopLatLon, ...(lapLatLon || [])]
     const centerLatLon = getSimpleCentroid(fullLatLon.map(data => data?.coords))
