@@ -3,7 +3,7 @@ import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
 import LoadingScreen from '@/components/LoadingScreen';
 import { useTravelContext } from '@/context/PageContext';
 import useGetTravelData from '@/hooks/useGetTravelData';
-import { DataItem } from '@/src/types/Travels';
+import { DataItem, VehicleType } from '@/src/types/Travels';
 import { getSimpleCentroid } from '@/src/utils/mapUtils';
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native';
 import { useFocusEffect } from 'expo-router';
@@ -33,7 +33,11 @@ const formatDurationHoursMinutes = (milliseconds: number): string => {
 export default function TravelDetail() {
     const { selectedTravelItems } = useTravelContext()
 
-    const { travelLaps, getTravelLaps } = useGetTravelData()
+    const {
+        fullVehicleTypes,
+        travelLaps, getTravelLaps,
+        refetchTravelData
+    } = useGetTravelData()
 
     const [dataToUse, setDataToUse] = useState<DataItem[]>([])
 
@@ -54,6 +58,12 @@ export default function TravelDetail() {
         React.useCallback(() => {
             setDataToUse(selectedTravelItems)
         }, [selectedTravelItems])
+    )
+
+    useFocusEffect(
+        React.useCallback(() => {
+            refetchTravelData()
+        }, [])
     )
 
     const sortedData = [...dataToUse].sort((a, b) => {
@@ -267,7 +277,7 @@ export default function TravelDetail() {
                                     key={index}
                                     coordinate={data.coords as [number, number]} // Assert the type after filtering
                                 >
-                                    <AnnotationContent data_id={data.id} title={data.name || ''} stop={data.stop} />
+                                    <AnnotationContent fullVehicleTypes={fullVehicleTypes} data_id={data.id} title={data.name || ''} stop={data.stop} />
                                 </MarkerView>
                             ))}
                     </MapView>

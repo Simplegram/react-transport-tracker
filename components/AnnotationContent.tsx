@@ -1,19 +1,18 @@
 import useGetTravelData from "@/hooks/useGetTravelData";
-import { Stop } from "@/src/types/Travels";
+import { Stop, VehicleType } from "@/src/types/Travels";
 import { useState } from "react";
 import { StyleSheet } from "react-native";
 import { Text, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 interface AnnotationContentProps {
+    fullVehicleTypes: VehicleType[]
     data_id: string
     title: string
     stop: Stop | null
 }
 
-export default function AnnotationContent({ data_id, title, stop }: AnnotationContentProps) {
-    const { fullVehicleTypes } = useGetTravelData()
-
+export default function AnnotationContent({ fullVehicleTypes, data_id, title, stop }: AnnotationContentProps) {
     const [enableTitle, setEnableTitle] = useState<boolean>(false)
 
     return (
