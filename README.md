@@ -2,7 +2,28 @@
 
 Based on my personal experience as a former public transport commuter. I used to travel to and from Gading Serpong, Tangerang (a Jakarta satellite city) and Kemang, South Jakarta.
 
+## Table of Contents
+
+* [Get started](#get-started)
+
+  * [Packages Used](#key-packages-used)
+* [Create Supabase Tables](#create-supabase-tables)
+
+  * [Directions Table](#directions-table)
+  * [Icons Table](#icons-table)
+  * [Vehicle Types Table](#vehicle-types-table)
+  * [Stops Table](#stops-table)
+  * [Routes Table](#routes-table)
+  * [Travels Table](#travels-table)
+  * [Laps Table](#laps-table)
+* [Build Preview APK](#build-preview-apk)
+
+  * [With EAS](#with-eas)
+  * [With Android Studio](#with-android-studio)
+
 ## Get started
+
+This app uses Expo SDK 52.
 
 1. Install dependencies
 
@@ -15,14 +36,50 @@ Based on my personal experience as a former public transport commuter. I used to
      npx expo start
     ```
 
-In the output, you'll find options to open the app in a
-
-* [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-* [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-* [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-* [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+
+### Packages Used
+
+* `@expo/vector-icons`
+* `@maplibre/maplibre-react-native`
+* `@react-native-async-storage/async-storage`
+* `@react-native-community/datetimepicker`
+* `@react-native-picker/picker`
+* `@react-navigation/bottom-tabs`
+* `@react-navigation/native`
+* `@rneui/themed`
+* `@supabase/supabase-js`
+* `expo`
+* `expo-blur`
+* `expo-build-properties`
+* `expo-constants`
+* `expo-dev-client`
+* `expo-font`
+* `expo-haptics`
+* `expo-linking`
+* `expo-router`
+* `expo-splash-screen`
+* `expo-status-bar`
+* `expo-symbols`
+* `expo-system-ui`
+* `expo-updates`
+* `expo-web-browser`
+* `moment`
+* `moment-timezone`
+* `react`
+* `react-dom`
+* `react-native`
+* `react-native-calendars`
+* `react-native-gesture-handler`
+* `react-native-keyboard-aware-scroll-view`
+* `react-native-loading-spinner-overlay`
+* `react-native-pager-view`
+* `react-native-safe-area-context`
+* `react-native-screens`
+* `react-native-vector-icons`
+* `react-native-web`
+* `react-native-webview`
+* `expo-location`
 
 ## Create Supabase Tables
 
@@ -159,7 +216,29 @@ create table
 create index if not exists laps_travel_id_idx on public_transport_tracker.laps using btree (travel_id) tablespace pg_default;
 ```
 
-## Build APK
+## Build Preview APK
+
+### With EAS
+
+1. Pull latest environment variables from EAS server
+
+    ```pgsql
+    npx eas env:pull --environment preview
+    ```
+
+2. Update EAS server with latest commit
+
+    ```pgsql
+    npx eas update --environment preview
+    ```
+
+3. Start build queue
+
+    ```pgsql
+    npx eas build --profile preview --platform android
+    ```
+
+### With Android Studio
 
 When you're ready to build the APK, run:
 
