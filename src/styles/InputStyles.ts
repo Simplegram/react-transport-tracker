@@ -1,12 +1,17 @@
+// src/styles/InputStyles.ts (or .js)
 import { Platform, StyleSheet } from "react-native";
 
 const inputElementStyles = StyleSheet.create({
     inputContainer: {
-        gap: 15,
-        paddingBottom: 15,
+        gap: 24,
+        paddingBottom: 20,
     },
     inputGroup: {
-        // flexDirection: 'column',
+        // This remains a simple wrapper, no specific styles needed here
+        // It contains a label and an input field
+    },
+    inputLargeGroup: {
+        gap: 16,
     },
     inputGroupCoord: {
         flex: 1,
@@ -19,59 +24,59 @@ const inputElementStyles = StyleSheet.create({
         gap: 10,
     },
     inputGroupEnd: {
-        paddingBottom: 20, 
-        borderBottomWidth: 1, 
+        paddingBottom: 20,
+        borderBottomWidth: 1,
         borderBottomColor: '#ccc'
     },
     inputLabel: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#000',
-        marginBottom: 5,
+        fontSize: 14,
+        fontWeight: '500',
+        color: '#333333',
+        marginBottom: 8,
     },
     inputLabelLight: {
-        fontSize: 15,
-        fontWeight: '500',
-        color: '#000',
+        fontSize: 14,
+        fontWeight: '300',
+        color: '#4A4A4A',
         marginBottom: 5,
     },
     insideLabel: {
         fontSize: 16,
-        fontWeight: 'bold',
-        color: '#000',
+        fontWeight: 500,
+        color: '#333333',
     },
-})
+});
 
 const inputStyles = StyleSheet.create({
     textInput: {
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingVertical: Platform.OS === 'ios' ? 12 : 10,
-        minHeight: Platform.OS === 'ios' ? 48 : 44,
+        backgroundColor: '#F0F2F5',
+        borderRadius: 10,
+        paddingHorizontal: 14,
+        paddingVertical: Platform.OS === 'ios' ? 14 : 12,
+        minHeight: Platform.OS === 'ios' ? 50 : 48,
         fontSize: 16,
-        backgroundColor: '#fff',
+        color: '#333333',
+        borderWidth: 1,
+        borderColor: '#D1D5DB',
     },
     multilineTextInput: {
-        minHeight: 80,
+        minHeight: 100,
         textAlignVertical: 'top',
     },
     pressableInput: {
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingVertical: 10,
+        backgroundColor: '#F0F2F5',
+        borderRadius: 10,
+        paddingHorizontal: 14,
+        paddingVertical: Platform.OS === 'ios' ? 14 : 12,
         justifyContent: 'center',
-        minHeight: 44,
-        fontSize: 16,
-        backgroundColor: '#fff',
+        minHeight: Platform.OS === 'ios' ? 50 : 48,
+        borderWidth: 1,
+        borderColor: '#D1D5DB',
     },
     pressableInputCoord: {
         flex: 1,
     }
-})
+});
 
 const iconPickerStyles = StyleSheet.create({
     iconContainer: {
@@ -80,7 +85,7 @@ const iconPickerStyles = StyleSheet.create({
         borderColor: '#ccc',
         borderRadius: 8,
         paddingVertical: 5,
-        marginRight: 10, // Space between icons
+        marginRight: 10,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -96,13 +101,13 @@ const iconPickerStyles = StyleSheet.create({
         justifyContent: 'center',
     },
     selectedIconContainer: {
-        borderColor: '#0284f5', // Highlight selected icon
-        backgroundColor: '#e3f2fd', // Light background for selected
+        borderColor: '#0284f5',
+        backgroundColor: '#e3f2fd',
     },
-})
+});
 
 export {
     inputStyles,
     inputElementStyles,
     iconPickerStyles
-}
+};
