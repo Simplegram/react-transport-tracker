@@ -84,11 +84,27 @@ export default function TravelDetail() {
         const coords = [];
 
         if (travel.first_stop_id && travel.first_stop_id.lat && travel.first_stop_id.lon) {
-            coords.push({ id: "stop", stop: travel.first_stop_id, name: travel.first_stop_id.name, coords: [travel.first_stop_id.lon, travel.first_stop_id.lat] });
+            coords.push(
+                { 
+                    id: "stop", 
+                    stop: travel.first_stop_id, 
+                    name: travel.first_stop_id.name, 
+                    coords: [travel.first_stop_id.lon, travel.first_stop_id.lat],
+                    time: travel.bus_initial_arrival || null
+                }
+            );
         }
 
         if (travel.last_stop_id && travel.last_stop_id.lat && travel.last_stop_id.lon) {
-            coords.push({ id: "stop", stop: travel.last_stop_id, name: travel.last_stop_id.name, coords: [travel.last_stop_id.lon, travel.last_stop_id.lat] });
+            coords.push(
+                { 
+                    id: "stop", 
+                    stop: travel.last_stop_id, 
+                    name: travel.last_stop_id.name, 
+                    coords: [travel.last_stop_id.lon, travel.last_stop_id.lat],
+                    time: travel.bus_final_arrival || null
+                }
+            );
         }
 
         return coords;
@@ -96,7 +112,15 @@ export default function TravelDetail() {
 
     const lapLatLon = travelLaps
         ?.filter(lap => lap.stop_id !== null && lap.stop_id.lon && lap.stop_id.lat)
-        .map(lap => ({ id: "lap", stop: lap.stop_id, name: lap.stop_id?.name, coords: [lap.stop_id.lon, lap.stop_id.lat] })) || [];
+        .map(lap => (
+            { 
+                id: "lap", 
+                stop: lap.stop_id, 
+                name: lap.stop_id?.name, 
+                coords: [lap.stop_id.lon, lap.stop_id.lat],
+                time: lap.time, 
+            }
+        )) || [];
 
     const fullLatLon = [...stopLatLon, ...lapLatLon];
 
@@ -277,7 +301,13 @@ export default function TravelDetail() {
                                     key={index}
                                     coordinate={data.coords as [number, number]} // Assert the type after filtering
                                 >
-                                    <AnnotationContent fullVehicleTypes={fullVehicleTypes} data_id={data.id} title={data.name || ''} stop={data.stop} />
+                                    <AnnotationContent 
+                                        fullVehicleTypes={fullVehicleTypes} 
+                                        data_id={data.id} 
+                                        title={data.name || ''} 
+                                        stop={data.stop} 
+                                        time={data.time}
+                                    />
                                 </MarkerView>
                             ))}
                     </MapView>

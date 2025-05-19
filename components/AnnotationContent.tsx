@@ -4,19 +4,30 @@ import { useState } from "react";
 import { StyleSheet } from "react-native";
 import { Text, TouchableOpacity, View } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome6'
+import moment from "moment";
 
 interface AnnotationContentProps {
     fullVehicleTypes: VehicleType[]
     data_id: string
     title: string
-    stop: Stop | null
+    stop: Stop | null,
+    time: string | null
 }
 
-export default function AnnotationContent({ fullVehicleTypes, data_id, title, stop }: AnnotationContentProps) {
+export default function AnnotationContent({ fullVehicleTypes, data_id, title, stop, time }: AnnotationContentProps) {
     const [enableTitle, setEnableTitle] = useState<boolean>(false)
+
+    const formattedTime = time ? moment(time.replace("T", " "), "yyyy-mm-dd HH:mm:ss").format("HH:mm:ss") : "no time"
 
     return (
         <TouchableOpacity style={styles.touchableContainer} disabled={true}>
+            {enableTitle && (
+                <TouchableOpacity onPress={() => setEnableTitle(!enableTitle)}>
+                    <Text style={styles.title}>
+                        {formattedTime}
+                    </Text>
+                </TouchableOpacity>
+            )}
             <TouchableOpacity 
                 style={[
                     styles.marker, 
