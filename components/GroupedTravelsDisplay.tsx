@@ -166,7 +166,7 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDa
                 </PagerView>
             ) : (
                 <View style={styles.noDataContainer}>
-                    <Text style={styles.noDataText}>No data available to display.</Text>
+                    <Text style={styles.noDataText}>No data available to display</Text>
                 </View>
             )}
         </View>
