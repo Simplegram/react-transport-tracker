@@ -88,7 +88,6 @@ const styles = StyleSheet.create({
     },
     header: {
         fontSize: 30,
-        textAlign: 'center',
     },
     inputContainer: {
         gap: 10,
