@@ -5,6 +5,13 @@ export const getTodayString = () => {
     return todaysDate
 };
 
+export const formatDate = (date: string) => {
+    const cleanDate = date.replace("T", " ")
+    const formattedDate = moment(cleanDate, "YYYY-MM-DD hh:mm:ss").format("HH:mm:ss")
+
+    return formattedDate;
+}
+
 export const getMonthsSinceEarliestDate = (dates: string[]): number => {
     if (!dates || dates.length === 0) {
         return 0; // No dates available

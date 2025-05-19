@@ -7,29 +7,11 @@ import { useTravelContext } from '@/context/PageContext';
 import { router } from 'expo-router';
 import { calculateDuration } from '@/src/utils/utils';
 import moment from 'moment';
+import { formatDate } from '@/src/utils/dateUtils';
 
 interface GroupedDataDisplayProps {
     data: DataItem[];
     currentDate: string
-}
-
-function formatDate(
-    date: Date,
-    custom_hours: number | null = null,
-    custom_minutes: number | null = null,
-    custom_seconds: number | null = null
-) {
-    // Ensure we're working with a Date object
-    if (!(date instanceof Date) || isNaN(date.getTime())) {
-        // Handle invalid date, perhaps return a placeholder or throw an error
-        return "Invalid Date";
-    }
-
-    const hours = custom_hours !== null ? String(custom_hours).padStart(2, '0') : String(date.getHours()).padStart(2, '0');
-    const minutes = custom_minutes !== null ? String(custom_minutes).padStart(2, '0') : String(date.getMinutes()).padStart(2, '0');
-    const seconds = custom_seconds !== null ? String(custom_seconds).padStart(2, '0') : String(date.getSeconds()).padStart(2, '0');
-
-    return `${hours}:${minutes}:${seconds}`;
 }
 
 const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDate }) => {
@@ -128,7 +110,7 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDa
                                                 <View style={styles.stopTimeBlock}>
                                                     <Text style={styles.stopNameText}>{item.first_stop_id?.name || 'N/A'}</Text>
                                                     <Text style={styles.timeText}>
-                                                        {item.bus_initial_departure ? formatDate(new Date(item.bus_initial_departure)) : 'N/A'}
+                                                        {item.bus_initial_departure ? formatDate(item.bus_initial_departure) : 'N/A'}
                                                     </Text>
                                                 </View>
 
@@ -140,7 +122,7 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDa
                                                 <View style={styles.stopTimeBlock}>
                                                     <Text style={styles.stopNameText}>{item.last_stop_id?.name || 'N/A'}</Text>
                                                     <Text style={styles.timeText}>
-                                                        {item.bus_final_arrival ? formatDate(new Date(item.bus_final_arrival)) : 'N/A'}
+                                                        {item.bus_final_arrival ? formatDate(item.bus_final_arrival) : 'N/A'}
                                                     </Text>
                                                 </View>
                                             </View>
