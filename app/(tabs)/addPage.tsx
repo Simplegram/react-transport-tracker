@@ -86,14 +86,12 @@ const styles = StyleSheet.create({
     },
     button: {
         borderWidth: 1,
-        paddingVertical: 14,
-        paddingHorizontal: 20,
         borderRadius: 8,
         alignItems: 'center',
     },
     buttonText: {
         color: '#fff',
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: '700',
     },
 });
