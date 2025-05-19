@@ -6,7 +6,6 @@ Based on my personal experience as a former public transport commuter. I used to
 
 * [Get started](#get-started)
   * [Packages Used](#packages-used)
-    
 * [Create Supabase Tables](#create-supabase-tables)
   * [Directions Table](#directions-table)
   * [Icons Table](#icons-table)
@@ -15,7 +14,6 @@ Based on my personal experience as a former public transport commuter. I used to
   * [Routes Table](#routes-table)
   * [Travels Table](#travels-table)
   * [Laps Table](#laps-table)
- 
 * [Build Preview APK](#build-preview-apk)
   * [With EAS](#with-eas)
   * [With Android Studio](#with-android-studio)
