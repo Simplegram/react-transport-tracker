@@ -84,80 +84,86 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDa
 
     return (
         <View style={styles.mainContainer}>
+            <Text style={styles.groupTitle}>
+                {formattedCurrentDate}
+            </Text>
             {directionNames.length > 0 ? (
-                <>
-                    <Text style={styles.groupTitle}>
-                        {formattedCurrentDate}
-                    </Text>
-                    <PagerView 
-                        style={styles.pagerView} 
-                        initialPage={0} 
-                        key={directionNames.length}
-                        pageMargin={10}
-                    >
-                        {directionNames.map((directionNameKey, index) => (
-                            <>
-                                <View key={directionNameKey} style={styles.page}>
-                                    <View>
-                                        <Pressable onPress={() => handleViewTravelDetails(directionNameKey)}>
-                                            <Text style={styles.groupTitle}>
-                                                Direction: {directionNameKey} ({index + 1}/{directionNames.length})
-                                            </Text>
+                <PagerView
+                    style={styles.pagerView}
+                    initialPage={0}
+                    key={directionNames.length}
+                    pageMargin={10}
+                >
+                    {directionNames.map((directionNameKey, index) => (
+                        <View key={directionNameKey} style={{ 
+                            flex: 1,
+                            padding: 10,
+                            borderWidth: 1,
+                            borderTopLeftRadius: 12,
+                            borderTopRightRadius: 12,
+                            borderBottomLeftRadius: 10,
+                            borderBottomRightRadius: 10,
+                        }}>
+                            <View key={directionNameKey} style={styles.page}>
+                                <View>
+                                    <Pressable onPress={() => handleViewTravelDetails(directionNameKey)}>
+                                        <Text style={styles.groupTitle}>
+                                            Direction: {directionNameKey} ({index + 1}/{directionNames.length})
+                                        </Text>
+                                    </Pressable>
+                                </View>
+
+                                <ScrollView contentContainerStyle={styles.itemsListContainer} nestedScrollEnabled={true}>
+                                    {finalGroupedData[directionNameKey].map((item, itemIndex) => (
+                                        <Pressable key={item.id} style={styles.itemContainer} onPress={() => handleItemPress(directionNameKey, itemIndex)}>
+                                            <View style={styles.generalInfoContainer}>
+                                                <Text style={styles.itemRouteText}>
+                                                    {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
+                                                </Text>
+                                                <Text style={styles.itemVehicleText}>
+                                                    {item.vehicle_code || 'N/A'}
+                                                </Text>
+                                            </View>
+
+                                            <View style={styles.stopsAndTimeRow}>
+                                                <View style={styles.stopTimeBlock}>
+                                                    <Text style={styles.stopNameText}>{item.first_stop_id?.name || 'N/A'}</Text>
+                                                    <Text style={styles.timeText}>
+                                                        {item.bus_initial_departure ? formatDate(new Date(item.bus_initial_departure)) : 'N/A'}
+                                                    </Text>
+                                                </View>
+
+                                                <View style={styles.arrowContainer}>
+                                                    <Text style={styles.arrowText}>➜</Text>
+                                                    <Text style={styles.notesLabel}>{calculateDuration(item)}</Text>
+                                                </View>
+
+                                                <View style={styles.stopTimeBlock}>
+                                                    <Text style={styles.stopNameText}>{item.last_stop_id?.name || 'N/A'}</Text>
+                                                    <Text style={styles.timeText}>
+                                                        {item.bus_final_arrival ? formatDate(new Date(item.bus_final_arrival)) : 'N/A'}
+                                                    </Text>
+                                                </View>
+                                            </View>
+
+                                            {item.notes && (
+                                                <View style={styles.notesContainer}>
+                                                    <Text style={styles.notesLabel}>Notes:</Text>
+                                                    <Text style={styles.notesText}>
+                                                        {item.notes}
+                                                    </Text>
+                                                </View>
+                                            )}
                                         </Pressable>
-                                    </View>
-
-                                    <ScrollView contentContainerStyle={styles.itemsListContainer} nestedScrollEnabled={true}>
-                                        {finalGroupedData[directionNameKey].map((item, itemIndex) => (
-                                            <Pressable key={item.id} style={styles.itemContainer} onPress={() => handleItemPress(directionNameKey, itemIndex)}>
-                                                <View style={styles.generalInfoContainer}>
-                                                    <Text style={styles.itemRouteText}>
-                                                        {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
-                                                    </Text>
-                                                    <Text style={styles.itemVehicleText}>
-                                                        {item.vehicle_code || 'N/A'}
-                                                    </Text>
-                                                </View>
-
-                                                <View style={styles.stopsAndTimeRow}>
-                                                    <View style={styles.stopTimeBlock}>
-                                                        <Text style={styles.stopNameText}>{item.first_stop_id?.name || 'N/A'}</Text>
-                                                        <Text style={styles.timeText}>
-                                                            {item.bus_initial_departure ? formatDate(new Date(item.bus_initial_departure)) : 'N/A'}
-                                                        </Text>
-                                                    </View>
-
-                                                    <View style={styles.arrowContainer}>
-                                                        <Text style={styles.arrowText}>➜</Text>
-                                                        <Text style={styles.notesLabel}>{calculateDuration(item)}</Text>
-                                                    </View>
-
-                                                    <View style={styles.stopTimeBlock}>
-                                                        <Text style={styles.stopNameText}>{item.last_stop_id?.name || 'N/A'}</Text>
-                                                        <Text style={styles.timeText}>
-                                                            {item.bus_final_arrival ? formatDate(new Date(item.bus_final_arrival)) : 'N/A'}
-                                                        </Text>
-                                                    </View>
-                                                </View>
-
-                                                {item.notes && (
-                                                    <View style={styles.notesContainer}>
-                                                        <Text style={styles.notesLabel}>Notes:</Text>
-                                                        <Text style={styles.notesText}>
-                                                            {item.notes}
-                                                        </Text>
-                                                    </View>
-                                                )}
-                                            </Pressable>
-                                        ))}
-                                    </ScrollView>
-                                </View>
-                                <View style={styles.swipeZone}>
-                                    <Text style={styles.swipeZoneText}>{`<<< Safe Swipe Zone >>>`}</Text>
-                                </View>
-                            </>
-                        ))}
-                    </PagerView>
-                </>
+                                    ))}
+                                </ScrollView>
+                            </View>
+                            <View style={styles.swipeZone}>
+                                <Text style={styles.swipeZoneText}>{`<<< Safe Swipe Zone >>>`}</Text>
+                            </View>
+                        </View>
+                    ))}
+                </PagerView>
             ) : (
                 <View style={styles.noDataContainer}>
                     <Text style={styles.noDataText}>No data available to display.</Text>
@@ -288,6 +294,11 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        borderWidth: 1,
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
     },
     noDataText: {
         fontSize: 16,

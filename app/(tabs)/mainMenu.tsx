@@ -123,12 +123,6 @@ const styles = StyleSheet.create({
     },
     listContainer: {
         flex: 1,
-        borderWidth: 1,
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10,
-        padding: 10,
     },
     listTitle: {
         fontSize: 18,
