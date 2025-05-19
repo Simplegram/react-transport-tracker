@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet, Pressable, Dimensions } from 'react-native';
 import PagerView from 'react-native-pager-view';
 
-import { DataItem } from '@/src/types/Travels'; // Import the interface from your specified path
+import { DataItem, Lap } from '@/src/types/Travels'; // Import the interface from your specified path
 import { useTravelContext } from '@/context/PageContext';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { calculateDuration } from '@/src/utils/utils';
 import moment from 'moment';
 import { formatDate } from '@/src/utils/dateUtils';
+import useGetTravelData from '@/hooks/useGetTravelData';
 
 interface GroupedDataDisplayProps {
     data: DataItem[];
@@ -18,6 +19,12 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDa
     const { setSelectedItem, setSelectedTravelItems } = useTravelContext();
 
     const formattedCurrentDate = moment(currentDate).format('LL')
+
+    const { laps, getAllLaps } = useGetTravelData()
+
+    useEffect(() => {
+        getAllLaps()
+    }, [])
 
     // Grouping data remains the same
     const groupedData = data.reduce((acc, currentItem) => {
@@ -42,8 +49,26 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDa
             return timeA - timeB;
         });
     });
+
+    interface DataItemWithNewKey extends DataItem {
+        lapCount: number; // Define the new key and its type
+    }
+
+    const finalGroupedDataWithNewKey: Record<string, DataItemWithNewKey[]> = {};
+    Object.keys(sortedGroupedData).forEach(directionKey => {
+        finalGroupedDataWithNewKey[directionKey] = sortedGroupedData[directionKey].map(item => {
+            const matchingLaps = laps.filter(lap => lap.travel_id === item.id);
+            const lapCount = matchingLaps.length;
+
+            return {
+                ...item,
+                lapCount: lapCount
+            };
+        });
+    });
+
     // Use the sorted data for rendering
-    const finalGroupedData = sortedGroupedData;
+    const finalGroupedData = finalGroupedDataWithNewKey;
 
 
     // Get the keys (direction names) and sort them for consistent page order
@@ -125,6 +150,13 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDa
                                                         {item.bus_final_arrival ? formatDate(item.bus_final_arrival) : 'N/A'}
                                                     </Text>
                                                 </View>
+                                            </View>
+
+                                            <View style={{
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}>
+                                                <Text style={{ fontWeight: 'bold' }}>{item.lapCount} lap(s)</Text>
                                             </View>
 
                                             {item.notes && (
@@ -214,7 +246,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        paddingBottom: 10,
         marginBottom: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#dcdcdc',
     },
     stopTimeBlock: {
         flex: 1,

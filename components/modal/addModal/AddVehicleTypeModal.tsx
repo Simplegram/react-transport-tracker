@@ -26,13 +26,13 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
 
     return (
         <View>
-            {(loading || icons.length === 0) ? (
+            {(loading || !icons || icons.length === 0) ? (
                 <Text style={inputElementStyles.inputLabel}>Loading...</Text>
             ) : (
                 <>
                     <View style={inputElementStyles.inputContainer}>
                         <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Name:</Text>
+                            <Text style={inputElementStyles.insideLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles.pressableInput}
                                 placeholder="e.g., Standard Bus"

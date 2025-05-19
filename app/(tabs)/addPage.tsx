@@ -85,14 +85,13 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     button: {
-        paddingVertical: 14,
-        paddingHorizontal: 20,
+        borderWidth: 1,
         borderRadius: 8,
         alignItems: 'center',
     },
     buttonText: {
         color: '#fff',
-        fontSize: 17,
+        fontSize: 16,
         fontWeight: '700',
     },
 });

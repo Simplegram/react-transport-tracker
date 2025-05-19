@@ -217,25 +217,27 @@ export default function EditTravelItem() {
             ) : (
                 <>
                     <View style={inputElementStyles.inputContainer}>
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Bus Initial Arrival:</Text>
-                            <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={inputStyles.pressableInput}>
-                                <Text style={inputElementStyles.insideLabel}>{formatDateForDisplay(travel.bus_initial_arrival)}</Text>
-                            </Pressable>
-                        </View>
+                        <View style={inputElementStyles.inputLargeGroup}>
+                            <View style={inputElementStyles.inputGroup}>
+                                <Text style={inputElementStyles.inputLabel}>Bus Initial Arrival:</Text>
+                                <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={inputStyles.pressableInput}>
+                                    <Text style={inputElementStyles.insideLabel}>{formatDateForDisplay(travel.bus_initial_arrival)}</Text>
+                                </Pressable>
+                            </View>
 
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Bus Initial Departure:</Text>
-                            <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={inputStyles.pressableInput}>
-                                <Text style={inputElementStyles.insideLabel}>{formatDateForDisplay(travel.bus_initial_departure)}</Text>
-                            </Pressable>
-                        </View>
+                            <View style={inputElementStyles.inputGroup}>
+                                <Text style={inputElementStyles.inputLabel}>Bus Initial Departure:</Text>
+                                <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={inputStyles.pressableInput}>
+                                    <Text style={inputElementStyles.insideLabel}>{formatDateForDisplay(travel.bus_initial_departure)}</Text>
+                                </Pressable>
+                            </View>
 
-                        <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
-                            <Text style={inputElementStyles.inputLabel}>Bus Final Arrival:</Text>
-                            <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={inputStyles.pressableInput}>
-                                <Text style={inputElementStyles.insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
-                            </Pressable>
+                            <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                                <Text style={inputElementStyles.inputLabel}>Bus Final Arrival:</Text>
+                                <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={inputStyles.pressableInput}>
+                                    <Text style={inputElementStyles.insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
+                                </Pressable>
+                            </View>
                         </View>
 
                         {showCustomPicker && editingDateField && (
@@ -252,85 +254,93 @@ export default function EditTravelItem() {
                             />
                         )}
 
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Route:</Text>
-                            <Pressable
-                                style={inputStyles.pressableInput}
-                                onPress={() => openRouteModal()}>
-                                <Text style={inputElementStyles.insideLabel}>
-                                    {`${routes.find(route => route.id === travel.route_id)?.code || `Select`} | ${routes.find(route => route.id === travel.route_id)?.name || `Route...`}`}
-                                </Text>
-                            </Pressable>
+                        <View style={inputElementStyles.inputLargeGroup}>
+                            <View style={inputElementStyles.inputGroup}>
+                                <Text style={inputElementStyles.inputLabel}>Route:</Text>
+                                <Pressable
+                                    style={inputStyles.pressableInput}
+                                    onPress={() => openRouteModal()}>
+                                    <Text style={inputElementStyles.insideLabel}>
+                                        {`${routes.find(route => route.id === travel.route_id)?.code || `Select`} | ${routes.find(route => route.id === travel.route_id)?.name || `Route...`}`}
+                                    </Text>
+                                </Pressable>
+                            </View>
+
+                            <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                                <Text style={inputElementStyles.inputLabel}>Type:</Text>
+                                <TextInput
+                                    editable={false}
+                                    style={inputStyles.textInput}
+                                    value={vehicleTypes.find(type => type.id === travel.type_id)?.name}
+                                    placeholder="Vehicle type..."
+                                />
+                            </View>
+                        </View>
+                        
+                        <View style={inputElementStyles.inputLargeGroup}>
+                            <View style={inputElementStyles.inputGroup}>
+                                <Text style={inputElementStyles.inputLabel}>Direction:</Text>
+                                <Pressable
+                                    style={inputStyles.pressableInput}
+                                    onPress={() => openDirectionModal()}>
+                                    <Text style={inputElementStyles.insideLabel}>
+                                        {directions.find(direction => direction.id === travel.direction_id)?.name || 'Select Direction...'}
+                                    </Text>
+                                </Pressable>
+                            </View>
+
+                            <View style={inputElementStyles.inputGroup}>
+                                <Text style={inputElementStyles.inputLabel}>First Stop:</Text>
+                                <Pressable
+                                    style={inputStyles.pressableInput}
+                                    onPress={() => openStopModal('first_stop_id')}>
+                                    <Text style={inputElementStyles.insideLabel}>{stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}</Text>
+                                </Pressable>
+                            </View>
+
+                            <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                                <Text style={inputElementStyles.inputLabel}>Last Stop:</Text>
+                                <Pressable
+                                    style={inputStyles.pressableInput}
+                                    onPress={() => openStopModal('last_stop_id')}>
+                                    <Text style={inputElementStyles.insideLabel}>{stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}</Text>
+                                </Pressable>
+                            </View>
+                        </View>
+                        
+                        <View style={inputElementStyles.inputLargeGroup}>
+                            <View style={inputElementStyles.inputGroup}>
+                                <Text style={inputElementStyles.inputLabel}>Vehicle Code:</Text>
+                                <TextInput
+                                    style={inputStyles.textInput}
+                                    value={travel.vehicle_code || ''}
+                                    onChangeText={(text) => handleChangeText('vehicle_code', text)}
+                                    placeholder="Enter vehicle code"
+                                />
+                            </View>
+
+                            <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                                <Text style={inputElementStyles.inputLabel}>Notes:</Text>
+                                <TextInput
+                                    style={[inputStyles.textInput, inputStyles.multilineTextInput]}
+                                    value={travel.notes || ''}
+                                    onChangeText={(text) => handleChangeText('notes', text)}
+                                    multiline={true}
+                                    numberOfLines={4}
+                                    placeholder="Enter notes (optional)"
+                                />
+                            </View>
                         </View>
 
-                        <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
-                            <Text style={inputElementStyles.inputLabel}>Type:</Text>
-                            <TextInput
-                                editable={false}
-                                style={inputStyles.textInput}
-                                value={vehicleTypes.find(type => type.id === travel.type_id)?.name}
-                                placeholder="Vehicle type..."
-                            />
-                        </View>
-
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Direction:</Text>
-                            <Pressable
-                                style={inputStyles.pressableInput}
-                                onPress={() => openDirectionModal()}>
-                                <Text style={inputElementStyles.insideLabel}>
-                                    {directions.find(direction => direction.id === travel.direction_id)?.name || 'Select Direction...'}
-                                </Text>
-                            </Pressable>
-                        </View>
-
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>First Stop:</Text>
-                            <Pressable
-                                style={inputStyles.pressableInput}
-                                onPress={() => openStopModal('first_stop_id')}>
-                                <Text style={inputElementStyles.insideLabel}>{stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}</Text>
-                            </Pressable>
-                        </View>
-
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Last Stop:</Text>
-                            <Pressable
-                                style={inputStyles.pressableInput}
-                                onPress={() => openStopModal('last_stop_id')}>
-                                <Text style={inputElementStyles.insideLabel}>{stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}</Text>
-                            </Pressable>
-                        </View>
-
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Vehicle Code:</Text>
-                            <TextInput
-                                style={inputStyles.textInput}
-                                value={travel.vehicle_code || ''}
-                                onChangeText={(text) => handleChangeText('vehicle_code', text)}
-                                placeholder="Enter vehicle code"
-                            />
-                        </View>
-
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Notes:</Text>
-                            <TextInput
-                                style={[inputStyles.textInput, inputStyles.multilineTextInput]}
-                                value={travel.notes || ''}
-                                onChangeText={(text) => handleChangeText('notes', text)}
-                                multiline={true}
-                                numberOfLines={4}
-                                placeholder="Enter notes (optional)"
-                            />
-                        </View>
-
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Laps:</Text>
-                            <Pressable
-                                style={inputStyles.pressableInput}
-                                onPress={() => openLapsModal()}>
-                                <Text style={inputElementStyles.insideLabel}>{`${laps.length} laps`}</Text>
-                            </Pressable>
+                        <View style={inputElementStyles.inputLargeGroup}>
+                            <View style={inputElementStyles.inputGroup}>
+                                <Text style={inputElementStyles.inputLabel}>Laps:</Text>
+                                <Pressable
+                                    style={inputStyles.pressableInput}
+                                    onPress={() => openLapsModal()}>
+                                    <Text style={inputElementStyles.insideLabel}>{`${laps.length} laps`}</Text>
+                                </Pressable>
+                            </View>
                         </View>
                     </View>
 

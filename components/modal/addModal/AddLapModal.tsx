@@ -70,7 +70,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                             <View style={inputElementStyles.inputGroup}>
                                 <Text style={inputElementStyles.inputLabel}>Time:</Text>
                                 <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles.pressableInput}>
-                                    <Text style={inputElementStyles.inputLabel}>{formatDateForDisplay(lap.time)}</Text>
+                                    <Text style={inputElementStyles.insideLabel}>{formatDateForDisplay(lap.time)}</Text>
                                 </Pressable>
                             </View>
 
@@ -79,7 +79,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 <Pressable
                                     style={inputStyles.pressableInput}
                                     onPress={() => openStopModal('last_stop_id')}>
-                                    <Text style={[inputElementStyles.inputLabel, { marginBottom: 0 }]}>
+                                    <Text style={[inputElementStyles.insideLabel, { marginBottom: 0 }]}>
                                         {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
                                     </Text>
                                 </Pressable>
@@ -104,13 +104,13 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                     returnKeyType="done"
                                     multiline={true}
                                     numberOfLines={3}
-                                    style={[inputStyles.textInput, inputStyles.multilineTextInput, inputElementStyles.inputLabel]}
+                                    style={[inputStyles.textInput, inputStyles.multilineTextInput, inputElementStyles.insideLabel]}
                                 />
                             </View>
 
                             <View style={buttonStyles.buttonRow}>
                                 <Button title='Cancel' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                                <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                                <Button title='Add Lap' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                             </View>
                         </View>
 

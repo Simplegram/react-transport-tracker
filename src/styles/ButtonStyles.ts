@@ -7,7 +7,7 @@ const buttonStyles = StyleSheet.create({
         gap: 10,
     },
     addButton: {
-        backgroundColor: '#1E88E5',
+        backgroundColor: '#007bff',
         paddingVertical: 12,
         borderRadius: 8,
         flex: 1,

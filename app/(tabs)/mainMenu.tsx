@@ -11,6 +11,7 @@ import { buttonStyles } from "@/src/styles/ButtonStyles";
 import CalendarModal from "@/components/modal/CalendarModal";
 import useStopModal from "@/hooks/useStopModal";
 import { getTodayString } from "@/src/utils/dateUtils";
+import useGetTravelData from "@/hooks/useGetTravelData";
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -93,15 +94,15 @@ export default function HomePage() {
                 )}
             </View>
             <View style={styles.calendarContainer}>
-                <Button 
-                    style={[buttonStyles.addButton, { flex: 0 }]} 
+                <Button
+                    style={[buttonStyles.addButton, { flex: 0 }]}
                     textStyle={buttonStyles.addButtonText}
                     onPress={() => openCalendarModal()}
                 >
                     View Calendar
                 </Button>
             </View>
-            <CalendarModal 
+            <CalendarModal
                 dates={dates}
                 markedDates={markedDates}
                 modalElements={{
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         justifyContent: 'center',
-        padding: 10,
+        padding: 15,
         paddingTop: 0,
         backgroundColor: '#fff'
     },

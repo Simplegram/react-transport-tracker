@@ -1,3 +1,3 @@
 export const colors = {
-    appBlue: '#0284f5'
+    appBlue: '#007bff'
 }
