@@ -70,6 +70,15 @@ export default function useGetTravelData() {
         if (data) setIcons(data)
     }
 
+    const getAllLaps = async () => {
+        const { data, error } = await supabase
+            .from("laps")
+            .select()
+
+        if (error) console.log(error)
+        if (data) setLaps(data)
+    }
+
     const getLaps = async (travelId: number) => {
         const { data, error } = await supabase
             .from("laps")
@@ -137,7 +146,7 @@ export default function useGetTravelData() {
         routes, getRoutes,
         vehicleTypes, fullVehicleTypes, getVehicleTypes,
         icons, getIcons,
-        laps, setLaps, getLaps, 
+        laps, setLaps, getLaps, getAllLaps, 
         travelLaps, getTravelLaps,
         refetchTravelData: getTravelData,
     }
