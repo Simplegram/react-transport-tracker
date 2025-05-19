@@ -1,15 +1,8 @@
 import { StandaloneModalProp } from "@/src/types/AddableTravels";
 import { getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils";
-import { Modal, StyleSheet, View } from "react-native";
+import { Modal, StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import { CalendarList } from "react-native-calendars";
-
-interface DateObject {
-    dateString: string,
-    day: number,
-    month: number,
-    timestamp: number,
-    year: number
-}
+import { useState } from "react";
 
 interface CalendarModalProps {
     dates: any
@@ -22,8 +15,9 @@ interface CalendarModalProps {
 }
 
 export default function CalendarModal({ dates, markedDates, modalElements }: CalendarModalProps) {
-    const pastScrollRange = getMonthsSinceEarliestDate(dates)
-    const futureScrollRange = getFutureMonthFromLatestDate(dates, 1)
+    const pastScrollRange = getMonthsSinceEarliestDate(dates);
+    const futureScrollRange = getFutureMonthFromLatestDate(dates, 1);
+    const [currentDate] = useState(new Date().toISOString().split('T')[0]);
 
     return (
         <Modal
@@ -53,6 +47,12 @@ export default function CalendarModal({ dates, markedDates, modalElements }: Cal
                             textDayHeaderFontSize: 16,
                         }}
                     />
+                    <TouchableOpacity
+                        style={styles.todayButton}
+                        onPress={() => modalElements.onSelect({ dateString: currentDate })}
+                    >
+                        <Text style={styles.todayButtonText}>Set Today</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </Modal>
@@ -70,5 +70,23 @@ const styles = StyleSheet.create({
         height: 500,
         backgroundColor: 'white',
         paddingTop: 10,
+        position: 'relative',
+    },
+    todayButton: {
+        position: 'absolute',
+        bottom: 35,
+        left: '50%',
+        transform: [{ translateX: -50 }],
+        backgroundColor: '#1E88E5',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderRadius: 8,
+        borderWidth: 1,
+        zIndex: 1,
+    },
+    todayButtonText: {
+        color: '#ffffff',
+        fontWeight: 'bold',
+        fontSize: 16,
     },
 });
