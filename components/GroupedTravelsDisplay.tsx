@@ -7,9 +7,11 @@ import { DataItem } from '@/src/types/Travels'; // Import the interface from you
 import { useTravelContext } from '@/context/PageContext';
 import { router } from 'expo-router';
 import { calculateDuration } from '@/src/utils/utils';
+import moment from 'moment';
 
 interface GroupedDataDisplayProps {
     data: DataItem[];
+    currentDate: string
 }
 
 function formatDate(
@@ -31,8 +33,10 @@ function formatDate(
     return `${hours}:${minutes}:${seconds}`;
 }
 
-const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data }) => {
+const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDate }) => {
     const { setSelectedItem, setSelectedTravelItems } = useTravelContext();
+
+    const formattedCurrentDate = moment(currentDate).format('LL')
 
     // Grouping data remains the same
     const groupedData = data.reduce((acc, currentItem) => {
@@ -81,64 +85,79 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data }) => {
     return (
         <View style={styles.mainContainer}>
             {directionNames.length > 0 ? (
-                <PagerView style={styles.pagerView} initialPage={0} key={directionNames.length}>
-                    {directionNames.map((directionNameKey, index) => (
-                        <View key={directionNameKey} style={styles.page}>
-                            <View>
-                                <Pressable onPress={() => handleViewTravelDetails(directionNameKey)}>
-                                    <Text style={styles.groupTitle}>
-                                        Direction: {directionNameKey} ({index + 1}/{directionNames.length})
-                                    </Text>
-                                </Pressable>
-                            </View>
-
-                            <ScrollView contentContainerStyle={styles.itemsListContainer} nestedScrollEnabled={true}>
-                                {finalGroupedData[directionNameKey].map((item, itemIndex) => (
-                                    <Pressable key={item.id} style={styles.itemContainer} onPress={() => handleItemPress(directionNameKey, itemIndex)}>
-                                        <View style={styles.generalInfoContainer}>
-                                            <Text style={styles.itemRouteText}>
-                                                {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
+                <>
+                    <Text style={styles.groupTitle}>
+                        {formattedCurrentDate}
+                    </Text>
+                    <PagerView 
+                        style={styles.pagerView} 
+                        initialPage={0} 
+                        key={directionNames.length}
+                        pageMargin={10}
+                    >
+                        {directionNames.map((directionNameKey, index) => (
+                            <>
+                                <View key={directionNameKey} style={styles.page}>
+                                    <View>
+                                        <Pressable onPress={() => handleViewTravelDetails(directionNameKey)}>
+                                            <Text style={styles.groupTitle}>
+                                                Direction: {directionNameKey} ({index + 1}/{directionNames.length})
                                             </Text>
-                                            <Text style={styles.itemVehicleText}>
-                                                {item.vehicle_code || 'N/A'}
-                                            </Text>
-                                        </View>
+                                        </Pressable>
+                                    </View>
 
-                                        <View style={styles.stopsAndTimeRow}>
-                                            <View style={styles.stopTimeBlock}>
-                                                <Text style={styles.stopNameText}>{item.first_stop_id?.name || 'N/A'}</Text>
-                                                <Text style={styles.timeText}>
-                                                    {item.bus_initial_departure ? formatDate(new Date(item.bus_initial_departure)) : 'N/A'}
-                                                </Text>
-                                            </View>
+                                    <ScrollView contentContainerStyle={styles.itemsListContainer} nestedScrollEnabled={true}>
+                                        {finalGroupedData[directionNameKey].map((item, itemIndex) => (
+                                            <Pressable key={item.id} style={styles.itemContainer} onPress={() => handleItemPress(directionNameKey, itemIndex)}>
+                                                <View style={styles.generalInfoContainer}>
+                                                    <Text style={styles.itemRouteText}>
+                                                        {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
+                                                    </Text>
+                                                    <Text style={styles.itemVehicleText}>
+                                                        {item.vehicle_code || 'N/A'}
+                                                    </Text>
+                                                </View>
 
-                                            <View style={styles.arrowContainer}>
-                                                <Text style={styles.arrowText}>➜</Text>
-                                                <Text style={styles.notesLabel}>{calculateDuration(item)}</Text>
-                                            </View>
+                                                <View style={styles.stopsAndTimeRow}>
+                                                    <View style={styles.stopTimeBlock}>
+                                                        <Text style={styles.stopNameText}>{item.first_stop_id?.name || 'N/A'}</Text>
+                                                        <Text style={styles.timeText}>
+                                                            {item.bus_initial_departure ? formatDate(new Date(item.bus_initial_departure)) : 'N/A'}
+                                                        </Text>
+                                                    </View>
 
-                                            <View style={styles.stopTimeBlock}>
-                                                <Text style={styles.stopNameText}>{item.last_stop_id?.name || 'N/A'}</Text>
-                                                <Text style={styles.timeText}>
-                                                    {item.bus_final_arrival ? formatDate(new Date(item.bus_final_arrival)) : 'N/A'}
-                                                </Text>
-                                            </View>
-                                        </View>
+                                                    <View style={styles.arrowContainer}>
+                                                        <Text style={styles.arrowText}>➜</Text>
+                                                        <Text style={styles.notesLabel}>{calculateDuration(item)}</Text>
+                                                    </View>
 
-                                        {item.notes && (
-                                            <View style={styles.notesContainer}>
-                                                <Text style={styles.notesLabel}>Notes:</Text>
-                                                <Text style={styles.notesText}>
-                                                    {item.notes}
-                                                </Text>
-                                            </View>
-                                        )}
-                                    </Pressable>
-                                ))}
-                            </ScrollView>
-                        </View>
-                    ))}
-                </PagerView>
+                                                    <View style={styles.stopTimeBlock}>
+                                                        <Text style={styles.stopNameText}>{item.last_stop_id?.name || 'N/A'}</Text>
+                                                        <Text style={styles.timeText}>
+                                                            {item.bus_final_arrival ? formatDate(new Date(item.bus_final_arrival)) : 'N/A'}
+                                                        </Text>
+                                                    </View>
+                                                </View>
+
+                                                {item.notes && (
+                                                    <View style={styles.notesContainer}>
+                                                        <Text style={styles.notesLabel}>Notes:</Text>
+                                                        <Text style={styles.notesText}>
+                                                            {item.notes}
+                                                        </Text>
+                                                    </View>
+                                                )}
+                                            </Pressable>
+                                        ))}
+                                    </ScrollView>
+                                </View>
+                                <View style={styles.swipeZone}>
+                                    <Text style={styles.swipeZoneText}>{`<<< Safe Swipe Zone >>>`}</Text>
+                                </View>
+                            </>
+                        ))}
+                    </PagerView>
+                </>
             ) : (
                 <View style={styles.noDataContainer}>
                     <Text style={styles.noDataText}>No data available to display.</Text>
@@ -156,7 +175,18 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     page: {
+        flex: 7,
+        paddingBottom: 10,
+        borderBottomWidth: 1,
+    },
+    swipeZone: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    swipeZoneText: {
+        fontSize: 16,
+        fontWeight: 'bold',
     },
     groupTitle: {
         fontSize: 20,
@@ -166,11 +196,10 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     itemsListContainer: {
-        gap: 15,
+        gap: 10,
     },
     itemContainer: {
         padding: 15,
-        marginHorizontal: 6,
         backgroundColor: '#ecf0f1',
         borderRadius: 8,
         borderWidth: 1,

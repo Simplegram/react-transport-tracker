@@ -1,11 +1,16 @@
 import useTravelCalendar from "@/hooks/useTravelCalendar";
 import React, { useEffect, useMemo } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
-import { Calendar } from 'react-native-calendars';
+import { Calendar, WeekCalendar } from 'react-native-calendars';
 import GroupedDataDisplay from "@/components/GroupedTravelsDisplay";
 import { useFocusEffect } from "expo-router";
 import { useToggleLoading } from "@/hooks/useLoading";
 import LoadingScreen from "@/components/LoadingScreen";
+import Button from "@/components/BaseButton";
+import { buttonStyles } from "@/src/styles/ButtonStyles";
+import CalendarModal from "@/components/modal/CalendarModal";
+import useStopModal from "@/hooks/useStopModal";
+import { getTodayString } from "@/src/utils/dateUtils";
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -17,12 +22,6 @@ interface DateObject {
     year: number
 }
 
-// --- Helper to get today's date string ---
-const getTodayString = () => {
-    const todaysDate = new Date().toISOString().split('T')[0].toString();
-    return todaysDate
-};
-
 export default function HomePage() {
     const {
         travelAtDate, getTravelAtDate, getDates,
@@ -30,6 +29,12 @@ export default function HomePage() {
     } = useTravelCalendar()
 
     const { loading, toggleLoading } = useToggleLoading()
+
+    const {
+        showStopModal: showCalendarModal,
+        openStopModal: openCalendarModal,
+        closeStopModal: closeCalendarModal
+    } = useStopModal();
 
     // Generate marked dates for the calendar
     const markedDates = useMemo(() => {
@@ -58,6 +63,7 @@ export default function HomePage() {
     const onDayPress = (day: DateObject) => {
         toggleLoading()
         setSelectedDate(day.dateString);
+        closeCalendarModal()
     };
 
     useEffect(() => {
@@ -69,41 +75,36 @@ export default function HomePage() {
         React.useCallback(() => {
             getDates()
             getTravelAtDate()
-        }, [dates])
+        }, [])
     )
 
     return (
         <View style={styles.container}>
-            <View style={styles.calendarContainer}>
-                <Calendar
-                    markedDates={markedDates}
-                    onDayPress={onDayPress}
-                    initialDate={getTodayString()}
-                    enableSwipeMonths={true}
-                    theme={{
-                        // Customize calendar theme if needed
-                        selectedDayBackgroundColor: '#00adf5',
-                        selectedDayTextColor: '#ffffff',
-                        todayTextColor: '#00adf5',
-                        arrowColor: '#00adf5',
-                        indicatorColor: '#00adf5',
-                        textDayFontWeight: '300',
-                        textMonthFontWeight: 'bold',
-                        textDayHeaderFontWeight: '300',
-                        textDayFontSize: 16,
-                        textMonthFontSize: 16,
-                        textDayHeaderFontSize: 16,
-                    }}
-                />
-            </View>
-
             <View style={styles.listContainer}>
                 {loading == true ? (
                     <LoadingScreen></LoadingScreen>
                 ) : (
-                    <GroupedDataDisplay data={travelAtDate}></GroupedDataDisplay>
+                    <GroupedDataDisplay data={travelAtDate} currentDate={selectedDate}></GroupedDataDisplay>
                 )}
             </View>
+            <View style={styles.calendarContainer}>
+                <Button 
+                    style={[buttonStyles.addButton, { flex: 0 }]} 
+                    textStyle={buttonStyles.addButtonText}
+                    onPress={() => openCalendarModal()}
+                >
+                    View Calendar
+                </Button>
+            </View>
+            <CalendarModal 
+                dates={dates}
+                markedDates={markedDates}
+                modalElements={{
+                    isModalVisible: showCalendarModal,
+                    onClose: closeCalendarModal,
+                    onSelect: onDayPress
+                }}
+            />
         </View>
     );
 };
@@ -113,19 +114,21 @@ const styles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: 'center',
         padding: 10,
+        paddingTop: 0,
         backgroundColor: '#fff'
     },
     calendarContainer: {
         backgroundColor: 'white',
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-        paddingBottom: 10,
+        paddingTop: 10,
     },
     listContainer: {
         flex: 1,
-        minHeight: screenHeight * 0.48,
-        maxHeight: screenHeight * 0.9,
-        paddingTop: 10,
+        borderWidth: 1,
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
+        padding: 10,
     },
     listTitle: {
         fontSize: 18,
