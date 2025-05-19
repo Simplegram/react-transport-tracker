@@ -99,14 +99,14 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                 <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
                     <View style={[modalStyles.modalContainer, modalStyles.lapModalContainer]}>
                         <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Time:</Text>
+                            <Text style={inputElementStyles.insideLabel}>Time:</Text>
                             <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles.pressableInput}>
                                 <Text style={inputElementStyles.inputLabel}>{formatDateForDisplay(lap.time)}</Text>
                             </Pressable>
                         </View>
 
                         <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Stop:</Text>
+                            <Text style={inputElementStyles.insideLabel}>Stop:</Text>
                             <Pressable
                                 style={inputStyles.pressableInput}
                                 onPress={() => openStopModal('last_stop_id')}>
@@ -135,7 +135,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                                 returnKeyType="done"
                                 multiline={true}
                                 numberOfLines={3}
-                                style={[inputStyles.textInput, inputStyles.multilineTextInput, inputElementStyles.inputLabel]}
+                                style={[inputStyles.textInput, inputStyles.multilineTextInput, inputElementStyles.insideLabel]}
                             />
                         </View>
 

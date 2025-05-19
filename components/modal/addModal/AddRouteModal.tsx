@@ -59,7 +59,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                 <>
                     <View style={inputElementStyles.inputContainer}>
                         <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Code:</Text>
+                            <Text style={inputElementStyles.insideLabel}>Code:</Text>
                             <TextInput
                                 style={inputStyles.pressableInput}
                                 placeholder="Route code..."
@@ -69,7 +69,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                         </View>
 
                         <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Name:</Text>
+                            <Text style={inputElementStyles.insideLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles.pressableInput}
                                 placeholder="Route name..."
@@ -83,7 +83,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             <Pressable
                                 style={inputStyles.pressableInput}
                                 onPress={() => openStopModal('first_stop_id')}>
-                                <Text style={[inputElementStyles.inputLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}</Text>
+                                <Text style={[inputElementStyles.insideLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}</Text>
                             </Pressable>
                         </View>
 
@@ -92,7 +92,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             <Pressable
                                 style={inputStyles.pressableInput}
                                 onPress={() => openStopModal('last_stop_id')}>
-                                <Text style={[inputElementStyles.inputLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}</Text>
+                                <Text style={[inputElementStyles.insideLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}</Text>
                             </Pressable>
                         </View>
 

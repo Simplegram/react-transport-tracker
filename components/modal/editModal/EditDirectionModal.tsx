@@ -32,7 +32,7 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
                 <>
                     <View style={inputElementStyles.inputContainer}>
                         <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Name:</Text>
+                            <Text style={inputElementStyles.insideLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles.pressableInput}
                                 placeholder="Direction name..."

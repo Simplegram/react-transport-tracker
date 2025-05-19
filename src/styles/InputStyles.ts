@@ -29,7 +29,7 @@ const inputElementStyles = StyleSheet.create({
         borderBottomColor: '#ccc'
     },
     inputLabel: {
-        fontSize: 14,
+        fontSize: 15,
         fontWeight: '500',
         color: '#333333',
         marginBottom: 8,
