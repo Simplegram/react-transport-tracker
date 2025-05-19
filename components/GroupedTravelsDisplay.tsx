@@ -1,6 +1,5 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, Pressable, Dimensions } from 'react-native';
-// Import PagerView
 import PagerView from 'react-native-pager-view';
 
 import { DataItem } from '@/src/types/Travels'; // Import the interface from your specified path
@@ -95,7 +94,7 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDa
                     pageMargin={10}
                 >
                     {directionNames.map((directionNameKey, index) => (
-                        <View key={directionNameKey} style={{ 
+                        <View key={directionNameKey} style={{
                             flex: 1,
                             padding: 10,
                             borderWidth: 1,
