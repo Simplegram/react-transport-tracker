@@ -5,8 +5,10 @@ Based on my personal experience as a former public transport commuter. I used to
 ## Table of Contents
 
 * [Get started](#get-started)
-  * [Packages Used](#packages-used)
+
+  * [Packages Used](#key-packages-used)
 * [Create Supabase Tables](#create-supabase-tables)
+
   * [Directions Table](#directions-table)
   * [Icons Table](#icons-table)
   * [Vehicle Types Table](#vehicle-types-table)
@@ -15,6 +17,7 @@ Based on my personal experience as a former public transport commuter. I used to
   * [Travels Table](#travels-table)
   * [Laps Table](#laps-table)
 * [Build Preview APK](#build-preview-apk)
+
   * [With EAS](#with-eas)
   * [With Android Studio](#with-android-studio)
 
@@ -217,6 +220,8 @@ create index if not exists laps_travel_id_idx on public_transport_tracker.laps u
 
 ### With EAS
 
+You need to specify `extra.eas.projectId` and `updates.url` on your app.config.js file
+
 1. Pull latest environment variables from EAS server
 
     ```pgsql
@@ -243,4 +248,4 @@ When you're ready to build the APK, run:
 npx expo prebuild --clean
 ```
 
-This command will create the android folder necessary to build with Android Studio.
+This command will create the android folder necessary to build with Android Studio. Close any `npx expo start` instance to avoid Android Studio gradle import error.
