@@ -6,6 +6,7 @@ import LoadingScreen from '@/components/LoadingScreen'
 import Button from '@/components/BaseButton'
 import { useToggleLoading } from '@/hooks/useLoading'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
+import { colors } from '@/const/color'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -66,7 +67,7 @@ const Login = () => {
                                     />
                                 </View>
                             </View>
-                            <Button title='Sign in' color='#0284f5' onPress={onSignInPress} style={styles.button} textStyle={{ color: '#fff' }}></Button>
+                            <Button onPress={onSignInPress} style={styles.button} textStyle={{ color: '#fff' }}>Sign in</Button>
                         </>
                     )}
             </View>
@@ -103,10 +104,12 @@ const styles = StyleSheet.create({
         color: '#000'
     },
     button: {
+        color: colors.appBlue,
         alignItems: 'center',
         backgroundColor: '#0284f5',
         padding: 12,
-        borderRadius: 4,
+        borderRadius: 8,
+        borderWidth: 1,
     },
 })
 
