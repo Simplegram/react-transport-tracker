@@ -1,14 +1,17 @@
 import { Alert, View, TextInput, StyleSheet, Text, KeyboardAvoidingView } from 'react-native'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import React from 'react'
 import { supabase } from '@/lib/supabase'
 import LoadingScreen from '@/components/LoadingScreen'
 import Button from '@/components/BaseButton'
+import { useToggleLoading } from '@/hooks/useLoading'
 
 const Login = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
+
+    const { loading, setLoading, toggleLoading } = useToggleLoading(500, true)
 
     const onSignInPress = async () => {
         setLoading(true)
@@ -25,6 +28,10 @@ const Login = () => {
         setLoading(false)
     }
 
+    useEffect(() => {
+        toggleLoading()
+    }, [])
+
     return (
         <KeyboardAvoidingView
             style={styles.keyboardView}
@@ -36,8 +43,11 @@ const Login = () => {
                     (
                         <>
                             <Text style={styles.header}>Transport Tracker</Text>
-                            
+
                             <View style={styles.inputContainer}>
+                                <Text style={{
+                                    textAlign: 'center',
+                                }}>{process.env.EXPO_PUBLIC_SUPABASE_URL}</Text>
                                 <TextInput
                                     autoCapitalize="none"
                                     placeholder="john@doe.com"
