@@ -109,7 +109,7 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
 
                     <View style={buttonStyles.buttonRow}>
                         <Button title='Cancel' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                        <Button title='Save Laps' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                        <Button title='Save Laps' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                     </View>
                 </View>
 
@@ -157,7 +157,6 @@ const styles = StyleSheet.create({
         flex: 1,
         gap: 10,
         flexDirection: 'column',
-        paddingVertical: 10,
     },
     detailRow: {
         flexDirection: 'column',
@@ -172,6 +171,7 @@ const styles = StyleSheet.create({
 
 const addButtonStyles = StyleSheet.create({
     buttonContainer: {
+        borderWidth: 1,
         borderColor: 'black',
         borderRadius: 10,
     },

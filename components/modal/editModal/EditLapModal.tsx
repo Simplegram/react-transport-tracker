@@ -141,7 +141,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
 
                         <View style={buttonStyles.buttonRow}>
                             <Button title='Cancel' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                            <Button title='Edit Lap' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                            <Button title='Edit Lap' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
                         </View>
                     </View>
 

@@ -3,7 +3,7 @@ import { Platform, StyleSheet } from "react-native";
 
 const inputElementStyles = StyleSheet.create({
     inputContainer: {
-        gap: 24,
+        gap: 10,
         paddingBottom: 20,
     },
     inputGroup: {
@@ -24,7 +24,7 @@ const inputElementStyles = StyleSheet.create({
         gap: 10,
     },
     inputGroupEnd: {
-        paddingBottom: 20,
+        paddingBottom: 12,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc'
     },
@@ -41,8 +41,8 @@ const inputElementStyles = StyleSheet.create({
         marginBottom: 5,
     },
     insideLabel: {
-        fontSize: 16,
-        fontWeight: 500,
+        fontSize: 14,
+        fontWeight: '500',
         color: '#333333',
     },
 });

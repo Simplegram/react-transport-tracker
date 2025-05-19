@@ -53,7 +53,7 @@ const modalStyles = StyleSheet.create({
         gap: 10,
     },
     lapModalContainer : {
-        height: 400
+        height: 425
     },
     coordModalContainer : {
         height: 475

@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     addButtonContainer: {
-
+        
     },
     emptyContainer: {
         flex: 1,
@@ -226,6 +226,7 @@ const styles = StyleSheet.create({
         color: '#666',
     },
     button: {
+        borderWidth: 1,
         borderRadius: 8,
         alignItems: 'center',
     },
