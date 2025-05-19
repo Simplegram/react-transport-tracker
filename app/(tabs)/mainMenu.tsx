@@ -74,8 +74,13 @@ export default function HomePage() {
     useFocusEffect(
         React.useCallback(() => {
             getDates()
-            getTravelAtDate()
         }, [])
+    )
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getTravelAtDate()
+        }, [selectedDate])
     )
 
     return (
