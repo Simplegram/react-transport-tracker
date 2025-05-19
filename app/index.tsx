@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase'
 import LoadingScreen from '@/components/LoadingScreen'
 import Button from '@/components/BaseButton'
 import { useToggleLoading } from '@/hooks/useLoading'
+import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
 
 const Login = () => {
     const [email, setEmail] = useState('')
@@ -43,27 +44,28 @@ const Login = () => {
                     (
                         <>
                             <Text style={styles.header}>Transport Tracker</Text>
-
-                            <View style={styles.inputContainer}>
-                                <Text style={{
-                                    textAlign: 'center',
-                                }}>{process.env.EXPO_PUBLIC_SUPABASE_URL}</Text>
-                                <TextInput
-                                    autoCapitalize="none"
-                                    placeholder="john@doe.com"
-                                    value={email}
-                                    onChangeText={setEmail}
-                                    style={styles.inputField}
-                                />
-                                <TextInput
-                                    placeholder="password"
-                                    value={password}
-                                    onChangeText={setPassword}
-                                    secureTextEntry
-                                    style={styles.inputField}
-                                />
+                            <View style={[inputElementStyles.inputContainer, { paddingBottom: 0 }]}>
+                                <View style={inputElementStyles.inputGroup}>
+                                    <Text style={inputElementStyles.inputLabel}>Supabase Account Email</Text>
+                                    <TextInput
+                                        autoCapitalize="none"
+                                        placeholder="john@doe.com"
+                                        value={email}
+                                        onChangeText={setEmail}
+                                        style={inputStyles.textInput}
+                                    />
+                                </View>
+                                <View style={inputElementStyles.inputGroup}>
+                                    <Text style={inputElementStyles.inputLabel}>Supabase Account Password</Text>
+                                    <TextInput
+                                        placeholder="password"
+                                        value={password}
+                                        onChangeText={setPassword}
+                                        secureTextEntry
+                                        style={inputStyles.textInput}
+                                    />
+                                </View>
                             </View>
-
                             <Button title='Sign in' color='#0284f5' onPress={onSignInPress} style={styles.button} textStyle={{ color: '#fff' }}></Button>
                         </>
                     )}
@@ -79,7 +81,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        padding: 15,
+        padding: 10,
         justifyContent: 'center',
         gap: 25,
     },
