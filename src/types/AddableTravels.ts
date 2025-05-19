@@ -54,6 +54,12 @@ interface AddableCoordinates {
     lat: number | null
 }
 
+export interface StandaloneModalProp {
+    isModalVisible: boolean
+    onClose: () => void
+    onSelect: (data: any) => void
+}
+
 interface AddableCoordModalProp {
     currentCoordinates: AddableCoordinates | undefined
     isModalVisible: boolean

@@ -1,12 +1,13 @@
 import { Pressable, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native';
 
 type Props = {
-    title: string;
+    title?: string;
     onPress?: () => void;
     style?: StyleProp<ViewStyle>; // Change to ViewStyle as the container will have background color
     textStyle?: StyleProp<TextStyle>;
     color?: string; // Keep for fallback
     darkenAmount?: number;
+    children?: string
 };
 
 export default function Button({
@@ -16,6 +17,7 @@ export default function Button({
     textStyle,
     color = '#f3f3f3',
     darkenAmount = 0.3,
+    children,
 }: Props) {
     const darkenColor = (hexColor: string, amount: number) => {
         // Remove the '#' if it exists
@@ -82,7 +84,7 @@ export default function Button({
 
     return (
         <Pressable style={buttonStyle} onPress={onPress}>
-            <Text style={[styles.buttonText, textStyle]}>{title}</Text>
+            <Text style={[styles.buttonText, textStyle]}>{title ? title : children}</Text>
         </Pressable>
     );
 }

@@ -54,14 +54,21 @@ export default function useTravelCalendar() {
     const getDates = async () => {
         const { data, error } = await supabase
             .from("travels")
-            .select("created_at")
+            .select("created_at");
 
-        if (!data) {
-            if (error) console.log(error)
-            return
+        if (error) {
+            console.error("Error fetching dates:", error);
+            return; // Exit if there's an error
         }
 
-        const dates = data.map(item => {
+        if (!data || data.length === 0) {
+            console.log("No dates found.");
+            setDates([]); // Set dates to an empty array if no data is returned
+            return;
+        }
+
+        // Extract dates and format them
+        const formattedDates = data.map(item => {
             const date = new Date(item.created_at);
             const year = date.getFullYear();
             const month = (date.getMonth() + 1).toString().padStart(2, '0'); // Months are 0-indexed
@@ -69,8 +76,13 @@ export default function useTravelCalendar() {
             return `${year}-${month}-${day}`;
         });
 
-        if (error) console.log(error)
-        if (data) setDates(dates)
+        // Use a Set to get unique dates and convert back to an array
+        const uniqueDates = Array.from(new Set(formattedDates));
+
+        // Sort the unique dates in ascending order
+        uniqueDates.sort();
+
+        setDates(uniqueDates); // Set the state with unique and sorted dates
     }
 
     useEffect(() => {
