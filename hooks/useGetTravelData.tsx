@@ -1,8 +1,10 @@
-import { supabase } from "@/lib/supabase"
+import { useSupabase } from "@/context/SupabaseContext"
 import { Direction, FullLap, IconType, Lap, Route, Stop, VehicleType } from "@/src/types/Travels"
 import { useCallback, useEffect, useRef, useState } from "react"
 
 export default function useGetTravelData() {
+    const { supabaseClient: supabase } = useSupabase()
+
     const [directions, setDirections] = useState<Direction[]>([])
     const [stops, setStops] = useState<Stop[]>([])
     const [routes, setRoutes] = useState<Route[]>([])
@@ -149,7 +151,7 @@ export default function useGetTravelData() {
         routes, getRoutes,
         vehicleTypes, fullVehicleTypes, getVehicleTypes,
         icons, getIcons,
-        laps, setLaps, getLaps, getAllLaps, 
+        laps, setLaps, getLaps, getAllLaps,
         travelLaps, getTravelLaps,
         refetchTravelData: getTravelData,
     }

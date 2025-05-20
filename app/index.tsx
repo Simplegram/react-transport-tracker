@@ -1,29 +1,62 @@
 import { Alert, View, TextInput, StyleSheet, Text, KeyboardAvoidingView } from 'react-native'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import React from 'react'
-import { supabase } from '@/lib/supabase'
 import LoadingScreen from '@/components/LoadingScreen'
 import Button from '@/components/BaseButton'
+import { useToggleLoading } from '@/hooks/useLoading'
+import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
+import { colors } from '@/const/color'
+import { useSupabase } from '@/context/SupabaseContext'
+import { SupabaseClient } from '@supabase/supabase-js'
 
 const Login = () => {
+    const { 
+        supabaseClient,
+        supabaseUrl, setSupabaseUrl,
+        supabaseAnonKey, setSupabaseAnonKey
+    } = useSupabase()
+    const { loading, setLoading, toggleLoading } = useToggleLoading(500, true)
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [loading, setLoading] = useState(false)
+
+    const [currentSupabaseClient, setCurrentSupabaseClient] = useState<SupabaseClient | undefined>(undefined)
+    const [currentSupabaseUrl, setCurrentSupabaseUrl] = useState<string | undefined>(undefined)
+    const [currentSupabaseAnonKey, setCurrentSupabaseAnonKey] = useState<string | undefined>(undefined)
 
     const onSignInPress = async () => {
         setLoading(true)
 
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        })
+        setSupabaseUrl(currentSupabaseUrl)
+        setSupabaseAnonKey(currentSupabaseAnonKey)
 
-        if (error) Alert.alert(
-            error.name,
-            error.message
-        )
-        setLoading(false)
+        try {
+            const { error } = await currentSupabaseClient.auth.signInWithPassword({
+                email,
+                password,
+            })
+
+            if (error) Alert.alert(
+                error.name,
+                error.message
+            )
+        } catch (err: any) {
+            console.error("An unexpected error during sign-in:", err);
+            Alert.alert('Supabase URL or Anon Key missing', 'The Supabase client could not be initialized with missing Supabase URL or Anon Key');
+        } finally {
+            setLoading(false)
+        }
     }
+
+    useEffect(() => {
+        toggleLoading()
+        setCurrentSupabaseUrl(supabaseUrl)
+        setCurrentSupabaseAnonKey(supabaseAnonKey)
+    }, [])
+
+    useEffect(() => {
+        setCurrentSupabaseClient(supabaseClient)
+    }, [supabaseClient])
 
     return (
         <KeyboardAvoidingView
@@ -36,25 +69,51 @@ const Login = () => {
                     (
                         <>
                             <Text style={styles.header}>Transport Tracker</Text>
-                            
-                            <View style={styles.inputContainer}>
-                                <TextInput
-                                    autoCapitalize="none"
-                                    placeholder="john@doe.com"
-                                    value={email}
-                                    onChangeText={setEmail}
-                                    style={styles.inputField}
-                                />
-                                <TextInput
-                                    placeholder="password"
-                                    value={password}
-                                    onChangeText={setPassword}
-                                    secureTextEntry
-                                    style={styles.inputField}
-                                />
+                            <View style={[inputElementStyles.inputContainer, { paddingBottom: 0 }]}>
+                                <View style={inputElementStyles.inputGroup}>
+                                    <Text style={inputElementStyles.inputLabel}>Supabase URL</Text>
+                                    <TextInput
+                                        autoCapitalize="none"
+                                        placeholder="https://my-example-brand.supabase.co"
+                                        value={currentSupabaseUrl}
+                                        onChangeText={setCurrentSupabaseUrl}
+                                        style={inputStyles.textInput}
+                                        numberOfLines={1}
+                                    />
+                                </View>
+                                <View style={inputElementStyles.inputGroup}>
+                                    <Text style={inputElementStyles.inputLabel}>Supabase Anon Key</Text>
+                                    <TextInput
+                                        autoCapitalize="none"
+                                        placeholder="abcdefghijklmnopqrstuvwxyz1234567890"
+                                        value={currentSupabaseAnonKey}
+                                        onChangeText={setCurrentSupabaseAnonKey}
+                                        style={inputStyles.textInput}
+                                        numberOfLines={1}
+                                    />
+                                </View>
+                                <View style={inputElementStyles.inputGroup}>
+                                    <Text style={inputElementStyles.inputLabel}>Supabase Account Email</Text>
+                                    <TextInput
+                                        autoCapitalize="none"
+                                        placeholder="john@doe.com"
+                                        value={email}
+                                        onChangeText={setEmail}
+                                        style={inputStyles.textInput}
+                                    />
+                                </View>
+                                <View style={inputElementStyles.inputGroup}>
+                                    <Text style={inputElementStyles.inputLabel}>Supabase Account Password</Text>
+                                    <TextInput
+                                        placeholder="password"
+                                        value={password}
+                                        onChangeText={setPassword}
+                                        secureTextEntry
+                                        style={inputStyles.textInput}
+                                    />
+                                </View>
                             </View>
-
-                            <Button title='Sign in' color='#0284f5' onPress={onSignInPress} style={styles.button} textStyle={{ color: '#fff' }}></Button>
+                            <Button onPress={onSignInPress} style={styles.button} textStyle={{ color: '#fff' }}>Sign in</Button>
                         </>
                     )}
             </View>
@@ -69,13 +128,12 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        padding: 15,
+        padding: 10,
         justifyContent: 'center',
         gap: 25,
     },
     header: {
         fontSize: 30,
-        textAlign: 'center',
     },
     inputContainer: {
         gap: 10,
@@ -91,10 +149,12 @@ const styles = StyleSheet.create({
         color: '#000'
     },
     button: {
+        color: colors.appBlue,
         alignItems: 'center',
         backgroundColor: '#0284f5',
         padding: 12,
-        borderRadius: 4,
+        borderRadius: 8,
+        borderWidth: 1,
     },
 })
 

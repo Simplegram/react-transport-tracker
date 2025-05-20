@@ -44,7 +44,7 @@ export default function DataListScreen() {
     const {
         activeModalConfig,
         setActiveModal, setActiveEditModal
-    } = useDatalistModal(() => refetchTravelData(500))
+    } = useDatalistModal(() => refetchTravelData(300))
 
     const {
         loading

@@ -11,10 +11,11 @@ interface CalendarModalProps {
             [key: string]: any;
         };
     };
+    currentSelectedDate: string
     modalElements: StandaloneModalProp
 }
 
-export default function CalendarModal({ dates, markedDates, modalElements }: CalendarModalProps) {
+export default function CalendarModal({ dates, markedDates, currentSelectedDate, modalElements }: CalendarModalProps) {
     const pastScrollRange = getMonthsSinceEarliestDate(dates);
     const futureScrollRange = getFutureMonthFromLatestDate(dates, 1);
     const [currentDate] = useState(new Date().toISOString().split('T')[0]);
@@ -29,6 +30,7 @@ export default function CalendarModal({ dates, markedDates, modalElements }: Cal
             <View style={styles.modalBackdrop}>
                 <View style={styles.calendarContainer}>
                     <CalendarList
+                        current={currentSelectedDate}
                         pastScrollRange={pastScrollRange}
                         futureScrollRange={futureScrollRange}
                         markedDates={markedDates}

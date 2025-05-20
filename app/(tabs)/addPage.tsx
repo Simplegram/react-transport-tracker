@@ -9,6 +9,7 @@ import { router } from 'expo-router'; // Keep if needed elsewhere
 
 import { useTravelContext } from '@/context/PageContext';
 import Button from '@/components/BaseButton';
+import { useAuth } from '@/provider/AuthProvider';
 
 interface ButtonConfig {
     id: string
@@ -42,12 +43,18 @@ const navigationButtons: ButtonConfig[] = [
 const NavigationPage: React.FC = () => {
     const { setSelectedModification } = useTravelContext()
 
+    const { signOut } = useAuth()
+
     const handleItemPress = (selectedModification: string) => {
-        // Access the item from the correctly grouped/sorted data
         if (selectedModification) {
             setSelectedModification(selectedModification);
             router.push("/(tabs)/dataList");
         }
+    };
+
+    const handleLogout = () => {
+        signOut()
+        router.push("/");
     };
 
     return (
@@ -69,6 +76,12 @@ const NavigationPage: React.FC = () => {
                         />
                     ))}
                 </View>
+                <Button
+                    color='#f0473e'
+                    style={styles.button}
+                    textStyle={styles.buttonText}
+                    onPress={handleLogout}
+                >Logout</Button>
             </View>
         </CollapsibleHeaderPage>
     );
@@ -77,6 +90,7 @@ const NavigationPage: React.FC = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        gap: 10,
     },
     fillingContainer: {
         flex: 1,

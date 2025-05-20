@@ -30,7 +30,7 @@ export default {
     expo: {
         name: getAppName(),
         slug: "TransportTracker",
-        version: "1.4.0",
+        version: "1.5.0b2",
         icon: "./assets/images/icon.png",
         ios: {
             bundleIdentifier: getUniqueIdentifier(),
@@ -44,6 +44,7 @@ export default {
                 "android.permission.FOREGROUND_SERVICE"
             ]
         },
+        newArchEnabled: false,
         updates: {
             url: 'https://u.expo.dev/e8e4f24c-2007-4cad-a12f-7310de360390'
         },

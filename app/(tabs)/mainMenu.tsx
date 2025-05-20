@@ -1,7 +1,6 @@
 import useTravelCalendar from "@/hooks/useTravelCalendar";
 import React, { useEffect, useMemo } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
-import { Calendar, WeekCalendar } from 'react-native-calendars';
 import GroupedDataDisplay from "@/components/GroupedTravelsDisplay";
 import { useFocusEffect } from "expo-router";
 import { useToggleLoading } from "@/hooks/useLoading";
@@ -11,7 +10,7 @@ import { buttonStyles } from "@/src/styles/ButtonStyles";
 import CalendarModal from "@/components/modal/CalendarModal";
 import useStopModal from "@/hooks/useStopModal";
 import { getTodayString } from "@/src/utils/dateUtils";
-import useGetTravelData from "@/hooks/useGetTravelData";
+import { useSupabase } from "@/context/SupabaseContext";
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -24,6 +23,8 @@ interface DateObject {
 }
 
 export default function HomePage() {
+    const { supabaseClient: supabase } = useSupabase()
+    
     const {
         travelAtDate, getTravelAtDate, getDates,
         dates, selectedDate, setSelectedDate,
@@ -87,7 +88,7 @@ export default function HomePage() {
     return (
         <View style={styles.container}>
             <View style={styles.listContainer}>
-                {loading == true ? (
+                {loading == true || !supabase ? (
                     <LoadingScreen></LoadingScreen>
                 ) : (
                     <GroupedDataDisplay data={travelAtDate} currentDate={selectedDate}></GroupedDataDisplay>
@@ -105,6 +106,7 @@ export default function HomePage() {
             <CalendarModal
                 dates={dates}
                 markedDates={markedDates}
+                currentSelectedDate={selectedDate}
                 modalElements={{
                     isModalVisible: showCalendarModal,
                     onClose: closeCalendarModal,
