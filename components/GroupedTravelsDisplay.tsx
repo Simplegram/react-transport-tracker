@@ -11,6 +11,8 @@ import { formatDate } from '@/src/utils/dateUtils';
 import useGetTravelData from '@/hooks/useGetTravelData';
 import { useTheme } from '@/context/ThemeContext';
 import { colors } from '@/const/color';
+import Divider from './Divider';
+import { travelCardStyles, travelEmptyContainer } from '@/src/styles/TravelListStyles';
 
 interface GroupedDataDisplayProps {
     data: DataItem[];
@@ -119,7 +121,7 @@ export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDis
                             borderBottomRightRadius: 10,
                             borderColor: borderColor
                         }}>
-                            <View key={directionNameKey} style={styles.page}>
+                            <View key={directionNameKey} style={styles.cardCanvas}>
                                 <View>
                                     <Pressable onPress={() => handleViewTravelDetails(directionNameKey)}>
                                         <Text style={[styles.groupTitle, { color: dateLabelColor }]}>
@@ -128,50 +130,87 @@ export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDis
                                     </Pressable>
                                 </View>
 
-                                <ScrollView contentContainerStyle={styles.itemsListContainer} nestedScrollEnabled={true}>
+                                <ScrollView contentContainerStyle={travelCardStyles['light'].cardHolder} nestedScrollEnabled={true}>
                                     {finalGroupedData[directionNameKey].map((item, itemIndex) => (
-                                        <Pressable key={item.id} style={styles.itemContainer} onPress={() => handleItemPress(directionNameKey, itemIndex)}>
-                                            <View style={styles.generalInfoContainer}>
-                                                <Text style={styles.itemRouteText}>
+                                        <Pressable 
+                                            key={item.id} 
+                                            style={[
+                                                travelCardStyles['light'].card, 
+                                                theme === 'dark' && travelCardStyles['dark'].card
+                                            ]} 
+                                            onPress={() => handleItemPress(directionNameKey, itemIndex)}
+                                        >
+                                            <View style={travelCardStyles['light'].routeInfoSection}>
+                                                <Text style={[
+                                                    travelCardStyles['light'].routeText,
+                                                    theme === 'dark' && travelCardStyles['dark'].routeText
+                                                ]}>
                                                     {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
                                                 </Text>
-                                                <Text style={styles.itemVehicleText}>
+                                                <Text style={[
+                                                    travelCardStyles['light'].vehicleText,
+                                                    theme === 'dark' && travelCardStyles['dark'].vehicleText
+                                                ]}>
                                                     {item.vehicle_code || 'N/A'}
                                                 </Text>
                                             </View>
 
-                                            <View style={styles.stopsAndTimeRow}>
-                                                <View style={styles.stopTimeBlock}>
-                                                    <Text style={styles.stopNameText}>{item.first_stop_id?.name || 'N/A'}</Text>
-                                                    <Text style={styles.timeText}>
+                                            <View style={travelCardStyles['light'].stopsTimeSection}>
+                                                <View style={travelCardStyles['light'].stopTimeBlock}>
+                                                    <Text style={[
+                                                        travelCardStyles['light'].stopText,
+                                                        theme === 'dark' && travelCardStyles['dark'].routeText
+                                                    ]}>{item.first_stop_id?.name || 'N/A'}</Text>
+                                                    <Text style={[
+                                                        travelCardStyles['light'].timeText,
+                                                        theme === 'dark' && travelCardStyles['dark'].vehicleText
+                                                    ]}>
                                                         {item.bus_initial_departure ? formatDate(item.bus_initial_departure) : 'N/A'}
                                                     </Text>
                                                 </View>
 
-                                                <View style={styles.arrowContainer}>
-                                                    <Text style={styles.arrowText}>➜</Text>
-                                                    <Text style={styles.notesLabel}>{calculateDuration(item)}</Text>
+                                                <View style={travelCardStyles['light'].stopArrowBlock}>
+                                                    <Text style={[
+                                                        travelCardStyles['light'].stopArrowText,
+                                                        theme === 'dark' && travelCardStyles['dark'].stopArrowText
+                                                    ]}>➜</Text>
+                                                    <Text style={[
+                                                        travelCardStyles['light'].notesLabel,
+                                                        theme === 'dark' && travelCardStyles['dark'].whiteText
+                                                    ]}>{calculateDuration(item)}</Text>
                                                 </View>
 
-                                                <View style={styles.stopTimeBlock}>
-                                                    <Text style={styles.stopNameText}>{item.last_stop_id?.name || 'N/A'}</Text>
-                                                    <Text style={styles.timeText}>
+                                                <View style={travelCardStyles['light'].stopTimeBlock}>
+                                                    <Text style={[
+                                                        travelCardStyles['light'].stopText,
+                                                        theme === 'dark' && travelCardStyles['dark'].routeText
+                                                    ]}>{item.last_stop_id?.name || 'N/A'}</Text>
+                                                    <Text style={[
+                                                        travelCardStyles['light'].timeText,
+                                                        theme === 'dark' && travelCardStyles['dark'].vehicleText
+                                                    ]}>
                                                         {item.bus_final_arrival ? formatDate(item.bus_final_arrival) : 'N/A'}
                                                     </Text>
                                                 </View>
                                             </View>
 
-                                            <View style={{
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                            }}>
-                                                <Text style={{ fontWeight: 'bold' }}>{item.lapCount} lap(s)</Text>
+                                            <View style={travelCardStyles['light'].lapsSection}>
+                                                <Text style={[
+                                                    travelCardStyles['light'].lapText,
+                                                    theme === 'dark' && travelCardStyles['dark'].whiteText
+                                                ]}>{item.lapCount} lap(s)</Text>
                                             </View>
 
                                             {item.notes && (
-                                                <View style={styles.notesContainer}>
-                                                    <Text style={styles.notesLabel}>Notes:</Text>
-                                                    <Text style={styles.notesText}>
+                                                <View style={travelCardStyles['light'].notesSection}>
+                                                    <Text style={[
+                                                        travelCardStyles['light'].notesLabel,
+                                                        theme === 'dark' && travelCardStyles['dark'].notesLabel
+                                                    ]}>Notes:</Text>
+                                                    <Text style={[
+                                                        travelCardStyles['light'].notesText,
+                                                        theme === 'dark' && travelCardStyles['dark'].whiteText
+                                                    ]}>
                                                         {item.notes}
                                                     </Text>
                                                 </View>
@@ -180,15 +219,22 @@ export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDis
                                     ))}
                                 </ScrollView>
                             </View>
+                            <Divider />
                             <View style={styles.swipeZone}>
-                                <Text style={styles.swipeZoneText}>{`<<< Safe Swipe Zone >>>`}</Text>
+                                <Text style={[styles.swipeZoneText, { color: dateLabelColor }]}>{`<<< Safe Swipe Zone >>>`}</Text>
                             </View>
                         </View>
                     ))}
                 </PagerView>
             ) : (
-                <View style={[styles.noDataContainer, { borderColor: borderColor }]}>
-                    <Text style={styles.noDataText}>No data available to display</Text>
+                <View style={[
+                    travelEmptyContainer['light'].noDataContainer, 
+                    { borderColor: borderColor }
+                ]}>
+                    <Text style={[
+                        travelEmptyContainer['light'].noDataText,
+                        theme === 'dark' && travelEmptyContainer['dark'].noDataText,
+                    ]}>No data available to display</Text>
                 </View>
             )}
         </View>
@@ -202,10 +248,9 @@ const styles = StyleSheet.create({
     pagerView: {
         flex: 1,
     },
-    page: {
+    cardCanvas: {
         flex: 7,
         paddingBottom: 10,
-        borderBottomWidth: 1,
     },
     swipeZone: {
         flex: 1,
@@ -221,113 +266,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         paddingBottom: 8,
         textAlign: 'center',
-    },
-    itemsListContainer: {
-        gap: 10,
-    },
-    itemContainer: {
-        padding: 15,
-        backgroundColor: '#ecf0f1',
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: '#000',
-    },
-    generalInfoContainer: {
-        marginBottom: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#dcdcdc',
-        paddingBottom: 10,
-    },
-    itemRouteText: {
-        fontSize: 16,
-        fontWeight: '600',
-        color: '#34495e',
-        marginBottom: 4,
-        textAlign: 'center',
-    },
-    itemVehicleText: {
-        fontSize: 14,
-        color: '#7f8c8d',
-        textAlign: 'center',
-    },
-    stopsAndTimeRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingBottom: 10,
-        marginBottom: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: '#dcdcdc',
-    },
-    stopTimeBlock: {
-        flex: 1,
-        paddingVertical: 8,
-        alignItems: 'center',
-    },
-    stopLabel: {
-        fontSize: 12,
-        color: '#555',
-        fontWeight: 'bold',
-        marginBottom: 2,
-    },
-    stopNameText: {
-        fontSize: 13,
-        fontWeight: 'bold',
-        color: '#2c3e50',
-        marginBottom: 5,
-        textAlign: 'center',
-    },
-    timeLabel: {
-        fontSize: 12,
-        color: '#555',
-        fontWeight: 'bold',
-        marginBottom: 2,
-    },
-    timeText: {
-        fontSize: 14,
-        color: '#3498db',
-        fontWeight: '500',
-    },
-    arrowContainer: {
-        paddingHorizontal: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    arrowText: {
-        fontSize: 20,
-        color: '#7f8c8d',
-    },
-    notesContainer: {
-        marginTop: 10,
-        paddingTop: 10,
-        borderTopWidth: 1,
-        borderTopColor: '#dcdcdc',
-    },
-    notesLabel: {
-        fontSize: 12,
-        color: '#555',
-        fontWeight: 'bold',
-        marginBottom: 4,
-    },
-    notesText: {
-        fontSize: 14,
-        fontStyle: 'italic',
-        color: '#555',
-    },
-    noDataContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10,
-    },
-    noDataText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        color: '#888',
     },
 });
