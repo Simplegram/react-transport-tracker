@@ -42,7 +42,7 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
                 <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupIcon]}>
                     <Icon style={styles.icon} name={icon.name ? icon.name : 'xmark'} size={32} />
                     <TextInput
-                        style={[inputStyles.pressableInput, { flex: 1 }]}
+                        style={[inputStyles['light'].pressableInput, { flex: 1 }]}
                         placeholder="e.g., train-subway"
                         value={iconQuery}
                         onChangeText={changeIcon}

@@ -31,7 +31,7 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
                         <View style={inputElementStyles['light'].inputGroup}>
                             <Text style={inputElementStyles['light'].insideLabel}>Name:</Text>
                             <TextInput
-                                style={inputStyles.pressableInput}
+                                style={inputStyles['light'].pressableInput}
                                 placeholder="Direction name..."
                                 value={direction.name}
                                 onChangeText={text => (setDirection({ ...direction, "name": text }))}

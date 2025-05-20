@@ -225,7 +225,7 @@ export default function EditTravelItem() {
                                     inputElementStyles['light'].inputLabel,
                                     theme === 'dark' && inputElementStyles['dark'].inputLabel
                                 ]}>Bus Initial Arrival:</Text>
-                                <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={inputStyles.pressableInput}>
+                                <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={inputStyles['light'].pressableInput}>
                                     <Text style={inputElementStyles['light'].insideLabel}>{formatDateForDisplay(travel.bus_initial_arrival)}</Text>
                                 </Pressable>
                             </View>
@@ -235,7 +235,7 @@ export default function EditTravelItem() {
                                     inputElementStyles['light'].inputLabel,
                                     theme === 'dark' && inputElementStyles['dark'].inputLabel
                                 ]}>Bus Initial Departure:</Text>
-                                <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={inputStyles.pressableInput}>
+                                <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={inputStyles['light'].pressableInput}>
                                     <Text style={inputElementStyles['light'].insideLabel}>{formatDateForDisplay(travel.bus_initial_departure)}</Text>
                                 </Pressable>
                             </View>
@@ -245,7 +245,7 @@ export default function EditTravelItem() {
                                     inputElementStyles['light'].inputLabel,
                                     theme === 'dark' && inputElementStyles['dark'].inputLabel
                                 ]}>Bus Final Arrival:</Text>
-                                <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={inputStyles.pressableInput}>
+                                <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={inputStyles['light'].pressableInput}>
                                     <Text style={inputElementStyles['light'].insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
                                 </Pressable>
                             </View>
@@ -272,7 +272,7 @@ export default function EditTravelItem() {
                                     theme === 'dark' && inputElementStyles['dark'].inputLabel
                                 ]}>Route:</Text>
                                 <Pressable
-                                    style={inputStyles.pressableInput}
+                                    style={inputStyles['light'].pressableInput}
                                     onPress={() => openRouteModal()}>
                                     <Text style={inputElementStyles['light'].insideLabel}>
                                         {`${routes.find(route => route.id === travel.route_id)?.code || `Select`} | ${routes.find(route => route.id === travel.route_id)?.name || `Route...`}`}
@@ -287,7 +287,7 @@ export default function EditTravelItem() {
                                 ]}>Type:</Text>
                                 <TextInput
                                     editable={false}
-                                    style={inputStyles.textInput}
+                                    style={inputStyles['light'].textInput}
                                     value={vehicleTypes.find(type => type.id === travel.type_id)?.name}
                                     placeholder="Vehicle type..."
                                 />
@@ -301,7 +301,7 @@ export default function EditTravelItem() {
                                     theme === 'dark' && inputElementStyles['dark'].inputLabel
                                 ]}>Direction:</Text>
                                 <Pressable
-                                    style={inputStyles.pressableInput}
+                                    style={inputStyles['light'].pressableInput}
                                     onPress={() => openDirectionModal()}>
                                     <Text style={inputElementStyles['light'].insideLabel}>
                                         {directions.find(direction => direction.id === travel.direction_id)?.name || 'Select Direction...'}
@@ -315,7 +315,7 @@ export default function EditTravelItem() {
                                     theme === 'dark' && inputElementStyles['dark'].inputLabel
                                 ]}>First Stop:</Text>
                                 <Pressable
-                                    style={inputStyles.pressableInput}
+                                    style={inputStyles['light'].pressableInput}
                                     onPress={() => openStopModal('first_stop_id')}>
                                     <Text style={inputElementStyles['light'].insideLabel}>{stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}</Text>
                                 </Pressable>
@@ -327,7 +327,7 @@ export default function EditTravelItem() {
                                     theme === 'dark' && inputElementStyles['dark'].inputLabel
                                 ]}>Last Stop:</Text>
                                 <Pressable
-                                    style={inputStyles.pressableInput}
+                                    style={inputStyles['light'].pressableInput}
                                     onPress={() => openStopModal('last_stop_id')}>
                                     <Text style={inputElementStyles['light'].insideLabel}>{stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}</Text>
                                 </Pressable>
@@ -341,7 +341,7 @@ export default function EditTravelItem() {
                                     theme === 'dark' && inputElementStyles['dark'].inputLabel
                                 ]}>Vehicle Code:</Text>
                                 <TextInput
-                                    style={inputStyles.textInput}
+                                    style={inputStyles['light'].textInput}
                                     value={travel.vehicle_code || ''}
                                     onChangeText={(text) => handleChangeText('vehicle_code', text)}
                                     placeholder="Enter vehicle code"
@@ -354,7 +354,7 @@ export default function EditTravelItem() {
                                     theme === 'dark' && inputElementStyles['dark'].inputLabel
                                 ]}>Notes:</Text>
                                 <TextInput
-                                    style={[inputStyles.textInput, inputStyles.multilineTextInput]}
+                                    style={[inputStyles['light'].textInput, inputStyles['light'].multilineTextInput]}
                                     value={travel.notes || ''}
                                     onChangeText={(text) => handleChangeText('notes', text)}
                                     multiline={true}
@@ -371,7 +371,7 @@ export default function EditTravelItem() {
                                     theme === 'dark' && inputElementStyles['dark'].inputLabel
                                 ]}>Laps:</Text>
                                 <Pressable
-                                    style={inputStyles.pressableInput}
+                                    style={inputStyles['light'].pressableInput}
                                     onPress={() => openLapsModal()}>
                                     <Text style={inputElementStyles['light'].insideLabel}>{`${laps.length} laps`}</Text>
                                 </Pressable>

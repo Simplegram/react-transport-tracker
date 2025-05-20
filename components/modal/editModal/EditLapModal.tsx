@@ -100,7 +100,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                     <View style={[modalStyles.modalContainer, modalStyles.lapModalContainer]}>
                         <View style={inputElementStyles['light'].inputGroup}>
                             <Text style={inputElementStyles['light'].insideLabel}>Time:</Text>
-                            <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles.pressableInput}>
+                            <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles['light'].pressableInput}>
                                 <Text style={inputElementStyles['light'].inputLabel}>{formatDateForDisplay(lap.time)}</Text>
                             </Pressable>
                         </View>
@@ -108,7 +108,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                         <View style={inputElementStyles['light'].inputGroup}>
                             <Text style={inputElementStyles['light'].insideLabel}>Stop:</Text>
                             <Pressable
-                                style={inputStyles.pressableInput}
+                                style={inputStyles['light'].pressableInput}
                                 onPress={() => openStopModal('last_stop_id')}>
                                 <Text style={[inputElementStyles['light'].inputLabel, { marginBottom: 0 }]}>
                                     {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
@@ -135,7 +135,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                                 returnKeyType="done"
                                 multiline={true}
                                 numberOfLines={3}
-                                style={[inputStyles.textInput, inputStyles.multilineTextInput, inputElementStyles['light'].insideLabel]}
+                                style={[inputStyles['light'].textInput, inputStyles['light'].multilineTextInput, inputElementStyles['light'].insideLabel]}
                             />
                         </View>
 

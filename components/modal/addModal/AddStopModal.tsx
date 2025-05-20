@@ -59,7 +59,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         <View style={inputElementStyles['light'].inputGroup}>
                             <Text style={inputElementStyles['light'].inputLabel}>Name:</Text>
                             <TextInput
-                                style={inputStyles.pressableInput}
+                                style={inputStyles['light'].pressableInput}
                                 placeholder="Stop name..."
                                 value={stop.name}
                                 onChangeText={text => (setStop({ ...stop, "name": text }))}
@@ -70,20 +70,20 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             <Text style={inputElementStyles['light'].inputLabel}>Latitude and Longitude:</Text>
                             <View style={inputElementStyles['light'].inputGroupCoord}>
                                 <TextInput
-                                    style={[inputStyles.pressableInput, inputStyles.pressableInputCoord]}
+                                    style={[inputStyles['light'].pressableInput, inputStyles['light'].pressableInputCoord]}
                                     placeholder="Stop latitude..."
                                     value={stop.lat?.toString()}
                                     onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
                                 />
                                 <TextInput
-                                    style={[inputStyles.pressableInput, inputStyles.pressableInputCoord]}
+                                    style={[inputStyles['light'].pressableInput, inputStyles['light'].pressableInputCoord]}
                                     placeholder="Stop longitude..."
                                     value={stop.lon?.toString()}
                                     onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
                                 />
                             </View>
                             <Pressable
-                                style={[inputStyles.pressableInput, { marginTop: 10 }]}
+                                style={[inputStyles['light'].pressableInput, { marginTop: 10 }]}
                                 onPress={() => openCoordModal()}>
                                 <Text style={inputElementStyles['light'].insideLabel}>Pick Latitude and Longitude...</Text>
                             </Pressable>
@@ -92,7 +92,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         <View style={inputElementStyles['light'].inputGroup}>
                             <Text style={inputElementStyles['light'].inputLabel}>Alternative name:</Text>
                             <TextInput
-                                style={inputStyles.pressableInput}
+                                style={inputStyles['light'].pressableInput}
                                 placeholder="Alternative name..."
                                 value={stop.name_alt ? stop.name_alt : ''}
                                 onChangeText={text => (setStop({ ...stop, "name_alt": text }))}
