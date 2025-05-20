@@ -1,7 +1,7 @@
 import Button from "@/components/BaseButton";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
 import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
-import styles from "@/src/styles/Styles";
+import { styles } from "@/src/styles/Styles";
 import { AddableIconType } from "@/src/types/AddableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
