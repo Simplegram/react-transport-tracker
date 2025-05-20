@@ -85,6 +85,14 @@ export default function useTravelCalendar() {
         setDates(uniqueDates);
     }
 
+    const getInitialData = async () => {
+        await getDates()
+    }
+
+    useEffect(() => {
+        getInitialData()
+    }, [supabase])
+
     useEffect(() => {
         getTravelAtDate()
     }, [selectedDate])
