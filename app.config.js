@@ -44,7 +44,7 @@ export default {
                 "android.permission.FOREGROUND_SERVICE"
             ]
         },
-        newArchEnabled: true,
+        newArchEnabled: false,
         updates: {
             url: 'https://u.expo.dev/e8e4f24c-2007-4cad-a12f-7310de360390'
         },

@@ -1,8 +1,7 @@
-import { useMMKVString } from "react-native-mmkv";
+import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage";
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import { createContext, useContext, useEffect, useState } from "react";
-import { Alert } from "react-native";
 
 interface SupabaseContextType {
     supabaseClient: SupabaseClient<any, any, any> | undefined;
@@ -20,8 +19,9 @@ interface ProviderProps {
 }
 
 export const SupabaseProvider = ({ schema = 'public_transport_tracker', children }: ProviderProps) => {
-    const [supabaseUrl, setSupabaseUrl] = useMMKVString('supabase.url');
-    const [supabaseAnonKey, setSupabaseAnonKey] = useMMKVString('supabase.anonKey');
+    const storage = new MMKVLoader().initialize()
+    const [supabaseUrl, setSupabaseUrl] = useMMKVStorage<string | undefined>('supabase_url', storage, undefined);
+    const [supabaseAnonKey, setSupabaseAnonKey] = useMMKVStorage<string | undefined>('supabase_anonKey', storage, undefined);
     const [supabaseClient, setSupabaseClient] = useState<SupabaseClient<any, any, any> | undefined>(undefined);
 
     const createSupabaseClient = () => {
