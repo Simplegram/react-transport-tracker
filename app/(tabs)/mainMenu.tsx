@@ -106,6 +106,7 @@ export default function HomePage() {
             <CalendarModal
                 dates={dates}
                 markedDates={markedDates}
+                currentSelectedDate={selectedDate}
                 modalElements={{
                     isModalVisible: showCalendarModal,
                     onClose: closeCalendarModal,
