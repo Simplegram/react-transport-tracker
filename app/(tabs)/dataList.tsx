@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, TextInput } from 'react-native';
 import Button from '@/components/BaseButton';
 import LoadingScreen from '@/components/LoadingScreen';
@@ -11,7 +11,6 @@ import { useModalContext } from '@/context/ModalContext';
 import { useLoading } from '@/hooks/useLoading';
 import useGetTravelData from '@/hooks/useGetTravelData';
 import { useFocusEffect } from 'expo-router';
-import { LocationModuleEventEmitter } from '@maplibre/maplibre-react-native/lib/typescript/commonjs/src/modules/location/LocationManager';
 
 interface ItemTemplate {
     id: string | number;
@@ -23,10 +22,19 @@ const DataListScreen: React.FC = () => {
     const { setModalData } = useModalContext()
 
     const {
+        directions,
+        stops,
+        routes,
+        vehicleTypes,
+        icons,
+        refetchTravelData,
+    } = useGetTravelData()
+
+    const {
         dataType,
-        filteredData: data, refetchTravelData,
+        filteredData: data,
         searchQuery, setSearchQuery,
-    } = useDataList()
+    } = useDataList({ directions, stops, routes, vehicleTypes, icons, refetchTravelData })
 
     const {
         showStopModal,
@@ -37,8 +45,6 @@ const DataListScreen: React.FC = () => {
         activeModalConfig,
         setActiveModal, setActiveEditModal
     } = useDatalistModal(refetchTravelData)
-
-    const { stops, icons } = useGetTravelData()
 
     const {
         loading
@@ -213,7 +219,7 @@ const styles = StyleSheet.create({
         gap: 10,
     },
     addButtonContainer: {
-        
+
     },
     emptyContainer: {
         flex: 1,

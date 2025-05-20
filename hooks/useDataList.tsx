@@ -1,19 +1,18 @@
 import { Direction, IconType, Route, Stop, VehicleType } from "@/src/types/Travels";
-import { useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTravelContext } from "@/context/PageContext";
-import useGetTravelData from "./useGetTravelData";
 
-export default function useDataList() {
+interface UseDatalistProps {
+    directions: Direction[]
+    stops: Stop[]
+    routes: Route[]
+    vehicleTypes: VehicleType[]
+    icons: IconType[]
+    refetchTravelData: () => void
+}
+
+export default function useDataList({ directions, stops, routes, vehicleTypes, icons, refetchTravelData }: UseDatalistProps) {
     const { selectedModification: dataType } = useTravelContext()
-
-    const {
-        directions,
-        stops,
-        routes,
-        vehicleTypes,
-        icons,
-        refetchTravelData,
-    } = useGetTravelData()
 
     const [data, setData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]>([]);
     const [filteredData, setFilteredData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]>([]);
