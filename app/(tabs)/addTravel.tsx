@@ -131,8 +131,6 @@ export default function AddTravel() {
         setEditingDateField(null);
     };
 
-    const screenTitle = 'Add New Travel';
-
     if (!travel) {
         return (
             <LoadingScreen></LoadingScreen>
@@ -207,7 +205,9 @@ export default function AddTravel() {
     };
 
     return (
-        <CollapsibleHeaderPage largeHeaderText={screenTitle}>
+        <CollapsibleHeaderPage 
+            headerText='Add New Travel'
+        >
             <View style={inputElementStyles.inputContainer}>
                 <View style={inputElementStyles.inputLargeGroup}>
                     <View style={inputElementStyles.inputGroup}>

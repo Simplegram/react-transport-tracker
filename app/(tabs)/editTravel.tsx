@@ -134,8 +134,6 @@ export default function EditTravelItem() {
         setEditingDateField(null);
     };
 
-    const screenTitle = 'Add New Travel'
-
     const handleStopSelect = (stopId: number) => {
         if (editingStopField && travel) {
             setTravel(prev => ({
@@ -211,7 +209,9 @@ export default function EditTravelItem() {
     };
 
     return (
-        <CollapsibleHeaderPage largeHeaderText={screenTitle}>
+        <CollapsibleHeaderPage 
+            headerText='Edit Travel'
+        >
             {(!travel || !laps || !travel) ? (
                 <LoadingScreen />
             ) : (

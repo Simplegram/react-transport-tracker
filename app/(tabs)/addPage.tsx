@@ -3,6 +3,7 @@ import {
     View,
     StyleSheet,
     Platform,
+    Text,
 } from 'react-native';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'; // Adjust path as needed
 import { router } from 'expo-router'; // Keep if needed elsewhere
@@ -10,6 +11,7 @@ import { router } from 'expo-router'; // Keep if needed elsewhere
 import { useTravelContext } from '@/context/PageContext';
 import Button from '@/components/BaseButton';
 import { useAuth } from '@/provider/AuthProvider';
+import Divider from '@/components/Divider';
 
 interface ButtonConfig {
     id: string
@@ -59,11 +61,10 @@ const NavigationPage: React.FC = () => {
 
     return (
         <CollapsibleHeaderPage
-            largeHeaderText="Add vehicle type, direction, stops, routes, or travels"
-            smallHeaderText="Add Page"
+            headerText="Add vehicle type, direction, stops, or routes"
         >
             <View style={styles.container}>
-                <View style={styles.fillingContainer}></View>
+                <View style={styles.fillingContainer} />
                 <View style={styles.buttonContainer}>
                     {navigationButtons.map((button) => (
                         <Button
@@ -76,6 +77,14 @@ const NavigationPage: React.FC = () => {
                         />
                     ))}
                 </View>
+                <Divider />
+                <Button
+                    title='Light Mode'
+                    color='#007bff'
+                    style={styles.button}
+                    textStyle={styles.buttonText}
+                />
+                <Divider />
                 <Button
                     color='#f0473e'
                     style={styles.button}
@@ -94,6 +103,8 @@ const styles = StyleSheet.create({
     },
     fillingContainer: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     buttonContainer: {
         gap: 10,
