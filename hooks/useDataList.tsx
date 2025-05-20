@@ -8,10 +8,9 @@ interface UseDatalistProps {
     routes: Route[]
     vehicleTypes: VehicleType[]
     icons: IconType[]
-    refetchTravelData: () => void
 }
 
-export default function useDataList({ directions, stops, routes, vehicleTypes, icons, refetchTravelData }: UseDatalistProps) {
+export default function useDataList({ directions, stops, routes, vehicleTypes, icons }: UseDatalistProps) {
     const { selectedModification: dataType } = useTravelContext()
 
     const [data, setData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]>([]);
@@ -68,7 +67,7 @@ export default function useDataList({ directions, stops, routes, vehicleTypes, i
 
     return {
         dataType,
-        filteredData, data, refetchTravelData,
+        filteredData, data,
         searchQuery, setSearchQuery,
     }
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, TextInput } from 'react-native';
 import Button from '@/components/BaseButton';
 import LoadingScreen from '@/components/LoadingScreen';
@@ -18,7 +18,7 @@ interface ItemTemplate {
     [key: string]: any;
 }
 
-const DataListScreen: React.FC = () => {
+export default function DataListScreen() {
     const { setModalData } = useModalContext()
 
     const {
@@ -34,7 +34,7 @@ const DataListScreen: React.FC = () => {
         dataType,
         filteredData: data,
         searchQuery, setSearchQuery,
-    } = useDataList({ directions, stops, routes, vehicleTypes, icons, refetchTravelData })
+    } = useDataList({ directions, stops, routes, vehicleTypes, icons })
 
     const {
         showStopModal,
@@ -250,5 +250,3 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff',
     },
 });
-
-export default DataListScreen;
