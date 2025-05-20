@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState } from "react"
+import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage";
 
 interface ThemeContextType {
     theme: 'light' | 'dark'
@@ -12,7 +13,8 @@ interface ThemeProviderProps {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-    const [theme, setTheme] = useState<'light' | 'dark'>('light')
+    const storage = new MMKVLoader().initialize()
+    const [theme, setTheme] = useMMKVStorage<'light' | 'dark'>('appTheme', storage, 'light');
 
     return (
         <ThemeContext.Provider value={{
