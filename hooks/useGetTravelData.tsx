@@ -129,13 +129,16 @@ export default function useGetTravelData() {
         }
     };
 
-    const getTravelData = async () => {
-        await getDirections()
-        await getStops()
-        await getRoutes()
-        await getVehicleTypes()
-        await getFullVehicletypes()
-        await getIcons()
+    const getTravelData = async (timeout: number = 0) => {
+        // listening to database changes might be a better idea?
+        setTimeout(async () => {
+            await getDirections()
+            await getStops()
+            await getRoutes()
+            await getVehicleTypes()
+            await getFullVehicletypes()
+            await getIcons()
+        }, timeout);
     }
 
     useEffect(() => {
