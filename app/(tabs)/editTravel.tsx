@@ -28,6 +28,7 @@ import LoadingScreen from '@/components/LoadingScreen';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
 import { useTheme } from '@/context/ThemeContext';
+import Divider from '@/components/Divider';
 
 export default function EditTravelItem() {
     const { theme } = useTheme()
@@ -234,13 +235,15 @@ export default function EditTravelItem() {
                                 </Pressable>
                             </View>
 
-                            <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                            <View style={inputElementStyles[theme].inputGroup}>
                                 <Text style={inputElementStyles[theme].inputLabel}>Bus Final Arrival:</Text>
                                 <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={inputStyles[theme].pressableInput}>
                                     <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
                                 </Pressable>
                             </View>
                         </View>
+
+                        <Divider />
 
                         {showCustomPicker && editingDateField && (
                             <CustomDateTimePicker
@@ -268,7 +271,7 @@ export default function EditTravelItem() {
                                 </Pressable>
                             </View>
 
-                            <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                            <View style={inputElementStyles[theme].inputGroup}>
                                 <Text style={inputElementStyles[theme].inputLabel}>Type:</Text>
                                 <TextInput
                                     editable={false}
@@ -278,6 +281,8 @@ export default function EditTravelItem() {
                                 />
                             </View>
                         </View>
+
+                        <Divider />
 
                         <View style={inputElementStyles[theme].inputLargeGroup}>
                             <View style={inputElementStyles[theme].inputGroup}>
@@ -300,7 +305,7 @@ export default function EditTravelItem() {
                                 </Pressable>
                             </View>
 
-                            <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                            <View style={inputElementStyles[theme].inputGroup}>
                                 <Text style={inputElementStyles[theme].inputLabel}>Last Stop:</Text>
                                 <Pressable
                                     style={inputStyles[theme].pressableInput}
@@ -309,6 +314,8 @@ export default function EditTravelItem() {
                                 </Pressable>
                             </View>
                         </View>
+
+                        <Divider />
 
                         <View style={inputElementStyles[theme].inputLargeGroup}>
                             <View style={inputElementStyles[theme].inputGroup}>
@@ -321,7 +328,7 @@ export default function EditTravelItem() {
                                 />
                             </View>
 
-                            <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                            <View style={inputElementStyles[theme].inputGroup}>
                                 <Text style={inputElementStyles[theme].inputLabel}>Notes:</Text>
                                 <TextInput
                                     style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput]}
@@ -333,6 +340,8 @@ export default function EditTravelItem() {
                                 />
                             </View>
                         </View>
+
+                        <Divider />
 
                         <View style={inputElementStyles[theme].inputLargeGroup}>
                             <View style={inputElementStyles[theme].inputGroup}>

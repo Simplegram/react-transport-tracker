@@ -28,6 +28,7 @@ import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
 import LoadingScreen from '@/components/LoadingScreen';
 import { useTheme } from '@/context/ThemeContext';
+import Divider from '@/components/Divider';
 
 // Softer placeholder color
 const PLACEHOLDER_TEXT_COLOR = '#9E9E9E';
@@ -235,6 +236,8 @@ export default function AddTravel() {
                     </View>
                 </View>
 
+                <Divider />
+
                 {showCustomPicker && editingDateField && (
                     <CustomDateTimePicker
                         visible={showCustomPicker}
@@ -260,7 +263,7 @@ export default function AddTravel() {
                         </Pressable>
                     </View>
 
-                    <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                    <View style={inputElementStyles[theme].inputGroup}>
                         <Text style={inputElementStyles[theme].inputLabel}>Type:</Text>
                         <TextInput
                             editable={false}
@@ -271,6 +274,8 @@ export default function AddTravel() {
                         />
                     </View>
                 </View>
+
+                <Divider />
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
                     <View style={inputElementStyles[theme].inputGroup}>
@@ -293,7 +298,7 @@ export default function AddTravel() {
                         </Pressable>
                     </View>
 
-                    <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                    <View style={inputElementStyles[theme].inputGroup}>
                         <Text style={inputElementStyles[theme].inputLabel}>Last Stop:</Text>
                         <Pressable
                             style={inputStyles[theme].pressableInput}
@@ -302,6 +307,8 @@ export default function AddTravel() {
                         </Pressable>
                     </View>
                 </View>
+
+                <Divider />
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
                     <View style={inputElementStyles[theme].inputGroup}>
@@ -315,7 +322,7 @@ export default function AddTravel() {
                         />
                     </View>
 
-                    <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                    <View style={inputElementStyles[theme].inputGroup}>
                         <Text style={inputElementStyles[theme].inputLabel}>Notes:</Text>
                         <TextInput
                             style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput]}
@@ -328,6 +335,8 @@ export default function AddTravel() {
                         />
                     </View>
                 </View>
+
+                <Divider />
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
                     <View style={inputElementStyles[theme].inputGroup}>
