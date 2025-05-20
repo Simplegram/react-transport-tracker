@@ -4,9 +4,9 @@ export const colors = {
         white: '#ffffff',
         black: '#000000',
         darkBlue: '#012359',
-        darkWhite: '#cccccc'
+        dimWhite: '#e8e8e8'
     },
     text: {
-        darkWhite: '#cccccc'
+        dimWhite: '#e8e8e8',
     }
 }

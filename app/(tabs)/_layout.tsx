@@ -13,8 +13,9 @@ import { colors } from "@/const/color";
 const TabsLayout = () => {
     const { theme } = useTheme()
 
-    const barColor = theme === 'light' ? colors.background.white : colors.background.black
-    const iconColor = theme === 'light' ? colors.background.black : colors.background.darkWhite
+    const barColor = theme === 'light' ? colors.background.dimWhite : colors.background.black
+    const iconColor = theme === 'light' ? colors.background.black : colors.background.dimWhite
+    const textColor = colors.appBlue
 
     const [selectedItem, setSelectedItem] = useState<DataItem | undefined>(undefined);
     const [selectedTravelItems, setSelectedTravelItems] = useState<DataItem[] | undefined>(undefined);
@@ -33,7 +34,7 @@ const TabsLayout = () => {
                 setSelectedTravelItems
             }}>
                 <ModalContext.Provider value={{ modalData, setModalData }}>
-                    <StatusBar 
+                    <StatusBar
                         backgroundColor={statusBarStyles[theme]}
                     />
                     <Tabs>
@@ -42,55 +43,65 @@ const TabsLayout = () => {
                             options={{
                                 title: "Home",
                                 headerShown: false,
-                                tabBarIcon: ({ color }) => <Icon size={24} name="house" color={iconColor} />,
+                                tabBarIcon: ({ color }) => <Icon size={24} name="house" color={color} />,
                                 tabBarStyle: {
                                     height: 60,
                                     backgroundColor: barColor
                                 },
                                 tabBarLabelStyle: {
-                                    fontSize: 13
-                                }
+                                    fontSize: 13,
+                                    fontWeight: 'bold',
+                                },
+                                tabBarActiveTintColor: colors.appBlue,
+                                tabBarInactiveTintColor: iconColor,
                             }} />
                         <Tabs.Screen
                             name="addTravel"
                             options={{
                                 title: "Add",
                                 headerShown: false,
-                                tabBarIcon: ({ color }) => <Icon size={24} name="square-plus" color={iconColor} />,
+                                tabBarIcon: ({ color }) => <Icon size={24} name="square-plus" color={color} />,
                                 tabBarStyle: {
                                     height: 60,
                                     backgroundColor: barColor
                                 },
                                 tabBarLabelStyle: {
-                                    fontSize: 13
-                                }
+                                    fontSize: 13,
+                                    fontWeight: 'bold',
+                                },
+                                tabBarActiveTintColor: colors.appBlue,
+                                tabBarInactiveTintColor: iconColor,
                             }} />
                         <Tabs.Screen
                             name="addPage"
                             options={{
                                 title: "Modify",
                                 headerShown: false,
-                                tabBarIcon: ({ color }) => <Icon size={24} name="pen-to-square" color={iconColor} />,
+                                tabBarIcon: ({ color }) => <Icon size={24} name="pen-to-square" color={color} />,
                                 tabBarStyle: {
                                     height: 60,
                                     backgroundColor: barColor
                                 },
                                 tabBarLabelStyle: {
-                                    fontSize: 13
-                                }
+                                    fontSize: 13,
+                                    fontWeight: 'bold',
+                                },
+                                tabBarActiveTintColor: colors.appBlue,
+                                tabBarInactiveTintColor: iconColor,
                             }} />
                         <Tabs.Screen
                             name="editTravel"
                             options={{
                                 title: "Add",
                                 headerShown: false,
-                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={iconColor} />,
+                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
                                 tabBarStyle: {
                                     height: 60,
                                     backgroundColor: barColor
                                 },
                                 tabBarLabelStyle: {
-                                    fontSize: 13
+                                    fontSize: 13,
+                                    fontWeight: 'bold',
                                 },
                                 href: null
                             }} />
@@ -99,13 +110,14 @@ const TabsLayout = () => {
                             options={{
                                 title: "Add",
                                 headerShown: false,
-                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={iconColor} />,
+                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
                                 tabBarStyle: {
                                     height: 60,
                                     backgroundColor: barColor
                                 },
                                 tabBarLabelStyle: {
-                                    fontSize: 13
+                                    fontSize: 13,
+                                    fontWeight: 'bold',
                                 },
                                 href: null
                             }} />
@@ -114,13 +126,14 @@ const TabsLayout = () => {
                             options={{
                                 title: "Add",
                                 headerShown: false,
-                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={iconColor} />,
+                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
                                 tabBarStyle: {
                                     height: 60,
                                     backgroundColor: barColor
                                 },
                                 tabBarLabelStyle: {
-                                    fontSize: 13
+                                    fontSize: 13,
+                                    fontWeight: 'bold',
                                 },
                                 href: null
                             }} />
