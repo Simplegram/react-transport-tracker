@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { DataItem } from "@/src/types/Travels";
-import { supabase } from "@/lib/supabase";
+import { useSupabase } from "@/context/SupabaseContext";
 
 function formatDate(
     date: Date,
@@ -34,6 +34,8 @@ function getDateToday() {
 }
 
 export default function useTravelCalendar() {
+    const { supabaseClient: supabase } = useSupabase()
+
     const [travelAtDate, setTravelAtDate] = useState<DataItem[]>([])
     const [selectedDate, setSelectedDate] = useState<string>(getDateToday);
 

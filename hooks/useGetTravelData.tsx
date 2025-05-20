@@ -1,5 +1,4 @@
 import { useSupabase } from "@/context/SupabaseContext"
-import { supabase } from "@/lib/supabase"
 import { Direction, FullLap, IconType, Lap, Route, Stop, VehicleType } from "@/src/types/Travels"
 import { useCallback, useEffect, useRef, useState } from "react"
 
