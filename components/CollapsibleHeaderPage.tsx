@@ -13,14 +13,18 @@ interface CollapsibleHeaderPageProps {
     containerStyle?: StyleProp<ViewStyle>;
 }
 
-export default function CollapsibleHeaderPage({ 
-    headerText, 
-    children, 
-    containerStyle 
+export default function CollapsibleHeaderPage({
+    headerText,
+    children,
+    containerStyle
 }: CollapsibleHeaderPageProps) {
     return (
         <View style={[collapsibleHeaderStyles.container, containerStyle]}>
-            <ScrollView contentContainerStyle={collapsibleHeaderStyles.scrollContainer} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
+            <ScrollView
+                contentContainerStyle={collapsibleHeaderStyles.scrollContainer}
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps={'always'}
+            >
                 <View style={collapsibleHeaderStyles.fillerContainer}>
                     <Text style={collapsibleHeaderStyles.headerText}>{headerText}</Text>
                 </View>
