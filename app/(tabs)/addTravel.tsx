@@ -216,7 +216,7 @@ export default function AddTravel() {
                     <View style={inputElementStyles['light'].inputGroup}>
                         <Text style={[
                             inputElementStyles['light'].inputLabel, 
-                            theme === 'dark' ? inputElementStyles['dark'].inputLabel : null
+                            theme === 'dark' && inputElementStyles['dark'].inputLabel
                         ]}>Bus Initial Arrival:</Text>
                         <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={inputStyles.pressableInput}>
                             <Text style={inputElementStyles['light'].insideLabel}>{formatDateForDisplay(travel.bus_initial_arrival) || 'Select Date...'}</Text>
@@ -226,7 +226,7 @@ export default function AddTravel() {
                     <View style={inputElementStyles['light'].inputGroup}>
                         <Text style={[
                             inputElementStyles['light'].inputLabel, 
-                            theme === 'dark' ? inputElementStyles['dark'].inputLabel : null
+                            theme === 'dark' && inputElementStyles['dark'].inputLabel
                         ]}>Bus Initial Departure:</Text>
                         <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={inputStyles.pressableInput}>
                             <Text style={inputElementStyles['light'].insideLabel}>{formatDateForDisplay(travel.bus_initial_departure) || 'Select Date...'}</Text>
@@ -236,7 +236,7 @@ export default function AddTravel() {
                     <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
                         <Text style={[
                             inputElementStyles['light'].inputLabel, 
-                            theme === 'dark' ? inputElementStyles['dark'].inputLabel : null
+                            theme === 'dark' && inputElementStyles['dark'].inputLabel
                         ]}>Bus Final Arrival:</Text>
                         <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={inputStyles.pressableInput}>
                             <Text style={inputElementStyles['light'].insideLabel}>{formatDateForDisplay(travel.bus_final_arrival) || 'Select Date...'}</Text>
@@ -261,7 +261,7 @@ export default function AddTravel() {
                     <View style={inputElementStyles['light'].inputGroup}>
                         <Text style={[
                             inputElementStyles['light'].inputLabel, 
-                            theme === 'dark' ? inputElementStyles['dark'].inputLabel : null
+                            theme === 'dark' && inputElementStyles['dark'].inputLabel
                         ]}>Route:</Text>
                         <Pressable
                             style={inputStyles.pressableInput}
@@ -275,7 +275,7 @@ export default function AddTravel() {
                     <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
                         <Text style={[
                             inputElementStyles['light'].inputLabel, 
-                            theme === 'dark' ? inputElementStyles['dark'].inputLabel : null
+                            theme === 'dark' && inputElementStyles['dark'].inputLabel
                         ]}>Type:</Text>
                         <TextInput
                             editable={false}
@@ -291,7 +291,7 @@ export default function AddTravel() {
                     <View style={inputElementStyles['light'].inputGroup}>
                         <Text style={[
                             inputElementStyles['light'].inputLabel, 
-                            theme === 'dark' ? inputElementStyles['dark'].inputLabel : null
+                            theme === 'dark' && inputElementStyles['dark'].inputLabel
                         ]}>Direction:</Text>
                         <Pressable
                             style={inputStyles.pressableInput}
@@ -305,7 +305,7 @@ export default function AddTravel() {
                     <View style={inputElementStyles['light'].inputGroup}>
                         <Text style={[
                             inputElementStyles['light'].inputLabel, 
-                            theme === 'dark' ? inputElementStyles['dark'].inputLabel : null
+                            theme === 'dark' && inputElementStyles['dark'].inputLabel
                         ]}>First Stop:</Text>
                         <Pressable
                             style={inputStyles.pressableInput}
@@ -317,7 +317,7 @@ export default function AddTravel() {
                     <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
                         <Text style={[
                             inputElementStyles['light'].inputLabel, 
-                            theme === 'dark' ? inputElementStyles['dark'].inputLabel : null
+                            theme === 'dark' && inputElementStyles['dark'].inputLabel
                         ]}>Last Stop:</Text>
                         <Pressable
                             style={inputStyles.pressableInput}
@@ -331,7 +331,7 @@ export default function AddTravel() {
                     <View style={inputElementStyles['light'].inputGroup}>
                         <Text style={[
                             inputElementStyles['light'].inputLabel, 
-                            theme === 'dark' ? inputElementStyles['dark'].inputLabel : null
+                            theme === 'dark' && inputElementStyles['dark'].inputLabel
                         ]}>Vehicle Code:</Text>
                         <TextInput
                             style={inputStyles.textInput}
@@ -345,7 +345,7 @@ export default function AddTravel() {
                     <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
                         <Text style={[
                             inputElementStyles['light'].inputLabel, 
-                            theme === 'dark' ? inputElementStyles['dark'].inputLabel : null
+                            theme === 'dark' && inputElementStyles['dark'].inputLabel
                         ]}>Notes:</Text>
                         <TextInput
                             style={[inputStyles.textInput, inputStyles.multilineTextInput]}
@@ -363,7 +363,7 @@ export default function AddTravel() {
                     <View style={inputElementStyles['light'].inputGroup}>
                         <Text style={[
                             inputElementStyles['light'].inputLabel, 
-                            theme === 'dark' ? inputElementStyles['dark'].inputLabel : null
+                            theme === 'dark' && inputElementStyles['dark'].inputLabel
                         ]}>Laps:</Text>
                         <Pressable
                             style={inputStyles.pressableInput}
