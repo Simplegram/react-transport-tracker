@@ -1,37 +1,59 @@
 import { Alert, View, TextInput, StyleSheet, Text, KeyboardAvoidingView } from 'react-native'
 import { useEffect, useState } from 'react'
 import React from 'react'
-import { supabase } from '@/lib/supabase'
 import LoadingScreen from '@/components/LoadingScreen'
 import Button from '@/components/BaseButton'
 import { useToggleLoading } from '@/hooks/useLoading'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
 import { colors } from '@/const/color'
+import { useSupabase } from '@/context/SupabaseContext'
 
 const Login = () => {
+    const { 
+        supabaseClient,
+        supabaseUrl, setSupabaseUrl,
+        supabaseAnonKey, setSupabaseAnonKey
+    } = useSupabase()
+    const { loading, setLoading, toggleLoading } = useToggleLoading(500, true)
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    // const [loading, setLoading] = useState(false)
-
-    const { loading, setLoading, toggleLoading } = useToggleLoading(500, true)
+    const [currentSupabaseUrl, setCurrentSupabaseUrl] = useState<string | undefined>(undefined)
+    const [currentSupabaseAnonKey, setCurrentSupabaseAnonKey] = useState<string | undefined>(undefined)
 
     const onSignInPress = async () => {
         setLoading(true)
 
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        })
+        setSupabaseUrl(currentSupabaseUrl)
+        setSupabaseAnonKey(currentSupabaseAnonKey)
 
-        if (error) Alert.alert(
-            error.name,
-            error.message
-        )
-        setLoading(false)
+        try {
+            setTimeout(() => {
+                setLoading(false)
+                return
+            }, 5000);
+
+            const { error } = await supabaseClient.auth.signInWithPassword({
+                email,
+                password,
+            })
+
+            if (error) Alert.alert(
+                error.name,
+                error.message
+            )
+        } catch (err: any) {
+            console.error("An unexpected error during sign-in:", err);
+            Alert.alert('Supabase URL or Anon Key missing', 'The Supabase client could not be initialized with missing Supabase URL or Anon Key');
+        } finally {
+            setLoading(false)
+        }
     }
 
     useEffect(() => {
         toggleLoading()
+        setCurrentSupabaseUrl(supabaseUrl)
+        setCurrentSupabaseAnonKey(supabaseAnonKey)
     }, [])
 
     return (
@@ -46,6 +68,28 @@ const Login = () => {
                         <>
                             <Text style={styles.header}>Transport Tracker</Text>
                             <View style={[inputElementStyles.inputContainer, { paddingBottom: 0 }]}>
+                                <View style={inputElementStyles.inputGroup}>
+                                    <Text style={inputElementStyles.inputLabel}>Supabase URL</Text>
+                                    <TextInput
+                                        autoCapitalize="none"
+                                        placeholder="https://my-example-brand.supabase.co"
+                                        value={currentSupabaseUrl}
+                                        onChangeText={setCurrentSupabaseUrl}
+                                        style={inputStyles.textInput}
+                                        numberOfLines={1}
+                                    />
+                                </View>
+                                <View style={inputElementStyles.inputGroup}>
+                                    <Text style={inputElementStyles.inputLabel}>Supabase Anon Key</Text>
+                                    <TextInput
+                                        autoCapitalize="none"
+                                        placeholder="abcdefghijklmnopqrstuvwxyz1234567890"
+                                        value={currentSupabaseAnonKey}
+                                        onChangeText={setCurrentSupabaseAnonKey}
+                                        style={inputStyles.textInput}
+                                        numberOfLines={1}
+                                    />
+                                </View>
                                 <View style={inputElementStyles.inputGroup}>
                                     <Text style={inputElementStyles.inputLabel}>Supabase Account Email</Text>
                                     <TextInput
