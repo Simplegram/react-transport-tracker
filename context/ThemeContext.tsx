@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState } from "react"
 
 interface ThemeContextType {
     theme: 'light' | 'dark'
+    setTheme: (key: 'light' | 'dark') => void;
 }
 
 interface ThemeProviderProps {
@@ -14,11 +15,9 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     const [theme, setTheme] = useState<'light' | 'dark'>('light')
 
     return (
-        <ThemeContext.Provider
-            value={{
-                theme
-            }}
-        >
+        <ThemeContext.Provider value={{
+            theme, setTheme
+        }}>
             {children}
         </ThemeContext.Provider>
     )
