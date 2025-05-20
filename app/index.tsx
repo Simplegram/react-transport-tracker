@@ -7,6 +7,7 @@ import { useToggleLoading } from '@/hooks/useLoading'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
 import { colors } from '@/const/color'
 import { useSupabase } from '@/context/SupabaseContext'
+import { SupabaseClient } from '@supabase/supabase-js'
 
 const Login = () => {
     const { 
@@ -18,6 +19,8 @@ const Login = () => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const [currentSupabaseClient, setCurrentSupabaseClient] = useState<SupabaseClient | undefined>(undefined)
     const [currentSupabaseUrl, setCurrentSupabaseUrl] = useState<string | undefined>(undefined)
     const [currentSupabaseAnonKey, setCurrentSupabaseAnonKey] = useState<string | undefined>(undefined)
 
@@ -28,12 +31,7 @@ const Login = () => {
         setSupabaseAnonKey(currentSupabaseAnonKey)
 
         try {
-            setTimeout(() => {
-                setLoading(false)
-                return
-            }, 5000);
-
-            const { error } = await supabaseClient.auth.signInWithPassword({
+            const { error } = await currentSupabaseClient.auth.signInWithPassword({
                 email,
                 password,
             })
@@ -55,6 +53,10 @@ const Login = () => {
         setCurrentSupabaseUrl(supabaseUrl)
         setCurrentSupabaseAnonKey(supabaseAnonKey)
     }, [])
+
+    useEffect(() => {
+        setCurrentSupabaseClient(supabaseClient)
+    }, [supabaseClient])
 
     return (
         <KeyboardAvoidingView
