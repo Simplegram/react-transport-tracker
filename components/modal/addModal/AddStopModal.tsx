@@ -13,7 +13,7 @@ import AddCoordModal from "./AddCoordModal"
 
 export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { fullVehicleTypes } = useGetTravelData()
-    
+
     const [stop, setStop] = useState<AddableStop>({
         name: undefined,
         lat: null,
@@ -21,7 +21,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
         name_alt: null,
         vehicle_type: undefined
     })
-    
+
     const { loading } = useLoading()
 
     const {
@@ -52,12 +52,12 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
     return (
         <View>
             {loading ? (
-                <Text style={inputElementStyles.inputLabel}>Loading...</Text>
+                <Text style={inputElementStyles['light'].inputLabel}>Loading...</Text>
             ) : (
                 <>
-                    <View style={inputElementStyles.inputContainer}>
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Name:</Text>
+                    <View style={inputElementStyles['light'].inputContainer}>
+                        <View style={inputElementStyles['light'].inputGroup}>
+                            <Text style={inputElementStyles['light'].inputLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles.pressableInput}
                                 placeholder="Stop name..."
@@ -66,9 +66,9 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             />
                         </View>
 
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Latitude and Longitude:</Text>
-                            <View style={inputElementStyles.inputGroupCoord}>
+                        <View style={inputElementStyles['light'].inputGroup}>
+                            <Text style={inputElementStyles['light'].inputLabel}>Latitude and Longitude:</Text>
+                            <View style={inputElementStyles['light'].inputGroupCoord}>
                                 <TextInput
                                     style={[inputStyles.pressableInput, inputStyles.pressableInputCoord]}
                                     placeholder="Stop latitude..."
@@ -83,14 +83,14 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                                 />
                             </View>
                             <Pressable
-                                style={[inputStyles.pressableInput, {marginTop: 10}]}
+                                style={[inputStyles.pressableInput, { marginTop: 10 }]}
                                 onPress={() => openCoordModal()}>
-                                <Text style={inputElementStyles.insideLabel}>Pick Latitude and Longitude...</Text>
+                                <Text style={inputElementStyles['light'].insideLabel}>Pick Latitude and Longitude...</Text>
                             </Pressable>
                         </View>
 
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Alternative name:</Text>
+                        <View style={inputElementStyles['light'].inputGroup}>
+                            <Text style={inputElementStyles['light'].inputLabel}>Alternative name:</Text>
                             <TextInput
                                 style={inputStyles.pressableInput}
                                 placeholder="Alternative name..."
@@ -99,11 +99,11 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             />
                         </View>
 
-                        <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                        <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles.inputLabel}>Icon:</Text>
+                                <Text style={inputElementStyles['light'].inputLabel}>Icon:</Text>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
@@ -119,7 +119,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                                             onPress={() => setStop({ ...stop, vehicle_type: type.id })}
                                         >
                                             <Icon name={type.icon_id.name} size={20}></Icon>
-                                            <Text style={inputElementStyles.inputLabel}>{type.name.slice(0, 5)}</Text>
+                                            <Text style={inputElementStyles['light'].inputLabel}>{type.name.slice(0, 5)}</Text>
                                         </TouchableOpacity>
                                     ))}
                                 </ScrollView>
@@ -127,7 +127,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         </View>
                     </View>
 
-                    <AddCoordModal 
+                    <AddCoordModal
                         currentCoordinates={{
                             lat: stop.lat,
                             lon: stop.lon

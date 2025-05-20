@@ -71,7 +71,7 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
         >
             <Pressable style={modalStyles.modalBackdrop}>
                 <View style={[modalStyles.modalContainer, modalStyles.coordModalContainer]} onStartShouldSetResponder={() => true}>
-                    <View style={[inputElementStyles.inputGroup, { flex: 1 }]}>
+                    <View style={[inputElementStyles['light'].inputGroup, { flex: 1 }]}>
                         <MapView
                             ref={mapRef}
                             style={{ flex: 1 }}

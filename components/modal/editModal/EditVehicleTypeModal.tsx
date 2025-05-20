@@ -38,12 +38,12 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
     return (
         <View>
             {loading ? (
-                <Text style={inputElementStyles.inputLabel}>Loading...</Text>
+                <Text style={inputElementStyles['light'].inputLabel}>Loading...</Text>
             ) : (
                 <>
-                    <View style={inputElementStyles.inputContainer}>
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.insideLabel}>Name:</Text>
+                    <View style={inputElementStyles['light'].inputContainer}>
+                        <View style={inputElementStyles['light'].inputGroup}>
+                            <Text style={inputElementStyles['light'].insideLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles.pressableInput}
                                 placeholder="e.g., Standard Bus"
@@ -52,11 +52,11 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                             />
                         </View>
 
-                        <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                        <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles.inputLabel}>Icon:</Text>
+                                <Text style={inputElementStyles['light'].inputLabel}>Icon:</Text>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}

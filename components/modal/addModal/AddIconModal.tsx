@@ -34,9 +34,9 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
 
     return (
         <View>
-            <Text style={inputElementStyles.inputLabel}>Icon name (FontAwesome6):</Text>
-            <View style={inputElementStyles.inputContainer}>
-                <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupIcon]}>
+            <Text style={inputElementStyles['light'].inputLabel}>Icon name (FontAwesome6):</Text>
+            <View style={inputElementStyles['light'].inputContainer}>
+                <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupIcon]}>
                     <Icon style={styles.icon} name={icon.name ? icon.name : 'xmark'} size={32} />
                     <TextInput
                         style={[inputStyles.pressableInput, { flex: 1 }]}

@@ -54,12 +54,12 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
     return (
         <View>
             {loading || !stops ? (
-                <Text style={inputElementStyles.inputLabel}>Loading...</Text>
+                <Text style={inputElementStyles['light'].inputLabel}>Loading...</Text>
             ) : (
                 <>
-                    <View style={inputElementStyles.inputContainer}>
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.insideLabel}>Code:</Text>
+                    <View style={inputElementStyles['light'].inputContainer}>
+                        <View style={inputElementStyles['light'].inputGroup}>
+                            <Text style={inputElementStyles['light'].insideLabel}>Code:</Text>
                             <TextInput
                                 style={inputStyles.pressableInput}
                                 placeholder="Route code..."
@@ -68,8 +68,8 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             />
                         </View>
 
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.insideLabel}>Name:</Text>
+                        <View style={inputElementStyles['light'].inputGroup}>
+                            <Text style={inputElementStyles['light'].insideLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles.pressableInput}
                                 placeholder="Route name..."
@@ -78,29 +78,29 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             />
                         </View>
 
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>First Stop:</Text>
+                        <View style={inputElementStyles['light'].inputGroup}>
+                            <Text style={inputElementStyles['light'].inputLabel}>First Stop:</Text>
                             <Pressable
                                 style={inputStyles.pressableInput}
                                 onPress={() => openStopModal('first_stop_id')}>
-                                <Text style={[inputElementStyles.insideLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}</Text>
+                                <Text style={[inputElementStyles['light'].insideLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}</Text>
                             </Pressable>
                         </View>
 
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.inputLabel}>Last Stop:</Text>
+                        <View style={inputElementStyles['light'].inputGroup}>
+                            <Text style={inputElementStyles['light'].inputLabel}>Last Stop:</Text>
                             <Pressable
                                 style={inputStyles.pressableInput}
                                 onPress={() => openStopModal('last_stop_id')}>
-                                <Text style={[inputElementStyles.insideLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}</Text>
+                                <Text style={[inputElementStyles['light'].insideLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}</Text>
                             </Pressable>
                         </View>
 
-                        <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                        <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles.inputLabel}>Type:</Text>
+                                <Text style={inputElementStyles['light'].inputLabel}>Type:</Text>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
@@ -116,7 +116,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                                             onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}
                                         >
                                             <Icon name={type.icon_id.name} size={20}></Icon>
-                                            <Text style={inputElementStyles.inputLabel}>{type.name.slice(0, 5)}</Text>
+                                            <Text style={inputElementStyles['light'].inputLabel}>{type.name.slice(0, 5)}</Text>
                                         </TouchableOpacity>
                                     ))}
                                 </ScrollView>
