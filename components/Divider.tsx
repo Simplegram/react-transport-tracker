@@ -1,8 +1,12 @@
+import { useTheme } from "@/context/ThemeContext";
+import { dividerStyles } from "@/src/styles/Styles";
 import { StyleSheet, View } from "react-native";
 
 export default function Divider() {
+    const { theme } = useTheme()
+
     return (
-        <View style={styles.divider}/>
+        <View style={[styles.divider, {borderColor: dividerStyles[theme]}]} />
     )
 }
 

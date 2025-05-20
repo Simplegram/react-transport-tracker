@@ -4,6 +4,7 @@ import {
     StyleSheet,
     Platform,
     Text,
+    StatusBar,
 } from 'react-native';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'; // Adjust path as needed
 import { router } from 'expo-router'; // Keep if needed elsewhere
@@ -12,6 +13,9 @@ import { useTravelContext } from '@/context/PageContext';
 import Button from '@/components/BaseButton';
 import { useAuth } from '@/provider/AuthProvider';
 import Divider from '@/components/Divider';
+import { useTheme } from '@/context/ThemeContext';
+import { statusBarStyles } from '@/src/styles/Styles';
+import { colors } from '@/const/color';
 
 interface ButtonConfig {
     id: string
@@ -43,9 +47,12 @@ const navigationButtons: ButtonConfig[] = [
 
 
 const NavigationPage: React.FC = () => {
+    const { theme, setTheme } = useTheme()
     const { setSelectedModification } = useTravelContext()
 
     const { signOut } = useAuth()
+
+    const buttonBorderColor = theme === 'light' ? colors.background.black : colors.background.black
 
     const handleItemPress = (selectedModification: string) => {
         if (selectedModification) {
@@ -59,6 +66,11 @@ const NavigationPage: React.FC = () => {
         router.push("/");
     };
 
+    const handleThemeChange = () => {
+        if (theme === 'light') setTheme('dark')
+        else setTheme('light')
+    }
+
     return (
         <CollapsibleHeaderPage
             headerText="Add vehicle type, direction, stops, or routes"
@@ -71,7 +83,7 @@ const NavigationPage: React.FC = () => {
                             color='#007bff'
                             key={button.text}
                             title={button.text}
-                            style={styles.button}
+                            style={[styles.button, { borderColor: buttonBorderColor }]}
                             textStyle={styles.buttonText}
                             onPress={() => handleItemPress(button.id)}
                         />
@@ -79,10 +91,11 @@ const NavigationPage: React.FC = () => {
                 </View>
                 <Divider />
                 <Button
-                    title='Light Mode'
+                    title={`Enable ${theme === 'light' ? 'dark' : 'light'} mode`}
                     color='#007bff'
-                    style={styles.button}
+                    style={[styles.button, { borderColor: buttonBorderColor }]}
                     textStyle={styles.buttonText}
+                    onPress={handleThemeChange}
                 />
                 <Divider />
                 <Button
