@@ -24,7 +24,6 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
 
     useEffect(() => {
         if (supabaseClient) {
-            console.log('enter')
             const { data } = supabaseClient.auth.onAuthStateChange(async (event, session) => {
                 setSession(session)
                 setUser(session ? session.user : null)
@@ -35,10 +34,9 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
                 data.subscription.unsubscribe()
             }
         }
-    }, [])
+    }, [supabaseClient])
 
     const signOut = async () => {
-        console.log(supabaseClient.auth)
         if (supabaseClient) await supabaseClient.auth.signOut()
     }
 
