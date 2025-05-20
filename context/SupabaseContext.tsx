@@ -20,8 +20,8 @@ interface ProviderProps {
 
 export const SupabaseProvider = ({ schema = 'public_transport_tracker', children }: ProviderProps) => {
     const storage = new MMKVLoader().initialize()
-    const [supabaseUrl, setSupabaseUrl] = useMMKVStorage<string | undefined>('supabaseUrl', storage, undefined);
-    const [supabaseAnonKey, setSupabaseAnonKey] = useMMKVStorage<string | undefined>('supabaseAnonKey', storage, undefined);
+    const [supabaseUrl, setSupabaseUrl] = useMMKVStorage<string | undefined>('supabaseUrl', storage, '');
+    const [supabaseAnonKey, setSupabaseAnonKey] = useMMKVStorage<string | undefined>('supabaseAnonKey', storage, '');
     const [supabaseClient, setSupabaseClient] = useState<SupabaseClient<any, any, any> | undefined>(undefined);
 
     const createSupabaseClient = () => {
