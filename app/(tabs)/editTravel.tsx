@@ -218,35 +218,26 @@ export default function EditTravelItem() {
                 <LoadingScreen />
             ) : (
                 <>
-                    <View style={inputElementStyles['light'].inputContainer}>
-                        <View style={inputElementStyles['light'].inputLargeGroup}>
-                            <View style={inputElementStyles['light'].inputGroup}>
-                                <Text style={[
-                                    inputElementStyles['light'].inputLabel,
-                                    theme === 'dark' && inputElementStyles['dark'].inputLabel
-                                ]}>Bus Initial Arrival:</Text>
-                                <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={inputStyles['light'].pressableInput}>
-                                    <Text style={inputElementStyles['light'].insideLabel}>{formatDateForDisplay(travel.bus_initial_arrival)}</Text>
+                    <View style={inputElementStyles[theme].inputContainer}>
+                        <View style={inputElementStyles[theme].inputLargeGroup}>
+                            <View style={inputElementStyles[theme].inputGroup}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Bus Initial Arrival:</Text>
+                                <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={inputStyles[theme].pressableInput}>
+                                    <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(travel.bus_initial_arrival)}</Text>
                                 </Pressable>
                             </View>
 
-                            <View style={inputElementStyles['light'].inputGroup}>
-                                <Text style={[
-                                    inputElementStyles['light'].inputLabel,
-                                    theme === 'dark' && inputElementStyles['dark'].inputLabel
-                                ]}>Bus Initial Departure:</Text>
-                                <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={inputStyles['light'].pressableInput}>
-                                    <Text style={inputElementStyles['light'].insideLabel}>{formatDateForDisplay(travel.bus_initial_departure)}</Text>
+                            <View style={inputElementStyles[theme].inputGroup}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Bus Initial Departure:</Text>
+                                <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={inputStyles[theme].pressableInput}>
+                                    <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(travel.bus_initial_departure)}</Text>
                                 </Pressable>
                             </View>
 
-                            <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
-                                <Text style={[
-                                    inputElementStyles['light'].inputLabel,
-                                    theme === 'dark' && inputElementStyles['dark'].inputLabel
-                                ]}>Bus Final Arrival:</Text>
-                                <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={inputStyles['light'].pressableInput}>
-                                    <Text style={inputElementStyles['light'].insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
+                            <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Bus Final Arrival:</Text>
+                                <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={inputStyles[theme].pressableInput}>
+                                    <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
                                 </Pressable>
                             </View>
                         </View>
@@ -265,96 +256,75 @@ export default function EditTravelItem() {
                             />
                         )}
 
-                        <View style={inputElementStyles['light'].inputLargeGroup}>
-                            <View style={inputElementStyles['light'].inputGroup}>
-                                <Text style={[
-                                    inputElementStyles['light'].inputLabel,
-                                    theme === 'dark' && inputElementStyles['dark'].inputLabel
-                                ]}>Route:</Text>
+                        <View style={inputElementStyles[theme].inputLargeGroup}>
+                            <View style={inputElementStyles[theme].inputGroup}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Route:</Text>
                                 <Pressable
-                                    style={inputStyles['light'].pressableInput}
+                                    style={inputStyles[theme].pressableInput}
                                     onPress={() => openRouteModal()}>
-                                    <Text style={inputElementStyles['light'].insideLabel}>
+                                    <Text style={inputElementStyles[theme].insideLabel}>
                                         {`${routes.find(route => route.id === travel.route_id)?.code || `Select`} | ${routes.find(route => route.id === travel.route_id)?.name || `Route...`}`}
                                     </Text>
                                 </Pressable>
                             </View>
 
-                            <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
-                                <Text style={[
-                                    inputElementStyles['light'].inputLabel,
-                                    theme === 'dark' && inputElementStyles['dark'].inputLabel
-                                ]}>Type:</Text>
+                            <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Type:</Text>
                                 <TextInput
                                     editable={false}
-                                    style={inputStyles['light'].textInput}
+                                    style={inputStyles[theme].textInput}
                                     value={vehicleTypes.find(type => type.id === travel.type_id)?.name}
                                     placeholder="Vehicle type..."
                                 />
                             </View>
                         </View>
 
-                        <View style={inputElementStyles['light'].inputLargeGroup}>
-                            <View style={inputElementStyles['light'].inputGroup}>
-                                <Text style={[
-                                    inputElementStyles['light'].inputLabel,
-                                    theme === 'dark' && inputElementStyles['dark'].inputLabel
-                                ]}>Direction:</Text>
+                        <View style={inputElementStyles[theme].inputLargeGroup}>
+                            <View style={inputElementStyles[theme].inputGroup}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Direction:</Text>
                                 <Pressable
-                                    style={inputStyles['light'].pressableInput}
+                                    style={inputStyles[theme].pressableInput}
                                     onPress={() => openDirectionModal()}>
-                                    <Text style={inputElementStyles['light'].insideLabel}>
+                                    <Text style={inputElementStyles[theme].insideLabel}>
                                         {directions.find(direction => direction.id === travel.direction_id)?.name || 'Select Direction...'}
                                     </Text>
                                 </Pressable>
                             </View>
 
-                            <View style={inputElementStyles['light'].inputGroup}>
-                                <Text style={[
-                                    inputElementStyles['light'].inputLabel,
-                                    theme === 'dark' && inputElementStyles['dark'].inputLabel
-                                ]}>First Stop:</Text>
+                            <View style={inputElementStyles[theme].inputGroup}>
+                                <Text style={inputElementStyles[theme].inputLabel}>First Stop:</Text>
                                 <Pressable
-                                    style={inputStyles['light'].pressableInput}
+                                    style={inputStyles[theme].pressableInput}
                                     onPress={() => openStopModal('first_stop_id')}>
-                                    <Text style={inputElementStyles['light'].insideLabel}>{stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}</Text>
+                                    <Text style={inputElementStyles[theme].insideLabel}>{stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}</Text>
                                 </Pressable>
                             </View>
 
-                            <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
-                                <Text style={[
-                                    inputElementStyles['light'].inputLabel,
-                                    theme === 'dark' && inputElementStyles['dark'].inputLabel
-                                ]}>Last Stop:</Text>
+                            <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Last Stop:</Text>
                                 <Pressable
-                                    style={inputStyles['light'].pressableInput}
+                                    style={inputStyles[theme].pressableInput}
                                     onPress={() => openStopModal('last_stop_id')}>
-                                    <Text style={inputElementStyles['light'].insideLabel}>{stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}</Text>
+                                    <Text style={inputElementStyles[theme].insideLabel}>{stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}</Text>
                                 </Pressable>
                             </View>
                         </View>
 
-                        <View style={inputElementStyles['light'].inputLargeGroup}>
-                            <View style={inputElementStyles['light'].inputGroup}>
-                                <Text style={[
-                                    inputElementStyles['light'].inputLabel,
-                                    theme === 'dark' && inputElementStyles['dark'].inputLabel
-                                ]}>Vehicle Code:</Text>
+                        <View style={inputElementStyles[theme].inputLargeGroup}>
+                            <View style={inputElementStyles[theme].inputGroup}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Vehicle Code:</Text>
                                 <TextInput
-                                    style={inputStyles['light'].textInput}
+                                    style={inputStyles[theme].textInput}
                                     value={travel.vehicle_code || ''}
                                     onChangeText={(text) => handleChangeText('vehicle_code', text)}
                                     placeholder="Enter vehicle code"
                                 />
                             </View>
 
-                            <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
-                                <Text style={[
-                                    inputElementStyles['light'].inputLabel,
-                                    theme === 'dark' && inputElementStyles['dark'].inputLabel
-                                ]}>Notes:</Text>
+                            <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Notes:</Text>
                                 <TextInput
-                                    style={[inputStyles['light'].textInput, inputStyles['light'].multilineTextInput]}
+                                    style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput]}
                                     value={travel.notes || ''}
                                     onChangeText={(text) => handleChangeText('notes', text)}
                                     multiline={true}
@@ -364,16 +334,13 @@ export default function EditTravelItem() {
                             </View>
                         </View>
 
-                        <View style={inputElementStyles['light'].inputLargeGroup}>
-                            <View style={inputElementStyles['light'].inputGroup}>
-                                <Text style={[
-                                    inputElementStyles['light'].inputLabel,
-                                    theme === 'dark' && inputElementStyles['dark'].inputLabel
-                                ]}>Laps:</Text>
+                        <View style={inputElementStyles[theme].inputLargeGroup}>
+                            <View style={inputElementStyles[theme].inputGroup}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Laps:</Text>
                                 <Pressable
-                                    style={inputStyles['light'].pressableInput}
+                                    style={inputStyles[theme].pressableInput}
                                     onPress={() => openLapsModal()}>
-                                    <Text style={inputElementStyles['light'].insideLabel}>{`${laps.length} laps`}</Text>
+                                    <Text style={inputElementStyles[theme].insideLabel}>{`${laps.length} laps`}</Text>
                                 </Pressable>
                             </View>
                         </View>
