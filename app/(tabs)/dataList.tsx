@@ -44,7 +44,7 @@ const DataListScreen: React.FC = () => {
     const {
         activeModalConfig,
         setActiveModal, setActiveEditModal
-    } = useDatalistModal(refetchTravelData)
+    } = useDatalistModal(() => refetchTravelData(500))
 
     const {
         loading
