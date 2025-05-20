@@ -11,6 +11,8 @@ import CalendarModal from "@/components/modal/CalendarModal";
 import useStopModal from "@/hooks/useStopModal";
 import { getTodayString } from "@/src/utils/dateUtils";
 import { useSupabase } from "@/context/SupabaseContext";
+import { useTheme } from "@/context/ThemeContext";
+import { colors } from "@/const/color";
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -24,7 +26,9 @@ interface DateObject {
 
 export default function HomePage() {
     const { supabaseClient: supabase } = useSupabase()
-    
+
+    const { theme } = useTheme()
+
     const {
         travelAtDate, getTravelAtDate, getDates,
         dates, selectedDate, setSelectedDate,
@@ -85,8 +89,10 @@ export default function HomePage() {
         }, [selectedDate])
     )
 
+    const backgroundColor = theme === 'light' ? colors.background.white : colors.background.black
+
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { backgroundColor: backgroundColor }]}>
             <View style={styles.listContainer}>
                 {loading == true || !supabase ? (
                     <LoadingScreen></LoadingScreen>
@@ -94,7 +100,7 @@ export default function HomePage() {
                     <GroupedDataDisplay data={travelAtDate} currentDate={selectedDate}></GroupedDataDisplay>
                 )}
             </View>
-            <View style={styles.calendarContainer}>
+            <View style={[styles.calendarContainer, { backgroundColor: backgroundColor }]}>
                 <Button
                     style={[buttonStyles.addButton, { flex: 0 }]}
                     textStyle={buttonStyles.addButtonText}

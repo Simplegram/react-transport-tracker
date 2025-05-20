@@ -9,13 +9,17 @@ import { calculateDuration } from '@/src/utils/utils';
 import moment from 'moment';
 import { formatDate } from '@/src/utils/dateUtils';
 import useGetTravelData from '@/hooks/useGetTravelData';
+import { useTheme } from '@/context/ThemeContext';
+import { colors } from '@/const/color';
 
 interface GroupedDataDisplayProps {
     data: DataItem[];
     currentDate: string
 }
 
-const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDate }) => {
+export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDisplayProps) {
+    const { theme } = useTheme()
+
     const { setSelectedItem, setSelectedTravelItems } = useTravelContext();
 
     const formattedCurrentDate = moment(currentDate).format('LL')
@@ -88,9 +92,13 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDa
         router.push("/(tabs)/travelDetail");
     };
 
+    const backgroundColor = theme === 'light' ? colors.background.white : colors.background.black
+    const borderColor = theme === 'light' ? colors.background.black : colors.background.white
+    const dateLabelColor = theme === 'light' ? '#2c3e50' : colors.text.dimWhite
+
     return (
         <View style={styles.mainContainer}>
-            <Text style={styles.groupTitle}>
+            <Text style={[styles.groupTitle, { color: dateLabelColor }]}>
                 {formattedCurrentDate}
             </Text>
             {directionNames.length > 0 ? (
@@ -109,11 +117,12 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDa
                             borderTopRightRadius: 12,
                             borderBottomLeftRadius: 10,
                             borderBottomRightRadius: 10,
+                            borderColor: borderColor
                         }}>
                             <View key={directionNameKey} style={styles.page}>
                                 <View>
                                     <Pressable onPress={() => handleViewTravelDetails(directionNameKey)}>
-                                        <Text style={styles.groupTitle}>
+                                        <Text style={[styles.groupTitle, { color: dateLabelColor }]}>
                                             Direction: {directionNameKey} ({index + 1}/{directionNames.length})
                                         </Text>
                                     </Pressable>
@@ -178,7 +187,7 @@ const GroupedDataDisplay: React.FC<GroupedDataDisplayProps> = ({ data, currentDa
                     ))}
                 </PagerView>
             ) : (
-                <View style={styles.noDataContainer}>
+                <View style={[styles.noDataContainer, { borderColor: borderColor }]}>
                     <Text style={styles.noDataText}>No data available to display</Text>
                 </View>
             )}
@@ -210,7 +219,6 @@ const styles = StyleSheet.create({
     groupTitle: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#2c3e50',
         paddingBottom: 8,
         textAlign: 'center',
     },
@@ -323,5 +331,3 @@ const styles = StyleSheet.create({
         color: '#888',
     },
 });
-
-export default GroupedDataDisplay;
