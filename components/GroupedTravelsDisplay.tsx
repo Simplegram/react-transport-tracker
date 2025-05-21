@@ -95,7 +95,7 @@ export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDis
     };
 
     const backgroundColor = theme === 'light' ? colors.background.white : colors.background.black
-    const borderColor = theme === 'light' ? colors.background.black : colors.background.white
+    const borderColor = theme === 'light' ? colors.background.black : colors.text.dimmerWhite
     const dateLabelColor = theme === 'light' ? '#2c3e50' : colors.text.dimWhite
 
     return (
@@ -130,90 +130,61 @@ export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDis
                                     </Pressable>
                                 </View>
 
-                                <ScrollView contentContainerStyle={travelCardStyles['light'].cardHolder} nestedScrollEnabled={true}>
+                                <ScrollView contentContainerStyle={travelCardStyles[theme].cardHolder} nestedScrollEnabled={true}>
                                     {finalGroupedData[directionNameKey].map((item, itemIndex) => (
                                         <Pressable 
                                             key={item.id} 
-                                            style={[
-                                                travelCardStyles['light'].card, 
-                                                theme === 'dark' && travelCardStyles['dark'].card
-                                            ]} 
+                                            style={travelCardStyles[theme].card} 
                                             onPress={() => handleItemPress(directionNameKey, itemIndex)}
                                         >
-                                            <View style={travelCardStyles['light'].routeInfoSection}>
-                                                <Text style={[
-                                                    travelCardStyles['light'].routeText,
-                                                    theme === 'dark' && travelCardStyles['dark'].routeText
-                                                ]}>
+                                            <View style={travelCardStyles[theme].routeInfoSection}>
+                                                <Text style={travelCardStyles[theme].routeText}>
                                                     {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
                                                 </Text>
-                                                <Text style={[
-                                                    travelCardStyles['light'].vehicleText,
-                                                    theme === 'dark' && travelCardStyles['dark'].vehicleText
-                                                ]}>
+                                                <Text style={travelCardStyles[theme].vehicleText}>
                                                     {item.vehicle_code || 'N/A'}
                                                 </Text>
                                             </View>
 
-                                            <View style={travelCardStyles['light'].stopsTimeSection}>
-                                                <View style={travelCardStyles['light'].stopTimeBlock}>
-                                                    <Text style={[
-                                                        travelCardStyles['light'].stopText,
-                                                        theme === 'dark' && travelCardStyles['dark'].routeText
-                                                    ]}>{item.first_stop_id?.name || 'N/A'}</Text>
-                                                    <Text style={[
-                                                        travelCardStyles['light'].timeText,
-                                                        theme === 'dark' && travelCardStyles['dark'].vehicleText
-                                                    ]}>
+                                            <Divider />
+
+                                            <View style={travelCardStyles[theme].stopsTimeSection}>
+                                                <View style={travelCardStyles[theme].stopTimeBlock}>
+                                                    <Text style={travelCardStyles[theme].stopText}>{item.first_stop_id?.name || 'N/A'}</Text>
+                                                    <Text style={travelCardStyles[theme].timeText}>
                                                         {item.bus_initial_departure ? formatDate(item.bus_initial_departure) : 'N/A'}
                                                     </Text>
                                                 </View>
 
-                                                <View style={travelCardStyles['light'].stopArrowBlock}>
-                                                    <Text style={[
-                                                        travelCardStyles['light'].stopArrowText,
-                                                        theme === 'dark' && travelCardStyles['dark'].stopArrowText
-                                                    ]}>➜</Text>
-                                                    <Text style={[
-                                                        travelCardStyles['light'].notesLabel,
-                                                        theme === 'dark' && travelCardStyles['dark'].whiteText
-                                                    ]}>{calculateDuration(item)}</Text>
+                                                <View style={travelCardStyles[theme].stopArrowBlock}>
+                                                    <Text style={travelCardStyles[theme].stopArrowText}>➜</Text>
+                                                    <Text style={travelCardStyles[theme].notesLabel}>{calculateDuration(item)}</Text>
                                                 </View>
 
-                                                <View style={travelCardStyles['light'].stopTimeBlock}>
-                                                    <Text style={[
-                                                        travelCardStyles['light'].stopText,
-                                                        theme === 'dark' && travelCardStyles['dark'].routeText
-                                                    ]}>{item.last_stop_id?.name || 'N/A'}</Text>
-                                                    <Text style={[
-                                                        travelCardStyles['light'].timeText,
-                                                        theme === 'dark' && travelCardStyles['dark'].vehicleText
-                                                    ]}>
+                                                <View style={travelCardStyles[theme].stopTimeBlock}>
+                                                    <Text style={travelCardStyles[theme].stopText}>{item.last_stop_id?.name || 'N/A'}</Text>
+                                                    <Text style={travelCardStyles[theme].timeText}>
                                                         {item.bus_final_arrival ? formatDate(item.bus_final_arrival) : 'N/A'}
                                                     </Text>
                                                 </View>
                                             </View>
 
-                                            <View style={travelCardStyles['light'].lapsSection}>
-                                                <Text style={[
-                                                    travelCardStyles['light'].lapText,
-                                                    theme === 'dark' && travelCardStyles['dark'].whiteText
-                                                ]}>{item.lapCount} lap(s)</Text>
+                                            <Divider />
+
+                                            <View style={travelCardStyles[theme].lapsSection}>
+                                                <Text style={travelCardStyles[theme].lapText}>{item.lapCount} lap(s)</Text>
                                             </View>
 
                                             {item.notes && (
-                                                <View style={travelCardStyles['light'].notesSection}>
-                                                    <Text style={[
-                                                        travelCardStyles['light'].notesLabel,
-                                                        theme === 'dark' && travelCardStyles['dark'].notesLabel
-                                                    ]}>Notes:</Text>
-                                                    <Text style={[
-                                                        travelCardStyles['light'].notesText,
-                                                        theme === 'dark' && travelCardStyles['dark'].whiteText
-                                                    ]}>
-                                                        {item.notes}
-                                                    </Text>
-                                                </View>
+                                                <>
+                                                    <Divider />
+                                                    <View style={travelCardStyles[theme].notesSection}>
+                                                        <Text style={travelCardStyles[theme].notesLabel}>Notes:</Text>
+                                                        <Text style={travelCardStyles[theme].notesText}>
+                                                            {item.notes}
+                                                        </Text>
+                                                    </View>
+                                                </>
                                             )}
                                         </Pressable>
                                     ))}
@@ -228,13 +199,10 @@ export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDis
                 </PagerView>
             ) : (
                 <View style={[
-                    travelEmptyContainer['light'].noDataContainer, 
+                    travelEmptyContainer[theme].noDataContainer, 
                     { borderColor: borderColor }
                 ]}>
-                    <Text style={[
-                        travelEmptyContainer['light'].noDataText,
-                        theme === 'dark' && travelEmptyContainer['dark'].noDataText,
-                    ]}>No data available to display</Text>
+                    <Text style={travelEmptyContainer[theme].noDataText}>No data available to display</Text>
                 </View>
             )}
         </View>
