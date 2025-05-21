@@ -16,7 +16,7 @@ const lightButtonStyles = StyleSheet.create({
         borderWidth: 1,
     },
     addButtonText: {
-        color: '#fff',
+        color: colors.text.white,
         fontSize: 16,
         fontWeight: '600',
     },
@@ -26,10 +26,10 @@ const lightButtonStyles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         borderWidth: 1,
-        backgroundColor: '#ffffff'
+        backgroundColor: colors.text.white
     },
     cancelButtonText: {
-        color: '#000',
+        color: colors.text.black,
         fontSize: 16,
         fontWeight: '600',
     },

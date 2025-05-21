@@ -7,6 +7,8 @@ export const colors = {
         dimWhite: '#e8e8e8'
     },
     text: {
+        white: '#ffffff',
+        black: '#000000',
         dimWhite: '#e8e8e8',
         dimmerWhite: '#b3b3b3',
         dimmerWhite2: '#cfcfcf',

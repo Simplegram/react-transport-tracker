@@ -16,6 +16,7 @@ import Divider from '@/components/Divider';
 import { useTheme } from '@/context/ThemeContext';
 import { statusBarStyles } from '@/src/styles/Styles';
 import { colors } from '@/const/color';
+import { buttonStyles } from '@/src/styles/ButtonStyles';
 
 interface ButtonConfig {
     id: string
@@ -52,8 +53,6 @@ const NavigationPage: React.FC = () => {
 
     const { signOut } = useAuth()
 
-    const buttonBorderColor = theme === 'light' ? colors.background.black : colors.background.black
-
     const handleItemPress = (selectedModification: string) => {
         if (selectedModification) {
             setSelectedModification(selectedModification);
@@ -83,8 +82,8 @@ const NavigationPage: React.FC = () => {
                             color='#007bff'
                             key={button.text}
                             title={button.text}
-                            style={[styles.button, { borderColor: buttonBorderColor }]}
-                            textStyle={styles.buttonText}
+                            style={buttonStyles[theme].addButton}
+                            textStyle={buttonStyles[theme].addButtonText}
                             onPress={() => handleItemPress(button.id)}
                         />
                     ))}
@@ -93,15 +92,15 @@ const NavigationPage: React.FC = () => {
                 <Button
                     title={`Enable ${theme === 'light' ? 'dark' : 'light'} mode`}
                     color='#007bff'
-                    style={[styles.button, { borderColor: buttonBorderColor }]}
-                    textStyle={styles.buttonText}
+                    style={buttonStyles[theme].addButton}
+                    textStyle={buttonStyles[theme].addButtonText}
                     onPress={handleThemeChange}
                 />
                 <Divider />
                 <Button
                     color='#f0473e'
                     style={styles.button}
-                    textStyle={styles.buttonText}
+                    textStyle={buttonStyles[theme].addButtonText}
                     onPress={handleLogout}
                 >Logout</Button>
             </View>
@@ -126,11 +125,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 8,
         alignItems: 'center',
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '700',
     },
 });
 
