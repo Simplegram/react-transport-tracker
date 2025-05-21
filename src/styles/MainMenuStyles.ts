@@ -49,11 +49,11 @@ export const mainMenuStyles = {
     dark: StyleSheet.create({
         container: {
             ...lightMainmenuStyles.container,
-            color: colors.background.black,
+            backgroundColor: colors.background.black,
         },
         calendarContainer: {
             ...lightMainmenuStyles.calendarContainer,
-            color: colors.background.black,
+            backgroundColor: colors.background.black,
         },
         listContainer: {
             ...lightMainmenuStyles.listContainer,
