@@ -33,6 +33,12 @@ const lightButtonStyles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
     },
+    redButton: {
+        borderWidth: 1,
+        borderRadius: 8,
+        alignItems: 'center',
+        backgroundColor: colors.background.redCancel,
+    },
 })
 
 export const buttonStyles = {
@@ -55,6 +61,11 @@ export const buttonStyles = {
         },
         cancelButtonText: {
             ...lightButtonStyles.cancelButtonText,
+        },
+        redButton: {
+            ...lightButtonStyles.redButton,
+            borderColor: colors.background.dimRedCancel,
+            backgroundColor: colors.background.black,
         },
     })
 }

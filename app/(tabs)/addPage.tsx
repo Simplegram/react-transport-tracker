@@ -79,7 +79,6 @@ const NavigationPage: React.FC = () => {
                 <View style={styles.buttonContainer}>
                     {navigationButtons.map((button) => (
                         <Button
-                            color='#007bff'
                             key={button.text}
                             title={button.text}
                             style={buttonStyles[theme].addButton}
@@ -91,15 +90,13 @@ const NavigationPage: React.FC = () => {
                 <Divider />
                 <Button
                     title={`Enable ${theme === 'light' ? 'dark' : 'light'} mode`}
-                    color='#007bff'
                     style={buttonStyles[theme].addButton}
                     textStyle={buttonStyles[theme].addButtonText}
                     onPress={handleThemeChange}
                 />
                 <Divider />
                 <Button
-                    color='#f0473e'
-                    style={styles.button}
+                    style={buttonStyles[theme].redButton}
                     textStyle={buttonStyles[theme].addButtonText}
                     onPress={handleLogout}
                 >Logout</Button>
@@ -120,11 +117,6 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         gap: 10,
-    },
-    button: {
-        borderWidth: 1,
-        borderRadius: 8,
-        alignItems: 'center',
     },
 });
 

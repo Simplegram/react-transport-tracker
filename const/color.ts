@@ -5,7 +5,9 @@ export const colors = {
         white: '#ffffff',
         black: '#000000',
         darkBlue: '#012359',
-        dimWhite: '#e8e8e8'
+        dimWhite: '#e8e8e8',
+        redCancel: '#f0473e',
+        dimRedCancel: '#b83730',
     },
     text: {
         white: '#ffffff',
