@@ -1,12 +1,21 @@
 import { colors } from "@/const/color";
 import { StyleSheet, Dimensions } from "react-native";
 
-export const styles = StyleSheet.create({
+const lightStyles = StyleSheet.create({
     icon: {
-        paddingLeft: 5,
         alignItems: 'center',
     },
 })
+
+export const styles = {
+    light: lightStyles,
+    dark: StyleSheet.create({
+        icon: {
+            ...lightStyles.icon,
+            color: colors.text.dimWhite,
+        }
+    })
+}
 
 const { height: screenHeight } = Dimensions.get('window');
 

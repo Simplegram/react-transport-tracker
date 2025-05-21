@@ -43,7 +43,7 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
             <Text style={inputElementStyles['light'].inputLabel}>Icon name (FontAwesome6):</Text>
             <View style={inputElementStyles['light'].inputContainer}>
                 <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupIcon]}>
-                    <Icon style={styles.icon} name={icon.name ? icon.name : 'xmark'} size={32} />
+                    <Icon style={styles[theme].icon} name={icon.name ? icon.name : 'xmark'} size={32} />
                     <TextInput
                         style={[inputStyles['light'].pressableInput, { flex: 1 }]}
                         placeholder="e.g., train-subway"

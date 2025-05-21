@@ -16,6 +16,7 @@ import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { DatalistStyles, ItemStyles } from '@/src/styles/DatalistStyles';
 import { colors } from '@/const/color';
 import { inputStyles } from '@/src/styles/InputStyles';
+import { styles } from '@/src/styles/Styles';
 
 interface ItemTemplate {
     id: string | number;
@@ -91,13 +92,13 @@ export default function DataListScreen() {
             <View style={ItemStyles[theme].textContainer}>
                 {dataType === "Stops" ? (
                     <>
-                        <Icon name={item.vehicle_type?.icon_id.name} size={20}></Icon>
+                        <Icon style={styles[theme].icon} name={item.vehicle_type?.icon_id.name} size={20}></Icon>
                         <Text style={ItemStyles[theme].itemSubtitle}>{item.vehicle_type?.name}</Text>
                     </>
                 ) : null}
                 {dataType === "Routes" ? (
                     <>
-                        <Icon name={item.vehicle_type_id?.icon_id.name} size={20}></Icon>
+                        <Icon style={styles[theme].icon} name={item.vehicle_type_id?.icon_id.name} size={20}></Icon>
                         <Text style={ItemStyles[theme].itemSubtitle}>{item.code}</Text>
                     </>
                 ) : null}
