@@ -62,10 +62,10 @@ export const collapsibleHeaderStyles = {
 
 export const dividerStyles = {
     light: colors.background.black,
-    dark: '#ffffff',
+    dark: colors.text.dimmerWhite,
 }
 
 export const statusBarStyles = {
-    light: '#ffffff',
+    light: colors.background.white,
     dark: colors.background.black,
 }
