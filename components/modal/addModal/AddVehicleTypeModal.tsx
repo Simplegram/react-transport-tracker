@@ -30,12 +30,12 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
     return (
         <View>
             {(loading || !icons || icons.length === 0) ? (
-                <Text style={inputElementStyles['light'].inputLabel}>Loading...</Text>
+                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
             ) : (
                 <>
-                    <View style={inputElementStyles['light'].inputContainer}>
-                        <View style={inputElementStyles['light'].inputGroup}>
-                            <Text style={inputElementStyles['light'].insideLabel}>Name:</Text>
+                    <View style={inputElementStyles[theme].inputContainer}>
+                        <View style={inputElementStyles[theme].inputGroup}>
+                            <Text style={inputElementStyles[theme].insideLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles['light'].pressableInput}
                                 placeholder="e.g., Standard Bus"
@@ -44,11 +44,11 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
                             />
                         </View>
 
-                        <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
+                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles['light'].inputLabel}>Icon:</Text>
+                                <Text style={inputElementStyles[theme].inputLabel}>Icon:</Text>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}

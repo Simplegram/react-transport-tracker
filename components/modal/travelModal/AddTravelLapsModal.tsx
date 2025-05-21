@@ -75,11 +75,11 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
             onRequestClose={onClose}
         >
             <View style={styles.modalBackdrop}>
-                <View style={[styles.modalContainer, inputElementStyles['light'].inputContainer]}>
+                <View style={[styles.modalContainer, inputElementStyles[theme].inputContainer]}>
                     <View style={styles.inputContainer}>
                         {laps.length === 0 ? (
                             <View style={styles.emptyList}>
-                                <Text style={inputElementStyles['light'].inputLabel}>No lap found</Text>
+                                <Text style={inputElementStyles[theme].inputLabel}>No lap found</Text>
                             </View>
                         ) : (
                             <ScrollView
@@ -89,15 +89,15 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                             >
                                 {laps.map((lap: AddableLap, index) => (
                                     <Pressable key={index} style={styles.detailRow} onPress={() => handleLapSelect(lap)}>
-                                        <Text style={inputElementStyles['light'].inputLabel}>{formatDateForDisplay(lap.time)}</Text>
+                                        <Text style={inputElementStyles[theme].inputLabel}>{formatDateForDisplay(lap.time)}</Text>
                                         {stops.find(stop => stop.id === lap.stop_id) ? (
-                                            <Text style={[inputElementStyles['light'].inputLabel, { color: colors.appBlue }]}>
+                                            <Text style={[inputElementStyles[theme].inputLabel, { color: colors.appBlue }]}>
                                                 {stops.find(stop => stop.id === lap.stop_id)?.name}
                                             </Text>
                                         ) : null}
 
                                         {lap.note && (
-                                            <Text style={inputElementStyles['light'].inputLabelLight}>{lap.note}</Text>
+                                            <Text style={inputElementStyles[theme].inputLabelLight}>{lap.note}</Text>
                                         )}
                                     </Pressable>
                                 ))}

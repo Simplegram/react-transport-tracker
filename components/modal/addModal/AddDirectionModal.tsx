@@ -27,12 +27,12 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
     return (
         <View>
             {loading ? (
-                <Text style={inputElementStyles['light'].inputLabel}>Loading...</Text>
+                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
             ) : (
                 <>
-                    <View style={inputElementStyles['light'].inputContainer}>
-                        <View style={inputElementStyles['light'].inputGroup}>
-                            <Text style={inputElementStyles['light'].insideLabel}>Name:</Text>
+                    <View style={inputElementStyles[theme].inputContainer}>
+                        <View style={inputElementStyles[theme].inputGroup}>
+                            <Text style={inputElementStyles[theme].insideLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles['light'].pressableInput}
                                 placeholder="Direction name..."

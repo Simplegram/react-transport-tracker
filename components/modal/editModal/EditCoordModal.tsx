@@ -37,9 +37,9 @@ export default function EditCoordModal({ currentCoordinates, isModalVisible, onC
             transparent={true}
             animationType="slide"
         >
-            <Pressable style={modalStyles.modalBackdrop}>
-                <View style={[modalStyles.modalContainer, modalStyles.coordModalContainer]}>
-                    <View style={[inputElementStyles['light'].inputGroup, { flex: 1 }]}>
+            <Pressable style={modalStyles[theme].modalBackdrop}>
+                <View style={[modalStyles[theme].modalContainer, modalStyles[theme].coordModalContainer]}>
+                    <View style={[inputElementStyles[theme].inputGroup, { flex: 1 }]}>
                         <MapView
                             ref={mapRef}
                             style={{ flex: 1 }}

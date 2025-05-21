@@ -1,3 +1,4 @@
+import { useTheme } from '@/context/ThemeContext';
 import {
     View,
     Text,
@@ -22,6 +23,8 @@ interface Props {
 }
 
 export default function ModalTemplate({ children, isModalVisible, title = "Editor", handleCloseModal }: Props) {
+    const { theme } = useTheme()
+
     return (
         <Modal
             animationType="slide"

@@ -72,9 +72,9 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
             transparent={true}
             animationType="slide"
         >
-            <Pressable style={modalStyles.modalBackdrop}>
-                <View style={[modalStyles.modalContainer, modalStyles.coordModalContainer]} onStartShouldSetResponder={() => true}>
-                    <View style={[inputElementStyles['light'].inputGroup, { flex: 1 }]}>
+            <Pressable style={modalStyles[theme].modalBackdrop}>
+                <View style={[modalStyles[theme].modalContainer, modalStyles[theme].coordModalContainer]} onStartShouldSetResponder={() => true}>
+                    <View style={[inputElementStyles[theme].inputGroup, { flex: 1 }]}>
                         <MapView
                             ref={mapRef}
                             style={{ flex: 1 }}

@@ -99,21 +99,21 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
             {!lap ? (
                 <LoadingScreen></LoadingScreen>
             ) : (
-                <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
-                    <View style={[modalStyles.modalContainer, modalStyles.lapModalContainer]}>
-                        <View style={inputElementStyles['light'].inputGroup}>
-                            <Text style={inputElementStyles['light'].insideLabel}>Time:</Text>
+                <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose}>
+                    <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
+                        <View style={inputElementStyles[theme].inputGroup}>
+                            <Text style={inputElementStyles[theme].insideLabel}>Time:</Text>
                             <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles['light'].pressableInput}>
-                                <Text style={inputElementStyles['light'].inputLabel}>{formatDateForDisplay(lap.time)}</Text>
+                                <Text style={inputElementStyles[theme].inputLabel}>{formatDateForDisplay(lap.time)}</Text>
                             </Pressable>
                         </View>
 
-                        <View style={inputElementStyles['light'].inputGroup}>
-                            <Text style={inputElementStyles['light'].insideLabel}>Stop:</Text>
+                        <View style={inputElementStyles[theme].inputGroup}>
+                            <Text style={inputElementStyles[theme].insideLabel}>Stop:</Text>
                             <Pressable
                                 style={inputStyles['light'].pressableInput}
                                 onPress={() => openStopModal('last_stop_id')}>
-                                <Text style={[inputElementStyles['light'].inputLabel, { marginBottom: 0 }]}>
+                                <Text style={[inputElementStyles[theme].inputLabel, { marginBottom: 0 }]}>
                                     {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
                                 </Text>
                             </Pressable>
@@ -128,8 +128,8 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             />
                         )}
 
-                        <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
-                            <Text style={inputElementStyles['light'].inputLabel}>Note:</Text>
+                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                            <Text style={inputElementStyles[theme].inputLabel}>Note:</Text>
                             <TextInput
                                 placeholder="Optional notes"
                                 value={lap.note || ''}
@@ -138,7 +138,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                                 returnKeyType="done"
                                 multiline={true}
                                 numberOfLines={3}
-                                style={[inputStyles['light'].textInput, inputStyles['light'].multilineTextInput, inputElementStyles['light'].insideLabel]}
+                                style={[inputStyles['light'].textInput, inputStyles['light'].multilineTextInput, inputElementStyles[theme].insideLabel]}
                             />
                         </View>
 

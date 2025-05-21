@@ -55,12 +55,12 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
     return (
         <View>
             {loading ? (
-                <Text style={inputElementStyles['light'].inputLabel}>Loading...</Text>
+                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
             ) : (
                 <>
-                    <View style={inputElementStyles['light'].inputContainer}>
-                        <View style={inputElementStyles['light'].inputGroup}>
-                            <Text style={inputElementStyles['light'].inputLabel}>Name:</Text>
+                    <View style={inputElementStyles[theme].inputContainer}>
+                        <View style={inputElementStyles[theme].inputGroup}>
+                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles['light'].pressableInput}
                                 placeholder="Stop name..."
@@ -69,9 +69,9 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             />
                         </View>
 
-                        <View style={inputElementStyles['light'].inputGroup}>
-                            <Text style={inputElementStyles['light'].inputLabel}>Latitude and Longitude:</Text>
-                            <View style={inputElementStyles['light'].inputGroupCoord}>
+                        <View style={inputElementStyles[theme].inputGroup}>
+                            <Text style={inputElementStyles[theme].inputLabel}>Latitude and Longitude:</Text>
+                            <View style={inputElementStyles[theme].inputGroupCoord}>
                                 <TextInput
                                     style={[inputStyles['light'].pressableInput, inputStyles['light'].pressableInputCoord]}
                                     placeholder="Stop latitude..."
@@ -88,12 +88,12 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             <Pressable
                                 style={[inputStyles['light'].pressableInput, { marginTop: 10 }]}
                                 onPress={() => openCoordModal()}>
-                                <Text style={inputElementStyles['light'].insideLabel}>Pick Latitude and Longitude...</Text>
+                                <Text style={inputElementStyles[theme].insideLabel}>Pick Latitude and Longitude...</Text>
                             </Pressable>
                         </View>
 
-                        <View style={inputElementStyles['light'].inputGroup}>
-                            <Text style={inputElementStyles['light'].inputLabel}>Alternative name:</Text>
+                        <View style={inputElementStyles[theme].inputGroup}>
+                            <Text style={inputElementStyles[theme].inputLabel}>Alternative name:</Text>
                             <TextInput
                                 style={inputStyles['light'].pressableInput}
                                 placeholder="Alternative name..."
@@ -102,11 +102,11 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             />
                         </View>
 
-                        <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
+                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles['light'].inputLabel}>Icon:</Text>
+                                <Text style={inputElementStyles[theme].inputLabel}>Icon:</Text>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
@@ -122,7 +122,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                                             onPress={() => setStop({ ...stop, vehicle_type: type.id })}
                                         >
                                             <Icon name={type.icon_id.name} size={20}></Icon>
-                                            <Text style={inputElementStyles['light'].inputLabel}>{type.name.slice(0, 5)}</Text>
+                                            <Text style={inputElementStyles[theme].inputLabel}>{type.name.slice(0, 5)}</Text>
                                         </TouchableOpacity>
                                     ))}
                                 </ScrollView>

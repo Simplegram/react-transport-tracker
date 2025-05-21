@@ -69,9 +69,9 @@ const Login = () => {
                     (
                         <>
                             <Text style={styles.header}>Transport Tracker</Text>
-                            <View style={[inputElementStyles['light'].inputContainer, { paddingBottom: 0 }]}>
-                                <View style={inputElementStyles['light'].inputGroup}>
-                                    <Text style={inputElementStyles['light'].inputLabel}>Supabase URL</Text>
+                            <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
+                                <View style={inputElementStyles[theme].inputGroup}>
+                                    <Text style={inputElementStyles[theme].inputLabel}>Supabase URL</Text>
                                     <TextInput
                                         autoCapitalize="none"
                                         placeholder="https://my-example-brand.supabase.co"
@@ -81,8 +81,8 @@ const Login = () => {
                                         numberOfLines={1}
                                     />
                                 </View>
-                                <View style={inputElementStyles['light'].inputGroup}>
-                                    <Text style={inputElementStyles['light'].inputLabel}>Supabase Anon Key</Text>
+                                <View style={inputElementStyles[theme].inputGroup}>
+                                    <Text style={inputElementStyles[theme].inputLabel}>Supabase Anon Key</Text>
                                     <TextInput
                                         autoCapitalize="none"
                                         placeholder="abcdefghijklmnopqrstuvwxyz1234567890"
@@ -92,8 +92,8 @@ const Login = () => {
                                         numberOfLines={1}
                                     />
                                 </View>
-                                <View style={inputElementStyles['light'].inputGroup}>
-                                    <Text style={inputElementStyles['light'].inputLabel}>Supabase Account Email</Text>
+                                <View style={inputElementStyles[theme].inputGroup}>
+                                    <Text style={inputElementStyles[theme].inputLabel}>Supabase Account Email</Text>
                                     <TextInput
                                         autoCapitalize="none"
                                         placeholder="john@doe.com"
@@ -102,8 +102,8 @@ const Login = () => {
                                         style={inputStyles['light'].textInput}
                                     />
                                 </View>
-                                <View style={inputElementStyles['light'].inputGroup}>
-                                    <Text style={inputElementStyles['light'].inputLabel}>Supabase Account Password</Text>
+                                <View style={inputElementStyles[theme].inputGroup}>
+                                    <Text style={inputElementStyles[theme].inputLabel}>Supabase Account Password</Text>
                                     <TextInput
                                         placeholder="password"
                                         value={password}

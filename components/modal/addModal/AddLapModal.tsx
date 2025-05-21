@@ -64,25 +64,25 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
             animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
+            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose}>
                 {!stops ? (
-                    <Text style={inputElementStyles['light'].inputLabel}>Loading...</Text>
+                    <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
                 ) : (
                     <>
-                        <View style={[modalStyles.modalContainer, modalStyles.lapModalContainer]}>
-                            <View style={inputElementStyles['light'].inputGroup}>
-                                <Text style={inputElementStyles['light'].inputLabel}>Time:</Text>
+                        <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
+                            <View style={inputElementStyles[theme].inputGroup}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Time:</Text>
                                 <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles['light'].pressableInput}>
-                                    <Text style={inputElementStyles['light'].insideLabel}>{formatDateForDisplay(lap.time)}</Text>
+                                    <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(lap.time)}</Text>
                                 </Pressable>
                             </View>
 
-                            <View style={inputElementStyles['light'].inputGroup}>
-                                <Text style={inputElementStyles['light'].inputLabel}>Stop:</Text>
+                            <View style={inputElementStyles[theme].inputGroup}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Stop:</Text>
                                 <Pressable
                                     style={inputStyles['light'].pressableInput}
                                     onPress={() => openStopModal('last_stop_id')}>
-                                    <Text style={[inputElementStyles['light'].insideLabel, { marginBottom: 0 }]}>
+                                    <Text style={[inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>
                                         {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
                                     </Text>
                                 </Pressable>
@@ -97,8 +97,8 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 />
                             )}
 
-                            <View style={[inputElementStyles['light'].inputGroup, inputElementStyles['light'].inputGroupEnd]}>
-                                <Text style={inputElementStyles['light'].inputLabel}>Note:</Text>
+                            <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Note:</Text>
                                 <TextInput
                                     placeholder="Optional notes"
                                     value={lap.note || ''}
@@ -107,7 +107,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                     returnKeyType="done"
                                     multiline={true}
                                     numberOfLines={3}
-                                    style={[inputStyles['light'].textInput, inputStyles['light'].multilineTextInput, inputElementStyles['light'].insideLabel]}
+                                    style={[inputStyles['light'].textInput, inputStyles['light'].multilineTextInput, inputElementStyles[theme].insideLabel]}
                                 />
                             </View>
 
