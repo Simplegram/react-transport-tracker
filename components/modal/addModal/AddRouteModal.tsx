@@ -64,7 +64,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
                         <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].insideLabel}>Code:</Text>
+                            <Text style={inputElementStyles[theme].inputLabel}>Code:</Text>
                             <TextInput
                                 style={inputStyles[theme].pressableInput}
                                 placeholder="Route code..."
@@ -75,7 +75,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                         </View>
 
                         <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].insideLabel}>Name:</Text>
+                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles[theme].pressableInput}
                                 placeholder="Route name..."

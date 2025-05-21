@@ -37,7 +37,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
                         <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].insideLabel}>Name:</Text>
+                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles[theme].pressableInput}
                                 placeholder="e.g., Standard Bus"
