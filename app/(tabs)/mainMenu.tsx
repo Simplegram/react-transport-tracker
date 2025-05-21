@@ -13,6 +13,7 @@ import { getTodayString } from "@/src/utils/dateUtils";
 import { useSupabase } from "@/context/SupabaseContext";
 import { useTheme } from "@/context/ThemeContext";
 import { colors } from "@/const/color";
+import { mainMenuStyles } from "@/src/styles/MainMenuStyles";
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -89,18 +90,16 @@ export default function HomePage() {
         }, [selectedDate])
     )
 
-    const backgroundColor = theme === 'light' ? colors.background.white : colors.background.black
-
     return (
-        <View style={[styles.container, { backgroundColor: backgroundColor }]}>
-            <View style={styles.listContainer}>
+        <View style={mainMenuStyles[theme].container}>
+            <View style={mainMenuStyles[theme].listContainer}>
                 {loading == true || !supabase ? (
                     <LoadingScreen></LoadingScreen>
                 ) : (
                     <GroupedDataDisplay data={travelAtDate} currentDate={selectedDate}></GroupedDataDisplay>
                 )}
             </View>
-            <View style={[styles.calendarContainer, { backgroundColor: backgroundColor }]}>
+            <View style={mainMenuStyles[theme].calendarContainer}>
                 <Button
                     style={[buttonStyles.addButton, { flex: 0 }]}
                     textStyle={buttonStyles.addButtonText}
@@ -122,45 +121,3 @@ export default function HomePage() {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flexGrow: 1,
-        justifyContent: 'center',
-        padding: 15,
-        paddingTop: 0,
-        backgroundColor: '#fff'
-    },
-    calendarContainer: {
-        backgroundColor: 'white',
-        paddingTop: 10,
-    },
-    listContainer: {
-        flex: 1,
-    },
-    listTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        color: '#333',
-    },
-    listContent: {
-        flexGrow: 1,
-    },
-    listItem: {
-        backgroundColor: 'white',
-        padding: 15,
-        borderRadius: 8,
-        marginBottom: 10,
-    },
-    itemText: {
-        fontSize: 16,
-        color: '#333',
-    },
-    noItemsText: {
-        fontSize: 16,
-        color: '#777',
-        textAlign: 'center',
-        marginTop: 20,
-    },
-});
