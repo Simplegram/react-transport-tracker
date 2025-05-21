@@ -1,21 +1,21 @@
 import Button from "@/components/BaseButton"
+import { colors } from "@/const/color"
 import { useModalContext } from "@/context/ModalContext"
+import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
-import { EditableRoute } from "@/src/types/EditableTravels"
-import { useRef, useState } from "react"
-import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
-import Icon from 'react-native-vector-icons/FontAwesome6'
-import EditTravelStopModal from "../travelModal/EditTravelStopModal"
-import useStopModal from "@/hooks/useStopModal"
-import { sortByIdToFront } from "@/src/utils/utils"
 import { useLoading } from "@/hooks/useLoading"
-import { VehicleType } from "@/src/types/Travels"
+import useStopModal from "@/hooks/useStopModal"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
-import { ModalProp } from "@/src/types/TravelModal"
-import { useTheme } from "@/context/ThemeContext"
-import { colors } from "@/const/color"
 import { styles } from "@/src/styles/Styles"
+import { EditableRoute } from "@/src/types/EditableTravels"
+import { ModalProp } from "@/src/types/TravelModal"
+import { VehicleType } from "@/src/types/Travels"
+import { sortByIdToFront } from "@/src/utils/utils"
+import { useRef, useState } from "react"
+import { Alert, Pressable, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
+import Icon from 'react-native-vector-icons/FontAwesome6'
+import EditTravelStopModal from "../travelModal/EditTravelStopModal"
 
 
 export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: ModalProp) {

@@ -1,21 +1,20 @@
 import Button from "@/components/BaseButton";
+import { colors } from "@/const/color";
 import { useModalContext } from "@/context/ModalContext";
+import { useTheme } from "@/context/ThemeContext";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
+import useStopModal from "@/hooks/useStopModal";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles";
+import { styles } from "@/src/styles/Styles";
+import { AddableCoordinates } from "@/src/types/AddableTravels";
 import { EditableStop } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { useState } from "react";
-import { Alert, Pressable } from "react-native";
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import AddCoordModal from "../addModal/AddCoordModal";
-import useStopModal from "@/hooks/useStopModal";
-import { AddableCoordinates, AddableCoordModalProp } from "@/src/types/AddableTravels";
-import { colors } from "@/const/color";
-import { useTheme } from "@/context/ThemeContext";
-import { styles } from "@/src/styles/Styles";
 
 export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()

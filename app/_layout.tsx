@@ -1,8 +1,8 @@
-import { Slot, useRouter, useSegments } from 'expo-router'
-import { useEffect } from 'react'
-import { AuthProvider, useAuth } from '@/provider/AuthProvider'
 import { SupabaseProvider } from '@/context/SupabaseContext'
 import { ThemeProvider } from '@/context/ThemeContext'
+import { AuthProvider, useAuth } from '@/provider/AuthProvider'
+import { Slot, useRouter, useSegments } from 'expo-router'
+import { useEffect } from 'react'
 
 // Makes sure the user is authenticated before accessing protected pages
 const InitialLayout = () => {

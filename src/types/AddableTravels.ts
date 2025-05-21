@@ -84,13 +84,5 @@ interface AddableLapModalProp {
 }
 
 export {
-    AddableDirection,
-    AddableStop,
-    AddableRoute,
-    AddableVehicleType,
-    AddableIconType,
-    AddableTravel,
-    AddableLap,
-    AddableCoordinates, AddableCoordModalProp,
-    AddableLapsModalProp, AddableLapModalProp
+    AddableCoordinates, AddableCoordModalProp, AddableDirection, AddableIconType, AddableLap, AddableLapModalProp, AddableLapsModalProp, AddableRoute, AddableStop, AddableTravel, AddableVehicleType
 }

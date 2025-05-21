@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react';
-import { View, Text, ScrollView, StyleSheet, Pressable, Dimensions } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import PagerView from 'react-native-pager-view';
 
-import { DataItem, Lap } from '@/src/types/Travels'; // Import the interface from your specified path
-import { useTravelContext } from '@/context/PageContext';
-import { router, useFocusEffect } from 'expo-router';
-import { calculateDuration } from '@/src/utils/utils';
-import moment from 'moment';
-import { formatDate } from '@/src/utils/dateUtils';
-import useGetTravelData from '@/hooks/useGetTravelData';
-import { useTheme } from '@/context/ThemeContext';
 import { colors } from '@/const/color';
-import Divider from './Divider';
+import { useTravelContext } from '@/context/PageContext';
+import { useTheme } from '@/context/ThemeContext';
+import useGetTravelData from '@/hooks/useGetTravelData';
 import { travelCardStyles, travelEmptyContainer } from '@/src/styles/TravelListStyles';
+import { DataItem } from '@/src/types/Travels'; // Import the interface from your specified path
+import { formatDate } from '@/src/utils/dateUtils';
+import { calculateDuration } from '@/src/utils/utils';
+import { router } from 'expo-router';
+import moment from 'moment';
+import Divider from './Divider';
 
 interface GroupedDataDisplayProps {
     data: DataItem[];
@@ -135,9 +135,9 @@ export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDis
 
                                 <ScrollView contentContainerStyle={travelCardStyles[theme].cardHolder} nestedScrollEnabled={true}>
                                     {finalGroupedData[directionNameKey].map((item, itemIndex) => (
-                                        <Pressable 
-                                            key={item.id} 
-                                            style={travelCardStyles[theme].card} 
+                                        <Pressable
+                                            key={item.id}
+                                            style={travelCardStyles[theme].card}
                                             onPress={() => handleItemPress(directionNameKey, itemIndex)}
                                         >
                                             <View style={travelCardStyles[theme].routeInfoSection}>
@@ -206,7 +206,7 @@ export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDis
                 </PagerView>
             ) : (
                 <View style={[
-                    travelEmptyContainer[theme].noDataContainer, 
+                    travelEmptyContainer[theme].noDataContainer,
                     { borderColor: borderColor }
                 ]}>
                     <Text style={travelEmptyContainer[theme].noDataText}>No data available to display</Text>

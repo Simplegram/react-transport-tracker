@@ -1,11 +1,11 @@
 import { useTheme } from '@/context/ThemeContext';
-import { collapsibleHeaderStyles, styles } from '@/src/styles/Styles';
+import { collapsibleHeaderStyles } from '@/src/styles/Styles';
 import {
+    ScrollView,
+    Text,
     View,
     ViewStyle,
-    type StyleProp,
-    ScrollView,
-    Text
+    type StyleProp
 } from 'react-native';
 
 interface CollapsibleHeaderPageProps {

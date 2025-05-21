@@ -1,21 +1,18 @@
-import useTravelCalendar from "@/hooks/useTravelCalendar";
-import React, { useEffect, useMemo } from "react";
-import { StyleSheet, View, Dimensions } from "react-native";
-import GroupedDataDisplay from "@/components/GroupedTravelsDisplay";
-import { useFocusEffect } from "expo-router";
-import { useToggleLoading } from "@/hooks/useLoading";
-import LoadingScreen from "@/components/LoadingScreen";
 import Button from "@/components/BaseButton";
-import { buttonStyles } from "@/src/styles/ButtonStyles";
+import GroupedDataDisplay from "@/components/GroupedTravelsDisplay";
+import LoadingScreen from "@/components/LoadingScreen";
 import CalendarModal from "@/components/modal/CalendarModal";
-import useStopModal from "@/hooks/useStopModal";
-import { getTodayString } from "@/src/utils/dateUtils";
 import { useSupabase } from "@/context/SupabaseContext";
 import { useTheme } from "@/context/ThemeContext";
-import { colors } from "@/const/color";
+import { useToggleLoading } from "@/hooks/useLoading";
+import useStopModal from "@/hooks/useStopModal";
+import useTravelCalendar from "@/hooks/useTravelCalendar";
+import { buttonStyles } from "@/src/styles/ButtonStyles";
 import { mainMenuStyles } from "@/src/styles/MainMenuStyles";
-
-const { height: screenHeight } = Dimensions.get('window');
+import { getTodayString } from "@/src/utils/dateUtils";
+import { useFocusEffect } from "expo-router";
+import React, { useEffect, useMemo } from "react";
+import { View } from "react-native";
 
 interface DateObject {
     dateString: string,

@@ -1,18 +1,18 @@
 import Button from "@/components/BaseButton"
+import { colors } from "@/const/color"
+import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import useStopModal from "@/hooks/useStopModal"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { styles } from "@/src/styles/Styles"
 import { AddableCoordinates, AddableStop } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { Alert, Pressable, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import AddCoordModal from "./AddCoordModal"
-import { useTheme } from "@/context/ThemeContext"
-import { styles } from "@/src/styles/Styles"
-import { colors } from "@/const/color"
 
 export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()
@@ -127,15 +127,15 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                                             ]}
                                             onPress={() => setStop({ ...stop, vehicle_type: type.id })}
                                         >
-                                            <Icon 
+                                            <Icon
                                                 style={
-                                                    stop.vehicle_type === type.id ? 
-                                                    iconPickerStyles[theme].selectedIcon 
-                                                    : 
-                                                    styles[theme].icon
-                                                } 
-                                                name={type.icon_id.name} 
-                                                size={20} 
+                                                    stop.vehicle_type === type.id ?
+                                                        iconPickerStyles[theme].selectedIcon
+                                                        :
+                                                        styles[theme].icon
+                                                }
+                                                name={type.icon_id.name}
+                                                size={20}
                                             />
                                             <Text style={inputElementStyles[theme].inputLabel}>{type.name.slice(0, 5)}</Text>
                                         </TouchableOpacity>

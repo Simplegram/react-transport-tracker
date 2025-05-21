@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, TextInput } from 'react-native';
 import Button from '@/components/BaseButton';
 import LoadingScreen from '@/components/LoadingScreen';
-import useDataList from '@/hooks/useDataList';
 import ModalTemplate from '@/components/ModalTemplate';
-import useStopModal from '@/hooks/useStopModal';
-import useDatalistModal from '@/hooks/useDatalistModal';
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { colors } from '@/const/color';
 import { useModalContext } from '@/context/ModalContext';
-import { useLoading } from '@/hooks/useLoading';
-import useGetTravelData from '@/hooks/useGetTravelData';
-import { useFocusEffect } from 'expo-router';
 import { useTheme } from '@/context/ThemeContext';
+import useDataList from '@/hooks/useDataList';
+import useDatalistModal from '@/hooks/useDatalistModal';
+import useGetTravelData from '@/hooks/useGetTravelData';
+import { useLoading } from '@/hooks/useLoading';
+import useStopModal from '@/hooks/useStopModal';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { DatalistStyles, ItemStyles } from '@/src/styles/DatalistStyles';
-import { colors } from '@/const/color';
 import { inputStyles } from '@/src/styles/InputStyles';
 import { styles } from '@/src/styles/Styles';
+import { useFocusEffect } from 'expo-router';
+import React from 'react';
+import { Alert, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 interface ItemTemplate {
     id: string | number;

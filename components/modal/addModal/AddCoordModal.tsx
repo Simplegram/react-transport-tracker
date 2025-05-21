@@ -5,11 +5,10 @@ import { buttonStyles } from "@/src/styles/ButtonStyles";
 import { inputElementStyles } from "@/src/styles/InputStyles";
 import { modalStyles } from "@/src/styles/ModalStyles";
 import { AddableCoordModalProp } from "@/src/types/AddableTravels";
-import { MapView, Camera } from "@maplibre/maplibre-react-native";
+import { Camera, MapView } from "@maplibre/maplibre-react-native";
 import { LocationObject } from "expo-location";
 import { useEffect, useRef, useState } from "react";
-import { Alert, Modal, Pressable, StyleSheet, Text } from "react-native";
-import { View } from "react-native";
+import { Alert, Modal, Pressable, StyleSheet, View } from "react-native";
 
 const pointSize = {
     width: 8,

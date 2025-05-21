@@ -1,12 +1,12 @@
-import { EditableTravelRouteModalProp } from "@/src/types/EditableTravels";
-import { useMemo } from "react";
-import { FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome6'
-import { flatlistStyles, modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
+import { colors } from "@/const/color";
 import { useTheme } from "@/context/ThemeContext";
 import { inputStyles } from "@/src/styles/InputStyles";
-import { colors } from "@/const/color";
+import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
 import { styles } from "@/src/styles/Styles";
+import { EditableTravelRouteModalProp } from "@/src/types/EditableTravels";
+import { useMemo } from "react";
+import { Modal, Pressable, Text, TextInput, View } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import FlatlistPicker from "../FlatlistPicker";
 
 export default function EditTravelRouteModal({ routes, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelRouteModalProp) {

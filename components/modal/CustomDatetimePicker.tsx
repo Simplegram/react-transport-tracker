@@ -1,23 +1,21 @@
+import { colors } from '@/const/color';
+import { useTheme } from '@/context/ThemeContext';
 import { useLoading } from '@/hooks/useLoading';
-import React, { useState, useEffect } from 'react';
+import { datetimePickerStyles } from '@/src/styles/DatetimePickerStyles';
+import { inputStyles } from '@/src/styles/InputStyles';
+import React, { useEffect, useState } from 'react';
 import {
+    Alert,
     Modal,
-    View,
+    Pressable,
+    ScrollView,
     Text,
     TextInput,
     TouchableOpacity,
-    StyleSheet,
-    Platform,
-    Pressable,
-    ScrollView,
-    Alert,
+    View
 } from 'react-native';
-import LoadingScreen from '../LoadingScreen';
-import { useTheme } from '@/context/ThemeContext';
-import { datetimePickerStyles } from '@/src/styles/DatetimePickerStyles';
 import Divider from '../Divider';
-import { inputStyles } from '@/src/styles/InputStyles';
-import { colors } from '@/const/color';
+import LoadingScreen from '../LoadingScreen';
 
 interface CustomDateTimePickerProps {
     visible: boolean;

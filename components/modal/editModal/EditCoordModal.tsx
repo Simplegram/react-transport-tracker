@@ -1,13 +1,12 @@
 import Button from "@/components/BaseButton";
 import { useTheme } from "@/context/ThemeContext";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles";
+import { inputElementStyles } from "@/src/styles/InputStyles";
 import { modalStyles } from "@/src/styles/ModalStyles";
 import { AddableCoordModalProp } from "@/src/types/AddableTravels";
 import { Camera, MapView } from "@maplibre/maplibre-react-native";
-import { useRef, useState } from "react";
-import { Dimensions, Modal, Pressable, StyleSheet, Text } from "react-native";
-import { View } from "react-native";
+import { useRef } from "react";
+import { Dimensions, Modal, Pressable, StyleSheet, View } from "react-native";
 
 const { height: screenHeight, width: screenWidth } = Dimensions.get('window')
 

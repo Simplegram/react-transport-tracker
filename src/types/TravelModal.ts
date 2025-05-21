@@ -1,5 +1,4 @@
-import { Icon } from "react-native-vector-icons/Icon";
-import { IconType, Stop } from "./Travels"
+import { IconType, Stop } from "./Travels";
 
 export interface ModalProp {
     onSubmit: (data: any) => void;

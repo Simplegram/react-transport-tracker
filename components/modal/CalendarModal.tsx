@@ -1,10 +1,10 @@
-import { StandaloneModalProp } from "@/src/types/AddableTravels";
-import { getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils";
-import { Modal, StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import { CalendarList } from "react-native-calendars";
-import { useState } from "react";
 import { useTheme } from "@/context/ThemeContext";
 import { calendarStyles, calendarTheme } from "@/src/styles/CalendarStyles";
+import { StandaloneModalProp } from "@/src/types/AddableTravels";
+import { getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils";
+import { useState } from "react";
+import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { CalendarList } from "react-native-calendars";
 
 interface CalendarModalProps {
     dates: any

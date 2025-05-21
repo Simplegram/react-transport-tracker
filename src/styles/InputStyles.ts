@@ -185,7 +185,5 @@ const iconPickerStyles = {
 }
 
 export {
-    inputStyles,
-    inputElementStyles,
-    iconPickerStyles
+    iconPickerStyles, inputElementStyles, inputStyles
 };

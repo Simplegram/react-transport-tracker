@@ -5,12 +5,12 @@ import { useTravelContext } from '@/context/PageContext';
 import { useTheme } from '@/context/ThemeContext';
 import useGetTravelData from '@/hooks/useGetTravelData';
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles';
-import { DataItem, VehicleType } from '@/src/types/Travels';
+import { DataItem } from '@/src/types/Travels';
 import { getSimpleCentroid } from '@/src/utils/mapUtils';
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native';
 import { useFocusEffect } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { Dimensions, StyleSheet, Text, View } from 'react-native';
 
 const { width: screenWidth } = Dimensions.get("screen")
 

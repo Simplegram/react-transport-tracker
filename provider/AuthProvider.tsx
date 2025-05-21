@@ -1,12 +1,12 @@
-import React, { useState, useEffect, createContext, PropsWithChildren } from 'react'
-import { Session, User } from '@supabase/supabase-js'
 import { useSupabase } from '@/context/SupabaseContext'
+import { Session, User } from '@supabase/supabase-js'
+import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
 
 type AuthProps = {
-  user: User | null
-  session: Session | null
-  initialized?: boolean
-  signOut?: () => void
+    user: User | null
+    session: Session | null
+    initialized?: boolean
+    signOut?: () => void
 }
 
 export const AuthContext = createContext<Partial<AuthProps>>({})

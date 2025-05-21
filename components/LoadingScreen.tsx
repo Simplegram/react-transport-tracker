@@ -1,13 +1,13 @@
 import { useTheme } from '@/context/ThemeContext';
 import { loadingStyles } from '@/src/styles/LoadingScreenStyles';
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
     ActivityIndicator,
+    Dimensions,
     Modal,
-    Dimensions
+    StyleSheet,
+    Text,
+    View
 } from 'react-native';
 
 type Props = {

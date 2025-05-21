@@ -69,12 +69,7 @@ interface Coordinates {
 }
 
 export {
-    Direction,
-    Stop,
-    Route,
-    VehicleType,
-    IconType,
-    Lap, FullLap,
     Coordinates,
-    DataItem
+    DataItem, Direction, FullLap, IconType,
+    Lap, Route, Stop, VehicleType
 }

@@ -1,7 +1,7 @@
-import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage";
-import AsyncStorage from '@react-native-async-storage/async-storage'
-import { createClient, SupabaseClient } from '@supabase/supabase-js'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { createContext, useContext, useEffect, useState } from "react";
+import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage";
 
 interface SupabaseContextType {
     supabaseClient: SupabaseClient<any, any, any> | undefined;

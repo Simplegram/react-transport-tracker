@@ -1,13 +1,12 @@
-import { Alert, View, TextInput, StyleSheet, Text, KeyboardAvoidingView } from 'react-native'
-import { useEffect, useState } from 'react'
-import React from 'react'
-import LoadingScreen from '@/components/LoadingScreen'
 import Button from '@/components/BaseButton'
-import { useToggleLoading } from '@/hooks/useLoading'
-import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
+import LoadingScreen from '@/components/LoadingScreen'
 import { colors } from '@/const/color'
 import { useSupabase } from '@/context/SupabaseContext'
+import { useToggleLoading } from '@/hooks/useLoading'
+import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
 import { SupabaseClient } from '@supabase/supabase-js'
+import React, { useEffect, useState } from 'react'
+import { Alert, KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from 'react-native'
 
 const Login = () => {
     const {

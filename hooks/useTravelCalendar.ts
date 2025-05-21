@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
-import { DataItem } from "@/src/types/Travels";
 import { useSupabase } from "@/context/SupabaseContext";
-import { SupabaseClient } from "@supabase/supabase-js";
+import { DataItem } from "@/src/types/Travels";
+import { useEffect, useState } from "react";
 
 function formatDate(
     date: Date,

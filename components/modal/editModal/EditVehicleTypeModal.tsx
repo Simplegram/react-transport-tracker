@@ -5,15 +5,15 @@ import { useTheme } from "@/context/ThemeContext";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles";
 import { styles } from "@/src/styles/Styles";
 import { EditableVehicleType } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { IconType } from "@/src/types/Travels";
 import { sortByIdToFront } from "@/src/utils/utils";
 import { useEffect, useRef, useState } from "react";
-import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalContentProps) {
     const { theme } = useTheme()

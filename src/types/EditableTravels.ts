@@ -98,11 +98,5 @@ interface EditableLapModalProp {
 }
 
 export {
-    EditableStop,
-    EditableVehicleType,
-    EditableRoute,
-    EditableTravel,
-    EditableLap,
-    EditableTravelModalProp, EditableTravelStopModalProp,
-    EditableLapsModalProp, EditableLapModalProp
+    EditableLap, EditableLapModalProp, EditableLapsModalProp, EditableRoute, EditableStop, EditableTravel, EditableTravelModalProp, EditableTravelStopModalProp, EditableVehicleType
 }

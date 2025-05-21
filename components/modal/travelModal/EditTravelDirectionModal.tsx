@@ -1,11 +1,10 @@
-import useGetTravelData from "@/hooks/useGetTravelData";
-import { EditableTravelDirectionModalProp, EditableTravelModalProp } from "@/src/types/EditableTravels";
-import { useMemo } from "react";
-import { FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { flatlistStyles, modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
+import { colors } from "@/const/color";
 import { useTheme } from "@/context/ThemeContext";
 import { inputStyles } from "@/src/styles/InputStyles";
-import { colors } from "@/const/color";
+import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
+import { EditableTravelDirectionModalProp } from "@/src/types/EditableTravels";
+import { useMemo } from "react";
+import { Modal, Pressable, Text, TextInput, View } from "react-native";
 import FlatlistPicker from "../FlatlistPicker";
 
 export default function EditTravelDirectionModal({ directions, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelDirectionModalProp) {
@@ -53,7 +52,7 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
                             )}
                         </FlatlistPicker>
                     )}
-                        </View>
+                </View>
             </Pressable>
         </Modal>
     )

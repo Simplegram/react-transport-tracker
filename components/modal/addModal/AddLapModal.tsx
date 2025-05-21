@@ -1,25 +1,24 @@
 import Button from '@/components/BaseButton';
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker';
-import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels';
-import React, { useState } from 'react';
-import {
-    View,
-    Text,
-    TextInput,
-    StyleSheet,
-    Pressable,
-    Modal,
-    Alert,
-} from 'react-native';
-import moment from 'moment-timezone'
-import { formatDateForDisplay } from '@/src/utils/utils';
+import { colors } from '@/const/color';
+import { useTheme } from '@/context/ThemeContext';
 import useStopModal from '@/hooks/useStopModal';
-import EditTravelStopModal from '../travelModal/EditTravelStopModal';
-import { modalStyles } from '@/src/styles/ModalStyles';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
-import { useTheme } from '@/context/ThemeContext';
-import { colors } from '@/const/color';
+import { modalStyles } from '@/src/styles/ModalStyles';
+import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels';
+import { formatDateForDisplay } from '@/src/utils/utils';
+import moment from 'moment-timezone';
+import React, { useState } from 'react';
+import {
+    Alert,
+    Modal,
+    Pressable,
+    Text,
+    TextInput,
+    View
+} from 'react-native';
+import EditTravelStopModal from '../travelModal/EditTravelStopModal';
 
 export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { theme } = useTheme()

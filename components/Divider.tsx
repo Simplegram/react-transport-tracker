@@ -1,12 +1,12 @@
 import { useTheme } from "@/context/ThemeContext";
 import { dividerStyles } from "@/src/styles/Styles";
-import { StyleSheet, View } from "react-native";
+import { View } from "react-native";
 
 interface DividerProp {
     size?: number
 }
 
-export default function Divider({size = 5}: DividerProp) {
+export default function Divider({ size = 5 }: DividerProp) {
     const { theme } = useTheme()
 
     return (

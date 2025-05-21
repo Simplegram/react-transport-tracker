@@ -1,12 +1,12 @@
-import { Modal, Pressable, View, Text, TextInput, FlatList, TouchableOpacity } from "react-native"
-import Icon from "react-native-vector-icons/FontAwesome6";
-import { useMemo } from "react";
-import { EditableTravelStopModalProp } from "@/src/types/EditableTravels";
-import { flatlistStyles, modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
+import { colors } from "@/const/color";
 import { useTheme } from "@/context/ThemeContext";
 import { inputStyles } from "@/src/styles/InputStyles";
-import { colors } from "@/const/color";
+import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
 import { styles } from "@/src/styles/Styles";
+import { EditableTravelStopModalProp } from "@/src/types/EditableTravels";
+import { useMemo } from "react";
+import { Modal, Pressable, Text, TextInput, View } from "react-native";
+import Icon from "react-native-vector-icons/FontAwesome6";
 import FlatlistPicker from "../FlatlistPicker";
 
 export default function EditTravelStopModal({ stops, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelStopModalProp) {

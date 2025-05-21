@@ -1,14 +1,14 @@
+import { colors } from "@/const/color";
+import { ModalContext } from "@/context/ModalContext";
 import { TravelContext } from "@/context/PageContext";
+import { SupabaseProvider } from "@/context/SupabaseContext";
+import { useTheme } from "@/context/ThemeContext";
+import { statusBarStyles } from "@/src/styles/Styles";
 import { DataItem } from "@/src/types/Travels";
-import Icon from 'react-native-vector-icons/FontAwesome6'
 import { Tabs } from "expo-router";
 import { useState } from "react";
-import { ModalContext } from "@/context/ModalContext";
-import { SupabaseProvider } from "@/context/SupabaseContext";
-import { ThemeProvider, useTheme } from "@/context/ThemeContext";
 import { StatusBar } from "react-native";
-import { statusBarStyles } from "@/src/styles/Styles";
-import { colors } from "@/const/color";
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 const TabsLayout = () => {
     const { theme } = useTheme()

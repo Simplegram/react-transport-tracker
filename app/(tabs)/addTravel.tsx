@@ -1,38 +1,33 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import Button from '@/components/BaseButton';
+import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
+import Divider from '@/components/Divider';
+import LoadingScreen from '@/components/LoadingScreen';
+import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker';
+import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModal';
+import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal';
+import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal';
+import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal';
+import { useTheme } from '@/context/ThemeContext';
+import useGetTravelData from '@/hooks/useGetTravelData';
+import useModifyTravelData from '@/hooks/useModifyTravelData';
+import useStopModal from '@/hooks/useStopModal';
+import { buttonStyles } from '@/src/styles/ButtonStyles';
+import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
+import { AddableLap, AddableTravel } from '@/src/types/AddableTravels';
+import { DataItem } from '@/src/types/Travels';
+import { formatDateForDisplay } from '@/src/utils/utils';
+import { router, useFocusEffect } from 'expo-router';
+import moment from 'moment-timezone';
+import React, { useEffect, useState } from 'react';
 import {
-    View,
+    Alert,
+    Pressable,
     Text,
     TextInput,
-    StyleSheet,
-    Platform,
-    Pressable,
-    Alert,
+    View,
 } from 'react-native';
-import { DataItem } from '@/src/types/Travels';
-import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
-import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal';
-import useStopModal from '@/hooks/useStopModal';
-import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker';
-import useGetTravelData from '@/hooks/useGetTravelData';
-import { AddableLap, AddableTravel } from '@/src/types/AddableTravels';
-import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal';
-import Button from '@/components/BaseButton';
-import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal';
-import useModifyTravelData from '@/hooks/useModifyTravelData';
-import { router, useFocusEffect } from 'expo-router';
-import { formatDateForDisplay } from '@/src/utils/utils';
-import moment from 'moment-timezone'
-import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModal';
-import { buttonStyles } from '@/src/styles/ButtonStyles';
-// Ensure this path is correct for your project structure
-import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
-import LoadingScreen from '@/components/LoadingScreen';
-import { useTheme } from '@/context/ThemeContext';
-import Divider from '@/components/Divider';
 
-// Softer placeholder color
 const PLACEHOLDER_TEXT_COLOR = '#9E9E9E';
-
 
 export default function AddTravel() {
     const { theme } = useTheme()

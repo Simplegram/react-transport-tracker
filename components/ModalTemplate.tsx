@@ -1,20 +1,12 @@
 import { useTheme } from '@/context/ThemeContext';
 import { modalElementStyles, modalStyles } from '@/src/styles/ModalStyles';
 import {
-    View,
-    Text,
-    StyleSheet,
-    Platform,
-    TouchableOpacity,
-    Linking,
-    Alert,
-    ScrollView,
     Modal,
     Pressable,
-    KeyboardAvoidingView,
+    Text
 } from 'react-native';
 
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface Props {
     children: React.ReactNode

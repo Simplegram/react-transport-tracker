@@ -7,7 +7,7 @@ import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { AddableDirection } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native"
+import { Alert, Text, TextInput, View } from "react-native"
 
 export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()

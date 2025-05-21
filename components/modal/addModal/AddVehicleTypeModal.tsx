@@ -1,17 +1,15 @@
 import Button from "@/components/BaseButton";
 import { colors } from "@/const/color";
 import { useTheme } from "@/context/ThemeContext";
-import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles";
 import { styles } from "@/src/styles/Styles";
 import { AddableVehicleType } from "@/src/types/AddableTravels";
-import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { VehicleTypeModalProp } from "@/src/types/TravelModal";
 import { useState } from "react";
-import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: VehicleTypeModalProp) {
     const { theme } = useTheme()

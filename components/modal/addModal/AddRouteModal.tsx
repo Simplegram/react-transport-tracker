@@ -1,18 +1,18 @@
-import { AddableRoute } from "@/src/types/AddableTravels"
-import { useState } from "react"
-import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
-import EditTravelStopModal from "../travelModal/EditTravelStopModal"
 import Button from "@/components/BaseButton"
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { colors } from "@/const/color"
+import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import useStopModal from "@/hooks/useStopModal"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
-import { ModalProp } from "@/src/types/TravelModal"
-import { useTheme } from "@/context/ThemeContext"
-import { colors } from "@/const/color"
 import { styles } from "@/src/styles/Styles"
+import { AddableRoute } from "@/src/types/AddableTravels"
+import { ModalProp } from "@/src/types/TravelModal"
+import { useState } from "react"
+import { Alert, Pressable, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
+import Icon from 'react-native-vector-icons/FontAwesome6'
+import EditTravelStopModal from "../travelModal/EditTravelStopModal"
 
 export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: ModalProp) {
     const { theme } = useTheme()
@@ -122,14 +122,14 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                                             ]}
                                             onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}
                                         >
-                                            <Icon 
+                                            <Icon
                                                 style={
                                                     route.vehicle_type_id === type.id ?
                                                         iconPickerStyles[theme].selectedIcon
                                                         :
                                                         styles[theme].icon
-                                                } 
-                                                name={type.icon_id.name} 
+                                                }
+                                                name={type.icon_id.name}
                                                 size={20}
                                             />
                                             <Text style={inputElementStyles[theme].inputLabel}>{type.name.slice(0, 5)}</Text>

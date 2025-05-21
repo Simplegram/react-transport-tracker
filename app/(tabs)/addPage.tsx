@@ -1,26 +1,17 @@
-import React, { useState } from 'react';
-import {
-    View,
-    StyleSheet,
-    Platform,
-    Text,
-    StatusBar,
-} from 'react-native';
-import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'; // Adjust path as needed
-import { router } from 'expo-router'; // Keep if needed elsewhere
-
-import { useTravelContext } from '@/context/PageContext';
 import Button from '@/components/BaseButton';
-import { useAuth } from '@/provider/AuthProvider';
+import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
 import Divider from '@/components/Divider';
+import { useTravelContext } from '@/context/PageContext';
 import { useTheme } from '@/context/ThemeContext';
-import { statusBarStyles } from '@/src/styles/Styles';
-import { colors } from '@/const/color';
+import { useAuth } from '@/provider/AuthProvider';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
+import { router } from 'expo-router';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
 interface ButtonConfig {
     id: string
-    text: string; // The button label
+    text: string;
 }
 
 const navigationButtons: ButtonConfig[] = [

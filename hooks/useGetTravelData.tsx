@@ -1,6 +1,6 @@
 import { useSupabase } from "@/context/SupabaseContext"
 import { Direction, FullLap, IconType, Lap, Route, Stop, VehicleType } from "@/src/types/Travels"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function useGetTravelData() {
     const { supabaseClient: supabase } = useSupabase()

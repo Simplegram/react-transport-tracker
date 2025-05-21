@@ -1,6 +1,6 @@
+import { useTravelContext } from "@/context/PageContext";
 import { Direction, IconType, Route, Stop, VehicleType } from "@/src/types/Travels";
 import { useEffect, useState } from "react";
-import { useTravelContext } from "@/context/PageContext";
 
 interface UseDatalistProps {
     directions: Direction[]

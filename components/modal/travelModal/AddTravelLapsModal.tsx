@@ -1,22 +1,22 @@
 import Button from '@/components/BaseButton';
 import { colors } from '@/const/color';
+import { useTheme } from '@/context/ThemeContext';
+import useStopModal from '@/hooks/useStopModal';
+import { buttonStyles } from '@/src/styles/ButtonStyles';
+import { inputElementStyles } from '@/src/styles/InputStyles';
 import { AddableLap, AddableLapsModalProp } from '@/src/types/AddableTravels';
 import { formatDateForDisplay } from '@/src/utils/utils';
 import React, { useEffect, useState } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
     Modal,
+    Pressable,
     ScrollView,
+    StyleSheet,
+    Text,
+    View,
 } from 'react-native';
 import AddLapModal from '../addModal/AddLapModal';
-import useStopModal from '@/hooks/useStopModal';
 import EditLapModal from '../editModal/EditLapModal';
-import { Pressable } from 'react-native';
-import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputElementStyles } from '@/src/styles/InputStyles';
-import { useTheme } from '@/context/ThemeContext';
 
 export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
     const { theme } = useTheme()

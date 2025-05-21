@@ -1,34 +1,33 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import {
-    View,
-    Text,
-    TextInput,
-    StyleSheet,
-    Platform,
-    Pressable,
-    Alert,
-} from 'react-native';
-import { DataItem, Lap } from '@/src/types/Travels';
-import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
-import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal';
-import useStopModal from '@/hooks/useStopModal';
-import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker';
-import useGetTravelData from '@/hooks/useGetTravelData';
-import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal';
 import Button from '@/components/BaseButton';
-import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal';
-import useModifyTravelData from '@/hooks/useModifyTravelData';
-import { router, useFocusEffect } from 'expo-router';
-import { useTravelContext } from '@/context/PageContext';
-import { EditableTravel } from '@/src/types/EditableTravels';
-import { formatDateForDisplay } from '@/src/utils/utils';
-import moment from 'moment-timezone'
-import EditTravelLapsModal from '@/components/modal/travelModal/EditTravelLapsModal';
+import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
+import Divider from '@/components/Divider';
 import LoadingScreen from '@/components/LoadingScreen';
+import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker';
+import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal';
+import EditTravelLapsModal from '@/components/modal/travelModal/EditTravelLapsModal';
+import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal';
+import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal';
+import { colors } from '@/const/color';
+import { useTravelContext } from '@/context/PageContext';
+import { useTheme } from '@/context/ThemeContext';
+import useGetTravelData from '@/hooks/useGetTravelData';
+import useModifyTravelData from '@/hooks/useModifyTravelData';
+import useStopModal from '@/hooks/useStopModal';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
-import { useTheme } from '@/context/ThemeContext';
-import Divider from '@/components/Divider';
+import { EditableTravel } from '@/src/types/EditableTravels';
+import { DataItem, Lap } from '@/src/types/Travels';
+import { formatDateForDisplay } from '@/src/utils/utils';
+import { router, useFocusEffect } from 'expo-router';
+import moment from 'moment-timezone';
+import React, { useState } from 'react';
+import {
+    Alert,
+    Pressable,
+    Text,
+    TextInput,
+    View
+} from 'react-native';
 
 export default function EditTravelItem() {
     const { theme } = useTheme()
