@@ -15,5 +15,6 @@ export const colors = {
         dimWhite: '#e8e8e8',
         dimmerWhite: '#b3b3b3',
         dimmerWhite2: '#cfcfcf',
+        placeholderGray: '#9E9E9E',
     }
 }

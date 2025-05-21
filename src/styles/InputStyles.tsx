@@ -118,6 +118,7 @@ const inputStyles = {
     dark: StyleSheet.create({
         textInput: {
             ...lightInputStyles.textInput,
+            color: colors.text.dimWhite,
             backgroundColor: '#000'
         },
         multilineTextInput: {
