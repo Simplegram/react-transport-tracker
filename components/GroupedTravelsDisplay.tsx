@@ -128,7 +128,7 @@ export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDis
                                 <View>
                                     <Pressable onPress={() => handleViewTravelDetails(directionNameKey)}>
                                         <Text style={[styles.groupTitle, { color: dateLabelColor }]}>
-                                            Direction: {directionNameKey} ({index + 1}/{directionNames.length})
+                                            Direction ({index + 1}/{directionNames.length}): {directionNameKey}
                                         </Text>
                                     </Pressable>
                                 </View>
