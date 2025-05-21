@@ -3,16 +3,13 @@ import { StyleSheet } from "react-native";
 
 const lightMainmenuStyles = StyleSheet.create({
     container: {
+        gap: 10,
         flexGrow: 1,
         justifyContent: 'center',
         paddingTop: 5,
         paddingBottom: 10,
         paddingHorizontal: 15,
-        backgroundColor: '#fff'
-    },
-    calendarContainer: {
-        backgroundColor: 'white',
-        paddingTop: 10,
+        backgroundColor: colors.text.dimWhite,
     },
     listContainer: {
         flex: 1,
@@ -27,7 +24,7 @@ const lightMainmenuStyles = StyleSheet.create({
         flexGrow: 1,
     },
     listItem: {
-        backgroundColor: 'white',
+        backgroundColor: colors.text.dimWhite,
         padding: 15,
         borderRadius: 8,
         marginBottom: 10,
@@ -49,10 +46,6 @@ export const mainMenuStyles = {
     dark: StyleSheet.create({
         container: {
             ...lightMainmenuStyles.container,
-            backgroundColor: colors.background.black,
-        },
-        calendarContainer: {
-            ...lightMainmenuStyles.calendarContainer,
             backgroundColor: colors.background.black,
         },
         listContainer: {

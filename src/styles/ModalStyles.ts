@@ -11,7 +11,7 @@ const lightFlatlistStyles = StyleSheet.create({
         paddingHorizontal: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#eee',
-        backgroundColor: colors.background.white,
+        backgroundColor: colors.text.dimWhite,
     },
 })
 
@@ -80,7 +80,7 @@ const lightModalStyles = StyleSheet.create({
         padding: 20,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
-        backgroundColor: '#fff',
+        backgroundColor: colors.text.dimWhite,
         justifyContent: 'space-between',
         gap: 10,
     },

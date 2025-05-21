@@ -84,7 +84,7 @@ const inputElementStyles = {
 
 const lightInputStyles = StyleSheet.create({
     textInput: {
-        backgroundColor: '#F0F2F5',
+        backgroundColor: colors.text.dimWhite,
         borderRadius: 10,
         paddingHorizontal: 14,
         paddingVertical: Platform.OS === 'ios' ? 14 : 12,
@@ -92,21 +92,21 @@ const lightInputStyles = StyleSheet.create({
         fontSize: 16,
         color: '#333333',
         borderWidth: 1,
-        borderColor: '#D1D5DB',
+        borderColor: colors.text.dimmerWhite,
     },
     multilineTextInput: {
         minHeight: 100,
         textAlignVertical: 'top',
     },
     pressableInput: {
-        backgroundColor: '#F0F2F5',
+        backgroundColor: colors.text.dimWhite,
         borderRadius: 10,
         paddingHorizontal: 14,
         paddingVertical: Platform.OS === 'ios' ? 14 : 12,
         justifyContent: 'center',
         minHeight: Platform.OS === 'ios' ? 50 : 48,
         borderWidth: 1,
-        borderColor: '#D1D5DB',
+        borderColor: colors.text.dimmerWhite,
     },
     pressableInputCoord: {
         flex: 1,

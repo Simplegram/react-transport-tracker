@@ -13,7 +13,7 @@ import { colors } from "@/const/color";
 const TabsLayout = () => {
     const { theme } = useTheme()
 
-    const barColor = theme === 'light' ? colors.text.dimmerWhite2 : colors.background.black
+    const barColor = theme === 'light' ? colors.text.dimWhite : colors.background.black
     const iconColor = theme === 'light' ? colors.background.black : colors.text.dimmerWhite2
 
     const [selectedItem, setSelectedItem] = useState<DataItem | undefined>(undefined);

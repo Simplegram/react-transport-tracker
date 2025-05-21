@@ -25,7 +25,7 @@ const lightCollapsibleHeaderStyles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 10,
         paddingHorizontal: 15,
-        backgroundColor: '#fff',
+        backgroundColor: colors.text.dimWhite,
     },
     fillerContainer: {
         flex: 1,
@@ -70,6 +70,6 @@ export const dividerStyles = {
 }
 
 export const statusBarStyles = {
-    light: colors.background.white,
+    light: colors.text.dimWhite,
     dark: colors.background.black,
 }

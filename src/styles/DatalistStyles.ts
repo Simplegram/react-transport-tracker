@@ -8,7 +8,7 @@ const lightDatalistStyles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 10,
         paddingHorizontal: 15,
-        backgroundColor: colors.background.white,
+        backgroundColor: colors.text.dimWhite,
     },
     listContent: {
         gap: 10,
@@ -43,7 +43,7 @@ const lightItemStyles = StyleSheet.create({
     itemContainer: {
         padding: 10,
         flexDirection: 'column',
-        backgroundColor: colors.background.white,
+        backgroundColor: colors.text.dimWhite,
         borderWidth: 1,
         borderRadius: 8,
         borderColor: colors.background.black,

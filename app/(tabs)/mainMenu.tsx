@@ -99,15 +99,13 @@ export default function HomePage() {
                     <GroupedDataDisplay data={travelAtDate} currentDate={selectedDate}></GroupedDataDisplay>
                 )}
             </View>
-            <View style={mainMenuStyles[theme].calendarContainer}>
-                <Button
-                    style={[buttonStyles[theme].addButton, { flex: 0 }]}
-                    textStyle={buttonStyles[theme].addButtonText}
-                    onPress={() => openCalendarModal()}
-                >
-                    View Calendar
-                </Button>
-            </View>
+            <Button
+                style={[buttonStyles[theme].addButton, { flex: 0 }]}
+                textStyle={buttonStyles[theme].addButtonText}
+                onPress={() => openCalendarModal()}
+            >
+                View Calendar
+            </Button>
             <CalendarModal
                 dates={dates}
                 markedDates={markedDates}
