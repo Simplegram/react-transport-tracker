@@ -55,40 +55,46 @@ const TabsLayout = () => {
                             options={{
                                 title: "Home",
                                 tabBarIcon: ({ color }) => <Icon size={24} name="house" color={color} />,
-                            }} />
+                            }} 
+                        />
                         <Tabs.Screen
                             name="addTravel"
                             options={{
                                 title: "Add",
                                 tabBarIcon: ({ color }) => <Icon size={24} name="square-plus" color={color} />,
-                            }} />
+                            }} 
+                        />
                         <Tabs.Screen
                             name="addPage"
                             options={{
                                 title: "Modify",
                                 tabBarIcon: ({ color }) => <Icon size={24} name="pen-to-square" color={color} />,
-                            }} />
+                            }} 
+                        />
                         <Tabs.Screen
                             name="editTravel"
                             options={{
                                 title: "Edit Travel",
                                 tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
                                 href: null
-                            }} />
+                            }} 
+                        />
                         <Tabs.Screen
                             name="dataList"
                             options={{
                                 title: "Data List",
                                 tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
                                 href: null
-                            }} />
+                            }} 
+                        />
                         <Tabs.Screen
                             name="travelDetail"
                             options={{
                                 title: "Travel Detail",
                                 tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
                                 href: null
-                            }} />
+                            }} 
+                        />
                     </Tabs>
                 </ModalContext.Provider>
             </TravelContext.Provider>
