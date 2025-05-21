@@ -1,13 +1,14 @@
+import { colors } from "@/const/color";
 import { StyleSheet } from "react-native";
 
-const buttonStyles = StyleSheet.create({
+const lightButtonStyles = StyleSheet.create({
     buttonRow: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         gap: 10,
     },
     addButton: {
-        backgroundColor: '#007bff',
+        backgroundColor: colors.appBlue,
         paddingVertical: 12,
         borderRadius: 8,
         flex: 1,
@@ -15,7 +16,7 @@ const buttonStyles = StyleSheet.create({
         borderWidth: 1,
     },
     addButtonText: {
-        color: '#fff',
+        color: colors.text.white,
         fontSize: 16,
         fontWeight: '600',
     },
@@ -25,15 +26,49 @@ const buttonStyles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         borderWidth: 1,
-        backgroundColor: '#ffffff'
+        backgroundColor: colors.text.white
     },
     cancelButtonText: {
-        color: '#000',
+        color: colors.text.black,
         fontSize: 16,
         fontWeight: '600',
     },
+    redButton: {
+        borderWidth: 1,
+        borderRadius: 8,
+        alignItems: 'center',
+        backgroundColor: colors.background.redCancel,
+    },
 })
 
-export {
-    buttonStyles
+export const buttonStyles = {
+    light: lightButtonStyles,
+    dark: StyleSheet.create({
+        buttonRow: {
+            ...lightButtonStyles.buttonRow,
+        },
+        addButton: {
+            ...lightButtonStyles.addButton,
+            borderColor: colors.dimmerAppBlue,
+            backgroundColor: colors.background.black,
+        },
+        addButtonText: {
+            ...lightButtonStyles.addButtonText,
+            color: colors.text.dimWhite,
+        },
+        cancelButton: {
+            ...lightButtonStyles.cancelButton,
+            borderColor: colors.dimmerWhite,
+            backgroundColor: colors.background.black,
+        },
+        cancelButtonText: {
+            ...lightButtonStyles.cancelButtonText,
+            color: colors.dimmerWhite,
+        },
+        redButton: {
+            ...lightButtonStyles.redButton,
+            borderColor: colors.background.dimRedCancel,
+            backgroundColor: colors.background.black,
+        },
+    })
 }

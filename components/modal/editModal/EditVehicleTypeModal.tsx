@@ -1,9 +1,12 @@
 import Button from "@/components/BaseButton";
+import { colors } from "@/const/color";
 import { useModalContext } from "@/context/ModalContext";
+import { useTheme } from "@/context/ThemeContext";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
 import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { styles } from "@/src/styles/Styles";
 import { EditableVehicleType } from "@/src/types/EditableTravels";
 import { BaseModalContentProps } from "@/src/types/ModalContentProps";
 import { IconType } from "@/src/types/Travels";
@@ -13,6 +16,8 @@ import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View 
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalContentProps) {
+    const { theme } = useTheme()
+
     const { modalData: data } = useModalContext()
 
     const { icons, getIcons } = useGetTravelData()
@@ -38,25 +43,26 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
     return (
         <View>
             {loading ? (
-                <Text style={inputElementStyles.inputLabel}>Loading...</Text>
+                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
             ) : (
                 <>
-                    <View style={inputElementStyles.inputContainer}>
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.insideLabel}>Name:</Text>
+                    <View style={inputElementStyles[theme].inputContainer}>
+                        <View style={inputElementStyles[theme].inputGroup}>
+                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
                             <TextInput
-                                style={inputStyles.pressableInput}
+                                style={inputStyles[theme].pressableInput}
                                 placeholder="e.g., Standard Bus"
+                                placeholderTextColor={colors.text.placeholderGray}
                                 value={vehicleType.name}
                                 onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}
                             />
                         </View>
 
-                        <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
+                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles.inputLabel}>Icon:</Text>
+                                <Text style={inputElementStyles[theme].inputLabel}>Icon:</Text>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
@@ -66,12 +72,21 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                                         <TouchableOpacity
                                             key={icon.id}
                                             style={[
-                                                iconPickerStyles.iconContainer,
-                                                vehicleType.icon_id === icon.id && iconPickerStyles.selectedIconContainer,
+                                                iconPickerStyles[theme].iconContainer,
+                                                vehicleType.icon_id === icon.id && iconPickerStyles[theme].selectedIconContainer,
                                             ]}
                                             onPress={() => setVehicleType({ ...vehicleType, icon_id: icon.id })}
                                         >
-                                            <Icon name={icon.name} size={20}></Icon>
+                                            <Icon
+                                                style={
+                                                    vehicleType.icon_id === icon.id ?
+                                                        iconPickerStyles[theme].selectedIcon
+                                                        :
+                                                        styles[theme].icon
+                                                }
+                                                name={icon.name}
+                                                size={20}
+                                            />
                                         </TouchableOpacity>
                                     ))}
                                 </ScrollView>
@@ -79,9 +94,9 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                         </View>
                     </View>
 
-                    <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                        <Button title='Edit Type' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button title='Edit Type' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </>
             )}

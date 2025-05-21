@@ -1,4 +1,3 @@
-// components/CustomDateTimePicker.tsx
 import { useLoading } from '@/hooks/useLoading';
 import React, { useState, useEffect } from 'react';
 import {
@@ -13,7 +12,12 @@ import {
     ScrollView,
     Alert,
 } from 'react-native';
-import LoadingScreen from './LoadingScreen';
+import LoadingScreen from '../LoadingScreen';
+import { useTheme } from '@/context/ThemeContext';
+import { datetimePickerStyles } from '@/src/styles/DatetimePickerStyles';
+import Divider from '../Divider';
+import { inputStyles } from '@/src/styles/InputStyles';
+import { colors } from '@/const/color';
 
 interface CustomDateTimePickerProps {
     visible: boolean;
@@ -23,13 +27,15 @@ interface CustomDateTimePickerProps {
     incrementSeconds?: number;
 }
 
-const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
+export default function CustomDateTimePicker({
     visible,
     initialDateTime,
     onClose,
     onConfirm,
     incrementSeconds = 5,
-}) => {
+}: CustomDateTimePickerProps) {
+    const { theme } = useTheme()
+
     const { loading } = useLoading(250)
 
     const [year, setYear] = useState('');
@@ -144,15 +150,16 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
     }
 
     const inputRow = (label: string, value: string, onChangeText: (text: string) => void, placeholder: string, maxLength?: number) => (
-        <View style={styles.inputRow}>
-            <Text style={styles.inputLabel}>{label}</Text>
+        <View style={datetimePickerStyles[theme].inputRow}>
+            <Text style={datetimePickerStyles[theme].inputLabel}>{label}</Text>
             <TextInput
-                style={styles.textInput}
+                style={[inputStyles[theme].textInput, { width: '100%' }]}
                 value={value}
                 onChangeText={onChangeText}
                 keyboardType="numeric"
                 maxLength={maxLength}
                 placeholder={placeholder}
+                placeholderTextColor={colors.text.placeholderGray}
                 textAlign='center'
             />
         </View>
@@ -168,54 +175,41 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
             {loading ? (
                 <LoadingScreen></LoadingScreen>
             ) : (
-                <Pressable style={styles.modalBackdrop} onPress={onClose}>
-                    <Pressable onPress={(e) => e.stopPropagation()} style={styles.modalContainer}>
-                        <ScrollView keyboardShouldPersistTaps="handled">
-                            <Text style={styles.modalTitle}>Set Date and Time</Text>
+                <Pressable style={datetimePickerStyles[theme].modalBackdrop} onPress={onClose}>
+                    <Pressable onPress={(e) => e.stopPropagation()} style={datetimePickerStyles[theme].modalContainer}>
+                        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={datetimePickerStyles[theme].scrollContainer}>
+                            <Text style={datetimePickerStyles[theme].modalTitle}>Set Date and Time</Text>
 
-                            <View style={styles.dateTimeSection}>
-                                <View style={styles.timePicker}>
+                            <View style={datetimePickerStyles[theme].dateTimeSection}>
+                                <View style={datetimePickerStyles[theme].timePicker}>
                                     {inputRow('Year', year, (text) => handlePartChange('year', text), 'YYYY', 4)}
                                     {inputRow('Month', month, (text) => handlePartChange('month', text), 'MM', 2)}
                                     {inputRow('Day', day, (text) => handlePartChange('day', text), 'DD', 2)}
                                 </View>
                             </View>
 
-                            <View style={styles.dateTimeSection}>
-                                <View style={styles.timePicker}>
+                            <View style={datetimePickerStyles[theme].dateTimeSection}>
+                                <View style={datetimePickerStyles[theme].timePicker}>
                                     {inputRow('Hours', hours, (text) => handlePartChange('hours', text), 'HH', 2)}
                                     {inputRow('Minutes', minutes, (text) => handlePartChange('minutes', text), 'mm', 2)}
                                     {inputRow('Seconds', seconds, (text) => handlePartChange('seconds', text), 'ss', 2)}
                                 </View>
                             </View>
 
-                            <View style={styles.timeAdjustmentButtons}>
-                                <TouchableOpacity
-                                    style={styles.adjButton}
-                                    onPress={() => handleTimeAdjustment(-incrementSeconds)}
-                                >
-                                    <Text style={styles.adjButtonText}>-{incrementSeconds}s</Text>
+                            <Divider />
+
+                            <View style={datetimePickerStyles[theme].actionButtons}>
+                                <TouchableOpacity style={[datetimePickerStyles[theme].button, datetimePickerStyles[theme].cancelButton]} onPress={onClose}>
+                                    <Text style={datetimePickerStyles[theme].buttonText}>Cancel</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={styles.adjButton}
-                                    onPress={() => handleTimeAdjustment(incrementSeconds)}
-                                >
-                                    <Text style={styles.adjButtonText}>+{incrementSeconds}s</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[styles.adjButton, { backgroundColor: '#4CAF50' }]}
+                                    style={[datetimePickerStyles[theme].nowButton]}
                                     onPress={handleTimeNow}
                                 >
-                                    <Text style={styles.adjButtonText}>Now</Text>
+                                    <Text style={datetimePickerStyles[theme].buttonText}>Now</Text>
                                 </TouchableOpacity>
-                            </View>
-
-                            <View style={styles.actionButtons}>
-                                <TouchableOpacity style={[styles.button, styles.cancelButton]} onPress={onClose}>
-                                    <Text style={styles.buttonText}>Cancel</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity style={[styles.button, styles.confirmButton]} onPress={handleConfirm}>
-                                    <Text style={styles.buttonText}>Confirm</Text>
+                                <TouchableOpacity style={[datetimePickerStyles[theme].button, datetimePickerStyles[theme].confirmButton]} onPress={handleConfirm}>
+                                    <Text style={datetimePickerStyles[theme].buttonText}>Confirm</Text>
                                 </TouchableOpacity>
                             </View>
                         </ScrollView>
@@ -225,116 +219,3 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
         </Modal>
     );
 };
-
-const styles = StyleSheet.create({
-    modalBackdrop: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-    },
-    modalContainer: {
-        width: '90%',
-        maxHeight: '90%', // Increased max height
-        backgroundColor: 'white',
-        borderRadius: 10,
-        padding: 20,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-    },
-    modalTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-    },
-    dateTimeSection: {
-        marginBottom: 15,
-        alignItems: 'center',
-    },
-    sectionTitle: {
-        fontSize: 16,
-        fontWeight: '600',
-        marginBottom: 10,
-        color: '#333',
-    },
-    timePicker: {
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 10,
-    },
-    inputRow: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    inputLabel: {
-        flex: 1,
-        fontSize: 16,
-        minWidth: 70,
-        textAlign: 'center',
-    },
-    textInput: {
-        flex: 1,
-        width: '100%',
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 5,
-        paddingHorizontal: 10,
-        paddingVertical: Platform.OS === 'ios' ? 10 : 8,
-        fontSize: 16,
-    },
-    timeAdjustmentButtons: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginVertical: 10,
-        gap: 10,
-    },
-    adjButton: {
-        flex: 1,
-        backgroundColor: '#007AFF',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-        alignItems: 'center',
-    },
-    adjButtonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    actionButtons: {
-        flexDirection: 'row',
-        justifyContent: 'flex-end',
-        marginTop: 10,
-        borderTopColor: '#eee',
-        borderTopWidth: 1,
-        paddingTop: 15,
-    },
-    button: {
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderRadius: 5,
-        marginLeft: 10,
-    },
-    confirmButton: {
-        backgroundColor: '#4CAF50',
-    },
-    cancelButton: {
-        backgroundColor: '#D32F2F',
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-});
-
-export default CustomDateTimePicker;

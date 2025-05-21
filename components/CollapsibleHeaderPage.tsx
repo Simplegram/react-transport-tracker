@@ -1,58 +1,38 @@
+import { useTheme } from '@/context/ThemeContext';
+import { collapsibleHeaderStyles, styles } from '@/src/styles/Styles';
 import {
     View,
-    StyleSheet,
     ViewStyle,
-    TextStyle,
     type StyleProp,
     ScrollView,
-    Dimensions
+    Text
 } from 'react-native';
 
-const { height: screenHeight } = Dimensions.get('window');
-
-// --- Props Definition ---
 interface CollapsibleHeaderPageProps {
-    largeHeaderText?: string; // Text for the large header initially visible
-    smallHeaderText?: string; // Text for the small header visible when collapsed (optional, not used in current layout but kept)
-    children: React.ReactNode; // The main content to be displayed below the header
+    headerText?: string;
+    children: React.ReactNode;
     containerStyle?: StyleProp<ViewStyle>;
-    scrollViewStyle?: StyleProp<ViewStyle>;
-    contentContainerStyle?: StyleProp<ViewStyle>; // Applied to the ScrollView's contentContainerStyle
-    smallHeaderContainerStyle?: StyleProp<ViewStyle>; // Not used in current layout but kept
-    smallHeaderTextStyle?: StyleProp<TextStyle>; // Not used in current layout but kept
-    largeInfoTextContainerStyle?: StyleProp<ViewStyle>;
-    largeInfoTextStyle?: StyleProp<TextStyle>;
 }
 
-const CollapsibleHeaderPage: React.FC<CollapsibleHeaderPageProps> = ({ // Not used in the current layout structure
+export default function CollapsibleHeaderPage({
+    headerText,
     children,
-    containerStyle,
-}) => {
+    containerStyle
+}: CollapsibleHeaderPageProps) {
+    const { theme } = useTheme()
+
     return (
-        <View style={[styles.container, containerStyle]}>
-            <ScrollView contentContainerStyle={styles.scrollContainer} showsVerticalScrollIndicator={false} keyboardShouldPersistTaps={'always'}>
-                <View style={styles.fillerContainer}></View>
+        <View style={[collapsibleHeaderStyles[theme].container, containerStyle]}>
+            <ScrollView
+                contentContainerStyle={collapsibleHeaderStyles[theme].scrollContainer}
+                showsVerticalScrollIndicator={false}
+                keyboardShouldPersistTaps={'always'}
+            >
+                <View style={collapsibleHeaderStyles[theme].fillerContainer}>
+                    <Text style={collapsibleHeaderStyles[theme].headerText}>{headerText}</Text>
+                </View>
                 {children}
             </ScrollView>
         </View>
     );
 };
-
-// --- Styles for the base component structure ---
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: 15,
-        paddingBottom: 15,
-        backgroundColor: '#fff',
-    },
-    fillerContainer: {
-        flex: 1,
-        minHeight: screenHeight * 0.45
-    },
-    scrollContainer: {
-        flexGrow: 1,
-    }
-});
-
-export default CollapsibleHeaderPage;

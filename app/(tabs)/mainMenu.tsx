@@ -11,6 +11,9 @@ import CalendarModal from "@/components/modal/CalendarModal";
 import useStopModal from "@/hooks/useStopModal";
 import { getTodayString } from "@/src/utils/dateUtils";
 import { useSupabase } from "@/context/SupabaseContext";
+import { useTheme } from "@/context/ThemeContext";
+import { colors } from "@/const/color";
+import { mainMenuStyles } from "@/src/styles/MainMenuStyles";
 
 const { height: screenHeight } = Dimensions.get('window');
 
@@ -24,7 +27,9 @@ interface DateObject {
 
 export default function HomePage() {
     const { supabaseClient: supabase } = useSupabase()
-    
+
+    const { theme } = useTheme()
+
     const {
         travelAtDate, getTravelAtDate, getDates,
         dates, selectedDate, setSelectedDate,
@@ -86,23 +91,21 @@ export default function HomePage() {
     )
 
     return (
-        <View style={styles.container}>
-            <View style={styles.listContainer}>
+        <View style={mainMenuStyles[theme].container}>
+            <View style={mainMenuStyles[theme].listContainer}>
                 {loading == true || !supabase ? (
                     <LoadingScreen></LoadingScreen>
                 ) : (
                     <GroupedDataDisplay data={travelAtDate} currentDate={selectedDate}></GroupedDataDisplay>
                 )}
             </View>
-            <View style={styles.calendarContainer}>
-                <Button
-                    style={[buttonStyles.addButton, { flex: 0 }]}
-                    textStyle={buttonStyles.addButtonText}
-                    onPress={() => openCalendarModal()}
-                >
-                    View Calendar
-                </Button>
-            </View>
+            <Button
+                style={[buttonStyles[theme].addButton, { flex: 0 }]}
+                textStyle={buttonStyles[theme].addButtonText}
+                onPress={() => openCalendarModal()}
+            >
+                View Calendar
+            </Button>
             <CalendarModal
                 dates={dates}
                 markedDates={markedDates}
@@ -116,45 +119,3 @@ export default function HomePage() {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flexGrow: 1,
-        justifyContent: 'center',
-        padding: 15,
-        paddingTop: 0,
-        backgroundColor: '#fff'
-    },
-    calendarContainer: {
-        backgroundColor: 'white',
-        paddingTop: 10,
-    },
-    listContainer: {
-        flex: 1,
-    },
-    listTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 10,
-        color: '#333',
-    },
-    listContent: {
-        flexGrow: 1,
-    },
-    listItem: {
-        backgroundColor: 'white',
-        padding: 15,
-        borderRadius: 8,
-        marginBottom: 10,
-    },
-    itemText: {
-        fontSize: 16,
-        color: '#333',
-    },
-    noItemsText: {
-        fontSize: 16,
-        color: '#777',
-        textAlign: 'center',
-        marginTop: 20,
-    },
-});

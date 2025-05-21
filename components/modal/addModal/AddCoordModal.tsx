@@ -1,4 +1,5 @@
 import Button from "@/components/BaseButton";
+import { useTheme } from "@/context/ThemeContext";
 import useLocation from "@/hooks/useLocation";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
 import { inputElementStyles } from "@/src/styles/InputStyles";
@@ -16,6 +17,8 @@ const pointSize = {
 }
 
 export default function AddCoordModal({ currentCoordinates, isModalVisible, onClose, onSelect }: AddableCoordModalProp) {
+    const { theme } = useTheme()
+
     const mapRef = useRef(null)
 
     const { location } = useLocation()
@@ -69,9 +72,9 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
             transparent={true}
             animationType="slide"
         >
-            <Pressable style={modalStyles.modalBackdrop}>
-                <View style={[modalStyles.modalContainer, modalStyles.coordModalContainer]} onStartShouldSetResponder={() => true}>
-                    <View style={[inputElementStyles.inputGroup, { flex: 1 }]}>
+            <Pressable style={modalStyles[theme].modalBackdrop}>
+                <View style={[modalStyles[theme].modalContainer, modalStyles[theme].coordModalContainer]} onStartShouldSetResponder={() => true}>
+                    <View style={[inputElementStyles[theme].inputGroup, { flex: 1 }]}>
                         <MapView
                             ref={mapRef}
                             style={{ flex: 1 }}
@@ -88,9 +91,9 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
                         </View>
                     </View>
 
-                    <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                        <Button title='Pick Coordinate' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button title='Pick Coordinate' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </View>
             </Pressable>

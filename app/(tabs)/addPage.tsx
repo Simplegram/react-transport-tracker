@@ -3,6 +3,8 @@ import {
     View,
     StyleSheet,
     Platform,
+    Text,
+    StatusBar,
 } from 'react-native';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'; // Adjust path as needed
 import { router } from 'expo-router'; // Keep if needed elsewhere
@@ -10,6 +12,11 @@ import { router } from 'expo-router'; // Keep if needed elsewhere
 import { useTravelContext } from '@/context/PageContext';
 import Button from '@/components/BaseButton';
 import { useAuth } from '@/provider/AuthProvider';
+import Divider from '@/components/Divider';
+import { useTheme } from '@/context/ThemeContext';
+import { statusBarStyles } from '@/src/styles/Styles';
+import { colors } from '@/const/color';
+import { buttonStyles } from '@/src/styles/ButtonStyles';
 
 interface ButtonConfig {
     id: string
@@ -41,6 +48,7 @@ const navigationButtons: ButtonConfig[] = [
 
 
 const NavigationPage: React.FC = () => {
+    const { theme, setTheme } = useTheme()
     const { setSelectedModification } = useTravelContext()
 
     const { signOut } = useAuth()
@@ -57,29 +65,39 @@ const NavigationPage: React.FC = () => {
         router.push("/");
     };
 
+    const handleThemeChange = () => {
+        if (theme === 'light') setTheme('dark')
+        else setTheme('light')
+    }
+
     return (
         <CollapsibleHeaderPage
-            largeHeaderText="Add vehicle type, direction, stops, routes, or travels"
-            smallHeaderText="Add Page"
+            headerText="Add vehicle type, direction, stops, or routes"
         >
             <View style={styles.container}>
-                <View style={styles.fillingContainer}></View>
+                <View style={styles.fillingContainer} />
                 <View style={styles.buttonContainer}>
                     {navigationButtons.map((button) => (
                         <Button
-                            color='#007bff'
                             key={button.text}
                             title={button.text}
-                            style={styles.button}
-                            textStyle={styles.buttonText}
+                            style={buttonStyles[theme].addButton}
+                            textStyle={buttonStyles[theme].addButtonText}
                             onPress={() => handleItemPress(button.id)}
                         />
                     ))}
                 </View>
+                <Divider />
                 <Button
-                    color='#f0473e'
-                    style={styles.button}
-                    textStyle={styles.buttonText}
+                    title={`Enable ${theme === 'light' ? 'dark' : 'light'} mode`}
+                    style={buttonStyles[theme].addButton}
+                    textStyle={buttonStyles[theme].addButtonText}
+                    onPress={handleThemeChange}
+                />
+                <Divider />
+                <Button
+                    style={buttonStyles[theme].redButton}
+                    textStyle={buttonStyles[theme].addButtonText}
                     onPress={handleLogout}
                 >Logout</Button>
             </View>
@@ -94,19 +112,11 @@ const styles = StyleSheet.create({
     },
     fillingContainer: {
         flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     buttonContainer: {
         gap: 10,
-    },
-    button: {
-        borderWidth: 1,
-        borderRadius: 8,
-        alignItems: 'center',
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '700',
     },
 });
 

@@ -2,7 +2,9 @@ import AnnotationContent from '@/components/AnnotationContent';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
 import LoadingScreen from '@/components/LoadingScreen';
 import { useTravelContext } from '@/context/PageContext';
+import { useTheme } from '@/context/ThemeContext';
 import useGetTravelData from '@/hooks/useGetTravelData';
+import { travelDetailStyles } from '@/src/styles/TravelDetailStyles';
 import { DataItem, VehicleType } from '@/src/types/Travels';
 import { getSimpleCentroid } from '@/src/utils/mapUtils';
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native';
@@ -31,6 +33,8 @@ const formatDurationHoursMinutes = (milliseconds: number): string => {
 };
 
 export default function TravelDetail() {
+    const { theme } = useTheme()
+
     const { selectedTravelItems } = useTravelContext()
 
     const {
@@ -85,10 +89,10 @@ export default function TravelDetail() {
 
         if (travel.first_stop_id && travel.first_stop_id.lat && travel.first_stop_id.lon) {
             coords.push(
-                { 
-                    id: "stop", 
-                    stop: travel.first_stop_id, 
-                    name: travel.first_stop_id.name, 
+                {
+                    id: "stop",
+                    stop: travel.first_stop_id,
+                    name: travel.first_stop_id.name,
                     coords: [travel.first_stop_id.lon, travel.first_stop_id.lat],
                     time: travel.bus_initial_arrival || null
                 }
@@ -97,10 +101,10 @@ export default function TravelDetail() {
 
         if (travel.last_stop_id && travel.last_stop_id.lat && travel.last_stop_id.lon) {
             coords.push(
-                { 
-                    id: "stop", 
-                    stop: travel.last_stop_id, 
-                    name: travel.last_stop_id.name, 
+                {
+                    id: "stop",
+                    stop: travel.last_stop_id,
+                    name: travel.last_stop_id.name,
                     coords: [travel.last_stop_id.lon, travel.last_stop_id.lat],
                     time: travel.bus_final_arrival || null
                 }
@@ -113,12 +117,12 @@ export default function TravelDetail() {
     const lapLatLon = travelLaps
         ?.filter(lap => lap.stop_id !== null && lap.stop_id.lon && lap.stop_id.lat)
         .map(lap => (
-            { 
-                id: "lap", 
-                stop: lap.stop_id, 
-                name: lap.stop_id?.name, 
+            {
+                id: "lap",
+                stop: lap.stop_id,
+                name: lap.stop_id?.name,
                 coords: [lap.stop_id.lon, lap.stop_id.lat],
-                time: lap.time, 
+                time: lap.time,
             }
         )) || [];
 
@@ -225,31 +229,31 @@ export default function TravelDetail() {
 
     return (
         <CollapsibleHeaderPage>
-            <View style={styles.container}>
-                <View style={styles.card}>
-                    <Text style={styles.cardTitle}>Efficiency Overview</Text>
+            <View style={travelDetailStyles[theme].container}>
+                <View style={travelDetailStyles[theme].card}>
+                    <Text style={travelDetailStyles[theme].cardTitle}>Efficiency Overview</Text>
 
-                    <View style={styles.detailRow}>
-                        <Text style={styles.label}>Total Time Span:</Text>
-                        <Text style={styles.valueText}>{formatDurationMinutes(totalCalendarSpanMilliseconds)}</Text>
+                    <View style={travelDetailStyles[theme].detailRow}>
+                        <Text style={travelDetailStyles[theme].label}>Total Time Span:</Text>
+                        <Text style={travelDetailStyles[theme].valueText}>{formatDurationMinutes(totalCalendarSpanMilliseconds)}</Text>
                     </View>
 
-                    <View style={styles.detailRow}>
-                        <Text style={styles.label}>Total On-Road Time:</Text>
-                        <Text style={styles.valueText}>{formatDurationMinutes(totalOnRoadMilliseconds)}</Text>
+                    <View style={travelDetailStyles[theme].detailRow}>
+                        <Text style={travelDetailStyles[theme].label}>Total On-Road Time:</Text>
+                        <Text style={travelDetailStyles[theme].valueText}>{formatDurationMinutes(totalOnRoadMilliseconds)}</Text>
                     </View>
 
-                    <View style={styles.detailRow}>
-                        <Text style={styles.label}>Calculated Efficiency:</Text>
-                        <Text style={[styles.valueText, styles.specialValue]}>
+                    <View style={travelDetailStyles[theme].detailRow}>
+                        <Text style={travelDetailStyles[theme].label}>Calculated Efficiency:</Text>
+                        <Text style={[travelDetailStyles[theme].valueText, travelDetailStyles[theme].specialValue]}>
                             {efficiencyPercentage.toFixed(2)}%
                         </Text>
                     </View>
                 </View>
 
                 {sortedData.length > 0 && (
-                    <View style={styles.card}>
-                        <Text style={styles.cardTitle}>Individual Trip Durations</Text>
+                    <View style={travelDetailStyles[theme].card}>
+                        <Text style={travelDetailStyles[theme].cardTitle}>Individual Trip Durations</Text>
                         {sortedData.sort(data => data.id).map((trip) => {
                             try {
                                 const departureDate = new Date(trip.bus_initial_departure);
@@ -260,17 +264,17 @@ export default function TravelDetail() {
                                 const tripIdentifier = `${trip.vehicle_code || 'N/A'} - ${trip.routes?.name || 'N/A'}`;
 
                                 return (
-                                    <View key={trip.id} style={styles.detailRow}>
-                                        <Text style={styles.label}>{tripIdentifier}:</Text>
-                                        <Text style={styles.valueText}>{durationString}</Text>
+                                    <View key={trip.id} style={travelDetailStyles[theme].detailRow}>
+                                        <Text style={travelDetailStyles[theme].label}>{tripIdentifier}:</Text>
+                                        <Text style={travelDetailStyles[theme].valueText}>{durationString}</Text>
                                     </View>
                                 );
                             } catch (error) {
                                 console.error(`Error calculating duration for trip ID ${trip.id || 'unknown'}:`, error);
                                 return (
-                                    <View key={trip.id} style={styles.detailRow}>
-                                        <Text style={styles.label}>Trip ID {trip.id || 'N/A'} Duration:</Text>
-                                        <Text style={styles.valueText}>Calculation Error</Text>
+                                    <View key={trip.id} style={travelDetailStyles[theme].detailRow}>
+                                        <Text style={travelDetailStyles[theme].label}>Trip ID {trip.id || 'N/A'} Duration:</Text>
+                                        <Text style={travelDetailStyles[theme].valueText}>Calculation Error</Text>
                                     </View>
                                 );
                             }
@@ -278,7 +282,7 @@ export default function TravelDetail() {
                     </View>
                 )}
 
-                <View style={[styles.card, { height: screenWidth * 0.95, padding: 0, overflow: 'hidden' }]}>
+                <View style={[travelDetailStyles[theme].card, { height: screenWidth * 0.95, padding: 0, overflow: 'hidden' }]}>
                     <MapView
                         style={{ flex: 1, overflow: 'hidden' }}
                         rotateEnabled={false}
@@ -301,11 +305,11 @@ export default function TravelDetail() {
                                     key={index}
                                     coordinate={data.coords as [number, number]} // Assert the type after filtering
                                 >
-                                    <AnnotationContent 
-                                        fullVehicleTypes={fullVehicleTypes} 
-                                        data_id={data.id} 
-                                        title={data.name || ''} 
-                                        stop={data.stop} 
+                                    <AnnotationContent
+                                        fullVehicleTypes={fullVehicleTypes}
+                                        data_id={data.id}
+                                        title={data.name || ''}
+                                        stop={data.stop}
                                         time={data.time}
                                     />
                                 </MarkerView>
@@ -313,25 +317,25 @@ export default function TravelDetail() {
                     </MapView>
                 </View>
 
-                <View style={styles.card}>
-                    <Text style={styles.cardTitle}>Activity Counts</Text>
+                <View style={travelDetailStyles[theme].card}>
+                    <Text style={travelDetailStyles[theme].cardTitle}>Activity Counts</Text>
 
-                    <View style={styles.detailRow}>
-                        <Text style={styles.label}>Total Trips Processed:</Text>
-                        <Text style={styles.valueText}>{sortedData.length}</Text>
+                    <View style={travelDetailStyles[theme].detailRow}>
+                        <Text style={travelDetailStyles[theme].label}>Total Trips Processed:</Text>
+                        <Text style={travelDetailStyles[theme].valueText}>{sortedData.length}</Text>
                     </View>
 
-                    <View style={styles.detailRow}>
-                        <Text style={styles.label}>Valid Trips for Duration:</Text>
-                        <Text style={styles.valueText}>{validTripCount}</Text>
+                    <View style={travelDetailStyles[theme].detailRow}>
+                        <Text style={travelDetailStyles[theme].label}>Valid Trips for Duration:</Text>
+                        <Text style={travelDetailStyles[theme].valueText}>{validTripCount}</Text>
                     </View>
 
                     {Object.keys(tripsByType).length > 0 && (
-                        <View style={styles.detailRow}>
-                            <Text style={styles.label}>Trips by Type:</Text>
-                            <View style={styles.value}>
+                        <View style={travelDetailStyles[theme].detailRow}>
+                            <Text style={travelDetailStyles[theme].label}>Trips by Type:</Text>
+                            <View style={travelDetailStyles[theme].value}>
                                 {Object.entries(tripsByType).map(([type, count]) => (
-                                    <Text key={type} style={[styles.valueText, styles.specialValue]}>{type}: {count}</Text>
+                                    <Text key={type} style={[travelDetailStyles[theme].valueText, travelDetailStyles[theme].specialValue]}>{type}: {count}</Text>
                                 ))}
                             </View>
                         </View>
@@ -339,48 +343,48 @@ export default function TravelDetail() {
                 </View>
 
                 {(uniqueVehiclesList.length > 0 || uniqueRoutesList.length > 0 || uniqueOriginsList.length > 0 || uniqueDestinationsList.length > 0) && (
-                    <View style={styles.card}>
-                        <Text style={styles.cardTitle}>Unique Items</Text>
+                    <View style={travelDetailStyles[theme].card}>
+                        <Text style={travelDetailStyles[theme].cardTitle}>Unique Items</Text>
 
                         {uniqueVehiclesList.length > 0 && (
-                            <View style={styles.detailRow}>
-                                <Text style={styles.label}>Unique Vehicles ({uniqueVehiclesList.length}):</Text>
-                                <View style={styles.value}>
+                            <View style={travelDetailStyles[theme].detailRow}>
+                                <Text style={travelDetailStyles[theme].label}>Unique Vehicles ({uniqueVehiclesList.length}):</Text>
+                                <View style={travelDetailStyles[theme].value}>
                                     {uniqueVehiclesList.map((item, index) => (
-                                        <Text key={index} style={[styles.valueText, styles.specialValue]}>{item}</Text>
+                                        <Text key={index} style={[travelDetailStyles[theme].valueText, travelDetailStyles[theme].specialValue]}>{item}</Text>
                                     ))}
                                 </View>
                             </View>
                         )}
 
                         {uniqueRoutesList.length > 0 && (
-                            <View style={styles.detailRow}>
-                                <Text style={styles.label}>Unique Routes ({uniqueRoutesList.length}):</Text>
-                                <View style={styles.value}>
+                            <View style={travelDetailStyles[theme].detailRow}>
+                                <Text style={travelDetailStyles[theme].label}>Unique Routes ({uniqueRoutesList.length}):</Text>
+                                <View style={travelDetailStyles[theme].value}>
                                     {uniqueRoutesList.map((item, index) => (
-                                        <Text key={index} style={styles.valueText}>{item}</Text>
+                                        <Text key={index} style={travelDetailStyles[theme].valueText}>{item}</Text>
                                     ))}
                                 </View>
                             </View>
                         )}
 
                         {uniqueOriginsList.length > 0 && (
-                            <View style={styles.detailRow}>
-                                <Text style={styles.label}>Unique Origins ({uniqueOriginsList.length}):</Text>
-                                <View style={styles.value}>
+                            <View style={travelDetailStyles[theme].detailRow}>
+                                <Text style={travelDetailStyles[theme].label}>Unique Origins ({uniqueOriginsList.length}):</Text>
+                                <View style={travelDetailStyles[theme].value}>
                                     {uniqueOriginsList.map((item, index) => (
-                                        <Text key={index} style={styles.valueText}>{item}</Text>
+                                        <Text key={index} style={travelDetailStyles[theme].valueText}>{item}</Text>
                                     ))}
                                 </View>
                             </View>
                         )}
 
                         {uniqueDestinationsList.length > 0 && (
-                            <View style={styles.detailRow}>
-                                <Text style={styles.label}>Unique Destinations ({uniqueDestinationsList.length}):</Text>
-                                <View style={styles.value}>
+                            <View style={travelDetailStyles[theme].detailRow}>
+                                <Text style={travelDetailStyles[theme].label}>Unique Destinations ({uniqueDestinationsList.length}):</Text>
+                                <View style={travelDetailStyles[theme].value}>
                                     {uniqueDestinationsList.map((item, index) => (
-                                        <Text key={index} style={styles.valueText}>{item}</Text>
+                                        <Text key={index} style={travelDetailStyles[theme].valueText}>{item}</Text>
                                     ))}
                                 </View>
                             </View>

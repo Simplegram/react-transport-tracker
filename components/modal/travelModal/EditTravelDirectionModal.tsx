@@ -3,8 +3,14 @@ import { EditableTravelDirectionModalProp, EditableTravelModalProp } from "@/src
 import { useMemo } from "react";
 import { FlatList, Modal, Pressable, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { flatlistStyles, modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
+import { useTheme } from "@/context/ThemeContext";
+import { inputStyles } from "@/src/styles/InputStyles";
+import { colors } from "@/const/color";
+import FlatlistPicker from "../FlatlistPicker";
 
 export default function EditTravelDirectionModal({ directions, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelDirectionModalProp) {
+    const { theme } = useTheme()
+
     const filteredItems = useMemo(() => {
         if (!directions) return [];
         const query = searchQuery.toLowerCase();
@@ -20,39 +26,34 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
             animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
-                <View style={modalStyles.modalContainer}>
-                    <View style={modalElementStyles.header}>
-                        <Text style={modalElementStyles.title}>Select a Direction</Text>
-                        <Text style={modalElementStyles.closeLabel}>Close</Text>
+            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose}>
+                <View style={modalStyles[theme].modalContainer}>
+                    <View style={modalElementStyles[theme].header}>
+                        <Text style={modalElementStyles[theme].title}>Select a Direction</Text>
+                        <Text style={modalElementStyles[theme].closeLabel}>Close</Text>
                     </View>
                     <TextInput
-                        style={modalStyles.modalSearchInput}
+                        style={inputStyles[theme].textInput}
                         placeholder="Search direction..."
+                        placeholderTextColor={colors.text.placeholderGray}
                         value={searchQuery}
                         onChangeText={setSearchQuery}
                     />
                     {filteredItems.length === 0 ? (
-                        <View style={modalStyles.emptyList}>
-                            <Text style={modalElementStyles.label}>No route found</Text>
+                        <View style={modalStyles[theme].emptyList}>
+                            <Text style={modalElementStyles[theme].label}>No route found</Text>
                         </View>
                     ) : (
-                        <FlatList
-                            inverted={true}
-                            data={filteredItems}
-                            keyExtractor={(item) => item.id.toString()}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                    style={flatlistStyles.item}
-                                    onPress={() => onSelect(item.id)}
-                                >
-                                    <Text style={modalElementStyles.label}>{item.name}</Text>
-                                </TouchableOpacity>
+                        <FlatlistPicker
+                            items={filteredItems}
+                            onSelect={onSelect}
+                        >
+                            {(item) => (
+                                <Text style={modalElementStyles[theme].label}>{item.name}</Text>
                             )}
-                            keyboardShouldPersistTaps={'always'}
-                        />
+                        </FlatlistPicker>
                     )}
-                </View>
+                        </View>
             </Pressable>
         </Modal>
     )

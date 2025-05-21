@@ -10,7 +10,7 @@ import { useSupabase } from '@/context/SupabaseContext'
 import { SupabaseClient } from '@supabase/supabase-js'
 
 const Login = () => {
-    const { 
+    const {
         supabaseClient,
         supabaseUrl, setSupabaseUrl,
         supabaseAnonKey, setSupabaseAnonKey
@@ -69,47 +69,47 @@ const Login = () => {
                     (
                         <>
                             <Text style={styles.header}>Transport Tracker</Text>
-                            <View style={[inputElementStyles.inputContainer, { paddingBottom: 0 }]}>
-                                <View style={inputElementStyles.inputGroup}>
-                                    <Text style={inputElementStyles.inputLabel}>Supabase URL</Text>
+                            <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
+                                <View style={inputElementStyles[theme].inputGroup}>
+                                    <Text style={inputElementStyles[theme].inputLabel}>Supabase URL</Text>
                                     <TextInput
                                         autoCapitalize="none"
                                         placeholder="https://my-example-brand.supabase.co"
                                         value={currentSupabaseUrl}
                                         onChangeText={setCurrentSupabaseUrl}
-                                        style={inputStyles.textInput}
+                                        style={inputStyles[theme].textInput}
                                         numberOfLines={1}
                                     />
                                 </View>
-                                <View style={inputElementStyles.inputGroup}>
-                                    <Text style={inputElementStyles.inputLabel}>Supabase Anon Key</Text>
+                                <View style={inputElementStyles[theme].inputGroup}>
+                                    <Text style={inputElementStyles[theme].inputLabel}>Supabase Anon Key</Text>
                                     <TextInput
                                         autoCapitalize="none"
                                         placeholder="abcdefghijklmnopqrstuvwxyz1234567890"
                                         value={currentSupabaseAnonKey}
                                         onChangeText={setCurrentSupabaseAnonKey}
-                                        style={inputStyles.textInput}
+                                        style={inputStyles[theme].textInput}
                                         numberOfLines={1}
                                     />
                                 </View>
-                                <View style={inputElementStyles.inputGroup}>
-                                    <Text style={inputElementStyles.inputLabel}>Supabase Account Email</Text>
+                                <View style={inputElementStyles[theme].inputGroup}>
+                                    <Text style={inputElementStyles[theme].inputLabel}>Supabase Account Email</Text>
                                     <TextInput
                                         autoCapitalize="none"
                                         placeholder="john@doe.com"
                                         value={email}
                                         onChangeText={setEmail}
-                                        style={inputStyles.textInput}
+                                        style={inputStyles[theme].textInput}
                                     />
                                 </View>
-                                <View style={inputElementStyles.inputGroup}>
-                                    <Text style={inputElementStyles.inputLabel}>Supabase Account Password</Text>
+                                <View style={inputElementStyles[theme].inputGroup}>
+                                    <Text style={inputElementStyles[theme].inputLabel}>Supabase Account Password</Text>
                                     <TextInput
                                         placeholder="password"
                                         value={password}
                                         onChangeText={setPassword}
                                         secureTextEntry
-                                        style={inputStyles.textInput}
+                                        style={inputStyles[theme].textInput}
                                     />
                                 </View>
                             </View>
