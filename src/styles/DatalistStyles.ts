@@ -3,9 +3,11 @@ import { StyleSheet } from "react-native";
 
 const lightDatalistStyles = StyleSheet.create({
     container: {
-        flex: 1,
-        padding: 15,
         gap: 10,
+        flex: 1,
+        paddingTop: 5,
+        paddingBottom: 10,
+        paddingHorizontal: 15,
         backgroundColor: colors.background.white,
     },
     listContent: {

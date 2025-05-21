@@ -22,8 +22,9 @@ export const styles = {
 const lightCollapsibleHeaderStyles = StyleSheet.create({
     container: {
         flex: 1,
+        paddingTop: 5,
+        paddingBottom: 10,
         paddingHorizontal: 15,
-        paddingBottom: 15,
         backgroundColor: '#fff',
     },
     fillerContainer: {

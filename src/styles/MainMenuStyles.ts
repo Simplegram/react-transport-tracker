@@ -5,9 +5,9 @@ const lightMainmenuStyles = StyleSheet.create({
     container: {
         flexGrow: 1,
         justifyContent: 'center',
-        paddingVertical: 15,
+        paddingTop: 5,
+        paddingBottom: 10,
         paddingHorizontal: 15,
-        paddingTop: 0,
         backgroundColor: '#fff'
     },
     calendarContainer: {
