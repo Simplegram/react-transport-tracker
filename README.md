@@ -70,6 +70,7 @@ You can start developing by editing the files inside the **app** directory. This
 * `react-native-gesture-handler`
 * `react-native-keyboard-aware-scroll-view`
 * `react-native-loading-spinner-overlay`
+* `react-native-mmkv-storage`
 * `react-native-pager-view`
 * `react-native-safe-area-context`
 * `react-native-screens`
@@ -79,6 +80,12 @@ You can start developing by editing the files inside the **app** directory. This
 * `expo-location`
 
 ## Create Supabase Tables
+
+### Create Schema
+```pgsql
+CREATE SCHEMA public_transport_tracker;
+GRANT ALL ON ALL TABLES IN SCHEMA public_transport_tracker TO authenticated;
+```
 
 ### Directions Table
 
