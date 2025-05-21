@@ -11,6 +11,8 @@ import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { ModalProp } from "@/src/types/TravelModal"
 import { useTheme } from "@/context/ThemeContext"
+import { colors } from "@/const/color"
+import { styles } from "@/src/styles/Styles"
 
 export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: ModalProp) {
     const { theme } = useTheme()
@@ -64,8 +66,9 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].insideLabel}>Code:</Text>
                             <TextInput
-                                style={inputStyles['light'].pressableInput}
+                                style={inputStyles[theme].pressableInput}
                                 placeholder="Route code..."
+                                placeholderTextColor={colors.text.placeholderGray}
                                 value={route.code}
                                 onChangeText={text => (setRoute({ ...route, "code": text }))}
                             />
@@ -74,8 +77,9 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].insideLabel}>Name:</Text>
                             <TextInput
-                                style={inputStyles['light'].pressableInput}
+                                style={inputStyles[theme].pressableInput}
                                 placeholder="Route name..."
+                                placeholderTextColor={colors.text.placeholderGray}
                                 value={route.name}
                                 onChangeText={text => (setRoute({ ...route, "name": text }))}
                             />
@@ -84,7 +88,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].inputLabel}>First Stop:</Text>
                             <Pressable
-                                style={inputStyles['light'].pressableInput}
+                                style={inputStyles[theme].pressableInput}
                                 onPress={() => openStopModal('first_stop_id')}>
                                 <Text style={[inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}</Text>
                             </Pressable>
@@ -93,7 +97,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].inputLabel}>Last Stop:</Text>
                             <Pressable
-                                style={inputStyles['light'].pressableInput}
+                                style={inputStyles[theme].pressableInput}
                                 onPress={() => openStopModal('last_stop_id')}>
                                 <Text style={[inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}</Text>
                             </Pressable>
@@ -113,12 +117,21 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                                         <TouchableOpacity
                                             key={type.id}
                                             style={[
-                                                iconPickerStyles.iconTextContainer,
-                                                route.vehicle_type_id === type.id && iconPickerStyles.selectedIconContainer,
+                                                iconPickerStyles[theme].iconTextContainer,
+                                                route.vehicle_type_id === type.id && iconPickerStyles[theme].selectedIconContainer,
                                             ]}
                                             onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}
                                         >
-                                            <Icon name={type.icon_id.name} size={20}></Icon>
+                                            <Icon 
+                                                style={
+                                                    route.vehicle_type_id === type.id ?
+                                                        iconPickerStyles[theme].selectedIcon
+                                                        :
+                                                        styles[theme].icon
+                                                } 
+                                                name={type.icon_id.name} 
+                                                size={20}
+                                            />
                                             <Text style={inputElementStyles[theme].inputLabel}>{type.name.slice(0, 5)}</Text>
                                         </TouchableOpacity>
                                     ))}

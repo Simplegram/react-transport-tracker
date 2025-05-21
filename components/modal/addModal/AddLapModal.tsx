@@ -19,6 +19,7 @@ import { modalStyles } from '@/src/styles/ModalStyles';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
 import { useTheme } from '@/context/ThemeContext';
+import { colors } from '@/const/color';
 
 export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { theme } = useTheme()
@@ -72,7 +73,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                         <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
                             <View style={inputElementStyles[theme].inputGroup}>
                                 <Text style={inputElementStyles[theme].inputLabel}>Time:</Text>
-                                <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles['light'].pressableInput}>
+                                <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles[theme].pressableInput}>
                                     <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(lap.time)}</Text>
                                 </Pressable>
                             </View>
@@ -80,7 +81,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                             <View style={inputElementStyles[theme].inputGroup}>
                                 <Text style={inputElementStyles[theme].inputLabel}>Stop:</Text>
                                 <Pressable
-                                    style={inputStyles['light'].pressableInput}
+                                    style={inputStyles[theme].pressableInput}
                                     onPress={() => openStopModal('last_stop_id')}>
                                     <Text style={[inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>
                                         {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
@@ -101,13 +102,14 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 <Text style={inputElementStyles[theme].inputLabel}>Note:</Text>
                                 <TextInput
                                     placeholder="Optional notes"
+                                    placeholderTextColor={colors.text.placeholderGray}
                                     value={lap.note || ''}
                                     onChangeText={text => setLap({ ...lap, note: text })}
                                     keyboardType="default"
                                     returnKeyType="done"
                                     multiline={true}
                                     numberOfLines={3}
-                                    style={[inputStyles['light'].textInput, inputStyles['light'].multilineTextInput, inputElementStyles[theme].insideLabel]}
+                                    style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput, inputElementStyles[theme].insideLabel]}
                                 />
                             </View>
 

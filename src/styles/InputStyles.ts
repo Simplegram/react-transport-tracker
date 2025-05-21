@@ -49,6 +49,7 @@ const inputElementStyles = {
     dark: StyleSheet.create({
         inputContainer: {
             ...lightInputElementStyles.inputContainer,
+            backgroundColor: colors.background.black,
         },
         inputGroup: {
             ...lightInputElementStyles.inputGroup,
@@ -124,7 +125,8 @@ const inputStyles = {
         },
         pressableInput: {
             ...lightInputStyles.pressableInput,
-            backgroundColor: '#000'
+            backgroundColor: '#000',
+            color: colors.text.dimmerWhite,
         },
         pressableInputCoord: {
             ...lightInputStyles.pressableInputCoord,
@@ -132,7 +134,7 @@ const inputStyles = {
     })
 }
 
-const iconPickerStyles = StyleSheet.create({
+const lightIconPickerStyles = StyleSheet.create({
     iconContainer: {
         width: 55,
         borderWidth: 1,
@@ -155,10 +157,32 @@ const iconPickerStyles = StyleSheet.create({
         justifyContent: 'center',
     },
     selectedIconContainer: {
-        borderColor: '#0284f5',
-        backgroundColor: '#e3f2fd',
+        borderColor: colors.appBlue,
+        backgroundColor: colors.background.lightBlue,
     },
-});
+    selectedIcon: {
+        color: colors.black
+    }
+})
+
+const iconPickerStyles = {
+    light: lightIconPickerStyles,
+    dark: StyleSheet.create({
+        iconContainer: {
+            ...lightIconPickerStyles.iconContainer,
+        },
+        iconTextContainer: {
+            ...lightIconPickerStyles.iconTextContainer,
+        },
+        selectedIconContainer: {
+            ...lightIconPickerStyles.selectedIconContainer,
+            backgroundColor: colors.black,
+        },
+        selectedIcon: {
+            color: colors.dimmerAppBlue
+        }
+    })
+}
 
 export {
     inputStyles,

@@ -77,7 +77,7 @@ const Login = () => {
                                         placeholder="https://my-example-brand.supabase.co"
                                         value={currentSupabaseUrl}
                                         onChangeText={setCurrentSupabaseUrl}
-                                        style={inputStyles['light'].textInput}
+                                        style={inputStyles[theme].textInput}
                                         numberOfLines={1}
                                     />
                                 </View>
@@ -88,7 +88,7 @@ const Login = () => {
                                         placeholder="abcdefghijklmnopqrstuvwxyz1234567890"
                                         value={currentSupabaseAnonKey}
                                         onChangeText={setCurrentSupabaseAnonKey}
-                                        style={inputStyles['light'].textInput}
+                                        style={inputStyles[theme].textInput}
                                         numberOfLines={1}
                                     />
                                 </View>
@@ -99,7 +99,7 @@ const Login = () => {
                                         placeholder="john@doe.com"
                                         value={email}
                                         onChangeText={setEmail}
-                                        style={inputStyles['light'].textInput}
+                                        style={inputStyles[theme].textInput}
                                     />
                                 </View>
                                 <View style={inputElementStyles[theme].inputGroup}>
@@ -109,7 +109,7 @@ const Login = () => {
                                         value={password}
                                         onChangeText={setPassword}
                                         secureTextEntry
-                                        style={inputStyles['light'].textInput}
+                                        style={inputStyles[theme].textInput}
                                     />
                                 </View>
                             </View>

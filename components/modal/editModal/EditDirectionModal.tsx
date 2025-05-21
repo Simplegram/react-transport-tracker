@@ -1,4 +1,5 @@
 import Button from "@/components/BaseButton"
+import { colors } from "@/const/color"
 import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
@@ -37,8 +38,9 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].insideLabel}>Name:</Text>
                             <TextInput
-                                style={inputStyles['light'].pressableInput}
+                                style={inputStyles[theme].pressableInput}
                                 placeholder="Direction name..."
+                                placeholderTextColor={colors.text.placeholderGray}
                                 value={direction.name}
                                 onChangeText={text => (setDirection({ ...direction, "name": text }))}
                             />

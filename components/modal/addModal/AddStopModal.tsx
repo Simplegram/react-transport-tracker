@@ -11,6 +11,8 @@ import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpa
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import AddCoordModal from "./AddCoordModal"
 import { useTheme } from "@/context/ThemeContext"
+import { styles } from "@/src/styles/Styles"
+import { colors } from "@/const/color"
 
 export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()
@@ -62,8 +64,9 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
                             <TextInput
-                                style={inputStyles['light'].pressableInput}
+                                style={inputStyles[theme].pressableInput}
                                 placeholder="Stop name..."
+                                placeholderTextColor={colors.text.placeholderGray}
                                 value={stop.name}
                                 onChangeText={text => (setStop({ ...stop, "name": text }))}
                             />
@@ -73,20 +76,22 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             <Text style={inputElementStyles[theme].inputLabel}>Latitude and Longitude:</Text>
                             <View style={inputElementStyles[theme].inputGroupCoord}>
                                 <TextInput
-                                    style={[inputStyles['light'].pressableInput, inputStyles['light'].pressableInputCoord]}
+                                    style={[inputStyles[theme].pressableInput, inputStyles[theme].pressableInputCoord]}
                                     placeholder="Stop latitude..."
+                                    placeholderTextColor={colors.text.placeholderGray}
                                     value={stop.lat?.toString()}
                                     onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
                                 />
                                 <TextInput
-                                    style={[inputStyles['light'].pressableInput, inputStyles['light'].pressableInputCoord]}
+                                    style={[inputStyles[theme].pressableInput, inputStyles[theme].pressableInputCoord]}
                                     placeholder="Stop longitude..."
+                                    placeholderTextColor={colors.text.placeholderGray}
                                     value={stop.lon?.toString()}
                                     onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
                                 />
                             </View>
                             <Pressable
-                                style={[inputStyles['light'].pressableInput, { marginTop: 10 }]}
+                                style={[inputStyles[theme].pressableInput, { marginTop: 10 }]}
                                 onPress={() => openCoordModal()}>
                                 <Text style={inputElementStyles[theme].insideLabel}>Pick Latitude and Longitude...</Text>
                             </Pressable>
@@ -95,8 +100,9 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].inputLabel}>Alternative name:</Text>
                             <TextInput
-                                style={inputStyles['light'].pressableInput}
+                                style={inputStyles[theme].pressableInput}
                                 placeholder="Alternative name..."
+                                placeholderTextColor={colors.text.placeholderGray}
                                 value={stop.name_alt ? stop.name_alt : ''}
                                 onChangeText={text => (setStop({ ...stop, "name_alt": text }))}
                             />
@@ -116,12 +122,21 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                                         <TouchableOpacity
                                             key={type.id}
                                             style={[
-                                                iconPickerStyles.iconTextContainer,
-                                                stop.vehicle_type === type.id && iconPickerStyles.selectedIconContainer,
+                                                iconPickerStyles[theme].iconTextContainer,
+                                                stop.vehicle_type === type.id && iconPickerStyles[theme].selectedIconContainer,
                                             ]}
                                             onPress={() => setStop({ ...stop, vehicle_type: type.id })}
                                         >
-                                            <Icon name={type.icon_id.name} size={20}></Icon>
+                                            <Icon 
+                                                style={
+                                                    stop.vehicle_type === type.id ? 
+                                                    iconPickerStyles[theme].selectedIcon 
+                                                    : 
+                                                    styles[theme].icon
+                                                } 
+                                                name={type.icon_id.name} 
+                                                size={20} 
+                                            />
                                             <Text style={inputElementStyles[theme].inputLabel}>{type.name.slice(0, 5)}</Text>
                                         </TouchableOpacity>
                                     ))}

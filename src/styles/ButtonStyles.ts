@@ -58,9 +58,12 @@ export const buttonStyles = {
         },
         cancelButton: {
             ...lightButtonStyles.cancelButton,
+            borderColor: colors.dimmerWhite,
+            backgroundColor: colors.background.black,
         },
         cancelButtonText: {
             ...lightButtonStyles.cancelButtonText,
+            color: colors.dimmerWhite,
         },
         redButton: {
             ...lightButtonStyles.redButton,

@@ -17,6 +17,7 @@ import { useTheme } from '@/context/ThemeContext';
 import { datetimePickerStyles } from '@/src/styles/DatetimePickerStyles';
 import Divider from '../Divider';
 import { inputStyles } from '@/src/styles/InputStyles';
+import { colors } from '@/const/color';
 
 interface CustomDateTimePickerProps {
     visible: boolean;
@@ -158,6 +159,7 @@ export default function CustomDateTimePicker({
                 keyboardType="numeric"
                 maxLength={maxLength}
                 placeholder={placeholder}
+                placeholderTextColor={colors.text.placeholderGray}
                 textAlign='center'
             />
         </View>
