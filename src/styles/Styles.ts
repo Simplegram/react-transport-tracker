@@ -1,6 +1,8 @@
 import { colors } from "@/const/color";
 import { StyleSheet, Dimensions } from "react-native";
 
+const { height: screenHeight } = Dimensions.get('window');
+
 const lightStyles = StyleSheet.create({
     icon: {
         alignItems: 'center',
@@ -17,54 +19,46 @@ export const styles = {
     })
 }
 
-const { height: screenHeight } = Dimensions.get('window');
+const lightCollapsibleHeaderStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingHorizontal: 15,
+        paddingBottom: 15,
+        backgroundColor: '#fff',
+    },
+    fillerContainer: {
+        flex: 1,
+        minHeight: screenHeight * 0.45,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headerText: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        paddingHorizontal: 10
+    },
+    scrollContainer: {
+        flexGrow: 1,
+    }
+})
 
 export const collapsibleHeaderStyles = {
-    light: StyleSheet.create({
-        container: {
-            flex: 1,
-            paddingHorizontal: 15,
-            paddingBottom: 15,
-            backgroundColor: '#fff',
-        },
-        fillerContainer: {
-            flex: 1,
-            minHeight: screenHeight * 0.45,
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
-        headerText: {
-            fontSize: 28,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            paddingHorizontal: 10
-        },
-        scrollContainer: {
-            flexGrow: 1,
-        }
-    }),
+    light: lightCollapsibleHeaderStyles,
     dark: StyleSheet.create({
         container: {
-            flex: 1,
-            paddingHorizontal: 15,
-            paddingBottom: 15,
+            ...lightCollapsibleHeaderStyles.container,
             backgroundColor: colors.background.black,
         },
         fillerContainer: {
-            flex: 1,
-            minHeight: screenHeight * 0.45,
-            justifyContent: 'center',
-            alignItems: 'center',
+            ...lightCollapsibleHeaderStyles.fillerContainer,
         },
         headerText: {
-            fontSize: 28,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            paddingHorizontal: 10,
+            ...lightCollapsibleHeaderStyles.headerText,
             color: colors.text.dimWhite,
         },
         scrollContainer: {
-            flexGrow: 1,
+            ...lightCollapsibleHeaderStyles.scrollContainer,
         }
     }),
 }

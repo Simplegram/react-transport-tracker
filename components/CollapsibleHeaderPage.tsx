@@ -20,17 +20,16 @@ export default function CollapsibleHeaderPage({
     containerStyle
 }: CollapsibleHeaderPageProps) {
     const { theme } = useTheme()
-    let activeTheme = theme
 
     return (
-        <View style={[collapsibleHeaderStyles[activeTheme].container, containerStyle]}>
+        <View style={[collapsibleHeaderStyles[theme].container, containerStyle]}>
             <ScrollView
-                contentContainerStyle={collapsibleHeaderStyles[activeTheme].scrollContainer}
+                contentContainerStyle={collapsibleHeaderStyles[theme].scrollContainer}
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps={'always'}
             >
-                <View style={collapsibleHeaderStyles[activeTheme].fillerContainer}>
-                    <Text style={collapsibleHeaderStyles[activeTheme].headerText}>{headerText}</Text>
+                <View style={collapsibleHeaderStyles[theme].fillerContainer}>
+                    <Text style={collapsibleHeaderStyles[theme].headerText}>{headerText}</Text>
                 </View>
                 {children}
             </ScrollView>
