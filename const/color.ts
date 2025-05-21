@@ -8,6 +8,8 @@ export const colors = {
         dimWhite: '#e8e8e8',
         redCancel: '#f0473e',
         dimRedCancel: '#b83730',
+        greenPositive: '#4CAF50',
+        dimGreenPositive: '#39823c',
     },
     text: {
         white: '#ffffff',
