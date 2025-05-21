@@ -1,5 +1,6 @@
 export const colors = {
     appBlue: '#007bff',
+    dimmerAppBlue: '#0261c7',
     background: {
         white: '#ffffff',
         black: '#000000',

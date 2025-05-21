@@ -8,7 +8,7 @@ const lightButtonStyles = StyleSheet.create({
         gap: 10,
     },
     addButton: {
-        backgroundColor: '#007bff',
+        backgroundColor: colors.appBlue,
         paddingVertical: 12,
         borderRadius: 8,
         flex: 1,
@@ -43,6 +43,8 @@ export const buttonStyles = {
         },
         addButton: {
             ...lightButtonStyles.addButton,
+            borderColor: colors.dimmerAppBlue,
+            backgroundColor: colors.background.black,
         },
         addButtonText: {
             ...lightButtonStyles.addButtonText,
