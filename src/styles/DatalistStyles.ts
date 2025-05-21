@@ -123,7 +123,7 @@ export const ItemStyles = {
         },
         itemTitle: {
             ...lightItemStyles.itemTitle,
-            color: colors.text.dimmerWhite,
+            color: colors.text.dimWhite,
         },
         itemSubtitle: {
             ...lightItemStyles.itemSubtitle,
@@ -137,7 +137,7 @@ export const ItemStyles = {
         },
         modifyButtonText: {
             ...lightItemStyles.modifyButtonText,
-            color: colors.text.dimmerWhite,
+            color: colors.text.dimWhite,
         },
         fillerContainer: {
             ...lightItemStyles.fillerContainer,
