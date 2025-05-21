@@ -12,7 +12,7 @@ export const styles = {
     dark: StyleSheet.create({
         icon: {
             ...lightStyles.icon,
-            color: colors.text.dimWhite,
+            color: colors.text.dimmerWhite,
         }
     })
 }
