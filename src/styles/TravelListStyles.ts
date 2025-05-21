@@ -6,8 +6,8 @@ const lightTravelCardStyles = StyleSheet.create({
         gap: 12,
     },
     card: {
-        padding: 12,
         gap: 8,
+        padding: 12,
         backgroundColor: '#ecf0f1',
         borderRadius: 8,
         borderWidth: 1,

@@ -113,7 +113,10 @@ export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDis
                     {directionNames.map((directionNameKey, index) => (
                         <View key={directionNameKey} style={{
                             flex: 1,
-                            padding: 10,
+                            paddingTop: 6,
+                            paddingLeft: 10,
+                            paddingBottom: 10,
+                            paddingRight: 10,
                             borderWidth: 1,
                             borderTopLeftRadius: 12,
                             borderTopRightRadius: 12,
@@ -190,10 +193,14 @@ export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDis
                                     ))}
                                 </ScrollView>
                             </View>
-                            <Divider />
-                            <View style={styles.swipeZone}>
-                                <Text style={[styles.swipeZoneText, { color: dateLabelColor }]}>{`<<< Safe Swipe Zone >>>`}</Text>
-                            </View>
+                            {directionNames.length > 1 && (
+                                <>
+                                    <Divider />
+                                    <View style={styles.swipeZone}>
+                                        <Text style={[styles.swipeZoneText, { color: dateLabelColor }]}>{`<<< Safe Swipe Zone >>>`}</Text>
+                                    </View>
+                                </>
+                            )}
                         </View>
                     ))}
                 </PagerView>
@@ -218,7 +225,6 @@ const styles = StyleSheet.create({
     },
     cardCanvas: {
         flex: 7,
-        paddingBottom: 10,
     },
     swipeZone: {
         flex: 1,
