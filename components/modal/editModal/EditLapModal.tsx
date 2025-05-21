@@ -1,5 +1,5 @@
 import Button from '@/components/BaseButton';
-import CustomDateTimePicker from '@/components/CustomDatetimePicker';
+import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker';
 import { AddableLap } from '@/src/types/AddableTravels';
 import React, { useEffect, useState } from 'react';
 import {

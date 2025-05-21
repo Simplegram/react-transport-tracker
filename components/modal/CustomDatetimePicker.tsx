@@ -13,7 +13,7 @@ import {
     ScrollView,
     Alert,
 } from 'react-native';
-import LoadingScreen from './LoadingScreen';
+import LoadingScreen from '../LoadingScreen';
 
 interface CustomDateTimePickerProps {
     visible: boolean;

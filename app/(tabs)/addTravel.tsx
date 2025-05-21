@@ -12,7 +12,7 @@ import { DataItem } from '@/src/types/Travels';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
 import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal';
 import useStopModal from '@/hooks/useStopModal';
-import CustomDateTimePicker from '@/components/CustomDatetimePicker';
+import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker';
 import useGetTravelData from '@/hooks/useGetTravelData';
 import { AddableLap, AddableTravel } from '@/src/types/AddableTravels';
 import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal';
