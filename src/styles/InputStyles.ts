@@ -1,15 +1,12 @@
-// src/styles/InputStyles.ts (or .js)
+import { colors } from "@/const/color";
 import { Platform, StyleSheet } from "react-native";
 
-const inputElementStyles = StyleSheet.create({
+const lightInputElementStyles = StyleSheet.create({
     inputContainer: {
         gap: 10,
         paddingBottom: 20,
     },
-    inputGroup: {
-        // This remains a simple wrapper, no specific styles needed here
-        // It contains a label and an input field
-    },
+    inputGroup: {},
     inputLargeGroup: {
         gap: 16,
     },
@@ -45,11 +42,47 @@ const inputElementStyles = StyleSheet.create({
         fontWeight: '500',
         color: '#333333',
     },
-});
+})
 
-const inputStyles = StyleSheet.create({
+const inputElementStyles = {
+    light: lightInputElementStyles,
+    dark: StyleSheet.create({
+        inputContainer: {
+            ...lightInputElementStyles.inputContainer,
+            backgroundColor: colors.background.black,
+        },
+        inputGroup: {
+            ...lightInputElementStyles.inputGroup,
+        },
+        inputLargeGroup: {
+            ...lightInputElementStyles.inputLargeGroup,
+        },
+        inputGroupCoord: {
+            ...lightInputElementStyles.inputGroupCoord,
+        },
+        inputGroupIcon: {
+            ...lightInputElementStyles.inputGroupIcon,
+        },
+        inputGroupEnd: {
+            ...lightInputElementStyles.inputGroupEnd,
+        },
+        inputLabel: {
+            ...lightInputElementStyles.inputLabel,
+            color: colors.text.dimWhite,
+        },
+        inputLabelLight: {
+            ...lightInputElementStyles.inputLabelLight,
+        },
+        insideLabel: {
+            ...lightInputElementStyles.insideLabel,
+            color: colors.text.dimmerWhite,
+        },
+    })
+}
+
+const lightInputStyles = StyleSheet.create({
     textInput: {
-        backgroundColor: '#F0F2F5',
+        backgroundColor: colors.text.dimWhite,
         borderRadius: 10,
         paddingHorizontal: 14,
         paddingVertical: Platform.OS === 'ios' ? 14 : 12,
@@ -57,28 +90,51 @@ const inputStyles = StyleSheet.create({
         fontSize: 16,
         color: '#333333',
         borderWidth: 1,
-        borderColor: '#D1D5DB',
+        borderColor: colors.text.dimmerWhite,
     },
     multilineTextInput: {
         minHeight: 100,
         textAlignVertical: 'top',
     },
     pressableInput: {
-        backgroundColor: '#F0F2F5',
+        backgroundColor: colors.text.dimWhite,
         borderRadius: 10,
         paddingHorizontal: 14,
         paddingVertical: Platform.OS === 'ios' ? 14 : 12,
         justifyContent: 'center',
         minHeight: Platform.OS === 'ios' ? 50 : 48,
         borderWidth: 1,
-        borderColor: '#D1D5DB',
+        borderColor: colors.text.dimmerWhite,
     },
     pressableInputCoord: {
         flex: 1,
     }
-});
+})
 
-const iconPickerStyles = StyleSheet.create({
+const inputStyles = {
+    light: lightInputStyles,
+    dark: StyleSheet.create({
+        textInput: {
+            ...lightInputStyles.textInput,
+            color: colors.text.dimWhite,
+            backgroundColor: '#000'
+        },
+        multilineTextInput: {
+            ...lightInputStyles.multilineTextInput,
+            backgroundColor: '#000'
+        },
+        pressableInput: {
+            ...lightInputStyles.pressableInput,
+            backgroundColor: '#000',
+            color: colors.text.dimmerWhite,
+        },
+        pressableInputCoord: {
+            ...lightInputStyles.pressableInputCoord,
+        }
+    })
+}
+
+const lightIconPickerStyles = StyleSheet.create({
     iconContainer: {
         width: 55,
         borderWidth: 1,
@@ -101,13 +157,33 @@ const iconPickerStyles = StyleSheet.create({
         justifyContent: 'center',
     },
     selectedIconContainer: {
-        borderColor: '#0284f5',
-        backgroundColor: '#e3f2fd',
+        borderColor: colors.appBlue,
+        backgroundColor: colors.background.lightBlue,
     },
-});
+    selectedIcon: {
+        color: colors.black
+    }
+})
+
+const iconPickerStyles = {
+    light: lightIconPickerStyles,
+    dark: StyleSheet.create({
+        iconContainer: {
+            ...lightIconPickerStyles.iconContainer,
+        },
+        iconTextContainer: {
+            ...lightIconPickerStyles.iconTextContainer,
+        },
+        selectedIconContainer: {
+            ...lightIconPickerStyles.selectedIconContainer,
+            backgroundColor: colors.black,
+        },
+        selectedIcon: {
+            color: colors.dimmerAppBlue
+        }
+    })
+}
 
 export {
-    inputStyles,
-    inputElementStyles,
-    iconPickerStyles
+    iconPickerStyles, inputElementStyles, inputStyles
 };

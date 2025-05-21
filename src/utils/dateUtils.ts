@@ -21,7 +21,7 @@ export const getMonthsSinceEarliestDate = (dates: string[]): number => {
     const earliestDate = moment(dates[0]);
     const today = moment(getTodayString());
 
-    const monthsDifference = today.diff(earliestDate, 'months') + 1;
+    const monthsDifference = today.diff(earliestDate, 'months') + 2;
 
     return monthsDifference;
 };

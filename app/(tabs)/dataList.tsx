@@ -1,16 +1,22 @@
-import React, { useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, Alert, TextInput } from 'react-native';
 import Button from '@/components/BaseButton';
 import LoadingScreen from '@/components/LoadingScreen';
-import useDataList from '@/hooks/useDataList';
 import ModalTemplate from '@/components/ModalTemplate';
-import useStopModal from '@/hooks/useStopModal';
-import useDatalistModal from '@/hooks/useDatalistModal';
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { colors } from '@/const/color';
 import { useModalContext } from '@/context/ModalContext';
-import { useLoading } from '@/hooks/useLoading';
+import { useTheme } from '@/context/ThemeContext';
+import useDataList from '@/hooks/useDataList';
+import useDatalistModal from '@/hooks/useDatalistModal';
 import useGetTravelData from '@/hooks/useGetTravelData';
+import { useLoading } from '@/hooks/useLoading';
+import useStopModal from '@/hooks/useStopModal';
+import { buttonStyles } from '@/src/styles/ButtonStyles';
+import { DatalistStyles, ItemStyles } from '@/src/styles/DatalistStyles';
+import { inputStyles } from '@/src/styles/InputStyles';
+import { styles } from '@/src/styles/Styles';
 import { useFocusEffect } from 'expo-router';
+import React from 'react';
+import { Alert, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 interface ItemTemplate {
     id: string | number;
@@ -19,6 +25,8 @@ interface ItemTemplate {
 }
 
 export default function DataListScreen() {
+    const { theme } = useTheme()
+
     const { setModalData } = useModalContext()
 
     const {
@@ -44,7 +52,7 @@ export default function DataListScreen() {
     const {
         activeModalConfig,
         setActiveModal, setActiveEditModal
-    } = useDatalistModal(() => refetchTravelData(500))
+    } = useDatalistModal(() => refetchTravelData(300))
 
     const {
         loading
@@ -80,30 +88,30 @@ export default function DataListScreen() {
     };
 
     const renderItem = ({ item }: { item: ItemTemplate }) => (
-        <View style={styles.itemContainer}>
-            <View style={styles.textContainer}>
+        <View style={ItemStyles[theme].itemContainer}>
+            <View style={ItemStyles[theme].textContainer}>
                 {dataType === "Stops" ? (
                     <>
-                        <Icon name={item.vehicle_type?.icon_id.name} size={20}></Icon>
-                        <Text>{item.vehicle_type?.name}</Text>
+                        <Icon style={styles[theme].icon} name={item.vehicle_type?.icon_id.name} size={20}></Icon>
+                        <Text style={ItemStyles[theme].itemSubtitle}>{item.vehicle_type?.name}</Text>
                     </>
                 ) : null}
                 {dataType === "Routes" ? (
                     <>
-                        <Icon name={item.vehicle_type_id?.icon_id.name} size={20}></Icon>
-                        <Text style={[styles.itemName, { color: '#007bff' }]}>{item.code}</Text>
+                        <Icon style={styles[theme].icon} name={item.vehicle_type_id?.icon_id.name} size={20}></Icon>
+                        <Text style={ItemStyles[theme].itemSubtitle}>{item.code}</Text>
                     </>
                 ) : null}
-                <Text style={styles.itemName}>{item.name}</Text>
+                <Text style={ItemStyles[theme].itemTitle}>{item.name}</Text>
             </View>
-            <View style={styles.buttonContainer}>
-                <View style={styles.fillerContainer}></View>
+            <View style={ItemStyles[theme].buttonContainer}>
+                <View style={ItemStyles[theme].fillerContainer}></View>
                 <TouchableOpacity
-                    style={styles.modifyButton}
+                    style={ItemStyles[theme].modifyButton}
                     onPress={() => handleModify(item)}
                     activeOpacity={0.8}
                 >
-                    <Text style={styles.modifyButtonText}>Modify</Text>
+                    <Text style={ItemStyles[theme].modifyButtonText}>Modify</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -112,14 +120,14 @@ export default function DataListScreen() {
     const ModalContentComponent = activeModalConfig?.content
 
     return (
-        <View style={styles.container}>
+        <View style={DatalistStyles[theme].container}>
             {loading || !dataType ? (
                 <LoadingScreen />
             ) : (
                 <>
                     {data.length === 0 ? (
-                        <View style={styles.emptyContainer}>
-                            <Text style={styles.emptyText}>No {dataType} found.</Text>
+                        <View style={DatalistStyles[theme].emptyContainer}>
+                            <Text style={DatalistStyles[theme].emptyText}>No {dataType} found.</Text>
                         </View>
                     ) : (
                         <FlatList
@@ -128,26 +136,26 @@ export default function DataListScreen() {
                             data={data}
                             renderItem={renderItem}
                             keyExtractor={item => item.id.toString()} // Ensure key is a string
-                            contentContainerStyle={styles.listContent}
+                            contentContainerStyle={DatalistStyles[theme].listContent}
                             keyboardShouldPersistTaps={'always'}
                         />
                     )}
 
                     <TextInput
-                        style={styles.modalSearchInput}
+                        style={inputStyles[theme].textInput}
                         placeholder={`Search ${dataType}...`}
+                        placeholderTextColor={colors.text.placeholderGray}
                         value={searchQuery}
                         onChangeText={setSearchQuery}
                         autoFocus={true}
                     />
 
-                    <View style={styles.addButtonContainer}>
+                    <View style={DatalistStyles[theme].addButtonContainer}>
                         <Button
-                            color='#007bff'
                             title={`Add New ${dataType.slice(0, -1)}`}
                             onPress={handleAddNew}
-                            style={styles.button}
-                            textStyle={styles.buttonText}
+                            style={[buttonStyles[theme].addButton, { flex: 0 }]}
+                            textStyle={buttonStyles[theme].addButtonText}
                         />
                     </View>
 
@@ -172,81 +180,3 @@ export default function DataListScreen() {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 15,
-        gap: 10,
-        backgroundColor: '#fff',
-    },
-    fillerContainer: {
-        flex: 1,
-    },
-    buttonContainer: {
-        flexDirection: 'column',
-    },
-    itemContainer: {
-        padding: 10,
-        flexDirection: 'column',
-        backgroundColor: '#fff',
-        borderWidth: 1,
-        borderRadius: 8,
-        borderColor: '#000',
-        gap: 10,
-    },
-    textContainer: {
-        flexDirection: 'column',
-    },
-    itemName: {
-        flex: 1,
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#333',
-    },
-    modifyButton: {
-        backgroundColor: '#007bff',
-        paddingVertical: 8,
-        paddingHorizontal: 15,
-        borderRadius: 5,
-    },
-    modifyButtonText: {
-        color: '#fff',
-        fontSize: 14,
-        fontWeight: 'bold',
-    },
-    listContent: {
-        gap: 10,
-    },
-    addButtonContainer: {
-
-    },
-    emptyContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    emptyText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#666',
-    },
-    button: {
-        borderWidth: 1,
-        borderRadius: 8,
-        alignItems: 'center',
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: '700',
-    },
-    modalSearchInput: {
-        borderWidth: 1,
-        borderColor: '#000',
-        borderRadius: 5,
-        padding: 10,
-        fontSize: 16,
-        backgroundColor: '#fff',
-    },
-});

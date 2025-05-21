@@ -72,7 +72,7 @@ export default function Button({
         const effectiveStyle = Array.isArray(style) ? [...style] : style ? { ...style } : {};
 
         if (typeof effectiveStyle === 'object' && effectiveStyle !== null) {
-             // Remove the original backgroundColor if it exists to avoid conflicts with the pressed state
+            // Remove the original backgroundColor if it exists to avoid conflicts with the pressed state
             if ('backgroundColor' in effectiveStyle) {
                 delete (effectiveStyle as ViewStyle).backgroundColor;
             }

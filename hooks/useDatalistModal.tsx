@@ -1,19 +1,19 @@
+import AddDirectionModal from "@/components/modal/addModal/AddDirectionModal";
 import AddIconModal from "@/components/modal/addModal/AddIconModal";
-import { Direction, IconType, Stop } from "@/src/types/Travels";
+import AddRouteModal from "@/components/modal/addModal/AddRouteModal";
+import AddStopModal from "@/components/modal/addModal/AddStopModal";
+import AddVehicleTypeModal from "@/components/modal/addModal/AddVehicleTypeModal";
+import EditDirectionModal from "@/components/modal/editModal/EditDirectionModal";
+import EditIconModal from "@/components/modal/editModal/EditIconModal";
+import EditRouteModal from "@/components/modal/editModal/EditRouteModal";
+import EditStopModal from "@/components/modal/editModal/EditStopModal";
+import EditVehicleTypeModal from "@/components/modal/editModal/EditVehicleTypeModal";
+import { AddableDirection, AddableIconType, AddableRoute, AddableStop, AddableVehicleType } from "@/src/types/AddableTravels";
+import { EditableRoute, EditableStop, EditableVehicleType } from "@/src/types/EditableTravels";
+import { Direction, IconType } from "@/src/types/Travels";
 import { useCallback, useState } from "react";
 import { Alert } from "react-native";
 import useModifyTravelData from "./useModifyTravelData";
-import AddVehicleTypeModal from "@/components/modal/addModal/AddVehicleTypeModal";
-import EditVehicleTypeModal from "@/components/modal/editModal/EditVehicleTypeModal";
-import { EditableRoute, EditableStop, EditableVehicleType } from "@/src/types/EditableTravels";
-import EditStopModal from "@/components/modal/editModal/EditStopModal";
-import EditRouteModal from "@/components/modal/editModal/EditRouteModal";
-import EditDirectionModal from "@/components/modal/editModal/EditDirectionModal";
-import AddDirectionModal from "@/components/modal/addModal/AddDirectionModal";
-import { AddableDirection, AddableIconType, AddableRoute, AddableStop, AddableVehicleType } from "@/src/types/AddableTravels";
-import AddStopModal from "@/components/modal/addModal/AddStopModal";
-import AddRouteModal from "@/components/modal/addModal/AddRouteModal";
-import EditIconModal from "@/components/modal/editModal/EditIconModal";
 
 interface ModalConfig {
     title: string;

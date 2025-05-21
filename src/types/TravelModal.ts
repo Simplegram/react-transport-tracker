@@ -1,5 +1,4 @@
-import { Icon } from "react-native-vector-icons/Icon";
-import { Stop } from "./Travels"
+import { IconType, Stop } from "./Travels";
 
 export interface ModalProp {
     onSubmit: (data: any) => void;
@@ -10,5 +9,5 @@ export interface ModalProp {
 export interface VehicleTypeModalProp {
     onSubmit: (data: any) => void;
     onCancel: () => void;
-    icons?: Icon[]
+    icons?: IconType[]
 }

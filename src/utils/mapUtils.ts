@@ -159,4 +159,4 @@ function getSimpleCentroid(points: number[][] | undefined | null) {
 
 export {
     getSimpleCentroid
-}
+};

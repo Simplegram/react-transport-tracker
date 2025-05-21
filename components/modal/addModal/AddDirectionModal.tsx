@@ -1,13 +1,17 @@
 import Button from "@/components/BaseButton"
+import { colors } from "@/const/color"
+import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { AddableDirection } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, StyleSheet, Text, TextInput, View } from "react-native"
+import { Alert, Text, TextInput, View } from "react-native"
 
 export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalContentProps) {
+    const { theme } = useTheme()
+
     const [direction, setDirection] = useState<AddableDirection>({ name: undefined })
 
     const { loading } = useLoading()
@@ -24,24 +28,25 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
     return (
         <View>
             {loading ? (
-                <Text style={inputElementStyles.inputLabel}>Loading...</Text>
+                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
             ) : (
                 <>
-                    <View style={inputElementStyles.inputContainer}>
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.insideLabel}>Name:</Text>
+                    <View style={inputElementStyles[theme].inputContainer}>
+                        <View style={inputElementStyles[theme].inputGroup}>
+                            <Text style={inputElementStyles[theme].insideLabel}>Name:</Text>
                             <TextInput
-                                style={inputStyles.pressableInput}
+                                style={inputStyles[theme].pressableInput}
                                 placeholder="Direction name..."
+                                placeholderTextColor={colors.text.placeholderGray}
                                 value={direction.name}
                                 onChangeText={text => (setDirection({ ...direction, "name": text }))}
                             />
                         </View>
                     </View>
 
-                    <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                        <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </>
             )}

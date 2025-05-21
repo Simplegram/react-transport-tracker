@@ -1,24 +1,27 @@
 import Button from '@/components/BaseButton';
 import { colors } from '@/const/color';
+import { useTheme } from '@/context/ThemeContext';
 import useStopModal from '@/hooks/useStopModal';
+import { buttonStyles } from '@/src/styles/ButtonStyles';
+import { inputElementStyles } from '@/src/styles/InputStyles';
 import { AddableLap } from '@/src/types/AddableTravels';
 import { EditableLap, EditableLapsModalProp } from '@/src/types/EditableTravels';
 import { formatDateForDisplay } from '@/src/utils/utils';
 import React, { useEffect, useState } from 'react';
 import {
-    View,
-    Text,
-    StyleSheet,
     Modal,
-    ScrollView,
     Pressable,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View,
 } from 'react-native';
 import AddLapModal from '../addModal/AddLapModal';
 import EditLapModal from '../editModal/EditLapModal';
-import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputElementStyles } from '@/src/styles/InputStyles';
 
 export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
+    const { theme } = useTheme()
+
     const {
         showStopModal: showLapModal,
         openStopModal: openLapModal,
@@ -73,11 +76,11 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
             onRequestClose={onClose}
         >
             <View style={styles.modalBackdrop}>
-                <View style={[styles.modalContainer, inputElementStyles.inputContainer]}>
+                <View style={[styles.modalContainer, inputElementStyles[theme].inputContainer]}>
                     <View style={styles.inputContainer}>
                         {laps.length === 0 ? (
                             <View style={styles.emptyList}>
-                                <Text style={inputElementStyles.inputLabel}>No lap found</Text>
+                                <Text style={inputElementStyles[theme].inputLabel}>No lap found</Text>
                             </View>
                         ) : (
                             <ScrollView
@@ -87,15 +90,15 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                             >
                                 {laps.map((lap: EditableLap, index) => (
                                     <Pressable key={index} style={styles.detailRow} onPress={() => handleLapSelect(lap)}>
-                                        <Text style={inputElementStyles.inputLabel}>{formatDateForDisplay(lap.time)}</Text>
+                                        <Text style={inputElementStyles[theme].inputLabel}>{formatDateForDisplay(lap.time)}</Text>
                                         {stops.find(stop => stop.id === lap.stop_id) ? (
-                                            <Text style={[inputElementStyles.inputLabel, { color: colors.appBlue }]}>
+                                            <Text style={[inputElementStyles[theme].inputLabel, { color: colors.appBlue }]}>
                                                 {stops.find(stop => stop.id === lap.stop_id)?.name}
                                             </Text>
                                         ) : null}
 
                                         {lap.note && (
-                                            <Text style={inputElementStyles.inputLabelLight}>{lap.note}</Text>
+                                            <Text style={inputElementStyles[theme].inputLabelLight}>{lap.note}</Text>
                                         )}
                                     </Pressable>
                                 ))}
@@ -107,9 +110,9 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                         <Button title='Add lap' color={colors.appBlue} onPress={openLapModal} style={addButtonStyles.buttonContainer} textStyle={addButtonStyles.plusText}></Button>
                     </View>
 
-                    <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                        <Button title='Save Laps' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button title='Save Laps' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </View>
 

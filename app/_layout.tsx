@@ -1,6 +1,8 @@
+import { SupabaseProvider } from '@/context/SupabaseContext'
+import { ThemeProvider } from '@/context/ThemeContext'
+import { AuthProvider, useAuth } from '@/provider/AuthProvider'
 import { Slot, useRouter, useSegments } from 'expo-router'
 import { useEffect } from 'react'
-import { AuthProvider, useAuth } from '@/provider/AuthProvider'
 
 // Makes sure the user is authenticated before accessing protected pages
 const InitialLayout = () => {
@@ -26,9 +28,13 @@ const InitialLayout = () => {
 // Wrap the app with the AuthProvider
 const RootLayout = () => {
     return (
-        <AuthProvider>
-            <InitialLayout />
-        </AuthProvider>
+        <SupabaseProvider>
+            <AuthProvider>
+                <ThemeProvider>
+                    <InitialLayout />
+                </ThemeProvider>
+            </AuthProvider>
+        </SupabaseProvider>
     )
 }
 

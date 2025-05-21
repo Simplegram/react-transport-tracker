@@ -1,8 +1,8 @@
-import { Coordinates, DataItem } from "../types/Travels";
+import { DataItem } from "../types/Travels";
 
 const sortByIdToFront = (arr: any, targetId: number) => {
     // Find the index of the object with the targetId
-    const targetIndex = arr.findIndex(item => item.id === targetId);
+    const targetIndex = arr.findIndex((item: any) => item.id === targetId);
 
     // If the targetId is found, move the object to the front
     if (targetIndex !== -1) {
@@ -84,7 +84,7 @@ const formatDateForDisplay = (isoString: string | undefined | null) => {
 };
 
 export {
-    sortByIdToFront,
     calculateDuration,
-    formatDateForDisplay,
-}
+    formatDateForDisplay, sortByIdToFront
+};
+

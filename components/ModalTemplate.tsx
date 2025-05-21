@@ -1,18 +1,12 @@
+import { useTheme } from '@/context/ThemeContext';
+import { modalElementStyles, modalStyles } from '@/src/styles/ModalStyles';
 import {
-    View,
-    Text,
-    StyleSheet,
-    Platform,
-    TouchableOpacity,
-    Linking,
-    Alert,
-    ScrollView,
     Modal,
     Pressable,
-    KeyboardAvoidingView,
+    Text
 } from 'react-native';
 
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface Props {
     children: React.ReactNode
@@ -22,6 +16,8 @@ interface Props {
 }
 
 export default function ModalTemplate({ children, isModalVisible, title = "Editor", handleCloseModal }: Props) {
+    const { theme } = useTheme()
+
     return (
         <Modal
             animationType="slide"
@@ -30,9 +26,9 @@ export default function ModalTemplate({ children, isModalVisible, title = "Edito
             onRequestClose={handleCloseModal}
             statusBarTranslucent={true}
         >
-            <Pressable style={modalStyles.backdrop} onPress={handleCloseModal}>
-                <Pressable style={modalStyles.modalContent} onPress={(e) => e.stopPropagation()}>
-                    <Text style={modalStyles.modalTitle}>{title}</Text>
+            <Pressable style={modalStyles[theme].modalBackdrop} onPress={handleCloseModal}>
+                <Pressable style={modalStyles[theme].modalContainer} onPress={(e) => e.stopPropagation()}>
+                    <Text style={modalElementStyles[theme].title}>{title}</Text>
                     <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
                         {children}
                     </KeyboardAwareScrollView>
@@ -41,38 +37,3 @@ export default function ModalTemplate({ children, isModalVisible, title = "Edito
         </Modal>
     )
 }
-
-const modalStyles = StyleSheet.create({
-    backdrop: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        justifyContent: 'flex-end',
-    },
-    keyboardAvoidingContainer: {
-
-    },
-    modalContent: {
-        backgroundColor: '#fff',
-        padding: 20,
-        borderTopLeftRadius: 20,
-        borderTopRightRadius: 20,
-        width: '100%',
-        ...Platform.select({
-            ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: -3 },
-                shadowOpacity: 0.2,
-                shadowRadius: 5,
-            },
-            android: {
-                elevation: 10,
-            },
-        }),
-    },
-    modalTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 15,
-        textAlign: 'center',
-    },
-});

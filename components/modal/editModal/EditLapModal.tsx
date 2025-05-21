@@ -1,5 +1,5 @@
 import Button from '@/components/BaseButton';
-import CustomDateTimePicker from '@/components/CustomDatetimePicker';
+import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker';
 import { AddableLap } from '@/src/types/AddableTravels';
 import React, { useEffect, useState } from 'react';
 import {
@@ -20,8 +20,12 @@ import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels';
 import LoadingScreen from '@/components/LoadingScreen';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
+import { useTheme } from '@/context/ThemeContext';
+import { colors } from '@/const/color';
 
 export default function EditLapModal({ stops, selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
+    const { theme } = useTheme()
+
     const {
         showStopModal,
         stopSearchQuery,
@@ -96,21 +100,21 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
             {!lap ? (
                 <LoadingScreen></LoadingScreen>
             ) : (
-                <Pressable style={modalStyles.modalBackdrop} onPress={onClose}>
-                    <View style={[modalStyles.modalContainer, modalStyles.lapModalContainer]}>
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.insideLabel}>Time:</Text>
-                            <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles.pressableInput}>
-                                <Text style={inputElementStyles.inputLabel}>{formatDateForDisplay(lap.time)}</Text>
+                <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose}>
+                    <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
+                        <View style={inputElementStyles[theme].inputGroup}>
+                            <Text style={inputElementStyles[theme].insideLabel}>Time:</Text>
+                            <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles[theme].pressableInput}>
+                                <Text style={inputElementStyles[theme].inputLabel}>{formatDateForDisplay(lap.time)}</Text>
                             </Pressable>
                         </View>
 
-                        <View style={inputElementStyles.inputGroup}>
-                            <Text style={inputElementStyles.insideLabel}>Stop:</Text>
+                        <View style={inputElementStyles[theme].inputGroup}>
+                            <Text style={inputElementStyles[theme].insideLabel}>Stop:</Text>
                             <Pressable
-                                style={inputStyles.pressableInput}
+                                style={inputStyles[theme].pressableInput}
                                 onPress={() => openStopModal('last_stop_id')}>
-                                <Text style={[inputElementStyles.inputLabel, { marginBottom: 0 }]}>
+                                <Text style={[inputElementStyles[theme].inputLabel, { marginBottom: 0 }]}>
                                     {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
                                 </Text>
                             </Pressable>
@@ -125,23 +129,24 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             />
                         )}
 
-                        <View style={[inputElementStyles.inputGroup, inputElementStyles.inputGroupEnd]}>
-                            <Text style={inputElementStyles.inputLabel}>Note:</Text>
+                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                            <Text style={inputElementStyles[theme].inputLabel}>Note:</Text>
                             <TextInput
                                 placeholder="Optional notes"
+                                placeholderTextColor={colors.text.placeholderGray}
                                 value={lap.note || ''}
                                 onChangeText={text => setLap({ ...lap, note: text })}
                                 keyboardType="default"
                                 returnKeyType="done"
                                 multiline={true}
                                 numberOfLines={3}
-                                style={[inputStyles.textInput, inputStyles.multilineTextInput, inputElementStyles.insideLabel]}
+                                style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput, inputElementStyles[theme].insideLabel]}
                             />
                         </View>
 
-                        <View style={buttonStyles.buttonRow}>
-                            <Button title='Cancel' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                            <Button title='Edit Lap' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                        <View style={buttonStyles[theme].buttonRow}>
+                            <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                            <Button title='Edit Lap' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                         </View>
                     </View>
 

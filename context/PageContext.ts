@@ -1,5 +1,5 @@
 import { DataItem } from "@/src/types/Travels";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext } from "react";
 
 export const ScrollContext = createContext<boolean>(false)
 

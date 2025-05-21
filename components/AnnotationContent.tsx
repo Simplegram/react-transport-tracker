@@ -1,10 +1,8 @@
-import useGetTravelData from "@/hooks/useGetTravelData";
 import { Stop, VehicleType } from "@/src/types/Travels";
-import { useState } from "react";
-import { StyleSheet } from "react-native";
-import { Text, TouchableOpacity, View } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome6'
 import moment from "moment";
+import { useState } from "react";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import Icon from 'react-native-vector-icons/FontAwesome6';
 
 interface AnnotationContentProps {
     fullVehicleTypes: VehicleType[]
@@ -28,9 +26,9 @@ export default function AnnotationContent({ fullVehicleTypes, data_id, title, st
                     </Text>
                 </TouchableOpacity>
             )}
-            <TouchableOpacity 
+            <TouchableOpacity
                 style={[
-                    styles.marker, 
+                    styles.marker,
                     { backgroundColor: data_id === "stop" ? 'limegreen' : 'yellow' }
                 ]}
                 onPress={() => setEnableTitle(!enableTitle)}
