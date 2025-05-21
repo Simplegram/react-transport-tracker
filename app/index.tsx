@@ -2,6 +2,7 @@ import Button from '@/components/BaseButton'
 import LoadingScreen from '@/components/LoadingScreen'
 import { colors } from '@/const/color'
 import { useSupabase } from '@/context/SupabaseContext'
+import { useTheme } from '@/context/ThemeContext'
 import { useToggleLoading } from '@/hooks/useLoading'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
 import { SupabaseClient } from '@supabase/supabase-js'
@@ -15,6 +16,8 @@ const Login = () => {
         supabaseAnonKey, setSupabaseAnonKey
     } = useSupabase()
     const { loading, setLoading, toggleLoading } = useToggleLoading(500, true)
+
+    const { theme } = useTheme()
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
