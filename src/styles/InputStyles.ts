@@ -6,10 +6,7 @@ const lightInputElementStyles = StyleSheet.create({
         gap: 10,
         paddingBottom: 20,
     },
-    inputGroup: {
-        // This remains a simple wrapper, no specific styles needed here
-        // It contains a label and an input field
-    },
+    inputGroup: {},
     inputLargeGroup: {
         gap: 16,
     },
