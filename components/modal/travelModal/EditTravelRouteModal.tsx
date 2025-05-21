@@ -7,6 +7,7 @@ import { useTheme } from "@/context/ThemeContext";
 import { inputStyles } from "@/src/styles/InputStyles";
 import { colors } from "@/const/color";
 import { styles } from "@/src/styles/Styles";
+import FlatlistPicker from "../FlatlistPicker";
 
 export default function EditTravelRouteModal({ routes, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelRouteModalProp) {
     const { theme } = useTheme()
@@ -44,22 +45,25 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
                             <Text style={modalElementStyles[theme].label}>No route found</Text>
                         </View>
                     ) : (
-                        <FlatList
-                            inverted={true}
-                            data={filteredItems}
-                            keyExtractor={(item) => item.id.toString()}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                    style={flatlistStyles[theme].item}
-                                    onPress={() => onSelect(item.id)}>
-                                    {
-                                        item.vehicle_type_id?.name ? <Icon style={[styles[theme].icon, { width: 20 }]} name={item.vehicle_type_id.icon_id.name.toLocaleLowerCase()} size={16}></Icon> : <Icon name="train" size={16}></Icon>
-                                    }
+                        <FlatlistPicker
+                            items={filteredItems}
+                            onSelect={onSelect}
+                        >
+                            {(item) => (
+                                <>
+                                    {item.vehicle_type_id?.name ? (
+                                        <Icon
+                                            style={[styles[theme].icon, { width: 20 }]}
+                                            name={item.vehicle_type_id.icon_id.name.toLocaleLowerCase()}
+                                            size={16}
+                                        />
+                                    ) : (
+                                        <Icon style={styles[theme].icon} name="train" size={16} />
+                                    )}
                                     <Text style={modalElementStyles[theme].label}>{`${item.code} | ${item.name}`}</Text>
-                                </TouchableOpacity>
+                                </>
                             )}
-                            keyboardShouldPersistTaps={'always'}
-                        />
+                        </FlatlistPicker>
                     )}
                 </View>
             </Pressable>

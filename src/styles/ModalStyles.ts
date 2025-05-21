@@ -10,7 +10,7 @@ const lightFlatlistStyles = StyleSheet.create({
         paddingVertical: 15,
         paddingHorizontal: 10,
         borderBottomWidth: 1,
-        borderBottomColor: '#eee',
+        borderBottomColor: colors.text.dimmerWhite2,
         backgroundColor: colors.text.dimWhite,
     },
 })

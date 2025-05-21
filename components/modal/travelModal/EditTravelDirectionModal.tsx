@@ -6,10 +6,11 @@ import { flatlistStyles, modalElementStyles, modalStyles } from "@/src/styles/Mo
 import { useTheme } from "@/context/ThemeContext";
 import { inputStyles } from "@/src/styles/InputStyles";
 import { colors } from "@/const/color";
+import FlatlistPicker from "../FlatlistPicker";
 
 export default function EditTravelDirectionModal({ directions, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelDirectionModalProp) {
     const { theme } = useTheme()
-    
+
     const filteredItems = useMemo(() => {
         if (!directions) return [];
         const query = searchQuery.toLowerCase();
@@ -43,22 +44,16 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
                             <Text style={modalElementStyles[theme].label}>No route found</Text>
                         </View>
                     ) : (
-                        <FlatList
-                            inverted={true}
-                            data={filteredItems}
-                            keyExtractor={(item) => item.id.toString()}
-                            renderItem={({ item }) => (
-                                <TouchableOpacity
-                                    style={flatlistStyles[theme].item}
-                                    onPress={() => onSelect(item.id)}
-                                >
-                                    <Text style={modalElementStyles[theme].label}>{item.name}</Text>
-                                </TouchableOpacity>
+                        <FlatlistPicker
+                            items={filteredItems}
+                            onSelect={onSelect}
+                        >
+                            {(item) => (
+                                <Text style={modalElementStyles[theme].label}>{item.name}</Text>
                             )}
-                            keyboardShouldPersistTaps={'always'}
-                        />
+                        </FlatlistPicker>
                     )}
-                </View>
+                        </View>
             </Pressable>
         </Modal>
     )
