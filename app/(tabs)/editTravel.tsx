@@ -391,8 +391,8 @@ export default function EditTravelItem() {
                         onClose={closeStopModal}
                     />
 
-                    <View style={buttonStyles.buttonRow}>
-                        <Button title='Edit Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button title='Edit Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </>
             )}

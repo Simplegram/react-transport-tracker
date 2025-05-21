@@ -1,5 +1,6 @@
 import Button from "@/components/BaseButton";
 import { useModalContext } from "@/context/ModalContext";
+import { useTheme } from "@/context/ThemeContext";
 import useGetTravelData from "@/hooks/useGetTravelData";
 import { useLoading } from "@/hooks/useLoading";
 import { buttonStyles } from "@/src/styles/ButtonStyles";
@@ -13,6 +14,8 @@ import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View 
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalContentProps) {
+    const { theme } = useTheme()
+
     const { modalData: data } = useModalContext()
 
     const { icons, getIcons } = useGetTravelData()
@@ -79,9 +82,9 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                         </View>
                     </View>
 
-                    <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                        <Button title='Edit Type' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button title='Edit Type' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </>
             )}

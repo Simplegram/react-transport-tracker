@@ -385,13 +385,13 @@ export default function AddTravel() {
                 onClose={closeStopModal}
             />
 
-            <View style={buttonStyles.buttonRow}>
+            <View style={buttonStyles[theme].buttonRow}>
                 <Button
                     title='Add Travel' // Changed title for clarity
                     color='#0284f5' // Assuming this color is part of your theme
                     onPress={handleOnSubmit}
-                    style={buttonStyles.addButton}
-                    textStyle={buttonStyles.addButtonText}
+                    style={buttonStyles[theme].addButton}
+                    textStyle={buttonStyles[theme].addButtonText}
                 />
             </View>
         </CollapsibleHeaderPage>

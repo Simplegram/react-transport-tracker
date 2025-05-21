@@ -18,8 +18,11 @@ import EditTravelStopModal from '../travelModal/EditTravelStopModal';
 import { modalStyles } from '@/src/styles/ModalStyles';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
+    const { theme } = useTheme()
+
     const {
         showStopModal,
         stopSearchQuery,
@@ -108,9 +111,9 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 />
                             </View>
 
-                            <View style={buttonStyles.buttonRow}>
-                                <Button title='Cancel' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                                <Button title='Add Lap' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                            <View style={buttonStyles[theme].buttonRow}>
+                                <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                                <Button title='Add Lap' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                             </View>
                         </View>
 

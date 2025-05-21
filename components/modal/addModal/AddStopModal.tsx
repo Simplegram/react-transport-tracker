@@ -10,8 +10,11 @@ import { useState } from "react"
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import AddCoordModal from "./AddCoordModal"
+import { useTheme } from "@/context/ThemeContext"
 
 export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
+    const { theme } = useTheme()
+
     const { fullVehicleTypes } = useGetTravelData()
 
     const [stop, setStop] = useState<AddableStop>({
@@ -137,9 +140,9 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         onSelect={handleCoordSelect}
                     />
 
-                    <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                        <Button title='Add Stop' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button title='Add Stop' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </>
             )}

@@ -101,8 +101,8 @@ export default function HomePage() {
             </View>
             <View style={mainMenuStyles[theme].calendarContainer}>
                 <Button
-                    style={[buttonStyles.addButton, { flex: 0 }]}
-                    textStyle={buttonStyles.addButtonText}
+                    style={[buttonStyles[theme].addButton, { flex: 0 }]}
+                    textStyle={buttonStyles[theme].addButtonText}
                     onPress={() => openCalendarModal()}
                 >
                     View Calendar

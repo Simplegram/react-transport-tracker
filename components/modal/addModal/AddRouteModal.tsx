@@ -10,8 +10,11 @@ import useStopModal from "@/hooks/useStopModal"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { ModalProp } from "@/src/types/TravelModal"
+import { useTheme } from "@/context/ThemeContext"
 
 export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: ModalProp) {
+    const { theme } = useTheme()
+
     const { fullVehicleTypes } = useGetTravelData()
 
     const { loading } = useLoading()
@@ -133,9 +136,9 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                         onClose={closeStopModal}
                     />
 
-                    <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                        <Button title='Add Route' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button title='Add Route' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </>
             )}

@@ -14,8 +14,11 @@ import AddCoordModal from "../addModal/AddCoordModal";
 import useStopModal from "@/hooks/useStopModal";
 import { AddableCoordinates, AddableCoordModalProp } from "@/src/types/AddableTravels";
 import { colors } from "@/const/color";
+import { useTheme } from "@/context/ThemeContext";
 
 export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
+    const { theme } = useTheme()
+
     const { modalData: data } = useModalContext()
 
     const { fullVehicleTypes } = useGetTravelData()
@@ -136,9 +139,9 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                         onSelect={handleCoordSelect}
                     />
 
-                    <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                        <Button title='Edit Stop' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button title='Edit Stop' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </>
             )}

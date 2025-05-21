@@ -1,6 +1,7 @@
+import { colors } from "@/const/color";
 import { StyleSheet } from "react-native";
 
-const buttonStyles = StyleSheet.create({
+const lightButtonStyles = StyleSheet.create({
     buttonRow: {
         flexDirection: 'row',
         justifyContent: 'space-around',
@@ -34,6 +35,24 @@ const buttonStyles = StyleSheet.create({
     },
 })
 
-export {
-    buttonStyles
+export const buttonStyles = {
+    light: lightButtonStyles,
+    dark: StyleSheet.create({
+        buttonRow: {
+            ...lightButtonStyles.buttonRow,
+        },
+        addButton: {
+            ...lightButtonStyles.addButton,
+        },
+        addButtonText: {
+            ...lightButtonStyles.addButtonText,
+            color: colors.text.dimWhite,
+        },
+        cancelButton: {
+            ...lightButtonStyles.cancelButton,
+        },
+        cancelButtonText: {
+            ...lightButtonStyles.cancelButtonText,
+        },
+    })
 }

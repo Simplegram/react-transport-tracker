@@ -16,8 +16,11 @@ import EditLapModal from '../editModal/EditLapModal';
 import { Pressable } from 'react-native';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles } from '@/src/styles/InputStyles';
+import { useTheme } from '@/context/ThemeContext';
 
 export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
+    const { theme } = useTheme()
+
     const {
         showStopModal: showLapModal,
         openStopModal: openLapModal,
@@ -106,9 +109,9 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                         <Button title='Add lap' color={colors.appBlue} onPress={openLapModal} style={addButtonStyles.buttonContainer} textStyle={addButtonStyles.plusText}></Button>
                     </View>
 
-                    <View style={buttonStyles.buttonRow}>
-                        <Button title='Cancel' onPress={onClose} style={buttonStyles.cancelButton} textStyle={buttonStyles.cancelButtonText}></Button>
-                        <Button title='Save Laps' onPress={handleOnSubmit} style={buttonStyles.addButton} textStyle={buttonStyles.addButtonText}></Button>
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button title='Save Laps' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </View>
 
