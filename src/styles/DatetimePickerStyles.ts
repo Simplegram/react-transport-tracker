@@ -14,7 +14,6 @@ const lightDatetimePickerStyles = StyleSheet.create({
     },
     modalContainer: {
         width: modalWidth,
-        maxHeight: 330,
         backgroundColor: 'white',
         borderRadius: 10,
         padding: 20,

@@ -115,20 +115,6 @@ export default function CustomDateTimePicker({
         return date;
     };
 
-    const handleTimeAdjustment = (adjustmentInSeconds: number) => {
-        let currentDate = constructDateFromParts();
-        if (!currentDate) {
-            currentDate = initialDateTime instanceof Date && !isNaN(initialDateTime.getTime())
-                ? new Date(initialDateTime)
-                : new Date();
-            updateStringPartsFromDate(currentDate);
-            Alert.alert("Input Corrected", "Some date/time inputs were invalid and have been reset. Please try adjusting again.");
-        }
-
-        currentDate.setSeconds(currentDate.getSeconds() + adjustmentInSeconds);
-        updateStringPartsFromDate(currentDate);
-    };
-
     const handleConfirm = () => {
         const newDate = constructDateFromParts();
         if (newDate) {
@@ -194,17 +180,18 @@ export default function CustomDateTimePicker({
                                 </View>
                             </View>
 
+                            <TouchableOpacity
+                                style={[datetimePickerStyles[theme].nowButton]}
+                                onPress={handleTimeNow}
+                            >
+                                <Text style={datetimePickerStyles[theme].buttonText}>Now</Text>
+                            </TouchableOpacity>
+
                             <Divider />
 
                             <View style={datetimePickerStyles[theme].actionButtons}>
                                 <TouchableOpacity style={[datetimePickerStyles[theme].button, datetimePickerStyles[theme].cancelButton]} onPress={onClose}>
                                     <Text style={datetimePickerStyles[theme].buttonText}>Cancel</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[datetimePickerStyles[theme].nowButton]}
-                                    onPress={handleTimeNow}
-                                >
-                                    <Text style={datetimePickerStyles[theme].buttonText}>Now</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={[datetimePickerStyles[theme].button, datetimePickerStyles[theme].confirmButton]} onPress={handleConfirm}>
                                     <Text style={datetimePickerStyles[theme].buttonText}>Confirm</Text>
