@@ -4,12 +4,13 @@ import React from "react";
 import { FlatList, TouchableOpacity } from "react-native";
 
 interface FlatlistPickerProps {
-    items: any[];
-    onSelect: (id: any) => void;
-    children?: (item: any) => React.ReactNode;
+    items: any[]
+    maxHeight?: number
+    onSelect: (id: any) => void
+    children?: (item: any) => React.ReactNode
 }
 
-export default function FlatlistPicker({ items, onSelect, children }: FlatlistPickerProps) {
+export default function FlatlistPicker({ items, maxHeight = 300, onSelect, children }: FlatlistPickerProps) {
     const { theme } = useTheme()
 
     return (
@@ -26,6 +27,9 @@ export default function FlatlistPicker({ items, onSelect, children }: FlatlistPi
                 </TouchableOpacity>
             )}
             keyboardShouldPersistTaps={'always'}
+            style={{
+                maxHeight: maxHeight
+            }}
         />
     )
 }
