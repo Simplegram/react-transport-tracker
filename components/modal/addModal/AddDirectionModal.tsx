@@ -33,7 +33,7 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
                         <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].insideLabel}>Name:</Text>
+                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
                             <TextInput
                                 style={inputStyles[theme].pressableInput}
                                 placeholder="Direction name..."
