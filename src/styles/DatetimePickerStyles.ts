@@ -170,7 +170,7 @@ export const datetimePickerStyles = {
         nowButton: {
             ...lightDatetimePickerStyles.nowButton,
             borderWidth: 1,
-            borderColor: colors.background.greenPositive,
+            borderColor: colors.dimmerWhite,
             backgroundColor: colors.background.black,
         },
         actionButtons: {
