@@ -268,6 +268,17 @@ export default function AddTravel() {
                             placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
                         />
                     </View>
+
+                    <View style={inputElementStyles[theme].inputGroup}>
+                        <Text style={inputElementStyles[theme].inputLabel}>Vehicle Code:</Text>
+                        <TextInput
+                            style={inputStyles[theme].textInput}
+                            value={travel.vehicle_code || ''}
+                            onChangeText={(text) => handleChangeText('vehicle_code', text)}
+                            placeholder="Enter vehicle code"
+                            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                        />
+                    </View>
                 </View>
 
                 <Divider />
@@ -307,17 +318,6 @@ export default function AddTravel() {
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
                     <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Vehicle Code:</Text>
-                        <TextInput
-                            style={inputStyles[theme].textInput}
-                            value={travel.vehicle_code || ''}
-                            onChangeText={(text) => handleChangeText('vehicle_code', text)}
-                            placeholder="Enter vehicle code"
-                            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-                        />
-                    </View>
-
-                    <View style={inputElementStyles[theme].inputGroup}>
                         <Text style={inputElementStyles[theme].inputLabel}>Notes:</Text>
                         <TextInput
                             style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput]}
@@ -330,8 +330,6 @@ export default function AddTravel() {
                         />
                     </View>
                 </View>
-
-                <Divider />
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
                     <View style={inputElementStyles[theme].inputGroup}>

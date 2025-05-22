@@ -279,6 +279,17 @@ export default function EditTravelItem() {
                                     placeholderTextColor={colors.text.placeholderGray}
                                 />
                             </View>
+
+                            <View style={inputElementStyles[theme].inputGroup}>
+                                <Text style={inputElementStyles[theme].inputLabel}>Vehicle Code:</Text>
+                                <TextInput
+                                    style={inputStyles[theme].textInput}
+                                    value={travel.vehicle_code || ''}
+                                    onChangeText={(text) => handleChangeText('vehicle_code', text)}
+                                    placeholder="Enter vehicle code"
+                                    placeholderTextColor={colors.text.placeholderGray}
+                                />
+                            </View>
                         </View>
 
                         <Divider />
@@ -318,17 +329,6 @@ export default function EditTravelItem() {
 
                         <View style={inputElementStyles[theme].inputLargeGroup}>
                             <View style={inputElementStyles[theme].inputGroup}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Vehicle Code:</Text>
-                                <TextInput
-                                    style={inputStyles[theme].textInput}
-                                    value={travel.vehicle_code || ''}
-                                    onChangeText={(text) => handleChangeText('vehicle_code', text)}
-                                    placeholder="Enter vehicle code"
-                                    placeholderTextColor={colors.text.placeholderGray}
-                                />
-                            </View>
-
-                            <View style={inputElementStyles[theme].inputGroup}>
                                 <Text style={inputElementStyles[theme].inputLabel}>Notes:</Text>
                                 <TextInput
                                     style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput]}
@@ -342,8 +342,6 @@ export default function EditTravelItem() {
                             </View>
                         </View>
 
-                        <Divider />
-
                         <View style={inputElementStyles[theme].inputLargeGroup}>
                             <View style={inputElementStyles[theme].inputGroup}>
                                 <Text style={inputElementStyles[theme].inputLabel}>Laps:</Text>
@@ -353,6 +351,12 @@ export default function EditTravelItem() {
                                     <Text style={inputElementStyles[theme].insideLabel}>{`${laps.length} laps`}</Text>
                                 </Pressable>
                             </View>
+                        </View>
+
+                        <Divider />
+
+                        <View style={buttonStyles[theme].buttonRow}>
+                            <Button title='Save Travel Edit(s)' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                         </View>
                     </View>
 
@@ -391,10 +395,6 @@ export default function EditTravelItem() {
                         onSelect={handleStopSelect}
                         onClose={closeStopModal}
                     />
-
-                    <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Save Travel Edit(s)' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                    </View>
                 </>
             )}
         </CollapsibleHeaderPage>
