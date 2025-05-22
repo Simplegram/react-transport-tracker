@@ -4,10 +4,12 @@ import { colors } from '@/const/color'
 import { useSupabase } from '@/context/SupabaseContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useToggleLoading } from '@/hooks/useLoading'
+import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
+import { statusBarStyles } from '@/src/styles/Styles'
 import { SupabaseClient } from '@supabase/supabase-js'
 import React, { useEffect, useState } from 'react'
-import { Alert, KeyboardAvoidingView, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, KeyboardAvoidingView, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native'
 
 const Login = () => {
     const {
@@ -62,21 +64,25 @@ const Login = () => {
 
     return (
         <KeyboardAvoidingView
-            style={styles.keyboardView}
+            style={styles[theme].keyboardView}
         >
-            <View style={styles.container}>
+            <StatusBar
+                backgroundColor={statusBarStyles[theme]}
+            />
+            <View style={styles[theme].container}>
                 {loading ? (
                     <LoadingScreen text="Loading..."></LoadingScreen>
                 ) :
                     (
                         <>
-                            <Text style={styles.header}>Transport Tracker</Text>
+                            <Text style={styles[theme].header}>Transport Tracker</Text>
                             <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
                                 <View style={inputElementStyles[theme].inputGroup}>
                                     <Text style={inputElementStyles[theme].inputLabel}>Supabase URL</Text>
                                     <TextInput
                                         autoCapitalize="none"
                                         placeholder="https://my-example-brand.supabase.co"
+                                        placeholderTextColor={colors.placeholderGray}
                                         value={currentSupabaseUrl}
                                         onChangeText={setCurrentSupabaseUrl}
                                         style={inputStyles[theme].textInput}
@@ -88,6 +94,7 @@ const Login = () => {
                                     <TextInput
                                         autoCapitalize="none"
                                         placeholder="abcdefghijklmnopqrstuvwxyz1234567890"
+                                        placeholderTextColor={colors.placeholderGray}
                                         value={currentSupabaseAnonKey}
                                         onChangeText={setCurrentSupabaseAnonKey}
                                         style={inputStyles[theme].textInput}
@@ -99,6 +106,7 @@ const Login = () => {
                                     <TextInput
                                         autoCapitalize="none"
                                         placeholder="john@doe.com"
+                                        placeholderTextColor={colors.placeholderGray}
                                         value={email}
                                         onChangeText={setEmail}
                                         style={inputStyles[theme].textInput}
@@ -108,6 +116,7 @@ const Login = () => {
                                     <Text style={inputElementStyles[theme].inputLabel}>Supabase Account Password</Text>
                                     <TextInput
                                         placeholder="password"
+                                        placeholderTextColor={colors.placeholderGray}
                                         value={password}
                                         onChangeText={setPassword}
                                         secureTextEntry
@@ -115,7 +124,7 @@ const Login = () => {
                                     />
                                 </View>
                             </View>
-                            <Button onPress={onSignInPress} style={styles.button} textStyle={{ color: '#fff' }}>Sign in</Button>
+                            <Button onPress={onSignInPress} style={buttonStyles[theme].addButton} textStyle={{ color: '#fff' }}>Sign in</Button>
                         </>
                     )}
             </View>
@@ -123,7 +132,7 @@ const Login = () => {
     )
 }
 
-const styles = StyleSheet.create({
+const lightStyles = StyleSheet.create({
     keyboardView: {
         flex: 1,
         padding: 15,
@@ -137,27 +146,24 @@ const styles = StyleSheet.create({
     header: {
         fontSize: 30,
     },
-    inputContainer: {
-        gap: 10,
-        flexDirection: 'column',
-        paddingVertical: 10,
-    },
-    inputField: {
-        height: 50,
-        borderWidth: 1,
-        borderColor: '#0284f5',
-        borderRadius: 4,
-        padding: 10,
-        color: '#000'
-    },
-    button: {
-        color: colors.appBlue,
-        alignItems: 'center',
-        backgroundColor: '#0284f5',
-        padding: 12,
-        borderRadius: 8,
-        borderWidth: 1,
-    },
 })
+
+const styles = {
+    light: lightStyles,
+    dark: StyleSheet.create({
+        keyboardView: {
+            ...lightStyles.keyboardView,
+            backgroundColor: colors.black,
+        },
+        container: {
+            ...lightStyles.container,
+            backgroundColor: colors.black,
+        },
+        header: {
+            ...lightStyles.header,
+            color: colors.dimWhite,
+        },
+    })
+}
 
 export default Login
