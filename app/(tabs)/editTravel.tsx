@@ -254,7 +254,6 @@ export default function EditTravelItem() {
                                 }
                                 onClose={closeCustomPicker}
                                 onConfirm={handleCustomDateConfirm}
-                            // incrementSeconds={10} // Optional: example of customizing increment
                             />
                         )}
 
@@ -394,7 +393,7 @@ export default function EditTravelItem() {
                     />
 
                     <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Edit Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                        <Button title='Save Travel Edit(s)' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </>
             )}
