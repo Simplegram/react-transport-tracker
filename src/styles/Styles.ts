@@ -30,14 +30,14 @@ const lightCollapsibleHeaderStyles = StyleSheet.create({
     fillerContainer: {
         flex: 1,
         minHeight: screenHeight * 0.45,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'flex-end',
+        // alignItems: 'center',
     },
     headerText: {
-        fontSize: 28,
+        fontSize: 32,
         fontWeight: 'bold',
-        textAlign: 'center',
-        paddingHorizontal: 10
+        // textAlign: 'center',
+        paddingBottom: 15
     },
     scrollContainer: {
         flexGrow: 1,
