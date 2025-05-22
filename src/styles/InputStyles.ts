@@ -72,6 +72,7 @@ const inputElementStyles = {
         },
         inputLabelLight: {
             ...lightInputElementStyles.inputLabelLight,
+            color: colors.dimmerWhite2,
         },
         insideLabel: {
             ...lightInputElementStyles.insideLabel,

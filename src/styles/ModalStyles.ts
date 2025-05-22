@@ -77,8 +77,8 @@ const lightModalStyles = StyleSheet.create({
     modalContainer: {
         marginTop: 'auto',
         padding: 20,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16,
         backgroundColor: colors.text.dimWhite,
         justifyContent: 'space-between',
         gap: 10,
@@ -124,7 +124,7 @@ const modalStyles = {
             ...lightModalStyles.modalContainer,
             borderRadius: 16,
             borderWidth: 1,
-            borderTopColor: colors.text.dimWhite,
+            borderTopColor: colors.text.dimmerWhite,
             backgroundColor: colors.background.black,
         },
         lapModalContainer: {
