@@ -4,9 +4,10 @@ import { useTheme } from '@/context/ThemeContext';
 import useStopModal from '@/hooks/useStopModal';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles } from '@/src/styles/InputStyles';
+import { modalStyles } from '@/src/styles/ModalStyles';
 import { AddableLap } from '@/src/types/AddableTravels';
 import { EditableLap, EditableLapsModalProp } from '@/src/types/EditableTravels';
-import { formatDateForDisplay } from '@/src/utils/utils';
+import { formatLapTimeDisplay } from '@/src/utils/utils';
 import React, { useEffect, useState } from 'react';
 import {
     Modal,
@@ -18,7 +19,6 @@ import {
 } from 'react-native';
 import AddLapModal from '../addModal/AddLapModal';
 import EditLapModal from '../editModal/EditLapModal';
-import { modalStyles } from '@/src/styles/ModalStyles';
 
 export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { theme } = useTheme()
@@ -80,7 +80,7 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                 <View style={[modalStyles[theme].modalContainer]}>
                     <View style={modalStyles[theme].inputContainer}>
                         {laps.length === 0 ? (
-                            <View style={styles.emptyList}>
+                            <View style={styles[theme].emptyList}>
                                 <Text style={inputElementStyles[theme].inputLabel}>No lap found</Text>
                             </View>
                         ) : (
@@ -88,8 +88,8 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                                 contentContainerStyle={modalStyles[theme].scrollView}
                             >
                                 {laps.map((lap: EditableLap, index) => (
-                                    <Pressable key={index} style={styles.detailRow} onPress={() => handleLapSelect(lap)}>
-                                        <Text style={inputElementStyles[theme].inputLabel}>{formatDateForDisplay(lap.time)}</Text>
+                                    <Pressable key={index} style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
+                                        <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
                                         {stops.find(stop => stop.id === lap.stop_id) ? (
                                             <Text style={[inputElementStyles[theme].inputLabel, { color: colors.appBlue }]}>
                                                 {stops.find(stop => stop.id === lap.stop_id)?.name}
@@ -135,41 +135,36 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
     );
 };
 
-const styles = StyleSheet.create({
-    modalBackdrop: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        justifyContent: 'flex-end',
-    },
-    modalContainer: {
-        height: 550,
-        marginTop: 'auto',
-        padding: 20,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        backgroundColor: '#fff',
-    },
+const lightStyles = StyleSheet.create({
     emptyList: {
         flex: 1,
         padding: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    inputContainer: {
-        flex: 1,
-        gap: 10,
-        flexDirection: 'column',
-    },
     detailRow: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
         alignItems: 'flex-start',
         borderWidth: 1,
         borderRadius: 10,
-        gap: 5,
     },
-});
+})
+
+const styles = {
+    light: lightStyles,
+    dark: StyleSheet.create({
+        emptyList: {
+            ...lightStyles.emptyList,
+        },
+        detailRow: {
+            ...lightStyles.detailRow,
+            paddingHorizontal: 0,
+        },
+    })
+}
 
 const addButtonStyles = StyleSheet.create({
     buttonContainer: {

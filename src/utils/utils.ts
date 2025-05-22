@@ -1,3 +1,4 @@
+import moment from "moment";
 import { DataItem } from "../types/Travels";
 
 const sortByIdToFront = (arr: any, targetId: number) => {
@@ -82,6 +83,14 @@ const formatDateForDisplay = (isoString: string | undefined | null) => {
         return 'Invalid Date';
     }
 };
+
+export const formatLapTimeDisplay = (isoString: string | undefined | null) => {
+    if (!isoString) return 'Select Date/Time...';
+    const cleanTime = isoString.replace("T", " ")
+    const formattedDate = moment(cleanTime).format("YYYY-MM-DD")
+    const formattedTime = moment(cleanTime).format("HH:mm:ss")
+    return `${formattedDate} ${formattedTime}`
+}
 
 export {
     calculateDuration,

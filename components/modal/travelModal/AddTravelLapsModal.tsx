@@ -4,8 +4,9 @@ import { useTheme } from '@/context/ThemeContext';
 import useStopModal from '@/hooks/useStopModal';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { inputElementStyles } from '@/src/styles/InputStyles';
+import { modalStyles } from '@/src/styles/ModalStyles';
 import { AddableLap, AddableLapsModalProp } from '@/src/types/AddableTravels';
-import { formatDateForDisplay } from '@/src/utils/utils';
+import { formatLapTimeDisplay } from '@/src/utils/utils';
 import React, { useEffect, useState } from 'react';
 import {
     Modal,
@@ -17,7 +18,6 @@ import {
 } from 'react-native';
 import AddLapModal from '../addModal/AddLapModal';
 import EditLapModal from '../editModal/EditLapModal';
-import { modalStyles } from '@/src/styles/ModalStyles';
 
 export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
     const { theme } = useTheme()
@@ -79,7 +79,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                 <View style={modalStyles[theme].modalContainer}>
                     <View style={modalStyles[theme].inputContainer}>
                         {laps.length === 0 ? (
-                            <View style={styles.emptyList}>
+                            <View style={styles[theme].emptyList}>
                                 <Text style={inputElementStyles[theme].inputLabel}>No lap found</Text>
                             </View>
                         ) : (
@@ -87,8 +87,8 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                                 contentContainerStyle={modalStyles[theme].scrollView}
                             >
                                 {laps.map((lap: AddableLap, index) => (
-                                    <Pressable key={index} style={styles.detailRow} onPress={() => handleLapSelect(lap)}>
-                                        <Text style={inputElementStyles[theme].inputLabel}>{formatDateForDisplay(lap.time)}</Text>
+                                    <Pressable key={index} style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
+                                        <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
                                         {stops.find(stop => stop.id === lap.stop_id) ? (
                                             <Text style={[inputElementStyles[theme].inputLabel, { color: colors.appBlue }]}>
                                                 {stops.find(stop => stop.id === lap.stop_id)?.name}
@@ -133,41 +133,36 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
     );
 };
 
-const styles = StyleSheet.create({
-    modalBackdrop: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        justifyContent: 'flex-end',
-    },
-    modalContainer: {
-        height: 550,
-        marginTop: 'auto',
-        padding: 20,
-        borderTopLeftRadius: 10,
-        borderTopRightRadius: 10,
-        backgroundColor: '#fff',
-    },
+const lightStyles = StyleSheet.create({
     emptyList: {
         flex: 1,
         padding: 20,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    inputContainer: {
-        flex: 1,
-        gap: 10,
-        flexDirection: 'column',
-        paddingVertical: 10,
-    },
     detailRow: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        padding: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
         alignItems: 'flex-start',
         borderWidth: 1,
         borderRadius: 10,
     },
-});
+})
+
+const styles = {
+    light: lightStyles,
+    dark: StyleSheet.create({
+        emptyList: {
+            ...lightStyles.emptyList,
+        },
+        detailRow: {
+            ...lightStyles.detailRow,
+            paddingHorizontal: 0,
+        },
+    })
+}
 
 const addButtonStyles = StyleSheet.create({
     buttonContainer: {
