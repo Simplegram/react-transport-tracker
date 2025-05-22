@@ -38,7 +38,7 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
                             <TextInput
-                                style={inputStyles[theme].pressableInput}
+                                style={inputStyles[theme].textInput}
                                 placeholder="Direction name..."
                                 placeholderTextColor={colors.text.placeholderGray}
                                 value={direction.name}

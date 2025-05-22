@@ -86,9 +86,9 @@ const lightInputStyles = StyleSheet.create({
         backgroundColor: colors.text.dimWhite,
         borderRadius: 10,
         paddingHorizontal: 14,
-        paddingVertical: Platform.OS === 'ios' ? 14 : 12,
+        paddingVertical: 8,
         minHeight: Platform.OS === 'ios' ? 50 : 48,
-        fontSize: 16,
+        fontSize: 14,
         color: '#333333',
         borderWidth: 1,
         borderColor: colors.text.dimmerWhite,
@@ -117,7 +117,7 @@ const inputStyles = {
     dark: StyleSheet.create({
         textInput: {
             ...lightInputStyles.textInput,
-            color: colors.text.dimWhite,
+            color: colors.text.dimmerWhite,
             backgroundColor: '#000'
         },
         multilineTextInput: {
@@ -188,3 +188,4 @@ const iconPickerStyles = {
 export {
     iconPickerStyles, inputElementStyles, inputStyles
 };
+

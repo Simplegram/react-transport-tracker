@@ -64,7 +64,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
                             <TextInput
-                                style={inputStyles[theme].pressableInput}
+                                style={inputStyles[theme].textInput}
                                 placeholder="Stop name..."
                                 placeholderTextColor={colors.text.placeholderGray}
                                 value={stop.name}
@@ -76,14 +76,14 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             <Text style={inputElementStyles[theme].inputLabel}>Latitude and Longitude:</Text>
                             <View style={inputElementStyles[theme].inputGroupCoord}>
                                 <TextInput
-                                    style={[inputStyles[theme].pressableInput, inputStyles[theme].pressableInputCoord]}
+                                    style={[inputStyles[theme].textInput, inputStyles[theme].pressableInputCoord]}
                                     placeholder="Stop latitude..."
                                     placeholderTextColor={colors.text.placeholderGray}
                                     value={stop.lat?.toString()}
                                     onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
                                 />
                                 <TextInput
-                                    style={[inputStyles[theme].pressableInput, inputStyles[theme].pressableInputCoord]}
+                                    style={[inputStyles[theme].textInput, inputStyles[theme].pressableInputCoord]}
                                     placeholder="Stop longitude..."
                                     placeholderTextColor={colors.text.placeholderGray}
                                     value={stop.lon?.toString()}
@@ -100,7 +100,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].inputLabel}>Alternative name:</Text>
                             <TextInput
-                                style={inputStyles[theme].pressableInput}
+                                style={inputStyles[theme].textInput}
                                 placeholder="Alternative name..."
                                 placeholderTextColor={colors.text.placeholderGray}
                                 value={stop.name_alt ? stop.name_alt : ''}

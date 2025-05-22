@@ -50,7 +50,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
                             <TextInput
-                                style={inputStyles[theme].pressableInput}
+                                style={inputStyles[theme].textInput}
                                 placeholder="e.g., Standard Bus"
                                 placeholderTextColor={colors.text.placeholderGray}
                                 value={vehicleType.name}

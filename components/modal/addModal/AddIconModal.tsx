@@ -43,7 +43,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
                 <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupIcon]}>
                     <Icon style={styles[theme].icon} name={icon.name ? icon.name : 'xmark'} size={32} />
                     <TextInput
-                        style={[inputStyles[theme].pressableInput, { flex: 1 }]}
+                        style={[inputStyles[theme].textInput, { flex: 1 }]}
                         placeholder="e.g., train-subway"
                         placeholderTextColor={colors.text.placeholderGray}
                         value={iconQuery}
