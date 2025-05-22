@@ -3,7 +3,7 @@ import { Platform, StyleSheet } from "react-native";
 
 const lightInputElementStyles = StyleSheet.create({
     inputContainer: {
-        gap: 10,
+        gap: 12,
         paddingBottom: 20,
     },
     inputGroup: {},
@@ -29,7 +29,7 @@ const lightInputElementStyles = StyleSheet.create({
         fontSize: 15,
         fontWeight: '500',
         color: '#333333',
-        marginBottom: 8,
+        marginBottom: 4,
     },
     inputLabelLight: {
         fontSize: 14,
