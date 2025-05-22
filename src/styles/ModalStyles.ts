@@ -89,6 +89,12 @@ const lightModalStyles = StyleSheet.create({
     coordModalContainer: {
         height: 475
     },
+    inputContainer: {
+        gap: 10,
+        minHeight: 100,
+        maxHeight: 325,
+        flexDirection: 'column',
+    },
     modalSearchInput: {
         borderWidth: 1,
         borderColor: '#ccc',
@@ -102,6 +108,9 @@ const lightModalStyles = StyleSheet.create({
         padding: 20,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    scrollView: {
+        gap: 10,
     },
 })
 
@@ -124,11 +133,17 @@ const modalStyles = {
         coordModalContainer: {
             ...lightModalStyles.coordModalContainer,
         },
+        inputContainer: {
+            ...lightModalStyles.inputContainer,
+        },
         modalSearchInput: {
             ...lightModalStyles.modalSearchInput,
         },
         emptyList: {
             ...lightModalStyles.emptyList,
+        },
+        scrollView: {
+            ...lightModalStyles.scrollView,
         },
     })
 }
@@ -138,3 +153,4 @@ export {
     modalElementStyles,
     modalStyles
 };
+

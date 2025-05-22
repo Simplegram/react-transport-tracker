@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import AddLapModal from '../addModal/AddLapModal';
 import EditLapModal from '../editModal/EditLapModal';
+import { modalStyles } from '@/src/styles/ModalStyles';
 
 export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { theme } = useTheme()
@@ -75,18 +76,16 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
             animationType="slide"
             onRequestClose={onClose}
         >
-            <View style={styles.modalBackdrop}>
-                <View style={[styles.modalContainer, inputElementStyles[theme].inputContainer]}>
-                    <View style={styles.inputContainer}>
+            <View style={modalStyles[theme].modalBackdrop}>
+                <View style={[modalStyles[theme].modalContainer]}>
+                    <View style={modalStyles[theme].inputContainer}>
                         {laps.length === 0 ? (
                             <View style={styles.emptyList}>
                                 <Text style={inputElementStyles[theme].inputLabel}>No lap found</Text>
                             </View>
                         ) : (
                             <ScrollView
-                                contentContainerStyle={{
-                                    gap: 10,
-                                }}
+                                contentContainerStyle={modalStyles[theme].scrollView}
                             >
                                 {laps.map((lap: EditableLap, index) => (
                                     <Pressable key={index} style={styles.detailRow} onPress={() => handleLapSelect(lap)}>
