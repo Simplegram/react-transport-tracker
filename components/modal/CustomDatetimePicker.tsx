@@ -30,11 +30,10 @@ export default function CustomDateTimePicker({
     initialDateTime,
     onClose,
     onConfirm,
-    incrementSeconds = 5,
 }: CustomDateTimePickerProps) {
     const { theme } = useTheme()
 
-    const { loading } = useLoading(250)
+    const { loading } = useLoading(25)
 
     const [year, setYear] = useState('');
     const [month, setMonth] = useState('');
@@ -157,7 +156,7 @@ export default function CustomDateTimePicker({
             onRequestClose={onClose}
         >
             {loading ? (
-                <LoadingScreen></LoadingScreen>
+                <></>
             ) : (
                 <Pressable style={datetimePickerStyles[theme].modalBackdrop} onPress={onClose}>
                     <Pressable onPress={(e) => e.stopPropagation()} style={datetimePickerStyles[theme].modalContainer}>
