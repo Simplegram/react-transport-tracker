@@ -26,7 +26,7 @@ const lightButtonStyles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         borderWidth: 1,
-        backgroundColor: colors.text.white
+        backgroundColor: colors.text.dimWhite
     },
     cancelButtonText: {
         color: colors.text.black,
