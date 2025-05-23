@@ -59,7 +59,7 @@ export default function useDataList({ directions, stops, routes, vehicleTypes, i
 
         setData(fetchedData)
         setFilteredData(filteredStops(fetchedData))
-    }, [dataType, directions, stops, routes, vehicleTypes, icons]) // Include all fetched data arrays as dependencies
+    }, [dataType, directions, stops, routes, vehicleTypes, icons])
 
     useEffect(() => {
         setFilteredData(filteredStops(data))

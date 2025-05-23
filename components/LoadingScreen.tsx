@@ -29,7 +29,7 @@ export default function LoadingScreen({ text = "Loading..." }: Props) {
     )
 };
 
-const { width, height } = Dimensions.get('window') // Get window width for responsive cards
+const { width, height } = Dimensions.get('window')
 const styles = StyleSheet.create({
     modalOverlay: {
         width: width,

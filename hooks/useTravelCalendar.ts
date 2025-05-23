@@ -8,18 +8,16 @@ function formatDate(
     custom_minutes: number | null = null,
     custom_seconds: number | null = null
 ) {
-    // Create a new Date object if one wasn't passed in
     if (!date) {
         date = new Date()
     }
 
-    // Ensure we're working with a Date object
     if (!(date instanceof Date)) {
-        return "Invalid Date" // Or handle the error in a way that suits your needs
+        return "Invalid Date"
     }
 
     const year = date.getFullYear()
-    const month = String(date.getMonth() + 1).padStart(2, '0') // Month is 0-indexed
+    const month = String(date.getMonth() + 1).padStart(2, '0')
     const day = String(date.getDate()).padStart(2, '0')
     const hours = custom_hours ?? String(date.getHours()).padStart(2, '0')
     const minutes = custom_minutes ?? String(date.getMinutes()).padStart(2, '0')
@@ -60,12 +58,12 @@ export default function useTravelCalendar() {
 
         if (error) {
             console.error("Error fetching dates:", error)
-            return // Exit if there's an error
+            return
         }
 
         if (!data || data.length === 0) {
             console.log("No dates found.")
-            setDates([]) // Set dates to an empty array if no data is returned
+            setDates([])
             return
         }
 

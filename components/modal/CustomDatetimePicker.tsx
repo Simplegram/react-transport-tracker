@@ -53,7 +53,7 @@ export default function CustomDateTimePicker({
     useEffect(() => {
         if (visible) {
             const dateToUse = initialDateTime instanceof Date && !isNaN(initialDateTime.getTime())
-                ? new Date(initialDateTime) // Use a copy
+                ? new Date(initialDateTime)
                 : new Date()
             updateStringPartsFromDate(dateToUse)
         }
@@ -89,7 +89,7 @@ export default function CustomDateTimePicker({
             errorMessage = "Year must be between 1000 and 9999."
         } else if (m < 1 || m > 12) {
             errorMessage = "Month must be between 1 and 12."
-        } else if (d < 1 || d > 31) { // Basic day validation
+        } else if (d < 1 || d > 31) {
             errorMessage = "Day must be between 1 and 31."
         } else if (h < 0 || h > 23) {
             errorMessage = "Hours must be between 0 and 23."
@@ -104,7 +104,7 @@ export default function CustomDateTimePicker({
             return null
         }
 
-        const date = new Date(y, m - 1, d, h, min, s) // Month is 0-indexed
+        const date = new Date(y, m - 1, d, h, min, s)
 
         if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) {
             Alert.alert("Invalid Date", "The day is not valid for the selected month and year.")

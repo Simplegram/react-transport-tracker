@@ -77,13 +77,11 @@ export default function DataListScreen() {
 
     const handleSubmitFromModal = (data: any) => {
         if (activeModalConfig?.onSubmitDataHandler) {
-            // Call the specific handler defined in the config, passing the collected data
             activeModalConfig.onSubmitDataHandler(data)
         } else {
             console.error("No data handler defined for this modal config.")
             Alert.alert("Error", "Configuration error: Could not process data.")
         }
-        // Always close the modal after handling submission
         closeStopModal()
     }
 
@@ -135,7 +133,7 @@ export default function DataListScreen() {
                             onRefresh={refetchTravelData}
                             data={data}
                             renderItem={renderItem}
-                            keyExtractor={item => item.id.toString()} // Ensure key is a string
+                            keyExtractor={item => item.id.toString()}
                             contentContainerStyle={DatalistStyles[theme].listContent}
                             keyboardShouldPersistTaps={'always'}
                         />

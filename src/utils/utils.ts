@@ -24,7 +24,6 @@ function calculateDuration(item: DataItem): string | null {
     const departureDate = new Date(item.bus_initial_departure)
     const arrivalDate = new Date(item.bus_final_arrival)
 
-    // Check if dates are valid
     if (isNaN(departureDate.getTime()) || isNaN(arrivalDate.getTime())) {
         return null
     }

@@ -7,7 +7,7 @@ export default function useStopModal() {
 
     const openStopModal = (field?: string) => {
         if (field) setEditingStopField(field)
-        setStopSearchQuery('') // Clear search query on opening
+        setStopSearchQuery('')
         setShowStopModal(true)
     }
 

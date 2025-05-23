@@ -3,9 +3,9 @@ import { Pressable, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 're
 type Props = {
     title?: string
     onPress?: () => void
-    style?: StyleProp<ViewStyle> // Change to ViewStyle as the container will have background color
+    style?: StyleProp<ViewStyle>
     textStyle?: StyleProp<TextStyle>
-    color?: string // Keep for fallback
+    color?: string
     darkenAmount?: number
     children?: string
 }

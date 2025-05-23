@@ -296,14 +296,14 @@ export default function TravelDetail() {
                         )}
                         {fullLatLon && fullLatLon
                             .filter(data =>
-                                data.coords !== undefined && // Check if coords exists
-                                Array.isArray(data.coords) && // Check if it's an array
-                                data.coords.every(coord => typeof coord === 'number') // Check if all elements are numbers
+                                data.coords !== undefined &&
+                                Array.isArray(data.coords) &&
+                                data.coords.every(coord => typeof coord === 'number')
                             )
                             .map((data, index) => (
                                 <MarkerView
                                     key={index}
-                                    coordinate={data.coords as [number, number]} // Assert the type after filtering
+                                    coordinate={data.coords as [number, number]}
                                 >
                                     <AnnotationContent
                                         fullVehicleTypes={fullVehicleTypes}

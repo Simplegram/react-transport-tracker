@@ -54,7 +54,7 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                                     <>
                                         {item.vehicle_type?.name ? (
                                             <Icon
-                                                style={[styles[theme].icon, { width: 20 }]} // Access theme and styles
+                                                style={[styles[theme].icon, { width: 20 }]}
                                                 name={item.vehicle_type.icon_id.name.toLocaleLowerCase()}
                                                 size={16}
                                             />

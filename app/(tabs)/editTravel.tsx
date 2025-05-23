@@ -114,13 +114,11 @@ export default function EditTravelItem() {
         })
     }
 
-    // RENAME old showDatePickerModal and update logic
     const openCustomPickerModal = (field: keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'>) => {
         setEditingDateField(field)
         setShowCustomPicker(true)
     }
 
-    // ADD handler for custom picker confirmation
     const handleCustomDateConfirm = (selectedDate: Date) => {
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
 
@@ -130,7 +128,6 @@ export default function EditTravelItem() {
         closeCustomPicker()
     }
 
-    // ADD function to close custom picker
     const closeCustomPicker = () => {
         setShowCustomPicker(false)
         setEditingDateField(null)
