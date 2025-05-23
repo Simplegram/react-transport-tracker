@@ -114,20 +114,20 @@ export default function useGetTravelData() {
     const getTravelLaps = async (travelIds: number[]) => {
         try {
             const lapPromises = travelIds.map(travelId => {
-                return getFullLaps(travelId);
-            });
+                return getFullLaps(travelId)
+            })
 
-            const allLapsData = await Promise.all(lapPromises);
+            const allLapsData = await Promise.all(lapPromises)
 
             const validLapsData = allLapsData.filter(laps => laps !== null)
             const flattenedLaps = validLapsData.flat()
 
-            setTravelLaps(flattenedLaps);
+            setTravelLaps(flattenedLaps)
 
         } catch (error) {
-            console.error("Error fetching travel laps:", error);
+            console.error("Error fetching travel laps:", error)
         }
-    };
+    }
 
     const getTravelData = async (timeout: number = 0) => {
         // listening to database changes might be a better idea?
@@ -138,7 +138,7 @@ export default function useGetTravelData() {
             await getVehicleTypes()
             await getFullVehicletypes()
             await getIcons()
-        }, timeout);
+        }, timeout)
     }
 
     useEffect(() => {

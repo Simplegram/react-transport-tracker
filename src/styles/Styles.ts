@@ -1,7 +1,7 @@
-import { colors } from "@/const/color";
-import { Dimensions, StyleSheet } from "react-native";
+import { colors } from "@/const/color"
+import { Dimensions, StyleSheet } from "react-native"
 
-const { height: screenHeight } = Dimensions.get('window');
+const { height: screenHeight } = Dimensions.get('window')
 
 const lightStyles = StyleSheet.create({
     icon: {

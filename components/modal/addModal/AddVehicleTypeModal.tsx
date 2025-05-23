@@ -1,15 +1,15 @@
-import Button from "@/components/BaseButton";
-import { colors } from "@/const/color";
-import { useTheme } from "@/context/ThemeContext";
-import { useLoading } from "@/hooks/useLoading";
-import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles";
-import { styles } from "@/src/styles/Styles";
-import { AddableVehicleType } from "@/src/types/AddableTravels";
-import { VehicleTypeModalProp } from "@/src/types/TravelModal";
-import { useState } from "react";
-import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import Button from "@/components/BaseButton"
+import { colors } from "@/const/color"
+import { useTheme } from "@/context/ThemeContext"
+import { useLoading } from "@/hooks/useLoading"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { styles } from "@/src/styles/Styles"
+import { AddableVehicleType } from "@/src/types/AddableTravels"
+import { VehicleTypeModalProp } from "@/src/types/TravelModal"
+import { useState } from "react"
+import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
+import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: VehicleTypeModalProp) {
     const { theme } = useTheme()
@@ -20,12 +20,12 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
 
     const handleOnSubmit = () => {
         if (!vehicleType.name || !vehicleType.icon_id) {
-            Alert.alert('Input Required', 'Please enter a type name and choose an icon.');
+            Alert.alert('Input Required', 'Please enter a type name and choose an icon.')
             return
         }
 
-        onSubmit(vehicleType);
-    };
+        onSubmit(vehicleType)
+    }
 
     return (
         <View>

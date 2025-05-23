@@ -1,9 +1,9 @@
-import React, { createContext, useContext } from "react";
-import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage";
+import React, { createContext, useContext } from "react"
+import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage"
 
 interface ThemeContextType {
     theme: 'light' | 'dark'
-    setTheme: (key: 'light' | 'dark') => void;
+    setTheme: (key: 'light' | 'dark') => void
 }
 
 interface ThemeProviderProps {
@@ -14,7 +14,7 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     const storage = new MMKVLoader().initialize()
-    const [theme, setTheme] = useMMKVStorage<'light' | 'dark'>('appTheme', storage, 'light');
+    const [theme, setTheme] = useMMKVStorage<'light' | 'dark'>('appTheme', storage, 'light')
 
     return (
         <ThemeContext.Provider value={{
@@ -26,9 +26,9 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 }
 
 export const useTheme = () => {
-    const context = useContext(ThemeContext);
+    const context = useContext(ThemeContext)
     if (context === undefined) {
-        throw new Error('useTheme must be used within a ThemeProvider');
+        throw new Error('useTheme must be used within a ThemeProvider')
     }
-    return context;
+    return context
 }

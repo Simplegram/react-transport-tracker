@@ -1,7 +1,7 @@
-import { colors } from "@/const/color";
-import { Dimensions, StyleSheet } from "react-native";
+import { colors } from "@/const/color"
+import { Dimensions, StyleSheet } from "react-native"
 
-const { width, height } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window')
 
 const lightLoadingStyles = StyleSheet.create({
     modalOverlay: {
@@ -24,7 +24,7 @@ const lightLoadingStyles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
     },
-});
+})
 
 export const loadingStyles = {
     light: lightLoadingStyles,

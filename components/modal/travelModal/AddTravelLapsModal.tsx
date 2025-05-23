@@ -1,13 +1,13 @@
-import Button from '@/components/BaseButton';
-import { colors } from '@/const/color';
-import { useTheme } from '@/context/ThemeContext';
-import useStopModal from '@/hooks/useStopModal';
-import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputElementStyles } from '@/src/styles/InputStyles';
-import { modalStyles } from '@/src/styles/ModalStyles';
-import { AddableLap, AddableLapsModalProp } from '@/src/types/AddableTravels';
-import { formatLapTimeDisplay } from '@/src/utils/utils';
-import React, { useEffect, useState } from 'react';
+import Button from '@/components/BaseButton'
+import { colors } from '@/const/color'
+import { useTheme } from '@/context/ThemeContext'
+import useStopModal from '@/hooks/useStopModal'
+import { buttonStyles } from '@/src/styles/ButtonStyles'
+import { inputElementStyles } from '@/src/styles/InputStyles'
+import { modalStyles } from '@/src/styles/ModalStyles'
+import { AddableLap, AddableLapsModalProp } from '@/src/types/AddableTravels'
+import { formatLapTimeDisplay } from '@/src/utils/utils'
+import React, { useEffect, useState } from 'react'
 import {
     Modal,
     Pressable,
@@ -15,9 +15,9 @@ import {
     StyleSheet,
     Text,
     View,
-} from 'react-native';
-import AddLapModal from '../addModal/AddLapModal';
-import EditLapModal from '../editModal/EditLapModal';
+} from 'react-native'
+import AddLapModal from '../addModal/AddLapModal'
+import EditLapModal from '../editModal/EditLapModal'
 
 export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
     const { theme } = useTheme()
@@ -26,20 +26,20 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
         showStopModal: showLapModal,
         openStopModal: openLapModal,
         closeStopModal: closeLapModal
-    } = useStopModal();
+    } = useStopModal()
 
     const {
         showStopModal: showEditLapModal,
         openStopModal: openEditLapModal,
         closeStopModal: closeEditLapModal
-    } = useStopModal();
+    } = useStopModal()
 
     const [laps, setLaps] = useState<AddableLap[]>([])
     const [selectedLap, setSelectedLap] = useState<AddableLap | undefined>(undefined)
 
     const handleOnSubmit = () => {
-        onSelect(laps);
-    };
+        onSelect(laps)
+    }
 
     const handleLapSelect = (lap: AddableLap) => {
         setSelectedLap(lap)
@@ -55,10 +55,10 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
     const handleLapEdit = (lap: AddableLap) => {
         const updatedLaps = laps.map(item => {
             if (item.time === lap.time) {
-                return lap;
+                return lap
             }
-            return item;
-        });
+            return item
+        })
 
         setLaps(updatedLaps)
         closeEditLapModal()
@@ -130,7 +130,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                 />
             </View>
         </Modal>
-    );
+    )
 };
 
 const lightStyles = StyleSheet.create({

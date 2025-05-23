@@ -28,7 +28,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
         setStopSearchQuery,
         openStopModal,
         closeStopModal
-    } = useStopModal();
+    } = useStopModal()
 
     const [route, setRoute] = useState<AddableRoute>({
         code: undefined,
@@ -44,17 +44,17 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
         }
 
         setRoute({ ...route, [editingStopField]: stopId })
-        closeStopModal();
-    };
+        closeStopModal()
+    }
 
     const handleOnSubmit = () => {
         if (!route.name || !route.first_stop_id || !route.last_stop_id || !route.vehicle_type_id) {
-            Alert.alert('Input Required', 'Please add route name/stops/vehicle type');
+            Alert.alert('Input Required', 'Please add route name/stops/vehicle type')
             return
         }
 
-        onSubmit(route);
-    };
+        onSubmit(route)
+    }
 
     return (
         <View>

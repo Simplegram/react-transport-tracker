@@ -33,18 +33,18 @@ interface IconType {
 }
 
 interface DataItem {
-    id: number;
-    created_at: string;
-    bus_initial_arrival: string;
-    bus_initial_departure: string;
-    bus_final_arrival: string;
+    id: number
+    created_at: string
+    bus_initial_arrival: string
+    bus_initial_departure: string
+    bus_final_arrival: string
     routes: Route
-    first_stop_id: Stop;
-    last_stop_id: Stop;
-    notes: string | null;
-    vehicle_code: string;
-    directions: Direction;
-    types: VehicleType;
+    first_stop_id: Stop
+    last_stop_id: Stop
+    notes: string | null
+    vehicle_code: string
+    directions: Direction
+    types: VehicleType
 }
 
 interface Lap {

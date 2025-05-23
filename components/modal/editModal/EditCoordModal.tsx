@@ -1,12 +1,12 @@
-import Button from "@/components/BaseButton";
-import { useTheme } from "@/context/ThemeContext";
-import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { inputElementStyles } from "@/src/styles/InputStyles";
-import { modalStyles } from "@/src/styles/ModalStyles";
-import { AddableCoordModalProp } from "@/src/types/AddableTravels";
-import { Camera, MapView } from "@maplibre/maplibre-react-native";
-import { useRef } from "react";
-import { Dimensions, Modal, Pressable, StyleSheet, View } from "react-native";
+import Button from "@/components/BaseButton"
+import { useTheme } from "@/context/ThemeContext"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
+import { modalStyles } from "@/src/styles/ModalStyles"
+import { AddableCoordModalProp } from "@/src/types/AddableTravels"
+import { Camera, MapView } from "@maplibre/maplibre-react-native"
+import { useRef } from "react"
+import { Dimensions, Modal, Pressable, StyleSheet, View } from "react-native"
 
 const { height: screenHeight, width: screenWidth } = Dimensions.get('window')
 
@@ -25,10 +25,10 @@ export default function EditCoordModal({ currentCoordinates, isModalVisible, onC
         const roundedCoordinate = {
             lon: Number(centerCoordinate[0].toFixed(6)),
             lat: Number(centerCoordinate[1].toFixed(6))
-        };
+        }
 
-        onSelect(roundedCoordinate);
-    };
+        onSelect(roundedCoordinate)
+    }
 
     return (
         <Modal

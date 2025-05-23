@@ -1,20 +1,20 @@
-import Button from "@/components/BaseButton";
-import { colors } from "@/const/color";
-import { useModalContext } from "@/context/ModalContext";
-import { useTheme } from "@/context/ThemeContext";
-import useGetTravelData from "@/hooks/useGetTravelData";
-import { useLoading } from "@/hooks/useLoading";
-import useStopModal from "@/hooks/useStopModal";
-import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles";
-import { styles } from "@/src/styles/Styles";
-import { AddableCoordinates } from "@/src/types/AddableTravels";
-import { EditableStop } from "@/src/types/EditableTravels";
-import { BaseModalContentProps } from "@/src/types/ModalContentProps";
-import { useState } from "react";
-import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import AddCoordModal from "../addModal/AddCoordModal";
+import Button from "@/components/BaseButton"
+import { colors } from "@/const/color"
+import { useModalContext } from "@/context/ModalContext"
+import { useTheme } from "@/context/ThemeContext"
+import useGetTravelData from "@/hooks/useGetTravelData"
+import { useLoading } from "@/hooks/useLoading"
+import useStopModal from "@/hooks/useStopModal"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { styles } from "@/src/styles/Styles"
+import { AddableCoordinates } from "@/src/types/AddableTravels"
+import { EditableStop } from "@/src/types/EditableTravels"
+import { BaseModalContentProps } from "@/src/types/ModalContentProps"
+import { useState } from "react"
+import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import Icon from 'react-native-vector-icons/FontAwesome6'
+import AddCoordModal from "../addModal/AddCoordModal"
 
 export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()
@@ -30,26 +30,26 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
         showStopModal: showCoordModal,
         openStopModal: openCoordModal,
         closeStopModal: closeCoordModal
-    } = useStopModal();
+    } = useStopModal()
 
     const handleCoordSelect = (coordinates: AddableCoordinates) => {
         if (!coordinates.lat || !coordinates.lon) {
-            Alert.alert('Input Required', 'Please pick the right coordinates');
+            Alert.alert('Input Required', 'Please pick the right coordinates')
             return
         }
 
         setStop({ ...stop, lat: coordinates.lat, lon: coordinates.lon })
-        closeCoordModal();
-    };
+        closeCoordModal()
+    }
 
     const handleOnSubmit = () => {
         if (!stop.name.trim() || !stop.vehicle_type) {
-            Alert.alert('Input Required', 'Please enter a stop name and choose a vehicle type');
+            Alert.alert('Input Required', 'Please enter a stop name and choose a vehicle type')
             return
         }
 
-        onSubmit(stop);
-    };
+        onSubmit(stop)
+    }
 
     return (
         <View>

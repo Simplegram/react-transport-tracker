@@ -1,18 +1,18 @@
 function calculateDistanceInMeters(point1: { lat: number; lon: number }, point2: { lat: number; lon: number }): number {
-    const R = 6371e3; // Earth's radius in meters
-    const lat1 = point1.lat * Math.PI / 180; // convert to radians
-    const lat2 = point2.lat * Math.PI / 180; // convert to radians
-    const deltaLat = (point2.lat - point1.lat) * Math.PI / 180;
-    const deltaLon = (point2.lon - point1.lon) * Math.PI / 180;
+    const R = 6371e3 // Earth's radius in meters
+    const lat1 = point1.lat * Math.PI / 180 // convert to radians
+    const lat2 = point2.lat * Math.PI / 180 // convert to radians
+    const deltaLat = (point2.lat - point1.lat) * Math.PI / 180
+    const deltaLon = (point2.lon - point1.lon) * Math.PI / 180
 
     const a =
         Math.sin(deltaLat / 2) * Math.sin(deltaLat / 2) +
         Math.cos(lat1) * Math.cos(lat2) *
-        Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        Math.sin(deltaLon / 2) * Math.sin(deltaLon / 2)
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 
-    const distance = R * c; // Distance in meters
-    return distance;
+    const distance = R * c // Distance in meters
+    return distance
 }
 
 // Based on the examples you provided:
@@ -102,49 +102,49 @@ function getZoomLevelForDimension(longestDimensionInMeters: number): number {
     // 208.576km good with zoom 6.5
 
     if (longestDimensionInMeters <= 0) {
-        return 18;
+        return 18
     }
 
-    const zoom = -3.103 * Math.log10(longestDimensionInMeters) + 23.3;
+    const zoom = -3.103 * Math.log10(longestDimensionInMeters) + 23.3
 
-    const minZoom = 0;
-    const maxZoom = 20;
-    return Math.max(minZoom, Math.min(maxZoom, zoom));
+    const minZoom = 0
+    const maxZoom = 20
+    return Math.max(minZoom, Math.min(maxZoom, zoom))
 }
 
 function getSimpleCentroid(points: number[][] | undefined | null) {
     if (!points || points === null || points.length === 0) {
-        return null;
+        return null
     }
 
-    let minLon = points[0][0];
-    let maxLon = points[0][0];
-    let minLat = points[0][1];
-    let maxLat = points[0][1];
+    let minLon = points[0][0]
+    let maxLon = points[0][0]
+    let minLat = points[0][1]
+    let maxLat = points[0][1]
 
     for (const point of points) {
-        minLon = Math.min(minLon, point[0]);
-        maxLon = Math.max(maxLon, point[0]);
-        minLat = Math.min(minLat, point[1]);
-        maxLat = Math.max(maxLat, point[1]);
+        minLon = Math.min(minLon, point[0])
+        maxLon = Math.max(maxLon, point[0])
+        minLat = Math.min(minLat, point[1])
+        maxLat = Math.max(maxLat, point[1])
     }
 
-    const centerLat = (minLat + maxLat) / 2;
-    const centerLon = (minLon + maxLon) / 2;
+    const centerLat = (minLat + maxLat) / 2
+    const centerLon = (minLon + maxLon) / 2
 
     // Calculate width in meters: distance between two points at min/max longitude
     // and the average latitude
     const widthMeters = calculateDistanceInMeters(
         { lat: centerLat, lon: minLon },
         { lat: centerLat, lon: maxLon }
-    );
+    )
 
     // Calculate height in meters: distance between two points at min/max latitude
     // and the average longitude (longitude doesn't affect vertical distance much)
     const heightMeters = calculateDistanceInMeters(
         { lat: minLat, lon: centerLon },
         { lat: maxLat, lon: centerLon }
-    );
+    )
 
     const longestDimensionMeters = Math.max(widthMeters, heightMeters).toFixed()
 
@@ -154,9 +154,9 @@ function getSimpleCentroid(points: number[][] | undefined | null) {
         center: { lat: centerLat, lon: centerLon },
         longestDimension: longestDimensionMeters,
         zoom: zoom,
-    };
+    }
 }
 
 export {
     getSimpleCentroid
-};
+}

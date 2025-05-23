@@ -1,24 +1,24 @@
-import { colors } from "@/const/color";
-import { useTheme } from "@/context/ThemeContext";
-import { inputStyles } from "@/src/styles/InputStyles";
-import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
-import { styles } from "@/src/styles/Styles";
-import { EditableTravelRouteModalProp } from "@/src/types/EditableTravels";
-import { useMemo } from "react";
-import { Modal, Pressable, Text, TextInput, View } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome6';
-import FlatlistPicker from "../FlatlistPicker";
+import { colors } from "@/const/color"
+import { useTheme } from "@/context/ThemeContext"
+import { inputStyles } from "@/src/styles/InputStyles"
+import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
+import { styles } from "@/src/styles/Styles"
+import { EditableTravelRouteModalProp } from "@/src/types/EditableTravels"
+import { useMemo } from "react"
+import { Modal, Pressable, Text, TextInput, View } from "react-native"
+import Icon from 'react-native-vector-icons/FontAwesome6'
+import FlatlistPicker from "../FlatlistPicker"
 
 export default function EditTravelRouteModal({ routes, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelRouteModalProp) {
     const { theme } = useTheme()
 
     const filteredItems = useMemo(() => {
-        if (!routes) return [];
-        const query = searchQuery.toLowerCase();
+        if (!routes) return []
+        const query = searchQuery.toLowerCase()
         return routes.filter(route =>
             route.name.toLowerCase().includes(query) || route.code.toLowerCase().includes(query)
-        );
-    }, [routes, searchQuery]);
+        )
+    }, [routes, searchQuery])
 
     return (
         <Modal

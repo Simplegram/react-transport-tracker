@@ -45,8 +45,8 @@ const Login = () => {
                 error.message
             )
         } catch (err: any) {
-            console.error("An unexpected error during sign-in:", err);
-            Alert.alert('Supabase URL or Anon Key missing', 'The Supabase client could not be initialized with missing Supabase URL or Anon Key');
+            console.error("An unexpected error during sign-in:", err)
+            Alert.alert('Supabase URL or Anon Key missing', 'The Supabase client could not be initialized with missing Supabase URL or Anon Key')
         } finally {
             setLoading(false)
         }

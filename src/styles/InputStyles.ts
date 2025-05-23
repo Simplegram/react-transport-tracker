@@ -1,5 +1,5 @@
-import { colors } from "@/const/color";
-import { Platform, StyleSheet } from "react-native";
+import { colors } from "@/const/color"
+import { Platform, StyleSheet } from "react-native"
 
 const lightInputElementStyles = StyleSheet.create({
     inputContainer: {
@@ -187,5 +187,5 @@ const iconPickerStyles = {
 
 export {
     iconPickerStyles, inputElementStyles, inputStyles
-};
+}
 

@@ -1,7 +1,7 @@
-import { useTheme } from "@/context/ThemeContext";
-import { flatlistStyles } from "@/src/styles/ModalStyles";
-import React from "react";
-import { FlatList, TouchableOpacity } from "react-native";
+import { useTheme } from "@/context/ThemeContext"
+import { flatlistStyles } from "@/src/styles/ModalStyles"
+import React from "react"
+import { FlatList, TouchableOpacity } from "react-native"
 
 interface FlatlistPickerProps {
     items: any[]

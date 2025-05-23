@@ -1,22 +1,22 @@
-import { colors } from "@/const/color";
-import { useTheme } from "@/context/ThemeContext";
-import { inputStyles } from "@/src/styles/InputStyles";
-import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
-import { EditableTravelDirectionModalProp } from "@/src/types/EditableTravels";
-import { useMemo } from "react";
-import { Modal, Pressable, Text, TextInput, View } from "react-native";
-import FlatlistPicker from "../FlatlistPicker";
+import { colors } from "@/const/color"
+import { useTheme } from "@/context/ThemeContext"
+import { inputStyles } from "@/src/styles/InputStyles"
+import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
+import { EditableTravelDirectionModalProp } from "@/src/types/EditableTravels"
+import { useMemo } from "react"
+import { Modal, Pressable, Text, TextInput, View } from "react-native"
+import FlatlistPicker from "../FlatlistPicker"
 
 export default function EditTravelDirectionModal({ directions, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelDirectionModalProp) {
     const { theme } = useTheme()
 
     const filteredItems = useMemo(() => {
-        if (!directions) return [];
-        const query = searchQuery.toLowerCase();
+        if (!directions) return []
+        const query = searchQuery.toLowerCase()
         return directions.filter(direction =>
             direction.name.toLowerCase().includes(query)
-        );
-    }, [directions, searchQuery]);
+        )
+    }, [directions, searchQuery])
 
     return (
         <Modal

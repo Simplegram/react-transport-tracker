@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext } from "react"
 
 export const ScrollContext = createContext<boolean>(false)
 
@@ -10,11 +10,11 @@ interface ModalContextValue {
 export const ModalContext = createContext<ModalContextValue | undefined>(undefined)
 
 export function useModalContext() {
-    const modalData = useContext(ModalContext);
+    const modalData = useContext(ModalContext)
 
     if (modalData === undefined) {
-        throw new Error('useTravelContext must be used within a TravelProvider');
+        throw new Error('useTravelContext must be used within a TravelProvider')
     }
 
-    return modalData;
+    return modalData
 }

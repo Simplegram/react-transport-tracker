@@ -1,36 +1,36 @@
-import AnnotationContent from '@/components/AnnotationContent';
-import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
-import LoadingScreen from '@/components/LoadingScreen';
-import { useTravelContext } from '@/context/PageContext';
-import { useTheme } from '@/context/ThemeContext';
-import useGetTravelData from '@/hooks/useGetTravelData';
-import { travelDetailStyles } from '@/src/styles/TravelDetailStyles';
-import { DataItem } from '@/src/types/Travels';
-import { getSimpleCentroid } from '@/src/utils/mapUtils';
-import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native';
-import { useFocusEffect } from 'expo-router';
-import React, { useEffect, useState } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import AnnotationContent from '@/components/AnnotationContent'
+import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
+import LoadingScreen from '@/components/LoadingScreen'
+import { useTravelContext } from '@/context/PageContext'
+import { useTheme } from '@/context/ThemeContext'
+import useGetTravelData from '@/hooks/useGetTravelData'
+import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
+import { DataItem } from '@/src/types/Travels'
+import { getSimpleCentroid } from '@/src/utils/mapUtils'
+import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
+import { useFocusEffect } from 'expo-router'
+import React, { useEffect, useState } from 'react'
+import { Dimensions, StyleSheet, Text, View } from 'react-native'
 
 const { width: screenWidth } = Dimensions.get("screen")
 
 const formatDurationMinutes = (milliseconds: number): string => {
     if (isNaN(milliseconds) || milliseconds < 0) {
-        return 'N/A';
+        return 'N/A'
     }
-    const minutes = Math.floor(milliseconds / (1000 * 60));
-    return `${minutes} mins`;
-};
+    const minutes = Math.floor(milliseconds / (1000 * 60))
+    return `${minutes} mins`
+}
 
 const formatDurationHoursMinutes = (milliseconds: number): string => {
     if (isNaN(milliseconds) || milliseconds < 0) {
-        return 'N/A';
+        return 'N/A'
     }
-    const totalMinutes = Math.floor(milliseconds / (1000 * 60));
-    const hours = Math.floor(totalMinutes / 60);
-    const minutes = totalMinutes % 60;
-    return `${hours}h ${minutes}m / ${totalMinutes}m`;
-};
+    const totalMinutes = Math.floor(milliseconds / (1000 * 60))
+    const hours = Math.floor(totalMinutes / 60)
+    const minutes = totalMinutes % 60
+    return `${hours}h ${minutes}m / ${totalMinutes}m`
+}
 
 export default function TravelDetail() {
     const { theme } = useTheme()
@@ -71,21 +71,21 @@ export default function TravelDetail() {
     )
 
     const sortedData = [...dataToUse].sort((a, b) => {
-        const dateAInitialArrival = a.bus_initial_arrival ? new Date(a.bus_initial_arrival).getTime() : null;
-        const dateBInitialArrival = b.bus_initial_arrival ? new Date(b.bus_initial_arrival).getTime() : null;
+        const dateAInitialArrival = a.bus_initial_arrival ? new Date(a.bus_initial_arrival).getTime() : null
+        const dateBInitialArrival = b.bus_initial_arrival ? new Date(b.bus_initial_arrival).getTime() : null
 
         if (dateAInitialArrival !== null && dateBInitialArrival !== null) {
-            return dateAInitialArrival - dateBInitialArrival;
+            return dateAInitialArrival - dateBInitialArrival
         }
 
-        const dateACreatedAt = new Date(a.created_at).getTime();
-        const dateBCreatedAt = new Date(b.created_at).getTime();
+        const dateACreatedAt = new Date(a.created_at).getTime()
+        const dateBCreatedAt = new Date(b.created_at).getTime()
 
-        return dateACreatedAt - dateBCreatedAt;
-    });
+        return dateACreatedAt - dateBCreatedAt
+    })
 
     const stopLatLon = sortedData.flatMap(travel => {
-        const coords = [];
+        const coords = []
 
         if (travel.first_stop_id && travel.first_stop_id.lat && travel.first_stop_id.lon) {
             coords.push(
@@ -96,7 +96,7 @@ export default function TravelDetail() {
                     coords: [travel.first_stop_id.lon, travel.first_stop_id.lat],
                     time: travel.bus_initial_arrival || null
                 }
-            );
+            )
         }
 
         if (travel.last_stop_id && travel.last_stop_id.lat && travel.last_stop_id.lon) {
@@ -108,11 +108,11 @@ export default function TravelDetail() {
                     coords: [travel.last_stop_id.lon, travel.last_stop_id.lat],
                     time: travel.bus_final_arrival || null
                 }
-            );
+            )
         }
 
-        return coords;
-    });
+        return coords
+    })
 
     const lapLatLon = travelLaps
         ?.filter(lap => lap.stop_id !== null && lap.stop_id.lon && lap.stop_id.lat)
@@ -124,108 +124,108 @@ export default function TravelDetail() {
                 coords: [lap.stop_id.lon, lap.stop_id.lat],
                 time: lap.time,
             }
-        )) || [];
+        )) || []
 
-    const fullLatLon = [...stopLatLon, ...lapLatLon];
+    const fullLatLon = [...stopLatLon, ...lapLatLon]
 
     const validCoords = fullLatLon
         .map(data => data?.coords)
-        .filter((coords): coords is number[] => coords !== undefined && coords !== null);
+        .filter((coords): coords is number[] => coords !== undefined && coords !== null)
 
-    const centerLatLon = getSimpleCentroid(validCoords);
+    const centerLatLon = getSimpleCentroid(validCoords)
 
-    let totalOnRoadMilliseconds = 0;
-    let earliestStartMillis: number | null = null;
-    let latestEndMillis: number | null = null;
-    let validTripCount = 0;
-    let sumInitialStopDurationMilliseconds = 0;
-    let uniqueVehicles = new Set<string>();
-    let uniqueRoutes = new Set<string>();
-    let uniqueOrigins = new Set<string>();
-    let uniqueDestinations = new Set<string>();
-    let tripsByType: { [key: string]: number } = {};
+    let totalOnRoadMilliseconds = 0
+    let earliestStartMillis: number | null = null
+    let latestEndMillis: number | null = null
+    let validTripCount = 0
+    let sumInitialStopDurationMilliseconds = 0
+    let uniqueVehicles = new Set<string>()
+    let uniqueRoutes = new Set<string>()
+    let uniqueOrigins = new Set<string>()
+    let uniqueDestinations = new Set<string>()
+    let tripsByType: { [key: string]: number } = {}
 
 
     sortedData.forEach(trip => {
         try {
-            const initialArrivalDate = new Date(trip.bus_initial_arrival);
-            const departureDate = new Date(trip.bus_initial_departure);
-            const finalArrivalDate = new Date(trip.bus_final_arrival);
+            const initialArrivalDate = new Date(trip.bus_initial_arrival)
+            const departureDate = new Date(trip.bus_initial_departure)
+            const finalArrivalDate = new Date(trip.bus_final_arrival)
 
-            const initialArrivalValid = !isNaN(initialArrivalDate.getTime());
-            const departureValid = !isNaN(departureDate.getTime());
-            const finalArrivalValid = !isNaN(finalArrivalDate.getTime());
+            const initialArrivalValid = !isNaN(initialArrivalDate.getTime())
+            const departureValid = !isNaN(departureDate.getTime())
+            const finalArrivalValid = !isNaN(finalArrivalDate.getTime())
 
             if (departureValid && finalArrivalValid) {
                 if (finalArrivalDate.getTime() >= departureDate.getTime()) {
-                    totalOnRoadMilliseconds += finalArrivalDate.getTime() - departureDate.getTime();
-                    validTripCount++;
+                    totalOnRoadMilliseconds += finalArrivalDate.getTime() - departureDate.getTime()
+                    validTripCount++
 
                     if (earliestStartMillis === null || departureDate.getTime() < earliestStartMillis) {
-                        earliestStartMillis = departureDate.getTime();
+                        earliestStartMillis = departureDate.getTime()
                     }
 
                     if (latestEndMillis === null || finalArrivalDate.getTime() > latestEndMillis) {
-                        latestEndMillis = finalArrivalDate.getTime();
+                        latestEndMillis = finalArrivalDate.getTime()
                     }
 
                 } else {
-                    console.warn(`Trip ID ${trip.id}: Final arrival (${trip.bus_final_arrival}) is before initial departure (${trip.bus_initial_departure}). Excluding from duration calcs.`);
+                    console.warn(`Trip ID ${trip.id}: Final arrival (${trip.bus_final_arrival}) is before initial departure (${trip.bus_initial_departure}). Excluding from duration calcs.`)
                 }
             } else {
-                console.warn(`Trip ID ${trip.id}: Invalid departure or final arrival date.`);
+                console.warn(`Trip ID ${trip.id}: Invalid departure or final arrival date.`)
             }
 
 
             if (initialArrivalValid && departureValid) {
                 if (departureDate.getTime() >= initialArrivalDate.getTime()) {
-                    sumInitialStopDurationMilliseconds += departureDate.getTime() - initialArrivalDate.getTime();
+                    sumInitialStopDurationMilliseconds += departureDate.getTime() - initialArrivalDate.getTime()
                 } else {
-                    console.warn(`Trip ID ${trip.id}: Initial departure (${trip.bus_initial_departure}) is before initial arrival (${trip.bus_initial_arrival}). Excluding from initial stop duration calc.`);
+                    console.warn(`Trip ID ${trip.id}: Initial departure (${trip.bus_initial_departure}) is before initial arrival (${trip.bus_initial_arrival}). Excluding from initial stop duration calc.`)
                 }
             } else {
-                console.warn(`Trip ID ${trip.id}: Invalid initial arrival or departure date for stop time calc.`);
+                console.warn(`Trip ID ${trip.id}: Invalid initial arrival or departure date for stop time calc.`)
             }
 
 
             if (trip.vehicle_code) {
-                uniqueVehicles.add(trip.vehicle_code);
+                uniqueVehicles.add(trip.vehicle_code)
             }
             if (trip.routes?.name) {
-                uniqueRoutes.add(trip.routes.name);
+                uniqueRoutes.add(trip.routes.name)
             }
             if (trip.first_stop_id?.name) {
-                uniqueOrigins.add(trip.first_stop_id.name);
+                uniqueOrigins.add(trip.first_stop_id.name)
             }
             if (trip.last_stop_id?.name) {
-                uniqueDestinations.add(trip.last_stop_id.name);
+                uniqueDestinations.add(trip.last_stop_id.name)
             }
 
             if (trip.types?.name) {
-                tripsByType[trip.types.name] = (tripsByType[trip.types.name] || 0) + 1;
+                tripsByType[trip.types.name] = (tripsByType[trip.types.name] || 0) + 1
             }
 
 
         } catch (error) {
-            console.error(`Error processing trip ID ${trip.id || 'unknown'}:`, error);
+            console.error(`Error processing trip ID ${trip.id || 'unknown'}:`, error)
         }
-    });
+    })
 
 
-    let totalCalendarSpanMilliseconds = 0;
+    let totalCalendarSpanMilliseconds = 0
     if (earliestStartMillis !== null && latestEndMillis !== null && latestEndMillis > earliestStartMillis) {
-        totalCalendarSpanMilliseconds = latestEndMillis - earliestStartMillis;
+        totalCalendarSpanMilliseconds = latestEndMillis - earliestStartMillis
     }
 
-    let efficiencyPercentage = 0;
+    let efficiencyPercentage = 0
     if (totalCalendarSpanMilliseconds > 0) {
-        efficiencyPercentage = (totalOnRoadMilliseconds / totalCalendarSpanMilliseconds) * 100;
+        efficiencyPercentage = (totalOnRoadMilliseconds / totalCalendarSpanMilliseconds) * 100
     }
 
-    const uniqueVehiclesList = [...uniqueVehicles.values()];
-    const uniqueRoutesList = [...uniqueRoutes.values()];
-    const uniqueOriginsList = [...uniqueOrigins.values()];
-    const uniqueDestinationsList = [...uniqueDestinations.values()];
+    const uniqueVehiclesList = [...uniqueVehicles.values()]
+    const uniqueRoutesList = [...uniqueRoutes.values()]
+    const uniqueOriginsList = [...uniqueOrigins.values()]
+    const uniqueDestinationsList = [...uniqueDestinations.values()]
 
     return (
         <CollapsibleHeaderPage>
@@ -256,27 +256,27 @@ export default function TravelDetail() {
                         <Text style={travelDetailStyles[theme].cardTitle}>Individual Trip Durations</Text>
                         {sortedData.sort(data => data.id).map((trip) => {
                             try {
-                                const departureDate = new Date(trip.bus_initial_departure);
-                                const finalArrivalDate = new Date(trip.bus_final_arrival);
-                                const durationMillis = finalArrivalDate.getTime() - departureDate.getTime();
-                                const durationString = formatDurationHoursMinutes(durationMillis);
+                                const departureDate = new Date(trip.bus_initial_departure)
+                                const finalArrivalDate = new Date(trip.bus_final_arrival)
+                                const durationMillis = finalArrivalDate.getTime() - departureDate.getTime()
+                                const durationString = formatDurationHoursMinutes(durationMillis)
 
-                                const tripIdentifier = `${trip.vehicle_code || 'N/A'} - ${trip.routes?.name || 'N/A'}`;
+                                const tripIdentifier = `${trip.vehicle_code || 'N/A'} - ${trip.routes?.name || 'N/A'}`
 
                                 return (
                                     <View key={trip.id} style={travelDetailStyles[theme].detailRow}>
                                         <Text style={travelDetailStyles[theme].label}>{tripIdentifier}:</Text>
                                         <Text style={travelDetailStyles[theme].valueText}>{durationString}</Text>
                                     </View>
-                                );
+                                )
                             } catch (error) {
-                                console.error(`Error calculating duration for trip ID ${trip.id || 'unknown'}:`, error);
+                                console.error(`Error calculating duration for trip ID ${trip.id || 'unknown'}:`, error)
                                 return (
                                     <View key={trip.id} style={travelDetailStyles[theme].detailRow}>
                                         <Text style={travelDetailStyles[theme].label}>Trip ID {trip.id || 'N/A'} Duration:</Text>
                                         <Text style={travelDetailStyles[theme].valueText}>Calculation Error</Text>
                                     </View>
-                                );
+                                )
                             }
                         })}
                     </View>
@@ -393,7 +393,7 @@ export default function TravelDetail() {
                 )}
             </View>
         </CollapsibleHeaderPage>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -454,4 +454,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#007bff',
     },
-});
+})

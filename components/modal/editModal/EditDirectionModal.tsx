@@ -21,12 +21,12 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
 
     const handleOnSubmit = () => {
         if (!direction.name?.trim()) {
-            Alert.alert('Input Required', 'Please enter a direction name');
+            Alert.alert('Input Required', 'Please enter a direction name')
             return
         }
 
-        onSubmit(direction);
-    };
+        onSubmit(direction)
+    }
 
     return (
         <View>

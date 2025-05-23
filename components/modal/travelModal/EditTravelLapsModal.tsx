@@ -1,14 +1,14 @@
-import Button from '@/components/BaseButton';
-import { colors } from '@/const/color';
-import { useTheme } from '@/context/ThemeContext';
-import useStopModal from '@/hooks/useStopModal';
-import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputElementStyles } from '@/src/styles/InputStyles';
-import { modalStyles } from '@/src/styles/ModalStyles';
-import { AddableLap } from '@/src/types/AddableTravels';
-import { EditableLap, EditableLapsModalProp } from '@/src/types/EditableTravels';
-import { formatLapTimeDisplay } from '@/src/utils/utils';
-import React, { useEffect, useState } from 'react';
+import Button from '@/components/BaseButton'
+import { colors } from '@/const/color'
+import { useTheme } from '@/context/ThemeContext'
+import useStopModal from '@/hooks/useStopModal'
+import { buttonStyles } from '@/src/styles/ButtonStyles'
+import { inputElementStyles } from '@/src/styles/InputStyles'
+import { modalStyles } from '@/src/styles/ModalStyles'
+import { AddableLap } from '@/src/types/AddableTravels'
+import { EditableLap, EditableLapsModalProp } from '@/src/types/EditableTravels'
+import { formatLapTimeDisplay } from '@/src/utils/utils'
+import React, { useEffect, useState } from 'react'
 import {
     Modal,
     Pressable,
@@ -16,9 +16,9 @@ import {
     StyleSheet,
     Text,
     View,
-} from 'react-native';
-import AddLapModal from '../addModal/AddLapModal';
-import EditLapModal from '../editModal/EditLapModal';
+} from 'react-native'
+import AddLapModal from '../addModal/AddLapModal'
+import EditLapModal from '../editModal/EditLapModal'
 
 export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { theme } = useTheme()
@@ -27,20 +27,20 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
         showStopModal: showLapModal,
         openStopModal: openLapModal,
         closeStopModal: closeLapModal
-    } = useStopModal();
+    } = useStopModal()
 
     const {
         showStopModal: showEditLapModal,
         openStopModal: openEditLapModal,
         closeStopModal: closeEditLapModal
-    } = useStopModal();
+    } = useStopModal()
 
     const [laps, setLaps] = useState<EditableLap[]>([])
     const [selectedLap, setSelectedLap] = useState<EditableLap | undefined>(undefined)
 
     const handleOnSubmit = () => {
-        onSelect(laps);
-    };
+        onSelect(laps)
+    }
 
     const handleLapSelect = (lap: EditableLap) => {
         setSelectedLap(lap)
@@ -56,10 +56,10 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
     const handleLapEdit = (lap: EditableLap) => {
         const updatedLaps = laps.map(item => {
             if (item.id === lap.id) {
-                return lap;
+                return lap
             }
-            return item;
-        });
+            return item
+        })
 
         setLaps(updatedLaps)
         closeEditLapModal()
@@ -132,7 +132,7 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                 />
             </View>
         </Modal>
-    );
+    )
 };
 
 const lightStyles = StyleSheet.create({

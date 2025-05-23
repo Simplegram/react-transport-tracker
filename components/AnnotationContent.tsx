@@ -1,8 +1,8 @@
-import { Stop, VehicleType } from "@/src/types/Travels";
-import moment from "moment";
-import { useState } from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import { Stop, VehicleType } from "@/src/types/Travels"
+import moment from "moment"
+import { useState } from "react"
+import { StyleSheet, Text, TouchableOpacity } from "react-native"
+import Icon from 'react-native-vector-icons/FontAwesome6'
 
 interface AnnotationContentProps {
     fullVehicleTypes: VehicleType[]
@@ -45,7 +45,7 @@ export default function AnnotationContent({ fullVehicleTypes, data_id, title, st
                 </TouchableOpacity>
             )}
         </TouchableOpacity>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -67,4 +67,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         flexWrap: 'wrap'
     },
-});
+})

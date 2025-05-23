@@ -1,18 +1,18 @@
-import { useTheme } from "@/context/ThemeContext";
-import { calendarStyles, calendarTheme } from "@/src/styles/CalendarStyles";
-import { StandaloneModalProp } from "@/src/types/AddableTravels";
-import { getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils";
-import { useState } from "react";
-import { Modal, Text, TouchableOpacity, View } from "react-native";
-import { CalendarList } from "react-native-calendars";
+import { useTheme } from "@/context/ThemeContext"
+import { calendarStyles, calendarTheme } from "@/src/styles/CalendarStyles"
+import { StandaloneModalProp } from "@/src/types/AddableTravels"
+import { getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils"
+import { useState } from "react"
+import { Modal, Text, TouchableOpacity, View } from "react-native"
+import { CalendarList } from "react-native-calendars"
 
 interface CalendarModalProps {
     dates: any
     markedDates: {
         [date: string]: {
-            [key: string]: any;
-        };
-    };
+            [key: string]: any
+        }
+    }
     currentSelectedDate: string
     modalElements: StandaloneModalProp
 }
@@ -20,9 +20,9 @@ interface CalendarModalProps {
 export default function CalendarModal({ dates, markedDates, currentSelectedDate, modalElements }: CalendarModalProps) {
     const { theme } = useTheme()
 
-    const pastScrollRange = getMonthsSinceEarliestDate(dates);
-    const futureScrollRange = getFutureMonthFromLatestDate(dates, 1);
-    const [currentDate] = useState(new Date().toISOString().split('T')[0]);
+    const pastScrollRange = getMonthsSinceEarliestDate(dates)
+    const futureScrollRange = getFutureMonthFromLatestDate(dates, 1)
+    const [currentDate] = useState(new Date().toISOString().split('T')[0])
 
     return (
         <Modal

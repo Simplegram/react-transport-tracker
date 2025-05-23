@@ -1,6 +1,6 @@
-import { useTheme } from '@/context/ThemeContext';
-import { loadingStyles } from '@/src/styles/LoadingScreenStyles';
-import React from 'react';
+import { useTheme } from '@/context/ThemeContext'
+import { loadingStyles } from '@/src/styles/LoadingScreenStyles'
+import React from 'react'
 import {
     ActivityIndicator,
     Dimensions,
@@ -8,7 +8,7 @@ import {
     StyleSheet,
     Text,
     View
-} from 'react-native';
+} from 'react-native'
 
 type Props = {
     text?: String
@@ -26,10 +26,10 @@ export default function LoadingScreen({ text = "Loading..." }: Props) {
                 </View>
             </View>
         </Modal>
-    );
+    )
 };
 
-const { width, height } = Dimensions.get('window'); // Get window width for responsive cards
+const { width, height } = Dimensions.get('window') // Get window width for responsive cards
 const styles = StyleSheet.create({
     modalOverlay: {
         width: width,
@@ -51,4 +51,4 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: "bold",
     },
-});
+})

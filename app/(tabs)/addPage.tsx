@@ -1,17 +1,17 @@
-import Button from '@/components/BaseButton';
-import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
-import Divider from '@/components/Divider';
-import { useAuth } from '@/context/AuthContext';
-import { useTravelContext } from '@/context/PageContext';
-import { useTheme } from '@/context/ThemeContext';
-import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { router } from 'expo-router';
-import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import Button from '@/components/BaseButton'
+import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
+import Divider from '@/components/Divider'
+import { useAuth } from '@/context/AuthContext'
+import { useTravelContext } from '@/context/PageContext'
+import { useTheme } from '@/context/ThemeContext'
+import { buttonStyles } from '@/src/styles/ButtonStyles'
+import { router } from 'expo-router'
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
 
 interface ButtonConfig {
     id: string
-    text: string;
+    text: string
 }
 
 const navigationButtons: ButtonConfig[] = [
@@ -35,7 +35,7 @@ const navigationButtons: ButtonConfig[] = [
         id: 'Icons',
         text: 'Manage icons',
     },
-];
+]
 
 
 const NavigationPage: React.FC = () => {
@@ -46,15 +46,15 @@ const NavigationPage: React.FC = () => {
 
     const handleItemPress = (selectedModification: string) => {
         if (selectedModification) {
-            setSelectedModification(selectedModification);
-            router.push("/(tabs)/dataList");
+            setSelectedModification(selectedModification)
+            router.push("/(tabs)/dataList")
         }
-    };
+    }
 
     const handleLogout = () => {
         signOut()
-        router.push("/");
-    };
+        router.push("/")
+    }
 
     const handleThemeChange = () => {
         if (theme === 'light') setTheme('dark')
@@ -93,8 +93,8 @@ const NavigationPage: React.FC = () => {
                 >Logout</Button>
             </View>
         </CollapsibleHeaderPage>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     container: {
@@ -109,6 +109,6 @@ const styles = StyleSheet.create({
     buttonContainer: {
         gap: 10,
     },
-});
+})
 
-export default NavigationPage;
+export default NavigationPage

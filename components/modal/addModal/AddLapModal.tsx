@@ -1,15 +1,15 @@
-import Button from '@/components/BaseButton';
-import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker';
-import { colors } from '@/const/color';
-import { useTheme } from '@/context/ThemeContext';
-import useStopModal from '@/hooks/useStopModal';
-import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
-import { modalStyles } from '@/src/styles/ModalStyles';
-import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels';
-import { formatDateForDisplay } from '@/src/utils/utils';
-import moment from 'moment-timezone';
-import React, { useState } from 'react';
+import Button from '@/components/BaseButton'
+import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
+import { colors } from '@/const/color'
+import { useTheme } from '@/context/ThemeContext'
+import useStopModal from '@/hooks/useStopModal'
+import { buttonStyles } from '@/src/styles/ButtonStyles'
+import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
+import { modalStyles } from '@/src/styles/ModalStyles'
+import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
+import { formatDateForDisplay } from '@/src/utils/utils'
+import moment from 'moment-timezone'
+import React, { useState } from 'react'
 import {
     Alert,
     Modal,
@@ -17,8 +17,8 @@ import {
     Text,
     TextInput,
     View
-} from 'react-native';
-import EditTravelStopModal from '../travelModal/EditTravelStopModal';
+} from 'react-native'
+import EditTravelStopModal from '../travelModal/EditTravelStopModal'
 
 export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { theme } = useTheme()
@@ -29,11 +29,11 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
         setStopSearchQuery,
         openStopModal,
         closeStopModal
-    } = useStopModal();
+    } = useStopModal()
 
     const [lap, setLap] = useState<AddableLap>({ time: undefined, stop_id: null, note: null })
 
-    const [showDatetimePicker, setShowDatetimePicker] = useState(false);
+    const [showDatetimePicker, setShowDatetimePicker] = useState(false)
 
     const handleCustomDateConfirm = (selectedDate: Date) => {
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
@@ -41,21 +41,21 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
         setLap({ ...lap, time: isoSelectedDate })
 
         setShowDatetimePicker(false)
-    };
+    }
 
     const handleStopSelect = (stopId: number) => {
         setLap({ ...lap, stop_id: stopId })
-        closeStopModal();
-    };
+        closeStopModal()
+    }
 
     const handleOnSubmit = () => {
         if (!lap.time) {
-            Alert.alert('Input Required', 'Please select time');
+            Alert.alert('Input Required', 'Please select time')
             return
         }
 
-        onSelect(lap);
-    };
+        onSelect(lap)
+    }
 
     return (
         <Modal
@@ -130,5 +130,5 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                 )}
             </Pressable>
         </Modal>
-    );
-};
+    )
+}

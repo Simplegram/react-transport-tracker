@@ -1,5 +1,5 @@
-import { colors } from "@/const/color";
-import { StyleSheet } from "react-native";
+import { colors } from "@/const/color"
+import { StyleSheet } from "react-native"
 
 const lightFlatlistStyles = StyleSheet.create({
     item: {
@@ -152,5 +152,5 @@ export {
     flatlistStyles,
     modalElementStyles,
     modalStyles
-};
+}
 
