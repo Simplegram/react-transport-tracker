@@ -1,9 +1,9 @@
 import Button from '@/components/BaseButton';
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
 import Divider from '@/components/Divider';
+import { useAuth } from '@/context/AuthContext';
 import { useTravelContext } from '@/context/PageContext';
 import { useTheme } from '@/context/ThemeContext';
-import { useAuth } from '@/provider/AuthProvider';
 import { buttonStyles } from '@/src/styles/ButtonStyles';
 import { router } from 'expo-router';
 import React from 'react';

@@ -1,6 +1,6 @@
+import { AuthProvider, useAuth } from '@/context/AuthContext'
 import { SupabaseProvider } from '@/context/SupabaseContext'
 import { ThemeProvider } from '@/context/ThemeContext'
-import { AuthProvider, useAuth } from '@/provider/AuthProvider'
 import { Slot, useRouter, useSegments } from 'expo-router'
 import { useEffect } from 'react'
 
