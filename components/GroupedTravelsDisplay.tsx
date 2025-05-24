@@ -15,9 +15,10 @@ import { Pressable, StyleSheet, Text, View } from 'react-native'
 interface GroupedDataDisplayProps {
     data: Record<string, DataItemWithNewKey[]>
     currentDate: string
+    refetch: () => void
 }
 
-export default function GroupedDataDisplay({ data: finalGroupedData, currentDate }: GroupedDataDisplayProps) {
+export default function GroupedDataDisplay({ data: finalGroupedData, currentDate, refetch }: GroupedDataDisplayProps) {
     const { theme } = useTheme()
 
     const { setSelectedItem, setSelectedTravelItems } = useTravelContext()
@@ -69,6 +70,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                     items={finalGroupedData[directionNameKey]}
                                     directionNameKey={directionNameKey}
                                     onPress={handleItemPress}
+                                    refetch={refetch}
                                 />
                             </View>
                             {directionNames.length > 1 && (
