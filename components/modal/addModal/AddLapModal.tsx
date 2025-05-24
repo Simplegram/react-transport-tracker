@@ -64,7 +64,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
             animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose}>
+            <Pressable style={modalStyles[theme].modalBackdrop}>
                 {!stops ? (
                     <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
                 ) : (

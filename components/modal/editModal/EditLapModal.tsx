@@ -98,7 +98,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
             {!lap ? (
                 <LoadingScreen></LoadingScreen>
             ) : (
-                <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose}>
+                <Pressable style={modalStyles[theme].modalBackdrop}>
                     <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].insideLabel}>Time:</Text>
