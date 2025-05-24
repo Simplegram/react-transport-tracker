@@ -12,25 +12,27 @@ interface MapDisplayProps {
     mapRef: React.MutableRefObject<null>
     zoomLevel: number
     centerCoordinate: number[]
+    draggable?: boolean
 }
 
-export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate }: MapDisplayProps) {
+export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, draggable = true }: MapDisplayProps) {
     const { theme } = useTheme()
 
     return (
-        <View style={[inputElementStyles[theme].inputGroup, { flex: 1 }]}>
+        <View style={[inputElementStyles[theme].inputGroup, styles.mapContainer]}>
             <MapView
                 ref={mapRef}
                 style={{ flex: 1 }}
                 rotateEnabled={false}
                 mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
+                scrollEnabled={draggable}
             >
                 <Camera
                     zoomLevel={zoomLevel}
                     centerCoordinate={centerCoordinate}
                 />
             </MapView>
-            <View style={styles.container}>
+            <View style={styles.pointContainer}>
                 <View style={styles.point} />
             </View>
         </View>
@@ -38,7 +40,12 @@ export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate }: MapD
 }
 
 const styles = StyleSheet.create({
-    container: {
+    mapContainer: {
+        flex: 1,
+        borderRadius: 12,
+        overflow: 'hidden',
+    },
+    pointContainer: {
         position: 'absolute',
         top: 0,
         left: 0,

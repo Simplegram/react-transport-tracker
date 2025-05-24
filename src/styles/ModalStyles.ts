@@ -84,7 +84,7 @@ const lightModalStyles = StyleSheet.create({
         gap: 10,
     },
     lapModalContainer: {
-        height: 425
+        maxHeight: 600
     },
     coordModalContainer: {
         height: 475

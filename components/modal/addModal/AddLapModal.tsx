@@ -1,15 +1,19 @@
 import Button from '@/components/BaseButton'
+import Divider from '@/components/Divider'
+import MapDisplay from '@/components/MapDisplay'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import { colors } from '@/const/color'
 import { useTheme } from '@/context/ThemeContext'
+import useLocation from '@/hooks/useLocation'
 import useStopModal from '@/hooks/useStopModal'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
 import { formatDateForDisplay, formatLapTimeDisplay } from '@/src/utils/utils'
+import { useFocusEffect } from '@react-navigation/native'
 import moment from 'moment-timezone'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
     Alert,
     Modal,
@@ -19,7 +23,6 @@ import {
     View
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
-import { useFocusEffect } from '@react-navigation/native'
 
 export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { theme } = useTheme()
@@ -32,16 +35,36 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
         closeStopModal
     } = useStopModal()
 
-    const [lap, setLap] = useState<AddableLap>({ time: undefined, stop_id: null, note: null })
+    const { location } = useLocation()
+
+    const mapRef = useRef(null)
+
+    const [lap, setLap] = useState<AddableLap>({ time: undefined, lat: null, lon: null, stop_id: null, note: null })
 
     const [showDatetimePicker, setShowDatetimePicker] = useState(false)
+
+    const [centerCoordinate, setCenterCoordinate] = useState<number[]>([0, 0])
+
+    useEffect(() => {
+        if (location) setCenterCoordinate([location.coords.longitude, location.coords.latitude])
+    }, [location])
 
     useFocusEffect(
         React.useCallback(() => {
             const currentTime = new Date().toISOString()
             const formattedTime = formatLapTimeDisplay(currentTime)
 
-            setLap({ ...lap, time: formattedTime })
+            setLap({ ...lap, time: formattedTime, stop_id: null, note: null })
+
+            if (location) {
+                setLap({ ...lap, lon: location.coords.longitude, lat: location.coords.latitude, stop_id: null })
+                setCenterCoordinate([location.coords.longitude, location.coords.latitude])
+            }
+
+            return () => {
+                setCenterCoordinate([0, 0])
+                setLap({ ...lap, time: formattedTime, stop_id: null, note: null })
+            }
         }, [isModalVisible])
     )
 
@@ -55,6 +78,13 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
     const handleStopSelect = (stopId: number) => {
         setLap({ ...lap, stop_id: stopId })
+
+        const stop = stops.find(stop => stop.id === stopId)
+        if (stop && stop.lat && stop.lon) {
+            setLap({ ...lap, lon: stop.lon, lat: stop.lat, stop_id: stopId })
+            setCenterCoordinate([stop.lon, stop.lat])
+        }
+
         closeStopModal()
     }
 
@@ -63,6 +93,8 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
             Alert.alert('Input Required', 'Please select time')
             return
         }
+
+        console.log(lap)
 
         onSelect(lap)
     }
@@ -98,14 +130,14 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 </Pressable>
                             </View>
 
-                            {showDatetimePicker && (
-                                <CustomDateTimePicker
-                                    visible={showDatetimePicker}
-                                    initialDateTime={new Date()}
-                                    onClose={() => setShowDatetimePicker(false)}
-                                    onConfirm={handleCustomDateConfirm}
+                            <View style={[inputElementStyles[theme].inputGroup, { height: 160 }]}>
+                                <MapDisplay
+                                    mapRef={mapRef}
+                                    zoomLevel={15}
+                                    centerCoordinate={centerCoordinate}
+                                    draggable={false}
                                 />
-                            )}
+                            </View>
 
                             <View style={inputElementStyles[theme].inputGroup}>
                                 <Text style={inputElementStyles[theme].inputLabel}>Note:</Text>
@@ -122,6 +154,8 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 />
                             </View>
 
+                            <Divider />
+
                             <View style={buttonStyles[theme].buttonRow}>
                                 <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
                                 <Button title='Add Lap' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
@@ -136,6 +170,15 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                             onSelect={handleStopSelect}
                             onClose={closeStopModal}
                         />
+
+                        {showDatetimePicker && (
+                            <CustomDateTimePicker
+                                visible={showDatetimePicker}
+                                initialDateTime={new Date()}
+                                onClose={() => setShowDatetimePicker(false)}
+                                onConfirm={handleCustomDateConfirm}
+                            />
+                        )}
                     </>
                 )}
             </Pressable>
