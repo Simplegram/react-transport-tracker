@@ -55,19 +55,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                     pageMargin={10}
                 >
                     {directionNames.map((directionNameKey, index) => (
-                        <View key={directionNameKey} style={{
-                            flex: 1,
-                            paddingTop: 6,
-                            paddingLeft: 10,
-                            paddingBottom: 10,
-                            paddingRight: 10,
-                            borderWidth: 1,
-                            borderTopLeftRadius: 12,
-                            borderTopRightRadius: 12,
-                            borderBottomLeftRadius: 10,
-                            borderBottomRightRadius: 10,
-                            borderColor: borderColor
-                        }}>
+                        <View key={directionNameKey} style={[styles.pagerViewContentContainer, { borderColor: borderColor }]}>
                             <View key={directionNameKey} style={styles.cardCanvas}>
                                 <View>
                                     <Pressable onPress={() => handleViewTravelDetails(directionNameKey)}>
@@ -112,6 +100,18 @@ const styles = StyleSheet.create({
     },
     pagerView: {
         flex: 1,
+    },
+    pagerViewContentContainer: {
+        flex: 1,
+        paddingTop: 6,
+        paddingLeft: 10,
+        paddingBottom: 10,
+        paddingRight: 10,
+        borderWidth: 1,
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
     },
     cardCanvas: {
         flex: 7,
