@@ -7,9 +7,9 @@ import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
-import { formatDateForDisplay } from '@/src/utils/utils'
+import { formatDateForDisplay, formatLapTimeDisplay } from '@/src/utils/utils'
 import moment from 'moment-timezone'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Alert,
     Modal,
@@ -19,6 +19,7 @@ import {
     View
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
+import { useFocusEffect } from '@react-navigation/native'
 
 export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { theme } = useTheme()
@@ -34,6 +35,15 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
     const [lap, setLap] = useState<AddableLap>({ time: undefined, stop_id: null, note: null })
 
     const [showDatetimePicker, setShowDatetimePicker] = useState(false)
+
+    useFocusEffect(
+        React.useCallback(() => {
+            const currentTime = new Date().toISOString()
+            const formattedTime = formatLapTimeDisplay(currentTime)
+
+            setLap({ ...lap, time: formattedTime })
+        }, [isModalVisible])
+    )
 
     const handleCustomDateConfirm = (selectedDate: Date) => {
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
