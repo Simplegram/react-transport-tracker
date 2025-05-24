@@ -10,7 +10,6 @@ import useStopModal from "@/hooks/useStopModal"
 import useTravelCalendar from "@/hooks/useTravelCalendar"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
-import { Lap } from "@/src/types/Travels"
 import { DataItemWithNewKey, getGroupedData } from "@/src/utils/dataUtils"
 import { getTodayString } from "@/src/utils/dateUtils"
 import { useFocusEffect } from "@react-navigation/native"
@@ -87,7 +86,6 @@ export default function HomePage() {
     useFocusEffect(
         React.useCallback(() => {
             getAllLaps()
-            getTravelAtDate()
         }, [dates])
     )
 
@@ -96,6 +94,12 @@ export default function HomePage() {
             const data = getGroupedData(travelAtDate, laps)
             setGroupedData(data)
         }, [travelAtDate, laps])
+    )
+
+    useFocusEffect(
+        React.useCallback(() => {
+            getTravelAtDate()
+        }, [selectedDate])
     )
 
     return (
