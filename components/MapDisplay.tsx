@@ -2,6 +2,8 @@ import { useTheme } from "@/context/ThemeContext"
 import { inputElementStyles } from "@/src/styles/InputStyles"
 import { Camera, MapView } from "@maplibre/maplibre-react-native"
 import { StyleSheet, View } from "react-native"
+import Icon from 'react-native-vector-icons/FontAwesome6'
+import Button from "./BaseButton"
 
 const pointSize = {
     width: 8,
@@ -13,9 +15,10 @@ interface MapDisplayProps {
     zoomLevel: number
     centerCoordinate: number[]
     draggable?: boolean
+    getCurrentCoordinate?: () => void
 }
 
-export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, draggable = true }: MapDisplayProps) {
+export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, draggable = true, getCurrentCoordinate }: MapDisplayProps) {
     const { theme } = useTheme()
 
     return (
@@ -35,6 +38,13 @@ export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, dragga
             <View style={styles.pointContainer}>
                 <View style={styles.point} />
             </View>
+            {getCurrentCoordinate && (
+                <View style={styles.buttonContainer}>
+                    <Button style={styles.button} onPress={getCurrentCoordinate}>
+                        <Icon name="location-crosshairs" size={24} />
+                    </Button>
+                </View>
+            )}
         </View>
     )
 }
@@ -61,5 +71,16 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 1,
         backgroundColor: 'red',
+    },
+    buttonContainer: {
+        position: 'absolute',
+        right: 0,
+        bottom: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+        pointerEvents: 'box-none',
+    },
+    button: {
+        backgroundColor: 'transparent'
     },
 })

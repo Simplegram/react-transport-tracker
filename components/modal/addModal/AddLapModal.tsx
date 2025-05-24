@@ -35,7 +35,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
         closeStopModal
     } = useStopModal()
 
-    const { location } = useLocation()
+    const { location, refetchLocation } = useLocation()
 
     const mapRef = useRef(null)
 
@@ -134,6 +134,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                     zoomLevel={15}
                                     centerCoordinate={centerCoordinate}
                                     draggable={false}
+                                    getCurrentCoordinate={refetchLocation}
                                 />
                             </View>
 
