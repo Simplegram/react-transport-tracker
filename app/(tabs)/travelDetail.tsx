@@ -71,8 +71,8 @@ export default function TravelDetail() {
     )
 
     const sortedData = [...dataToUse].sort((a, b) => {
-        const dateAInitialArrival = a.bus_initial_arrival ? new Date(a.bus_initial_arrival).getTime() : null
-        const dateBInitialArrival = b.bus_initial_arrival ? new Date(b.bus_initial_arrival).getTime() : null
+        const dateAInitialArrival = a.bus_initial_arrival ? new Date(a.bus_initial_arrival).getTime() : a.bus_initial_departure ? new Date(a.bus_initial_departure).getTime() : null
+        const dateBInitialArrival = b.bus_initial_arrival ? new Date(b.bus_initial_arrival).getTime() : b.bus_initial_departure ? new Date(b.bus_initial_departure).getTime() : null
 
         if (dateAInitialArrival !== null && dateBInitialArrival !== null) {
             return dateAInitialArrival - dateBInitialArrival
@@ -94,7 +94,7 @@ export default function TravelDetail() {
                     stop: travel.first_stop_id,
                     name: travel.first_stop_id.name,
                     coords: [travel.first_stop_id.lon, travel.first_stop_id.lat],
-                    time: travel.bus_initial_arrival || null
+                    time: travel.bus_initial_arrival || travel.bus_initial_departure || null
                 }
             )
         }
@@ -121,7 +121,7 @@ export default function TravelDetail() {
                 id: "lap",
                 stop: lap.stop_id,
                 name: lap.stop_id?.name,
-                coords: [lap.stop_id.lon, lap.stop_id.lat],
+                coords: [lap.stop_id?.lon, lap.stop_id?.lat],
                 time: lap.time,
             }
         )) || []
