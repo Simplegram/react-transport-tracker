@@ -97,7 +97,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 />
                             )}
 
-                            <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                            <View style={inputElementStyles[theme].inputGroup}>
                                 <Text style={inputElementStyles[theme].inputLabel}>Note:</Text>
                                 <TextInput
                                     placeholder="Optional notes"

@@ -45,7 +45,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
                             />
                         </View>
 
-                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                        <View style={inputElementStyles[theme].inputGroup}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>

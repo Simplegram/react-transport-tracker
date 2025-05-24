@@ -105,7 +105,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                             />
                         </View>
 
-                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                        <View style={inputElementStyles[theme].inputGroup}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>

@@ -127,7 +127,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             />
                         )}
 
-                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                        <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].inputLabel}>Note:</Text>
                             <TextInput
                                 placeholder="Optional notes"

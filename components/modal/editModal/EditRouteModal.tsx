@@ -110,7 +110,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                             </Pressable>
                         </View>
 
-                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                        <View style={inputElementStyles[theme].inputGroup}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>
