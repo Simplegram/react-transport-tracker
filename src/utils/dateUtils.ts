@@ -17,26 +17,19 @@ export const getMonthsSinceEarliestDate = (dates: string[]): number => {
         return 0
     }
 
-    // Assuming dates are already sorted from getDates(), the first element is the earliest
     const earliestDate = moment(dates[0])
     const today = moment(getTodayString())
 
-    const monthsDifference = today.diff(earliestDate, 'months') + 2
+    const monthsDifference = today.diff(earliestDate, 'months') + 1
 
     return monthsDifference
 }
 
-export const getFutureMonthFromLatestDate = (dates: string[], offset: number = 0): number => {
+export const getFutureMonthFromLatestDate = (selectedDate: string, offset: number = 1): number => {
     const today = moment(getTodayString())
-    let latestDate = today
+    let latestDate = moment(selectedDate)
 
-    if (dates && dates.length > 0) {
-        latestDate = moment(dates[dates.length - 1])
-    }
-
-    const baseMonth = moment.max(latestDate.clone().startOf('month'), today.clone().startOf('month'))
-    const futureMonth = baseMonth.clone().add(1 + offset, 'months')
-    const monthsDifference = Math.abs(today.diff(futureMonth, 'months'))
+    const monthsDifference = Math.abs(today.diff(latestDate, 'months')) + offset
 
     return monthsDifference
 }
