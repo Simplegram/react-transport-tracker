@@ -15,7 +15,6 @@ export default function FlatlistPicker({ items, maxHeight = 300, onSelect, child
 
     return (
         <FlatList
-            inverted={true}
             data={items}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
