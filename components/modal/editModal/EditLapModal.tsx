@@ -20,6 +20,7 @@ import {
     View
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
+import Divider from '@/components/Divider'
 
 export default function EditLapModal({ stops, selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
     const { theme } = useTheme()
@@ -118,15 +119,6 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             </Pressable>
                         </View>
 
-                        {showDatetimePicker && (
-                            <CustomDateTimePicker
-                                visible={showDatetimePicker}
-                                initialDateTime={new Date()}
-                                onClose={() => setShowDatetimePicker(false)}
-                                onConfirm={handleCustomDateConfirm}
-                            />
-                        )}
-
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].inputLabel}>Note:</Text>
                             <TextInput
@@ -142,12 +134,13 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             />
                         </View>
 
+                        <Divider />
+
                         <View style={buttonStyles[theme].buttonRow}>
                             <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
                             <Button title='Edit Lap' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                         </View>
                     </View>
-
 
                     <EditTravelStopModal
                         stops={stops}
@@ -157,6 +150,15 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                         onSelect={handleStopSelect}
                         onClose={closeStopModal}
                     />
+
+                    {showDatetimePicker && (
+                        <CustomDateTimePicker
+                            visible={showDatetimePicker}
+                            initialDateTime={new Date()}
+                            onClose={() => setShowDatetimePicker(false)}
+                            onConfirm={handleCustomDateConfirm}
+                        />
+                    )}
                 </Pressable>
             )}
         </Modal>
