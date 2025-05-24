@@ -1,18 +1,17 @@
+import moment from 'moment'
 import React from 'react'
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 import PagerView from 'react-native-pager-view'
+import Divider from './Divider'
 
 import { colors } from '@/const/color'
 import { useTravelContext } from '@/context/PageContext'
 import { useTheme } from '@/context/ThemeContext'
 import { travelCardStyles, travelEmptyContainer } from '@/src/styles/TravelListStyles'
-import { DataItem, Lap } from '@/src/types/Travels'
+import { DataItemWithNewKey } from '@/src/utils/dataUtils'
 import { formatDate } from '@/src/utils/dateUtils'
 import { calculateDuration } from '@/src/utils/utils'
 import { router } from 'expo-router'
-import moment from 'moment'
-import Divider from './Divider'
-import { DataItemWithNewKey } from '@/src/utils/dataUtils'
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 interface GroupedDataDisplayProps {
     data: Record<string, DataItemWithNewKey[]>
