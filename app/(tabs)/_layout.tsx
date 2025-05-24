@@ -1,14 +1,14 @@
-import { colors } from "@/const/color";
-import { ModalContext } from "@/context/ModalContext";
-import { TravelContext } from "@/context/PageContext";
-import { SupabaseProvider } from "@/context/SupabaseContext";
-import { useTheme } from "@/context/ThemeContext";
-import { statusBarStyles } from "@/src/styles/Styles";
-import { DataItem } from "@/src/types/Travels";
-import { Tabs } from "expo-router";
-import { useState } from "react";
-import { StatusBar } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import { colors } from "@/const/color"
+import { ModalContext } from "@/context/ModalContext"
+import { TravelContext } from "@/context/PageContext"
+import { SupabaseProvider } from "@/context/SupabaseContext"
+import { useTheme } from "@/context/ThemeContext"
+import { statusBarStyles } from "@/src/styles/Styles"
+import { DataItem } from "@/src/types/Travels"
+import { Tabs } from "expo-router"
+import { useState } from "react"
+import { StatusBar } from "react-native"
+import Icon from 'react-native-vector-icons/FontAwesome6'
 
 const TabsLayout = () => {
     const { theme } = useTheme()
@@ -16,8 +16,8 @@ const TabsLayout = () => {
     const barColor = theme === 'light' ? colors.text.dimWhite : colors.background.black
     const iconColor = theme === 'light' ? colors.background.black : colors.text.dimmerWhite2
 
-    const [selectedItem, setSelectedItem] = useState<DataItem | undefined>(undefined);
-    const [selectedTravelItems, setSelectedTravelItems] = useState<DataItem[] | undefined>(undefined);
+    const [selectedItem, setSelectedItem] = useState<DataItem | undefined>(undefined)
+    const [selectedTravelItems, setSelectedTravelItems] = useState<DataItem[] | undefined>(undefined)
     const [selectedModification, setSelectedModification] = useState<string | undefined>(undefined)
 
     const [modalData, setModalData] = useState<string | undefined>(undefined)
@@ -103,6 +103,6 @@ const TabsLayout = () => {
             </TravelContext.Provider>
         </SupabaseProvider>
     )
-};
+}
 
-export default TabsLayout;
+export default TabsLayout

@@ -1,27 +1,25 @@
-import Button from '@/components/BaseButton';
-import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker';
-import { AddableLap } from '@/src/types/AddableTravels';
-import React, { useEffect, useState } from 'react';
+import Button from '@/components/BaseButton'
+import LoadingScreen from '@/components/LoadingScreen'
+import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
+import { colors } from '@/const/color'
+import { useTheme } from '@/context/ThemeContext'
+import useStopModal from '@/hooks/useStopModal'
+import { buttonStyles } from '@/src/styles/ButtonStyles'
+import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
+import { modalStyles } from '@/src/styles/ModalStyles'
+import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels'
+import { formatDateForDisplay } from '@/src/utils/utils'
+import moment from 'moment-timezone'
+import React, { useEffect, useState } from 'react'
 import {
-    View,
+    Alert,
+    Modal,
+    Pressable,
     Text,
     TextInput,
-    StyleSheet,
-    Pressable,
-    Modal,
-    Alert,
-} from 'react-native';
-import moment from 'moment-timezone'
-import { formatDateForDisplay } from '@/src/utils/utils';
-import useStopModal from '@/hooks/useStopModal';
-import EditTravelStopModal from '../travelModal/EditTravelStopModal';
-import { modalStyles } from '@/src/styles/ModalStyles';
-import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels';
-import LoadingScreen from '@/components/LoadingScreen';
-import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
-import { useTheme } from '@/context/ThemeContext';
-import { colors } from '@/const/color';
+    View
+} from 'react-native'
+import EditTravelStopModal from '../travelModal/EditTravelStopModal'
 
 export default function EditLapModal({ stops, selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
     const { theme } = useTheme()
@@ -32,11 +30,11 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
         setStopSearchQuery,
         openStopModal,
         closeStopModal
-    } = useStopModal();
+    } = useStopModal()
 
     const [lap, setLap] = useState<EditableLap>()
 
-    const [showDatetimePicker, setShowDatetimePicker] = useState(false);
+    const [showDatetimePicker, setShowDatetimePicker] = useState(false)
 
     useEffect(() => {
         setLap(selectedLap)
@@ -54,14 +52,14 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
         }
 
         if (!lap.time) {
-            Alert.alert('Input Required', 'Please select time');
+            Alert.alert('Input Required', 'Please select time')
             return
         }
 
         setLap({ ...lap, time: isoSelectedDate })
 
         setShowDatetimePicker(false)
-    };
+    }
 
     const handleStopSelect = (stopId: number) => {
         if (!lap) {
@@ -74,8 +72,8 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
         }
 
         setLap({ ...lap, stop_id: stopId })
-        closeStopModal();
-    };
+        closeStopModal()
+    }
 
     const handleOnSubmit = () => {
         if (!lap) {
@@ -87,8 +85,8 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
             return
         }
 
-        onSelect(lap);
-    };
+        onSelect(lap)
+    }
 
     return (
         <Modal
@@ -162,5 +160,5 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                 </Pressable>
             )}
         </Modal>
-    );
-};
+    )
+}

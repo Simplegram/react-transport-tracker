@@ -1,7 +1,7 @@
-import { useTheme } from "@/context/ThemeContext";
-import { flatlistStyles } from "@/src/styles/ModalStyles";
-import React from "react";
-import { FlatList, TouchableOpacity } from "react-native";
+import { useTheme } from "@/context/ThemeContext"
+import { flatlistStyles } from "@/src/styles/ModalStyles"
+import React from "react"
+import { FlatList, TouchableOpacity } from "react-native"
 
 interface FlatlistPickerProps {
     items: any[]
@@ -15,7 +15,6 @@ export default function FlatlistPicker({ items, maxHeight = 300, onSelect, child
 
     return (
         <FlatList
-            inverted={true}
             data={items}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (

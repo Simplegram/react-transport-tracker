@@ -1,6 +1,6 @@
-import { useTheme } from "@/context/ThemeContext";
-import { dividerStyles } from "@/src/styles/Styles";
-import { View } from "react-native";
+import { useTheme } from "@/context/ThemeContext"
+import { dividerStyles } from "@/src/styles/Styles"
+import { View } from "react-native"
 
 interface DividerProp {
     size?: number

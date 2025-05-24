@@ -1,100 +1,45 @@
-import React, { useEffect } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
-import PagerView from 'react-native-pager-view';
+import moment from 'moment'
+import React from 'react'
+import PagerView from 'react-native-pager-view'
+import Divider from './Divider'
 
-import { colors } from '@/const/color';
-import { useTravelContext } from '@/context/PageContext';
-import { useTheme } from '@/context/ThemeContext';
-import useGetTravelData from '@/hooks/useGetTravelData';
-import { travelCardStyles, travelEmptyContainer } from '@/src/styles/TravelListStyles';
-import { DataItem } from '@/src/types/Travels'; // Import the interface from your specified path
-import { formatDate } from '@/src/utils/dateUtils';
-import { calculateDuration } from '@/src/utils/utils';
-import { router } from 'expo-router';
-import moment from 'moment';
-import Divider from './Divider';
+import { colors } from '@/const/color'
+import { useTravelContext } from '@/context/PageContext'
+import { useTheme } from '@/context/ThemeContext'
+import { travelCardStyles, travelEmptyContainer } from '@/src/styles/TravelListStyles'
+import { DataItemWithNewKey } from '@/src/utils/dataUtils'
+import { formatDate } from '@/src/utils/dateUtils'
+import { calculateDuration } from '@/src/utils/utils'
+import { router } from 'expo-router'
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 interface GroupedDataDisplayProps {
-    data: DataItem[];
+    data: Record<string, DataItemWithNewKey[]>
     currentDate: string
 }
 
-export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDisplayProps) {
+export default function GroupedDataDisplay({ data: finalGroupedData, currentDate }: GroupedDataDisplayProps) {
     const { theme } = useTheme()
 
-    const { setSelectedItem, setSelectedTravelItems } = useTravelContext();
+    const { setSelectedItem, setSelectedTravelItems } = useTravelContext()
 
     const formattedCurrentDate = moment(currentDate).format('LL')
 
-    const { laps, getAllLaps } = useGetTravelData()
-
-    useEffect(() => {
-        getAllLaps()
-    }, [])
-
-    // Grouping data remains the same
-    const groupedData = data.reduce((acc, currentItem) => {
-        const directionName = currentItem.directions?.name || 'Unassigned Direction';
-        const directionKey = directionName;
-
-        if (!acc[directionKey]) {
-            acc[directionKey] = [];
-        }
-        acc[directionKey].push(currentItem);
-        return acc;
-    }, {} as Record<string, DataItem[]>);
-
-    // Sorting items within each group remains the same (optional, but good practice)
-    const sortedGroupedData: Record<string, DataItem[]> = {};
-    Object.keys(groupedData).forEach(directionKey => {
-        sortedGroupedData[directionKey] = groupedData[directionKey].sort((a, b) => {
-            // Use valid date checks and handle potential null/invalid dates gracefully
-            const timeA = (a.bus_initial_departure && new Date(a.bus_initial_departure).getTime()) || Infinity;
-            const timeB = (b.bus_initial_departure && new Date(b.bus_initial_departure).getTime()) || Infinity;
-
-            return timeA - timeB;
-        });
-    });
-
-    interface DataItemWithNewKey extends DataItem {
-        lapCount: number; // Define the new key and its type
-    }
-
-    const finalGroupedDataWithNewKey: Record<string, DataItemWithNewKey[]> = {};
-    Object.keys(sortedGroupedData).forEach(directionKey => {
-        finalGroupedDataWithNewKey[directionKey] = sortedGroupedData[directionKey].map(item => {
-            const matchingLaps = laps.filter(lap => lap.travel_id === item.id);
-            const lapCount = matchingLaps.length;
-
-            return {
-                ...item,
-                lapCount: lapCount
-            };
-        });
-    });
-
-    // Use the sorted data for rendering
-    const finalGroupedData = finalGroupedDataWithNewKey;
-
-
-    // Get the keys (direction names) and sort them for consistent page order
-    const directionNames = Object.keys(finalGroupedData).sort();
+    const directionNames = Object.keys(finalGroupedData).sort()
 
     const handleItemPress = (directionNameKey: string, itemIndex: number) => {
-        // Access the item from the correctly grouped/sorted data
-        const itemToSelect = finalGroupedData[directionNameKey][itemIndex];
+        const itemToSelect = finalGroupedData[directionNameKey][itemIndex]
         if (itemToSelect) {
-            setSelectedItem(itemToSelect);
-            router.push("/(tabs)/editTravel");
+            setSelectedItem(itemToSelect)
+            router.push("/(tabs)/editTravel")
         }
-    };
+    }
 
     const handleViewTravelDetails = (directionNameKey: string) => {
-        setSelectedTravelItems(finalGroupedData[directionNameKey]);
-        router.push("/(tabs)/travelDetail");
-    };
+        setSelectedTravelItems(finalGroupedData[directionNameKey])
+        router.push("/(tabs)/travelDetail")
+    }
 
-    const backgroundColor = theme === 'light' ? colors.background.white : colors.background.black
     const borderColor = theme === 'light' ? colors.background.black : colors.text.dimmerWhite
     const dateLabelColor = theme === 'light' ? '#2c3e50' : colors.text.dimWhite
 
@@ -213,8 +158,8 @@ export default function GroupedDataDisplay({ data, currentDate }: GroupedDataDis
                 </View>
             )}
         </View>
-    );
-};
+    )
+}
 
 const styles = StyleSheet.create({
     mainContainer: {
@@ -241,4 +186,4 @@ const styles = StyleSheet.create({
         paddingBottom: 8,
         textAlign: 'center',
     },
-});
+})

@@ -1,7 +1,7 @@
-import { colors } from "@/const/color";
-import { Dimensions, StyleSheet } from "react-native";
+import { colors } from "@/const/color"
+import { Dimensions, StyleSheet } from "react-native"
 
-const { height: screenHeight } = Dimensions.get('window');
+const { height: screenHeight } = Dimensions.get('window')
 
 const lightStyles = StyleSheet.create({
     icon: {
@@ -31,12 +31,10 @@ const lightCollapsibleHeaderStyles = StyleSheet.create({
         flex: 1,
         minHeight: screenHeight * 0.45,
         justifyContent: 'flex-end',
-        // alignItems: 'center',
     },
     headerText: {
         fontSize: 32,
         fontWeight: 'bold',
-        // textAlign: 'center',
         paddingBottom: 15
     },
     scrollContainer: {

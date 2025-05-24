@@ -4,7 +4,6 @@ import { ThemeProvider } from '@/context/ThemeContext'
 import { Slot, useRouter, useSegments } from 'expo-router'
 import { useEffect } from 'react'
 
-// Makes sure the user is authenticated before accessing protected pages
 const InitialLayout = () => {
     const { session, initialized } = useAuth()
     const segments = useSegments()
@@ -25,7 +24,6 @@ const InitialLayout = () => {
     return <Slot />
 }
 
-// Wrap the app with the AuthProvider
 const RootLayout = () => {
     return (
         <SupabaseProvider>

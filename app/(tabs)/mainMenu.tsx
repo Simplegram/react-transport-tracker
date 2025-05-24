@@ -1,18 +1,20 @@
-import Button from "@/components/BaseButton";
-import GroupedDataDisplay from "@/components/GroupedTravelsDisplay";
-import LoadingScreen from "@/components/LoadingScreen";
-import CalendarModal from "@/components/modal/CalendarModal";
-import { useSupabase } from "@/context/SupabaseContext";
-import { useTheme } from "@/context/ThemeContext";
-import { useToggleLoading } from "@/hooks/useLoading";
-import useStopModal from "@/hooks/useStopModal";
-import useTravelCalendar from "@/hooks/useTravelCalendar";
-import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { mainMenuStyles } from "@/src/styles/MainMenuStyles";
-import { getTodayString } from "@/src/utils/dateUtils";
-import { useFocusEffect } from "expo-router";
-import React, { useEffect, useMemo } from "react";
-import { View } from "react-native";
+import Button from "@/components/BaseButton"
+import GroupedDataDisplay from "@/components/GroupedTravelsDisplay"
+import LoadingScreen from "@/components/LoadingScreen"
+import CalendarModal from "@/components/modal/CalendarModal"
+import { useSupabase } from "@/context/SupabaseContext"
+import { useTheme } from "@/context/ThemeContext"
+import useGetTravelData from "@/hooks/useGetTravelData"
+import { useToggleLoading } from "@/hooks/useLoading"
+import useStopModal from "@/hooks/useStopModal"
+import useTravelCalendar from "@/hooks/useTravelCalendar"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
+import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
+import { DataItemWithNewKey, getGroupedData } from "@/src/utils/dataUtils"
+import { getTodayString } from "@/src/utils/dateUtils"
+import { useFocusEffect } from "@react-navigation/native"
+import React, { useEffect, useMemo, useState } from "react"
+import { View } from "react-native"
 
 interface DateObject {
     dateString: string,
@@ -34,44 +36,44 @@ export default function HomePage() {
 
     const { loading, toggleLoading } = useToggleLoading()
 
+    const { laps, getAllLaps } = useGetTravelData()
+
+    const [groupedData, setGroupedData] = useState<Record<string, DataItemWithNewKey[]>>()
+
     const {
         showStopModal: showCalendarModal,
         openStopModal: openCalendarModal,
         closeStopModal: closeCalendarModal
-    } = useStopModal();
+    } = useStopModal()
 
-    // Generate marked dates for the calendar
     const markedDates = useMemo(() => {
-        const marked: any = {};
+        const marked: any = {}
 
-        // Mark dates that have items
         dates.forEach(date => {
             marked[date] = {
-                ...marked[date], // Preserve any existing marking (like 'selected')
+                ...marked[date],
                 marked: true,
                 color: '#dcf8c6',
-            };
-        });
+            }
+        })
 
-        // Mark the selected date distinctly
         marked[selectedDate] = {
-            ...marked[selectedDate], // Preserve any item marking
+            ...marked[selectedDate],
             selected: true,
-            selectedColor: '#00adf5', // Blue background for selected date
+            selectedColor: '#00adf5',
             selectedTextColor: 'white',
-        };
+        }
 
-        return marked;
-    }, [selectedDate, dates]);
+        return marked
+    }, [selectedDate, dates])
 
     const onDayPress = (day: DateObject) => {
         toggleLoading()
-        setSelectedDate(day.dateString);
+        setSelectedDate(day.dateString)
         closeCalendarModal()
-    };
+    }
 
     useEffect(() => {
-        getDates()
         setSelectedDate(getTodayString())
     }, [])
 
@@ -83,6 +85,19 @@ export default function HomePage() {
 
     useFocusEffect(
         React.useCallback(() => {
+            getAllLaps()
+        }, [dates])
+    )
+
+    useFocusEffect(
+        React.useCallback(() => {
+            const data = getGroupedData(travelAtDate, laps)
+            setGroupedData(data)
+        }, [travelAtDate, laps])
+    )
+
+    useFocusEffect(
+        React.useCallback(() => {
             getTravelAtDate()
         }, [selectedDate])
     )
@@ -90,10 +105,10 @@ export default function HomePage() {
     return (
         <View style={mainMenuStyles[theme].container}>
             <View style={mainMenuStyles[theme].listContainer}>
-                {loading == true || !supabase ? (
+                {loading == true || !supabase || !groupedData ? (
                     <LoadingScreen></LoadingScreen>
                 ) : (
-                    <GroupedDataDisplay data={travelAtDate} currentDate={selectedDate}></GroupedDataDisplay>
+                    <GroupedDataDisplay data={groupedData} currentDate={selectedDate}></GroupedDataDisplay>
                 )}
             </View>
             <Button
@@ -114,5 +129,5 @@ export default function HomePage() {
                 }}
             />
         </View>
-    );
-};
+    )
+}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 
 export function useLoading(timeout: number = 500) {
     const [loading, setLoading] = useState<boolean>(true)
@@ -6,7 +6,7 @@ export function useLoading(timeout: number = 500) {
     useEffect(() => {
         setTimeout(() => {
             setLoading(false)
-        }, timeout);
+        }, timeout)
     }, [])
 
     return {
@@ -21,7 +21,7 @@ export function useToggleLoading(timeout: number = 500, defaultValue: boolean = 
         setLoading(true)
         setTimeout(() => {
             setLoading(false)
-        }, timeout);
+        }, timeout)
     }
 
     return {

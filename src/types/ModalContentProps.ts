@@ -1,13 +1,13 @@
 export interface BaseModalContentProps {
-    onSubmit: (data: any) => void;
-    onCancel: () => void;
+    onSubmit: (data: any) => void
+    onCancel: () => void
 }
 
 export interface AddDirectionData {
-    name: string;
+    name: string
 }
 
 export interface AddStopData {
-    name: string;
-    location: string;
+    name: string
+    location: string
 }

@@ -1,6 +1,6 @@
-import { useTravelContext } from "@/context/PageContext";
-import { Direction, IconType, Route, Stop, VehicleType } from "@/src/types/Travels";
-import { useEffect, useState } from "react";
+import { useTravelContext } from "@/context/PageContext"
+import { Direction, IconType, Route, Stop, VehicleType } from "@/src/types/Travels"
+import { useEffect, useState } from "react"
 
 interface UseDatalistProps {
     directions: Direction[]
@@ -13,13 +13,13 @@ interface UseDatalistProps {
 export default function useDataList({ directions, stops, routes, vehicleTypes, icons }: UseDatalistProps) {
     const { selectedModification: dataType } = useTravelContext()
 
-    const [data, setData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]>([]);
-    const [filteredData, setFilteredData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]>([]);
+    const [data, setData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]>([])
+    const [filteredData, setFilteredData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]>([])
     const [searchQuery, setSearchQuery] = useState<string>('')
 
     const filteredStops = (data: Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]) => {
-        if (!data) return [];
-        const query = searchQuery.toLowerCase();
+        if (!data) return []
+        const query = searchQuery.toLowerCase()
 
         const filteredData = data.filter(item => {
             if (dataType === "Routes") {
@@ -29,37 +29,37 @@ export default function useDataList({ directions, stops, routes, vehicleTypes, i
             } else {
                 return item.name.toLowerCase().includes(query)
             }
-        });
+        })
 
         return filteredData
     }
 
-    let fetchedData: Direction[] | Stop[] | Route[] | VehicleType[] | IconType[] = [];
+    let fetchedData: Direction[] | Stop[] | Route[] | VehicleType[] | IconType[] = []
     useEffect(() => {
         switch (dataType) {
             case 'Directions':
                 fetchedData = directions
-                break;
+                break
             case 'Stops':
                 fetchedData = stops
-                break;
+                break
             case 'Routes':
                 fetchedData = routes
-                break;
+                break
             case 'VehicleTypes':
                 fetchedData = vehicleTypes
-                break;
+                break
             case 'Icons':
                 fetchedData = icons
-                break;
+                break
             default:
                 fetchedData = []
-                break;
+                break
         }
 
         setData(fetchedData)
         setFilteredData(filteredStops(fetchedData))
-    }, [dataType, directions, stops, routes, vehicleTypes, icons]); // Include all fetched data arrays as dependencies
+    }, [dataType, directions, stops, routes, vehicleTypes, icons])
 
     useEffect(() => {
         setFilteredData(filteredStops(data))

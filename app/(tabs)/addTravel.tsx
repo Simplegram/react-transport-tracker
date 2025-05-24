@@ -1,46 +1,46 @@
-import Button from '@/components/BaseButton';
-import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage';
-import Divider from '@/components/Divider';
-import LoadingScreen from '@/components/LoadingScreen';
-import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker';
-import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModal';
-import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal';
-import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal';
-import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal';
-import { useTheme } from '@/context/ThemeContext';
-import useGetTravelData from '@/hooks/useGetTravelData';
-import useModifyTravelData from '@/hooks/useModifyTravelData';
-import useStopModal from '@/hooks/useStopModal';
-import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles';
-import { AddableLap, AddableTravel } from '@/src/types/AddableTravels';
-import { DataItem } from '@/src/types/Travels';
-import { formatDateForDisplay } from '@/src/utils/utils';
-import { router, useFocusEffect } from 'expo-router';
-import moment from 'moment-timezone';
-import React, { useEffect, useState } from 'react';
+import Button from '@/components/BaseButton'
+import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
+import Divider from '@/components/Divider'
+import LoadingScreen from '@/components/LoadingScreen'
+import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
+import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModal'
+import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal'
+import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal'
+import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal'
+import { useTheme } from '@/context/ThemeContext'
+import useGetTravelData from '@/hooks/useGetTravelData'
+import useModifyTravelData from '@/hooks/useModifyTravelData'
+import useStopModal from '@/hooks/useStopModal'
+import { buttonStyles } from '@/src/styles/ButtonStyles'
+import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
+import { AddableLap, AddableTravel } from '@/src/types/AddableTravels'
+import { DataItem } from '@/src/types/Travels'
+import { formatDateForDisplay } from '@/src/utils/utils'
+import { router, useFocusEffect } from 'expo-router'
+import moment from 'moment-timezone'
+import React, { useEffect, useState } from 'react'
 import {
     Alert,
     Pressable,
     Text,
     TextInput,
     View,
-} from 'react-native';
+} from 'react-native'
 
-const PLACEHOLDER_TEXT_COLOR = '#9E9E9E';
+const PLACEHOLDER_TEXT_COLOR = '#9E9E9E'
 
 export default function AddTravel() {
     const { theme } = useTheme()
 
-    const { stops, routes, directions, vehicleTypes } = useGetTravelData();
+    const { stops, routes, directions, vehicleTypes } = useGetTravelData()
 
     const { addTravel, addLaps } = useModifyTravelData()
 
     const [laps, setLaps] = useState<AddableLap[]>([])
-    const [travel, setTravel] = useState<AddableTravel | null>(null);
+    const [travel, setTravel] = useState<AddableTravel | null>(null)
 
-    const [showCustomPicker, setShowCustomPicker] = useState(false);
-    const [editingDateField, setEditingDateField] = useState<keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'> | null>(null);
+    const [showCustomPicker, setShowCustomPicker] = useState(false)
+    const [editingDateField, setEditingDateField] = useState<keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'> | null>(null)
 
     const {
         showStopModal,
@@ -49,7 +49,7 @@ export default function AddTravel() {
         setStopSearchQuery,
         openStopModal,
         closeStopModal
-    } = useStopModal();
+    } = useStopModal()
 
     const {
         showStopModal: showRouteModal,
@@ -57,7 +57,7 @@ export default function AddTravel() {
         setStopSearchQuery: setRouteSearchQuery,
         openStopModal: openRouteModal,
         closeStopModal: closeRouteModal
-    } = useStopModal();
+    } = useStopModal()
 
     const {
         showStopModal: showDirectionModal,
@@ -65,13 +65,13 @@ export default function AddTravel() {
         setStopSearchQuery: setDirectionSearchQuery,
         openStopModal: openDirectionModal,
         closeStopModal: closeDirectionModal
-    } = useStopModal();
+    } = useStopModal()
 
     const {
         showStopModal: showLapsModal,
         openStopModal: openLapsModal,
         closeStopModal: closeLapsModal
-    } = useStopModal();
+    } = useStopModal()
 
     const { refetchTravelData } = useGetTravelData()
 
@@ -87,7 +87,7 @@ export default function AddTravel() {
             bus_initial_departure: null,
             vehicle_code: null,
             notes: null,
-        });
+        })
         setLaps([])
     }
 
@@ -103,37 +103,37 @@ export default function AddTravel() {
 
     const handleChangeText = (field: keyof AddableTravel, value: string) => {
         setTravel(prev => {
-            if (!prev) return null;
+            if (!prev) return null
             if (field in prev) {
-                return { ...prev, [field]: value };
+                return { ...prev, [field]: value }
             }
-            return prev;
-        });
-    };
+            return prev
+        })
+    }
 
     const openCustomPickerModal = (field: keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'>) => {
-        setEditingDateField(field);
-        setShowCustomPicker(true);
-    };
+        setEditingDateField(field)
+        setShowCustomPicker(true)
+    }
 
     const handleCustomDateConfirm = (selectedDate: Date) => {
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
 
         if (editingDateField) {
-            setTravel(prev => prev ? ({ ...prev, [editingDateField]: isoSelectedDate }) : null);
+            setTravel(prev => prev ? ({ ...prev, [editingDateField]: isoSelectedDate }) : null)
         }
-        closeCustomPicker();
-    };
+        closeCustomPicker()
+    }
 
     const closeCustomPicker = () => {
-        setShowCustomPicker(false);
-        setEditingDateField(null);
-    };
+        setShowCustomPicker(false)
+        setEditingDateField(null)
+    }
 
     if (!travel) {
         return (
             <LoadingScreen></LoadingScreen>
-        );
+        )
     }
 
     const handleStopSelect = (stopId: number) => {
@@ -141,10 +141,10 @@ export default function AddTravel() {
             setTravel(prev => prev ? ({
                 ...prev,
                 [editingStopField]: stopId
-            }) : null);
+            }) : null)
         }
-        closeStopModal();
-    };
+        closeStopModal()
+    }
 
     const handleRouteSelect = (routeId: number) => {
         if (travel) {
@@ -154,10 +154,10 @@ export default function AddTravel() {
                 type_id: routes.find(route => route.id === routeId)?.vehicle_type_id.id,
                 first_stop_id: routes.find(route => route.id === routeId)?.first_stop_id.id,
                 last_stop_id: routes.find(route => route.id === routeId)?.last_stop_id.id,
-            }) : null);
+            }) : null)
         }
-        closeRouteModal();
-    };
+        closeRouteModal()
+    }
 
     const handleDirectionSelect = (directionId: number) => {
         if (travel) {
@@ -181,18 +181,18 @@ export default function AddTravel() {
             !travel.route_id ||
             !travel.type_id
         ) {
-            Alert.alert('Input Required', 'Please choose a route/direction/stops.');
+            Alert.alert('Input Required', 'Please choose a route/direction/stops.')
             return
         }
 
         const newTravel = await addTravel(travel, true)
 
         let newLaps: AddableLap[] = []
-        if (newTravel && newTravel.length > 0) { // Check if newTravel is not null and not empty
+        if (newTravel && newTravel.length > 0) {
             newLaps = laps.map(lap => {
                 return { ...lap, travel_id: newTravel[0].id }
             })
-            if (newLaps.length > 0) { // Only call addLaps if there are laps to add
+            if (newLaps.length > 0) {
                 addLaps(newLaps)
             }
         }
@@ -201,7 +201,7 @@ export default function AddTravel() {
         setDefaultTravel()
 
         router.push('/(tabs)/mainMenu')
-    };
+    }
 
     return (
         <CollapsibleHeaderPage
@@ -262,7 +262,7 @@ export default function AddTravel() {
                         <Text style={inputElementStyles[theme].inputLabel}>Type:</Text>
                         <TextInput
                             editable={false}
-                            style={inputStyles[theme].textInput} // Read-only fields also use textInput style
+                            style={inputStyles[theme].textInput}
                             value={vehicleTypes.find(type => type.id === travel.type_id)?.name || ''}
                             placeholder="Vehicle type (auto-filled)"
                             placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
@@ -380,13 +380,13 @@ export default function AddTravel() {
 
             <View style={buttonStyles[theme].buttonRow}>
                 <Button
-                    title='Add Travel' // Changed title for clarity
-                    color='#0284f5' // Assuming this color is part of your theme
+                    title='Add Travel'
+                    color='#0284f5'
                     onPress={handleOnSubmit}
                     style={buttonStyles[theme].addButton}
                     textStyle={buttonStyles[theme].addButtonText}
                 />
             </View>
         </CollapsibleHeaderPage>
-    );
-};
+    )
+}

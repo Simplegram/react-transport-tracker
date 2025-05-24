@@ -1,5 +1,5 @@
-import { colors } from "@/const/color";
-import { StyleSheet } from "react-native";
+import { colors } from "@/const/color"
+import { StyleSheet } from "react-native"
 
 const lightDatalistStyles = StyleSheet.create({
     container: {

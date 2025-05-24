@@ -1,14 +1,14 @@
-import Button from "@/components/BaseButton";
-import { useTheme } from "@/context/ThemeContext";
-import useLocation from "@/hooks/useLocation";
-import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { inputElementStyles } from "@/src/styles/InputStyles";
-import { modalStyles } from "@/src/styles/ModalStyles";
-import { AddableCoordModalProp } from "@/src/types/AddableTravels";
-import { Camera, MapView } from "@maplibre/maplibre-react-native";
-import { LocationObject } from "expo-location";
-import { useEffect, useRef, useState } from "react";
-import { Alert, Modal, Pressable, StyleSheet, View } from "react-native";
+import Button from "@/components/BaseButton"
+import { useTheme } from "@/context/ThemeContext"
+import useLocation from "@/hooks/useLocation"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
+import { modalStyles } from "@/src/styles/ModalStyles"
+import { AddableCoordModalProp } from "@/src/types/AddableTravels"
+import { Camera, MapView } from "@maplibre/maplibre-react-native"
+import { LocationObject } from "expo-location"
+import { useEffect, useRef, useState } from "react"
+import { Alert, Modal, Pressable, StyleSheet, View } from "react-native"
 
 const pointSize = {
     width: 8,
@@ -32,27 +32,27 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
             return {
                 centerCoordinate: [currentCoordinates.lon, currentCoordinates.lat],
                 zoomLevel: 15
-            };
+            }
         } else if (userLocation) {
             return {
                 centerCoordinate: [userLocation.coords.longitude, userLocation.coords.latitude],
                 zoomLevel: 14
-            };
+            }
         } else {
             return {
                 centerCoordinate: [0, 0],
                 zoomLevel: 0
-            };
+            }
         }
-    };
+    }
 
-    const { centerCoordinate, zoomLevel } = getInitialCameraState();
+    const { centerCoordinate, zoomLevel } = getInitialCameraState()
 
     const handleOnSubmit = async () => {
         const currentMapRef = mapRef.current
 
         if (currentMapRef === null) {
-            Alert.alert('MapRef not available', 'There is a problem obtaining current map ref');
+            Alert.alert('MapRef not available', 'There is a problem obtaining current map ref')
             return
         }
 
@@ -60,10 +60,10 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
         const roundedCoordinate = {
             lon: Number(currentCoordinates[0].toFixed(6)),
             lat: Number(currentCoordinates[1].toFixed(6))
-        };
+        }
 
-        onSelect(roundedCoordinate);
-    };
+        onSelect(roundedCoordinate)
+    }
 
     return (
         <Modal

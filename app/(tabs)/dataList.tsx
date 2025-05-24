@@ -1,27 +1,27 @@
-import Button from '@/components/BaseButton';
-import LoadingScreen from '@/components/LoadingScreen';
-import ModalTemplate from '@/components/ModalTemplate';
-import { colors } from '@/const/color';
-import { useModalContext } from '@/context/ModalContext';
-import { useTheme } from '@/context/ThemeContext';
-import useDataList from '@/hooks/useDataList';
-import useDatalistModal from '@/hooks/useDatalistModal';
-import useGetTravelData from '@/hooks/useGetTravelData';
-import { useLoading } from '@/hooks/useLoading';
-import useStopModal from '@/hooks/useStopModal';
-import { buttonStyles } from '@/src/styles/ButtonStyles';
-import { DatalistStyles, ItemStyles } from '@/src/styles/DatalistStyles';
-import { inputStyles } from '@/src/styles/InputStyles';
-import { styles } from '@/src/styles/Styles';
-import { useFocusEffect } from 'expo-router';
-import React from 'react';
-import { Alert, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import Button from '@/components/BaseButton'
+import LoadingScreen from '@/components/LoadingScreen'
+import ModalTemplate from '@/components/ModalTemplate'
+import { colors } from '@/const/color'
+import { useModalContext } from '@/context/ModalContext'
+import { useTheme } from '@/context/ThemeContext'
+import useDataList from '@/hooks/useDataList'
+import useDatalistModal from '@/hooks/useDatalistModal'
+import useGetTravelData from '@/hooks/useGetTravelData'
+import { useLoading } from '@/hooks/useLoading'
+import useStopModal from '@/hooks/useStopModal'
+import { buttonStyles } from '@/src/styles/ButtonStyles'
+import { DatalistStyles, ItemStyles } from '@/src/styles/DatalistStyles'
+import { inputStyles } from '@/src/styles/InputStyles'
+import { styles } from '@/src/styles/Styles'
+import { useFocusEffect } from 'expo-router'
+import React from 'react'
+import { Alert, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import Icon from 'react-native-vector-icons/FontAwesome6'
 
 interface ItemTemplate {
-    id: string | number;
-    name: string;
-    [key: string]: any;
+    id: string | number
+    name: string
+    [key: string]: any
 }
 
 export default function DataListScreen() {
@@ -68,24 +68,22 @@ export default function DataListScreen() {
         setActiveEditModal(dataType)
         setModalData(item)
         openModal()
-    };
+    }
 
     const handleAddNew = () => {
         setActiveModal(dataType)
         openModal()
-    };
+    }
 
     const handleSubmitFromModal = (data: any) => {
         if (activeModalConfig?.onSubmitDataHandler) {
-            // Call the specific handler defined in the config, passing the collected data
-            activeModalConfig.onSubmitDataHandler(data);
+            activeModalConfig.onSubmitDataHandler(data)
         } else {
-            console.error("No data handler defined for this modal config.");
-            Alert.alert("Error", "Configuration error: Could not process data.");
+            console.error("No data handler defined for this modal config.")
+            Alert.alert("Error", "Configuration error: Could not process data.")
         }
-        // Always close the modal after handling submission
-        closeStopModal();
-    };
+        closeStopModal()
+    }
 
     const renderItem = ({ item }: { item: ItemTemplate }) => (
         <View style={ItemStyles[theme].itemContainer}>
@@ -115,7 +113,7 @@ export default function DataListScreen() {
                 </TouchableOpacity>
             </View>
         </View>
-    );
+    )
 
     const ModalContentComponent = activeModalConfig?.content
 
@@ -135,7 +133,7 @@ export default function DataListScreen() {
                             onRefresh={refetchTravelData}
                             data={data}
                             renderItem={renderItem}
-                            keyExtractor={item => item.id.toString()} // Ensure key is a string
+                            keyExtractor={item => item.id.toString()}
                             contentContainerStyle={DatalistStyles[theme].listContent}
                             keyboardShouldPersistTaps={'always'}
                         />
@@ -178,5 +176,5 @@ export default function DataListScreen() {
                 </>
             )}
         </View>
-    );
-};
+    )
+}

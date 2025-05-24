@@ -1,24 +1,24 @@
-import { colors } from "@/const/color";
-import { useTheme } from "@/context/ThemeContext";
-import { inputStyles } from "@/src/styles/InputStyles";
-import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles";
-import { styles } from "@/src/styles/Styles";
-import { EditableTravelStopModalProp } from "@/src/types/EditableTravels";
-import { useMemo } from "react";
-import { Modal, Pressable, Text, TextInput, View } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome6";
-import FlatlistPicker from "../FlatlistPicker";
+import { colors } from "@/const/color"
+import { useTheme } from "@/context/ThemeContext"
+import { inputStyles } from "@/src/styles/InputStyles"
+import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
+import { styles } from "@/src/styles/Styles"
+import { EditableTravelStopModalProp } from "@/src/types/EditableTravels"
+import { useMemo } from "react"
+import { Modal, Pressable, Text, TextInput, View } from "react-native"
+import Icon from "react-native-vector-icons/FontAwesome6"
+import FlatlistPicker from "../FlatlistPicker"
 
 export default function EditTravelStopModal({ stops, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelStopModalProp) {
     const { theme } = useTheme()
 
     const filteredStops = useMemo(() => {
-        if (!stops) return [];
-        const query = searchQuery.toLowerCase();
+        if (!stops) return []
+        const query = searchQuery.toLowerCase()
         return stops.filter(stop =>
             stop.name.toLowerCase().includes(query)
-        );
-    }, [stops, searchQuery]);
+        )
+    }, [stops, searchQuery])
 
     return (
         <>
@@ -54,7 +54,7 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                                     <>
                                         {item.vehicle_type?.name ? (
                                             <Icon
-                                                style={[styles[theme].icon, { width: 20 }]} // Access theme and styles
+                                                style={[styles[theme].icon, { width: 20 }]}
                                                 name={item.vehicle_type.icon_id.name.toLocaleLowerCase()}
                                                 size={16}
                                             />

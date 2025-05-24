@@ -1,15 +1,15 @@
-import Button from "@/components/BaseButton";
-import { colors } from "@/const/color";
-import { useModalContext } from "@/context/ModalContext";
-import { useTheme } from "@/context/ThemeContext";
-import { buttonStyles } from "@/src/styles/ButtonStyles";
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles";
-import { styles } from "@/src/styles/Styles";
-import { AddableIconType } from "@/src/types/AddableTravels";
-import { BaseModalContentProps } from "@/src/types/ModalContentProps";
-import { useState } from "react";
-import { Alert, Text, TextInput, View } from "react-native";
-import Icon from 'react-native-vector-icons/FontAwesome6';
+import Button from "@/components/BaseButton"
+import { colors } from "@/const/color"
+import { useModalContext } from "@/context/ModalContext"
+import { useTheme } from "@/context/ThemeContext"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
+import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { styles } from "@/src/styles/Styles"
+import { AddableIconType } from "@/src/types/AddableTravels"
+import { BaseModalContentProps } from "@/src/types/ModalContentProps"
+import { useState } from "react"
+import { Alert, Text, TextInput, View } from "react-native"
+import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()
@@ -21,12 +21,12 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
 
     const handleOnSubmit = () => {
         if (!icon.name?.trim()) {
-            Alert.alert('Input Required', 'Please enter icon name');
+            Alert.alert('Input Required', 'Please enter icon name')
             return
         }
 
-        onSubmit(icon);
-    };
+        onSubmit(icon)
+    }
 
     const changeIcon = (text: string) => {
         if (!text) {

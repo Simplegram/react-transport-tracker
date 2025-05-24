@@ -1,7 +1,7 @@
-import { useSupabase } from "@/context/SupabaseContext";
-import { AddableDirection, AddableIconType, AddableLap, AddableRoute, AddableStop, AddableTravel, AddableVehicleType } from "@/src/types/AddableTravels";
-import { EditableLap, EditableRoute, EditableStop, EditableTravel, EditableVehicleType } from "@/src/types/EditableTravels";
-import { IconType } from "@/src/types/Travels";
+import { useSupabase } from "@/context/SupabaseContext"
+import { AddableDirection, AddableIconType, AddableLap, AddableRoute, AddableStop, AddableTravel, AddableVehicleType } from "@/src/types/AddableTravels"
+import { EditableLap, EditableRoute, EditableStop, EditableTravel, EditableVehicleType } from "@/src/types/EditableTravels"
+import { IconType } from "@/src/types/Travels"
 
 export default function useModifyTravelData() {
     const { supabaseClient: supabase } = useSupabase()
