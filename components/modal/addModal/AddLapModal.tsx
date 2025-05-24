@@ -94,8 +94,6 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
             return
         }
 
-        console.log(lap)
-
         onSelect(lap)
     }
 
