@@ -64,6 +64,12 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
         closeEditLapModal()
     }
 
+    const handleLapRemove = (index: number) => {
+        const newLaps = [...laps]
+        newLaps.splice(index, 1)
+        setLaps(newLaps)
+    }
+
     useEffect(() => {
         setLaps(currentLaps)
     }, [currentLaps])
@@ -88,7 +94,17 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                             >
                                 {laps.map((lap: AddableLap, index) => (
                                     <Pressable key={index} style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
-                                        <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
+                                        <View style={{
+                                            flex: 1,
+                                            width: '100%',
+                                            justifyContent: 'space-between',
+                                            flexDirection: 'row',
+                                        }}>
+                                            <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
+                                            <Pressable onPress={() => handleLapRemove(index)}>
+                                                <Text style={[inputElementStyles[theme].inputLabel, { color: 'red' }]}>Remove</Text>
+                                            </Pressable>
+                                        </View>
                                         {stops.find(stop => stop.id === lap.stop_id) ? (
                                             <Text style={[inputElementStyles[theme].inputLabel, { color: colors.appBlue }]}>
                                                 {stops.find(stop => stop.id === lap.stop_id)?.name}
