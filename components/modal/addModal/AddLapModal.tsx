@@ -45,27 +45,30 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
     const [centerCoordinate, setCenterCoordinate] = useState<number[]>([0, 0])
 
-    useEffect(() => {
-        let lon: number = 0
-        let lat: number = 0
-        if (location) {
-            lon = location.coords.longitude
-            lat = location.coords.latitude
-        }
+    useFocusEffect(
+        React.useCallback(() => {
+            let lon: number = 0
+            let lat: number = 0
+            if (location) {
+                lon = location.coords.longitude
+                lat = location.coords.latitude
+            }
 
-        setLap({ ...lap, lon: lon, lat: lat })
-        setCenterCoordinate([lon, lat])
-    }, [location])
+            setLap({ ...lap, lon: lon, lat: lat })
+            setCenterCoordinate([lon, lat])
+        }, [location])
+    )
 
     useFocusEffect(
         React.useCallback(() => {
+            refetchLocation()
+
             const currentTime = new Date().toISOString()
             const formattedTime = formatLapTimeDisplay(currentTime)
 
             setLap({ ...lap, time: formattedTime, lon: 0, lat: 0, stop_id: null, note: null })
 
             return () => {
-                setCenterCoordinate([0, 0])
                 setLap({ ...lap, time: formattedTime, lon: 0, lat: 0, stop_id: null, note: null })
             }
         }, [isModalVisible])
