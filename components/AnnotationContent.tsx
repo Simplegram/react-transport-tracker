@@ -34,7 +34,7 @@ export default function AnnotationContent({ fullVehicleTypes, data_id, title, st
                 onPress={() => setEnableTitle(!enableTitle)}
             >
                 {stop && (
-                    <Icon size={10} name={fullVehicleTypes.find(type => type.id === Number(stop.vehicle_type))?.icon_id.name} />
+                    <Icon size={10} name={fullVehicleTypes.find(type => type.id === Number(stop.vehicle_type))?.icon_id.name || 'truck-plane'} />
                 )}
             </TouchableOpacity>
             {enableTitle && (
