@@ -59,6 +59,8 @@ interface FullLap {
     id: number
     travel_id: number
     time: string
+    lon: number | null
+    lat: number | null
     stop_id: Stop | null
     note: string | null
 }

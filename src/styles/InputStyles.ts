@@ -20,11 +20,6 @@ const lightInputElementStyles = StyleSheet.create({
         alignItems: 'center',
         gap: 10,
     },
-    inputGroupEnd: {
-        paddingBottom: 12,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc'
-    },
     inputLabel: {
         fontSize: 15,
         fontWeight: '500',
@@ -62,9 +57,6 @@ const inputElementStyles = {
         },
         inputGroupIcon: {
             ...lightInputElementStyles.inputGroupIcon,
-        },
-        inputGroupEnd: {
-            ...lightInputElementStyles.inputGroupEnd,
         },
         inputLabel: {
             ...lightInputElementStyles.inputLabel,

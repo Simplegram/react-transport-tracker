@@ -103,7 +103,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             </Pressable>
                         </View>
 
-                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                        <View style={inputElementStyles[theme].inputGroup}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>

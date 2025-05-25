@@ -45,13 +45,15 @@ interface AddableTravel {
 interface AddableLap {
     travel_id?: number | undefined
     time: string | undefined
+    lat: number | null
+    lon: number | null
     stop_id: number | null
     note: string | null
 }
 
 interface AddableCoordinates {
-    lon: number | null
-    lat: number | null
+    lon: number | null | undefined
+    lat: number | null | undefined
 }
 
 export interface StandaloneModalProp {
@@ -86,3 +88,4 @@ interface AddableLapModalProp {
 export {
     AddableCoordinates, AddableCoordModalProp, AddableDirection, AddableIconType, AddableLap, AddableLapModalProp, AddableLapsModalProp, AddableRoute, AddableStop, AddableTravel, AddableVehicleType
 }
+

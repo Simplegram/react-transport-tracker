@@ -5,7 +5,7 @@ import { useTravelContext } from '@/context/PageContext'
 import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
-import { DataItem } from '@/src/types/Travels'
+import { DataItem, Stop } from '@/src/types/Travels'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
@@ -30,6 +30,14 @@ const formatDurationHoursMinutes = (milliseconds: number): string => {
     const hours = Math.floor(totalMinutes / 60)
     const minutes = totalMinutes % 60
     return `${hours}h ${minutes}m / ${totalMinutes}m`
+}
+
+interface LapLatLon {
+    id: string
+    stop: Stop | null
+    name: string | undefined
+    coords: number[]
+    time: string
 }
 
 export default function TravelDetail() {
@@ -60,14 +68,17 @@ export default function TravelDetail() {
 
     useFocusEffect(
         React.useCallback(() => {
-            setDataToUse(selectedTravelItems)
-        }, [selectedTravelItems])
+            refetchTravelData()
+
+            const allLaps = selectedTravelItems.map(travel => travel.id)
+            getTravelLaps(allLaps)
+        }, [])
     )
 
     useFocusEffect(
         React.useCallback(() => {
-            refetchTravelData()
-        }, [])
+            setDataToUse(selectedTravelItems)
+        }, [selectedTravelItems])
     )
 
     const sortedData = [...dataToUse].sort((a, b) => {
@@ -114,17 +125,28 @@ export default function TravelDetail() {
         return coords
     })
 
-    const lapLatLon = travelLaps
-        ?.filter(lap => lap.stop_id !== null && lap.stop_id.lon && lap.stop_id.lat)
-        .map(lap => (
-            {
-                id: "lap",
-                stop: lap.stop_id,
-                name: lap.stop_id?.name,
-                coords: [lap.stop_id?.lon, lap.stop_id?.lat],
-                time: lap.time,
-            }
-        )) || []
+    let lapLatLon: LapLatLon[] = []
+    if (travelLaps)
+        lapLatLon = travelLaps
+            .filter(lap => (lap.stop_id !== null && lap.stop_id.lon && lap.stop_id.lat) || (lap.lon && lap.lat))
+            .map(lap => {
+                let coords: number[]
+                if (lap.stop_id && lap.stop_id.lon && lap.stop_id.lat) {
+                    coords = [lap.stop_id.lon, lap.stop_id.lat]
+                }
+                else if (lap.lon && lap.lat) coords = [lap.lon, lap.lat]
+                else coords = []
+
+                return {
+                    id: "lap",
+                    stop: lap.stop_id,
+                    name: lap.stop_id?.name,
+                    coords: coords,
+                    time: lap.time,
+                }
+            })
+
+    console.log(lapLatLon)
 
     const fullLatLon = [...stopLatLon, ...lapLatLon]
 

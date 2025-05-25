@@ -3,22 +3,22 @@ import React from 'react'
 import PagerView from 'react-native-pager-view'
 import Divider from './Divider'
 
+import TravelFlatlist from '@/components/TravelFlatlist'
 import { colors } from '@/const/color'
 import { useTravelContext } from '@/context/PageContext'
 import { useTheme } from '@/context/ThemeContext'
-import { travelCardStyles, travelEmptyContainer } from '@/src/styles/TravelListStyles'
+import { travelEmptyContainer } from '@/src/styles/TravelListStyles'
 import { DataItemWithNewKey } from '@/src/utils/dataUtils'
-import { formatDate } from '@/src/utils/dateUtils'
-import { calculateDuration } from '@/src/utils/utils'
 import { router } from 'expo-router'
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 interface GroupedDataDisplayProps {
     data: Record<string, DataItemWithNewKey[]>
     currentDate: string
+    refetch: () => void
 }
 
-export default function GroupedDataDisplay({ data: finalGroupedData, currentDate }: GroupedDataDisplayProps) {
+export default function GroupedDataDisplay({ data: finalGroupedData, currentDate, refetch }: GroupedDataDisplayProps) {
     const { theme } = useTheme()
 
     const { setSelectedItem, setSelectedTravelItems } = useTravelContext()
@@ -56,19 +56,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                     pageMargin={10}
                 >
                     {directionNames.map((directionNameKey, index) => (
-                        <View key={directionNameKey} style={{
-                            flex: 1,
-                            paddingTop: 6,
-                            paddingLeft: 10,
-                            paddingBottom: 10,
-                            paddingRight: 10,
-                            borderWidth: 1,
-                            borderTopLeftRadius: 12,
-                            borderTopRightRadius: 12,
-                            borderBottomLeftRadius: 10,
-                            borderBottomRightRadius: 10,
-                            borderColor: borderColor
-                        }}>
+                        <View key={directionNameKey} style={[styles.pagerViewContentContainer, { borderColor: borderColor }]}>
                             <View key={directionNameKey} style={styles.cardCanvas}>
                                 <View>
                                     <Pressable onPress={() => handleViewTravelDetails(directionNameKey)}>
@@ -78,65 +66,12 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                     </Pressable>
                                 </View>
 
-                                <ScrollView contentContainerStyle={travelCardStyles[theme].cardHolder} nestedScrollEnabled={true}>
-                                    {finalGroupedData[directionNameKey].map((item, itemIndex) => (
-                                        <Pressable
-                                            key={item.id}
-                                            style={travelCardStyles[theme].card}
-                                            onPress={() => handleItemPress(directionNameKey, itemIndex)}
-                                        >
-                                            <View style={travelCardStyles[theme].routeInfoSection}>
-                                                <Text style={travelCardStyles[theme].routeText}>
-                                                    {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
-                                                </Text>
-                                                <Text style={travelCardStyles[theme].vehicleText}>
-                                                    {item.vehicle_code || 'N/A'}
-                                                </Text>
-                                            </View>
-
-                                            <Divider />
-
-                                            <View style={travelCardStyles[theme].stopsTimeSection}>
-                                                <View style={travelCardStyles[theme].stopTimeBlock}>
-                                                    <Text style={travelCardStyles[theme].stopText}>{item.first_stop_id?.name || 'N/A'}</Text>
-                                                    <Text style={travelCardStyles[theme].timeText}>
-                                                        {item.bus_initial_departure ? formatDate(item.bus_initial_departure) : 'N/A'}
-                                                    </Text>
-                                                </View>
-
-                                                <View style={travelCardStyles[theme].stopArrowBlock}>
-                                                    <Text style={travelCardStyles[theme].stopArrowText}>➜</Text>
-                                                    <Text style={travelCardStyles[theme].notesLabel}>{calculateDuration(item)}</Text>
-                                                </View>
-
-                                                <View style={travelCardStyles[theme].stopTimeBlock}>
-                                                    <Text style={travelCardStyles[theme].stopText}>{item.last_stop_id?.name || 'N/A'}</Text>
-                                                    <Text style={travelCardStyles[theme].timeText}>
-                                                        {item.bus_final_arrival ? formatDate(item.bus_final_arrival) : 'N/A'}
-                                                    </Text>
-                                                </View>
-                                            </View>
-
-                                            <Divider />
-
-                                            <View style={travelCardStyles[theme].lapsSection}>
-                                                <Text style={travelCardStyles[theme].lapText}>{item.lapCount} lap(s)</Text>
-                                            </View>
-
-                                            {item.notes && (
-                                                <>
-                                                    <Divider />
-                                                    <View style={travelCardStyles[theme].notesSection}>
-                                                        <Text style={travelCardStyles[theme].notesLabel}>Notes:</Text>
-                                                        <Text style={travelCardStyles[theme].notesText}>
-                                                            {item.notes}
-                                                        </Text>
-                                                    </View>
-                                                </>
-                                            )}
-                                        </Pressable>
-                                    ))}
-                                </ScrollView>
+                                <TravelFlatlist
+                                    items={finalGroupedData[directionNameKey]}
+                                    directionNameKey={directionNameKey}
+                                    onPress={handleItemPress}
+                                    refetch={refetch}
+                                />
                             </View>
                             {directionNames.length > 1 && (
                                 <>
@@ -167,6 +102,18 @@ const styles = StyleSheet.create({
     },
     pagerView: {
         flex: 1,
+    },
+    pagerViewContentContainer: {
+        flex: 1,
+        paddingTop: 6,
+        paddingLeft: 10,
+        paddingBottom: 10,
+        paddingRight: 10,
+        borderWidth: 1,
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
+        borderBottomLeftRadius: 10,
+        borderBottomRightRadius: 10,
     },
     cardCanvas: {
         flex: 7,

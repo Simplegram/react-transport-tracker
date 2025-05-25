@@ -73,6 +73,12 @@ export default function HomePage() {
         closeCalendarModal()
     }
 
+    const refetchTravels = async () => {
+        await getDates()
+        await getAllLaps()
+        await getTravelAtDate()
+    }
+
     useEffect(() => {
         setSelectedDate(getTodayString())
     }, [])
@@ -105,10 +111,10 @@ export default function HomePage() {
     return (
         <View style={mainMenuStyles[theme].container}>
             <View style={mainMenuStyles[theme].listContainer}>
-                {loading == true || !supabase || !groupedData ? (
+                {!supabase || !groupedData ? (
                     <LoadingScreen></LoadingScreen>
                 ) : (
-                    <GroupedDataDisplay data={groupedData} currentDate={selectedDate}></GroupedDataDisplay>
+                    <GroupedDataDisplay data={groupedData} currentDate={selectedDate} refetch={refetchTravels}></GroupedDataDisplay>
                 )}
             </View>
             <Button

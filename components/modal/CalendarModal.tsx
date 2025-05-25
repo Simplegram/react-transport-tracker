@@ -21,7 +21,7 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
     const { theme } = useTheme()
 
     const pastScrollRange = getMonthsSinceEarliestDate(dates)
-    const futureScrollRange = getFutureMonthFromLatestDate(dates, 1)
+    const futureScrollRange = getFutureMonthFromLatestDate(currentSelectedDate, 1)
     const [currentDate] = useState(new Date().toISOString().split('T')[0])
 
     return (
