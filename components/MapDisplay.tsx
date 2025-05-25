@@ -33,6 +33,7 @@ export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, dragga
                 <Camera
                     zoomLevel={zoomLevel}
                     centerCoordinate={centerCoordinate}
+                    animationMode={"moveTo"}
                 />
             </MapView>
             <View style={styles.pointContainer}>
