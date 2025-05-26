@@ -36,20 +36,23 @@ const TabsLayout = () => {
                     <StatusBar
                         backgroundColor={statusBarStyles[theme]}
                     />
-                    <Tabs screenOptions={{
-                        tabBarStyle: {
-                            height: 60,
-                            backgroundColor: barColor,
-                            borderTopWidth: 0
-                        },
-                        tabBarLabelStyle: {
-                            fontSize: 13,
-                            fontWeight: 'bold',
-                        },
-                        tabBarActiveTintColor: colors.appBlue,
-                        tabBarInactiveTintColor: iconColor,
-                        headerShown: false,
-                    }}>
+                    <Tabs
+                        screenOptions={{
+                            tabBarStyle: {
+                                height: 60,
+                                backgroundColor: barColor,
+                                borderTopWidth: 0
+                            },
+                            tabBarLabelStyle: {
+                                fontSize: 13,
+                                fontWeight: 'bold',
+                            },
+                            tabBarActiveTintColor: colors.appBlue,
+                            tabBarInactiveTintColor: iconColor,
+                            headerShown: false,
+                        }}
+                        backBehavior="history"
+                    >
                         <Tabs.Screen
                             name="mainMenu"
                             options={{
