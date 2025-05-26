@@ -68,7 +68,7 @@ const TabsLayout = () => {
                             }}
                         />
                         <Tabs.Screen
-                            name="addPage"
+                            name="manage"
                             options={{
                                 title: "Modify",
                                 tabBarIcon: ({ color }) => <Icon size={24} name="pen-to-square" color={color} />,
@@ -86,30 +86,11 @@ const TabsLayout = () => {
                             }}
                         />
                         <Tabs.Screen
-                            name="dataList"
-                            options={{
-                                title: "Data List",
-                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
-                                href: null
-                            }}
-                        />
-                        <Tabs.Screen
                             name="travelDetail"
                             options={{
                                 title: "Travel Detail",
                                 tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
                                 href: null
-                            }}
-                        />
-                        <Tabs.Screen
-                            name="settings"
-                            options={{
-                                title: "Travel Detail",
-                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
-                                href: null,
-                                tabBarStyle: {
-                                    display: "none"
-                                }
                             }}
                         />
                     </Tabs>

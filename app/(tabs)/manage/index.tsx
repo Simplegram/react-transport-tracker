@@ -44,7 +44,7 @@ const NavigationPage: React.FC = () => {
     const handleItemPress = (selectedModification: string) => {
         if (selectedModification) {
             setSelectedModification(selectedModification)
-            router.push("/(tabs)/dataList")
+            router.push("manage/dataList")
         }
     }
 
@@ -70,7 +70,7 @@ const NavigationPage: React.FC = () => {
                     title={'Manage settings'}
                     style={buttonStyles[theme].addButton}
                     textStyle={buttonStyles[theme].addButtonText}
-                    onPress={() => router.push("/(tabs)/settings")}
+                    onPress={() => router.push("manage/settings")}
                 />
             </View>
         </CollapsibleHeaderPage>
