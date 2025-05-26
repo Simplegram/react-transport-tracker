@@ -3,17 +3,18 @@ import { dividerStyles } from "@/src/styles/Styles"
 import { View } from "react-native"
 
 interface DividerProp {
-    size?: number
+    paddingSize?: number
+    width?: number
 }
 
-export default function Divider({ size = 5 }: DividerProp) {
+export default function Divider({ paddingSize = 5, width = 0.5 }: DividerProp) {
     const { theme } = useTheme()
 
     return (
         <View style={{
-            paddingTop: size,
-            marginBottom: size,
-            borderBottomWidth: 1,
+            paddingTop: paddingSize,
+            marginBottom: paddingSize,
+            borderBottomWidth: width,
             borderColor: dividerStyles[theme]
         }} />
     )
