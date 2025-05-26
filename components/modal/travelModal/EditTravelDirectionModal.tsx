@@ -25,35 +25,36 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
             animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose}>
-                <View style={modalStyles[theme].modalContainer}>
-                    <View style={modalElementStyles[theme].header}>
-                        <Text style={modalElementStyles[theme].title}>Select a Direction</Text>
+            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose} />
+            <View style={modalStyles[theme].modalContainer}>
+                <View style={modalElementStyles[theme].header}>
+                    <Text style={modalElementStyles[theme].title}>Select a Direction</Text>
+                    <Pressable onPress={onClose}>
                         <Text style={modalElementStyles[theme].closeLabel}>Close</Text>
-                    </View>
-                    <TextInput
-                        style={inputStyles[theme].textInput}
-                        placeholder="Search direction..."
-                        placeholderTextColor={colors.text.placeholderGray}
-                        value={searchQuery}
-                        onChangeText={setSearchQuery}
-                    />
-                    {filteredItems.length === 0 ? (
-                        <View style={modalStyles[theme].emptyList}>
-                            <Text style={modalElementStyles[theme].label}>No route found</Text>
-                        </View>
-                    ) : (
-                        <FlatlistPicker
-                            items={filteredItems}
-                            onSelect={onSelect}
-                        >
-                            {(item) => (
-                                <Text style={modalElementStyles[theme].label}>{item.name}</Text>
-                            )}
-                        </FlatlistPicker>
-                    )}
+                    </Pressable>
                 </View>
-            </Pressable>
+                <TextInput
+                    style={inputStyles[theme].textInput}
+                    placeholder="Search direction..."
+                    placeholderTextColor={colors.text.placeholderGray}
+                    value={searchQuery}
+                    onChangeText={setSearchQuery}
+                />
+                {filteredItems.length === 0 ? (
+                    <View style={modalStyles[theme].emptyList}>
+                        <Text style={modalElementStyles[theme].label}>No route found</Text>
+                    </View>
+                ) : (
+                    <FlatlistPicker
+                        items={filteredItems}
+                        onSelect={onSelect}
+                    >
+                        {(item) => (
+                            <Text style={modalElementStyles[theme].label}>{item.name}</Text>
+                        )}
+                    </FlatlistPicker>
+                )}
+            </View>
         </Modal>
     )
 }
