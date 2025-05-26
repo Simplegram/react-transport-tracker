@@ -11,10 +11,12 @@ import { styles } from "@/src/styles/Styles"
 import { AddableCoordinates } from "@/src/types/AddableTravels"
 import { EditableStop } from "@/src/types/EditableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import AddCoordModal from "../addModal/AddCoordModal"
+import { sortByIdToFront } from "@/src/utils/utils"
+import { Stop } from "@/src/types/Travels"
 
 export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()
@@ -31,6 +33,8 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
         openStopModal: openCoordModal,
         closeStopModal: closeCoordModal
     } = useStopModal()
+
+    const savedVehicleTypeId = useRef(stop.vehicle_type)
 
     const handleCoordSelect = (coordinates: AddableCoordinates) => {
         if (!coordinates.lat || !coordinates.lon) {
@@ -115,7 +119,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                                     showsHorizontalScrollIndicator={false}
                                     keyboardShouldPersistTaps={"always"}
                                 >
-                                    {fullVehicleTypes.map((type) => (
+                                    {sortByIdToFront(fullVehicleTypes, savedVehicleTypeId.current).map((type: EditableStop) => (
                                         <TouchableOpacity
                                             key={type.id}
                                             style={[
