@@ -1,12 +1,13 @@
 import AnnotationContent from '@/components/AnnotationContent'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import LoadingScreen from '@/components/LoadingScreen'
+import { colors } from '@/const/color'
 import { useTravelContext } from '@/context/PageContext'
 import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
 import { DataItem, Stop } from '@/src/types/Travels'
-import { timeToMinutes } from '@/src/utils/dateUtils'
+import { sumTimesMs, timeToMinutes } from '@/src/utils/dateUtils'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
 import { formatLapTimeDisplay } from '@/src/utils/utils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
@@ -16,12 +17,13 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native'
 
 const { width: screenWidth } = Dimensions.get("screen")
 
-const formatDurationMinutes = (milliseconds: number): string => {
-    if (isNaN(milliseconds) || milliseconds < 0) {
+const formatDurationMinutes = (milliseconds: number, showSign: boolean = false): string => {
+    if (isNaN(milliseconds)) {
         return 'N/A'
     }
     const minutes = Math.floor(milliseconds / (1000 * 60))
-    return `${minutes} mins`
+    const sign = showSign ? Math.sign(milliseconds) < 0 ? '' : '+' : ''
+    return `${sign}${minutes} mins`
 }
 
 const formatDurationHoursMinutes = (milliseconds: number): string => {
@@ -86,7 +88,9 @@ export default function TravelDetail() {
     }, [selectedTravelItems])
 
     useEffect(() => {
-        if (averageTime !== undefined) setTravelTimes([...travelTimes, averageTime])
+        if (averageTime !== undefined) {
+            setTravelTimes([...travelTimes, averageTime])
+        }
     }, [averageTime])
 
     useFocusEffect(
@@ -177,9 +181,8 @@ export default function TravelDetail() {
 
     const centerLatLon = getSimpleCentroid(validCoords)
 
+    let averageRouteDurationMilliseconds = sumTimesMs(travelTimes)
     let totalOnRoadMilliseconds = 0
-    let earliestStartMillis: number | null = null
-    let latestEndMillis: number | null = null
     let sumInitialStopDurationMilliseconds = 0
 
     sortedData.forEach(trip => {
@@ -195,15 +198,6 @@ export default function TravelDetail() {
             if (departureValid && finalArrivalValid) {
                 if (finalArrivalDate.getTime() >= departureDate.getTime()) {
                     totalOnRoadMilliseconds += finalArrivalDate.getTime() - departureDate.getTime()
-
-                    if (earliestStartMillis === null || departureDate.getTime() < earliestStartMillis) {
-                        earliestStartMillis = departureDate.getTime()
-                    }
-
-                    if (latestEndMillis === null || finalArrivalDate.getTime() > latestEndMillis) {
-                        latestEndMillis = finalArrivalDate.getTime()
-                    }
-
                 } else {
                     console.warn(`Trip ID ${trip.id}: Final arrival (${trip.bus_final_arrival}) is before initial departure (${trip.bus_initial_departure}). Excluding from duration calcs.`)
                 }
@@ -227,31 +221,34 @@ export default function TravelDetail() {
         }
     })
 
-
-    let totalCalendarSpanMilliseconds = 0
-    if (earliestStartMillis !== null && latestEndMillis !== null && latestEndMillis > earliestStartMillis) {
-        totalCalendarSpanMilliseconds = latestEndMillis - earliestStartMillis
-    }
-
     let efficiencyPercentage = 0
-    if (totalCalendarSpanMilliseconds > 0) {
-        efficiencyPercentage = (totalOnRoadMilliseconds / totalCalendarSpanMilliseconds) * 100
+    if (averageRouteDurationMilliseconds > 0) {
+        efficiencyPercentage = (averageRouteDurationMilliseconds / totalOnRoadMilliseconds) * 100
     }
+
+    const timeDiff = formatDurationMinutes(totalOnRoadMilliseconds - averageRouteDurationMilliseconds, true)
+    const diffColor = Math.sign(totalOnRoadMilliseconds - averageRouteDurationMilliseconds) < 0 ? colors.dimGreenPositive : colors.dimRedCancel
 
     return (
         <CollapsibleHeaderPage headerText='Travel Detail'>
             <View style={travelDetailStyles[theme].container}>
                 <View style={travelDetailStyles[theme].card}>
-                    <Text style={travelDetailStyles[theme].cardTitle}>Efficiency Overview</Text>
+                    <Text style={travelDetailStyles[theme].cardTitle}>Efficiency Overview (vs. Average)</Text>
 
                     <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Total Time Span:</Text>
-                        <Text style={travelDetailStyles[theme].valueText}>{formatDurationMinutes(totalCalendarSpanMilliseconds)}</Text>
+                        <Text style={travelDetailStyles[theme].label}>Average Route Duration:</Text>
+                        <Text style={travelDetailStyles[theme].valueText}>{formatDurationMinutes(averageRouteDurationMilliseconds)}</Text>
                     </View>
 
                     <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Total On-Road Time:</Text>
-                        <Text style={travelDetailStyles[theme].valueText}>{formatDurationMinutes(totalOnRoadMilliseconds)}</Text>
+                        <Text style={travelDetailStyles[theme].label}>Total On-Road Duration:</Text>
+                        <View style={{
+                            gap: 5,
+                            flexDirection: 'row',
+                        }}>
+                            <Text style={travelDetailStyles[theme].valueText}>{formatDurationMinutes(totalOnRoadMilliseconds)}</Text>
+                            <Text style={[travelDetailStyles[theme].valueText, { color: diffColor }]}>{`(${timeDiff})`}</Text>
+                        </View>
                     </View>
 
                     <View style={travelDetailStyles[theme].detailRow}>
