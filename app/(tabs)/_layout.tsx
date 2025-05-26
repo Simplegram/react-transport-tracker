@@ -60,6 +60,9 @@ const TabsLayout = () => {
                             tabBarActiveTintColor: colors.appBlue,
                             tabBarInactiveTintColor: iconColor,
                             headerShown: false,
+                            sceneStyle: {
+                                backgroundColor: barColor
+                            }
                         }}
                         backBehavior="order"
                     >
