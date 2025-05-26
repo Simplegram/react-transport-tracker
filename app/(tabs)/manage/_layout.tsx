@@ -1,9 +1,10 @@
 import { Stack } from "expo-router"
 
-export default function ManageLayout() {
+export default function Layout() {
     return (
         <Stack screenOptions={{
-            headerShown: false
+            headerShown: false,
+            animation: "ios_from_right",
         }}>
             <Stack.Screen
                 name="index"
