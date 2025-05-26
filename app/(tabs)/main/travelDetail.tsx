@@ -146,8 +146,6 @@ export default function TravelDetail() {
                 }
             })
 
-    console.log(lapLatLon)
-
     const fullLatLon = [...stopLatLon, ...lapLatLon]
 
     const validCoords = fullLatLon
