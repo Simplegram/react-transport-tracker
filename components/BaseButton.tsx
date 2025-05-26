@@ -33,8 +33,6 @@ export default function Button({
         return [styles.buttonContainer, style, { backgroundColor }] as StyleProp<ViewStyle>
     }
 
-    console.log(title)
-
     return (
         <Pressable style={buttonContainerStyle} onPress={onPress}>
             {({ pressed }) => {
