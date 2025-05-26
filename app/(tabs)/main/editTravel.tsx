@@ -204,7 +204,7 @@ export default function EditTravelItem() {
             }
         }
 
-        router.push('/(tabs)/mainMenu')
+        router.push('/(tabs)/main')
     }
 
     return (

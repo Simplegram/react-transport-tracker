@@ -198,7 +198,7 @@ export default function AddTravel() {
 
         setDefaultTravel()
 
-        router.push('/(tabs)/mainMenu')
+        router.push('/(tabs)/main')
     }
 
     return (
