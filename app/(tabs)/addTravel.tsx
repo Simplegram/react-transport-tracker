@@ -32,7 +32,7 @@ const PLACEHOLDER_TEXT_COLOR = '#9E9E9E'
 export default function AddTravel() {
     const { theme } = useTheme()
 
-    const { stops, routes, directions, vehicleTypes } = useGetTravelData()
+    const { stops, routes, directions, vehicleTypes, refetchTravelData } = useGetTravelData()
 
     const { addTravel, addLaps } = useModifyTravelData()
 
@@ -72,8 +72,6 @@ export default function AddTravel() {
         openStopModal: openLapsModal,
         closeStopModal: closeLapsModal
     } = useStopModal()
-
-    const { refetchTravelData } = useGetTravelData()
 
     const setDefaultTravel = () => {
         setTravel({
