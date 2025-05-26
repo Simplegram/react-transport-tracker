@@ -7,6 +7,7 @@ import useGetTravelData from '@/hooks/useGetTravelData'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
 import { DataItem, Stop } from '@/src/types/Travels'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
+import { formatLapTimeDisplay } from '@/src/utils/utils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
@@ -249,12 +250,25 @@ export default function TravelDetail() {
                                 const durationMillis = finalArrivalDate.getTime() - departureDate.getTime()
                                 const durationString = formatDurationHoursMinutes(durationMillis)
 
-                                const tripIdentifier = `${trip.vehicle_code || 'N/A'} - ${trip.routes?.name || 'N/A'}`
+                                const departureTime = formatLapTimeDisplay(trip.bus_initial_departure, true)
+                                const arrivalTime = formatLapTimeDisplay(trip.bus_final_arrival, true)
+                                const timeString = `${departureTime} - ${arrivalTime}`
+
+                                const stopString = `${trip.first_stop_id.name} to ${trip.last_stop_id.name}`
+                                const tripIdentifier = `${trip.routes.code} | ${trip.vehicle_code || 'N/A'}`
 
                                 return (
                                     <View key={trip.id} style={travelDetailStyles[theme].detailRow}>
-                                        <Text style={travelDetailStyles[theme].label}>{tripIdentifier}:</Text>
-                                        <Text style={travelDetailStyles[theme].valueText}>{durationString}</Text>
+                                        <Text style={travelDetailStyles[theme].specialValue}>{tripIdentifier}</Text>
+                                        <Text style={travelDetailStyles[theme].valueText}>{stopString}</Text>
+                                        <View style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            gap: 5,
+                                        }}>
+                                            <Text style={travelDetailStyles[theme].valueText}>{timeString}</Text>
+                                            <Text style={travelDetailStyles[theme].valueText}>({durationString})</Text>
+                                        </View>
                                     </View>
                                 )
                             } catch (error) {
