@@ -51,10 +51,10 @@ const TabsLayout = () => {
                             tabBarInactiveTintColor: iconColor,
                             headerShown: false,
                         }}
-                        backBehavior="history"
+                        backBehavior="initialRoute"
                     >
                         <Tabs.Screen
-                            name="mainMenu"
+                            name="main"
                             options={{
                                 title: "Home",
                                 tabBarIcon: ({ color }) => <Icon size={24} name="house" color={color} />,
@@ -72,25 +72,6 @@ const TabsLayout = () => {
                             options={{
                                 title: "Modify",
                                 tabBarIcon: ({ color }) => <Icon size={24} name="pen-to-square" color={color} />,
-                            }}
-                        />
-                        <Tabs.Screen
-                            name="editTravel"
-                            options={{
-                                title: "Edit Travel",
-                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
-                                href: null,
-                                tabBarStyle: {
-                                    display: "none"
-                                }
-                            }}
-                        />
-                        <Tabs.Screen
-                            name="travelDetail"
-                            options={{
-                                title: "Travel Detail",
-                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
-                                href: null
                             }}
                         />
                     </Tabs>

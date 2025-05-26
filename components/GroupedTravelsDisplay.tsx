@@ -31,13 +31,13 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
         const itemToSelect = finalGroupedData[directionNameKey][itemIndex]
         if (itemToSelect) {
             setSelectedItem(itemToSelect)
-            router.push("/(tabs)/editTravel")
+            router.push("main/editTravel")
         }
     }
 
     const handleViewTravelDetails = (directionNameKey: string) => {
         setSelectedTravelItems(finalGroupedData[directionNameKey])
-        router.push("/(tabs)/travelDetail")
+        router.push("main/travelDetail")
     }
 
     const borderColor = theme === 'light' ? colors.background.black : colors.text.dimmerWhite

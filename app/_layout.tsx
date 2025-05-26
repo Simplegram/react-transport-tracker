@@ -15,7 +15,7 @@ const InitialLayout = () => {
         const inAuthGroup = segments[0] === '(tabs)'
 
         if (session && !inAuthGroup) {
-            router.replace('/mainMenu')
+            router.replace('/main')
         } else if (!session) {
             router.replace('/')
         }
