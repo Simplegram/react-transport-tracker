@@ -121,7 +121,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                     </View>
 
                     <View style={{ paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
-                        <Button title='Add lap' color={colors.appBlue} onPress={openLapModal} style={addButtonStyles.buttonContainer} textStyle={addButtonStyles.plusText}></Button>
+                        <Button title='Add lap' color={colors.appBlue} onPress={openLapModal} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>
