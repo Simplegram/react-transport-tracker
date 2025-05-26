@@ -105,7 +105,7 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                         )}
                     </View>
 
-                    <View style={{ paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
+                    <View style={buttonStyles[theme].buttonRow}>
                         <Button title='Add lap' color={colors.appBlue} onPress={openLapModal} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
 
