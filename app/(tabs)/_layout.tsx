@@ -28,7 +28,7 @@ const TabsLayout = () => {
         const currentPathname = usePathname()
         if (paths.indexOf(currentPathname) <= -1) return "flex"
 
-        return "none" as "none" | "flex"
+        return "none"
     }
 
     return (
