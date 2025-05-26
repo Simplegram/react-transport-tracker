@@ -157,14 +157,7 @@ export default function TravelDetail() {
     let totalOnRoadMilliseconds = 0
     let earliestStartMillis: number | null = null
     let latestEndMillis: number | null = null
-    let validTripCount = 0
     let sumInitialStopDurationMilliseconds = 0
-    let uniqueVehicles = new Set<string>()
-    let uniqueRoutes = new Set<string>()
-    let uniqueOrigins = new Set<string>()
-    let uniqueDestinations = new Set<string>()
-    let tripsByType: { [key: string]: number } = {}
-
 
     sortedData.forEach(trip => {
         try {
@@ -179,7 +172,6 @@ export default function TravelDetail() {
             if (departureValid && finalArrivalValid) {
                 if (finalArrivalDate.getTime() >= departureDate.getTime()) {
                     totalOnRoadMilliseconds += finalArrivalDate.getTime() - departureDate.getTime()
-                    validTripCount++
 
                     if (earliestStartMillis === null || departureDate.getTime() < earliestStartMillis) {
                         earliestStartMillis = departureDate.getTime()
@@ -207,25 +199,6 @@ export default function TravelDetail() {
                 console.warn(`Trip ID ${trip.id}: Invalid initial arrival or departure date for stop time calc.`)
             }
 
-
-            if (trip.vehicle_code) {
-                uniqueVehicles.add(trip.vehicle_code)
-            }
-            if (trip.routes?.name) {
-                uniqueRoutes.add(trip.routes.name)
-            }
-            if (trip.first_stop_id?.name) {
-                uniqueOrigins.add(trip.first_stop_id.name)
-            }
-            if (trip.last_stop_id?.name) {
-                uniqueDestinations.add(trip.last_stop_id.name)
-            }
-
-            if (trip.types?.name) {
-                tripsByType[trip.types.name] = (tripsByType[trip.types.name] || 0) + 1
-            }
-
-
         } catch (error) {
             console.error(`Error processing trip ID ${trip.id || 'unknown'}:`, error)
         }
@@ -241,11 +214,6 @@ export default function TravelDetail() {
     if (totalCalendarSpanMilliseconds > 0) {
         efficiencyPercentage = (totalOnRoadMilliseconds / totalCalendarSpanMilliseconds) * 100
     }
-
-    const uniqueVehiclesList = [...uniqueVehicles.values()]
-    const uniqueRoutesList = [...uniqueRoutes.values()]
-    const uniqueOriginsList = [...uniqueOrigins.values()]
-    const uniqueDestinationsList = [...uniqueDestinations.values()]
 
     return (
         <CollapsibleHeaderPage headerText='Travel Detail'>
@@ -336,81 +304,6 @@ export default function TravelDetail() {
                             ))}
                     </MapView>
                 </View>
-
-                <View style={travelDetailStyles[theme].card}>
-                    <Text style={travelDetailStyles[theme].cardTitle}>Activity Counts</Text>
-
-                    <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Total Trips Processed:</Text>
-                        <Text style={travelDetailStyles[theme].valueText}>{sortedData.length}</Text>
-                    </View>
-
-                    <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Valid Trips for Duration:</Text>
-                        <Text style={travelDetailStyles[theme].valueText}>{validTripCount}</Text>
-                    </View>
-
-                    {Object.keys(tripsByType).length > 0 && (
-                        <View style={travelDetailStyles[theme].detailRow}>
-                            <Text style={travelDetailStyles[theme].label}>Trips by Type:</Text>
-                            <View style={travelDetailStyles[theme].value}>
-                                {Object.entries(tripsByType).map(([type, count]) => (
-                                    <Text key={type} style={[travelDetailStyles[theme].valueText, travelDetailStyles[theme].specialValue]}>{type}: {count}</Text>
-                                ))}
-                            </View>
-                        </View>
-                    )}
-                </View>
-
-                {(uniqueVehiclesList.length > 0 || uniqueRoutesList.length > 0 || uniqueOriginsList.length > 0 || uniqueDestinationsList.length > 0) && (
-                    <View style={travelDetailStyles[theme].card}>
-                        <Text style={travelDetailStyles[theme].cardTitle}>Unique Items</Text>
-
-                        {uniqueVehiclesList.length > 0 && (
-                            <View style={travelDetailStyles[theme].detailRow}>
-                                <Text style={travelDetailStyles[theme].label}>Unique Vehicles ({uniqueVehiclesList.length}):</Text>
-                                <View style={travelDetailStyles[theme].value}>
-                                    {uniqueVehiclesList.map((item, index) => (
-                                        <Text key={index} style={[travelDetailStyles[theme].valueText, travelDetailStyles[theme].specialValue]}>{item}</Text>
-                                    ))}
-                                </View>
-                            </View>
-                        )}
-
-                        {uniqueRoutesList.length > 0 && (
-                            <View style={travelDetailStyles[theme].detailRow}>
-                                <Text style={travelDetailStyles[theme].label}>Unique Routes ({uniqueRoutesList.length}):</Text>
-                                <View style={travelDetailStyles[theme].value}>
-                                    {uniqueRoutesList.map((item, index) => (
-                                        <Text key={index} style={travelDetailStyles[theme].valueText}>{item}</Text>
-                                    ))}
-                                </View>
-                            </View>
-                        )}
-
-                        {uniqueOriginsList.length > 0 && (
-                            <View style={travelDetailStyles[theme].detailRow}>
-                                <Text style={travelDetailStyles[theme].label}>Unique Origins ({uniqueOriginsList.length}):</Text>
-                                <View style={travelDetailStyles[theme].value}>
-                                    {uniqueOriginsList.map((item, index) => (
-                                        <Text key={index} style={travelDetailStyles[theme].valueText}>{item}</Text>
-                                    ))}
-                                </View>
-                            </View>
-                        )}
-
-                        {uniqueDestinationsList.length > 0 && (
-                            <View style={travelDetailStyles[theme].detailRow}>
-                                <Text style={travelDetailStyles[theme].label}>Unique Destinations ({uniqueDestinationsList.length}):</Text>
-                                <View style={travelDetailStyles[theme].value}>
-                                    {uniqueDestinationsList.map((item, index) => (
-                                        <Text key={index} style={travelDetailStyles[theme].valueText}>{item}</Text>
-                                    ))}
-                                </View>
-                            </View>
-                        )}
-                    </View>
-                )}
             </View>
         </CollapsibleHeaderPage>
     )
