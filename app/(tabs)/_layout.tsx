@@ -5,7 +5,7 @@ import { SupabaseProvider } from "@/context/SupabaseContext"
 import { useTheme } from "@/context/ThemeContext"
 import { statusBarStyles } from "@/src/styles/Styles"
 import { DataItem } from "@/src/types/Travels"
-import { Tabs } from "expo-router"
+import { Tabs, usePathname } from "expo-router"
 import { useState } from "react"
 import { StatusBar } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
@@ -21,6 +21,15 @@ const TabsLayout = () => {
     const [selectedModification, setSelectedModification] = useState<string | undefined>(undefined)
 
     const [modalData, setModalData] = useState<string | undefined>(undefined)
+
+    const getDisplayValue = () => {
+        const paths = ["/manage/settings", "/main/editTravel", "/main/travelDetail"]
+
+        const currentPathname = usePathname()
+        if (paths.indexOf(currentPathname) <= -1) return "flex"
+
+        return "none" as "none" | "flex"
+    }
 
     return (
         <SupabaseProvider>
@@ -41,7 +50,8 @@ const TabsLayout = () => {
                             tabBarStyle: {
                                 height: 60,
                                 backgroundColor: barColor,
-                                borderTopWidth: 0
+                                borderTopWidth: 0,
+                                display: getDisplayValue()
                             },
                             tabBarLabelStyle: {
                                 fontSize: 13,
@@ -51,7 +61,7 @@ const TabsLayout = () => {
                             tabBarInactiveTintColor: iconColor,
                             headerShown: false,
                         }}
-                        backBehavior="initialRoute"
+                        backBehavior="order"
                     >
                         <Tabs.Screen
                             name="main"
