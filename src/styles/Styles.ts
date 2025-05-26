@@ -27,9 +27,11 @@ const lightCollapsibleHeaderStyles = StyleSheet.create({
         paddingHorizontal: 15,
         backgroundColor: colors.text.dimWhite,
     },
+    contentContainer: {
+        flexGrow: 1,
+    },
     fillerContainer: {
-        flex: 1,
-        minHeight: screenHeight * 0.45,
+        height: screenHeight * 0.45,
         justifyContent: 'flex-end',
     },
     headerText: {
@@ -48,6 +50,9 @@ export const collapsibleHeaderStyles = {
         container: {
             ...lightCollapsibleHeaderStyles.container,
             backgroundColor: colors.background.black,
+        },
+        contentContainer: {
+            ...lightCollapsibleHeaderStyles.contentContainer,
         },
         fillerContainer: {
             ...lightCollapsibleHeaderStyles.fillerContainer,
