@@ -1,7 +1,6 @@
 import Button from '@/components/BaseButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
-import { useAuth } from '@/context/AuthContext'
 import { useTravelContext } from '@/context/PageContext'
 import { useTheme } from '@/context/ThemeContext'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
@@ -39,10 +38,8 @@ const navigationButtons: ButtonConfig[] = [
 
 
 const NavigationPage: React.FC = () => {
-    const { theme, setTheme } = useTheme()
+    const { theme } = useTheme()
     const { setSelectedModification } = useTravelContext()
-
-    const { signOut } = useAuth()
 
     const handleItemPress = (selectedModification: string) => {
         if (selectedModification) {
@@ -51,19 +48,9 @@ const NavigationPage: React.FC = () => {
         }
     }
 
-    const handleLogout = () => {
-        signOut()
-        router.push("/")
-    }
-
-    const handleThemeChange = () => {
-        if (theme === 'light') setTheme('dark')
-        else setTheme('light')
-    }
-
     return (
         <CollapsibleHeaderPage
-            headerText="Add vehicle type, direction, stops, or routes"
+            headerText="Data Manager"
         >
             <View style={styles.container}>
                 <View style={styles.fillingContainer} />
@@ -80,17 +67,11 @@ const NavigationPage: React.FC = () => {
                 </View>
                 <Divider />
                 <Button
-                    title={`Enable ${theme === 'light' ? 'dark' : 'light'} mode`}
+                    title={'Manage settings'}
                     style={buttonStyles[theme].addButton}
                     textStyle={buttonStyles[theme].addButtonText}
-                    onPress={handleThemeChange}
+                    onPress={() => router.push("/(tabs)/settings")}
                 />
-                <Divider />
-                <Button
-                    style={buttonStyles[theme].redButton}
-                    textStyle={buttonStyles[theme].addButtonText}
-                    onPress={handleLogout}
-                >Logout</Button>
             </View>
         </CollapsibleHeaderPage>
     )

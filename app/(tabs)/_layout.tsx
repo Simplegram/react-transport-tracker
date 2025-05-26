@@ -98,6 +98,17 @@ const TabsLayout = () => {
                                 href: null
                             }}
                         />
+                        <Tabs.Screen
+                            name="settings"
+                            options={{
+                                title: "Travel Detail",
+                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
+                                href: null,
+                                tabBarStyle: {
+                                    display: "none"
+                                }
+                            }}
+                        />
                     </Tabs>
                 </ModalContext.Provider>
             </TravelContext.Provider>
