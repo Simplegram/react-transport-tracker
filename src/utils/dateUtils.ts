@@ -12,15 +12,15 @@ export const formatDate = (date: string) => {
     return formattedDate
 }
 
-export const getMonthsSinceEarliestDate = (dates: string[]): number => {
+export const getMonthsSinceEarliestDate = (dates: string[], selectedDate: string): number => {
     if (!dates || dates.length === 0) {
         return 0
     }
 
     const earliestDate = moment(dates[0])
-    const today = moment(getTodayString())
+    const currentSelectedDate = moment(selectedDate)
 
-    const monthsDifference = today.diff(earliestDate, 'months') + 1
+    const monthsDifference = Math.ceil(currentSelectedDate.diff(earliestDate, 'months', true))
 
     return monthsDifference
 }
@@ -29,7 +29,7 @@ export const getFutureMonthFromLatestDate = (selectedDate: string, offset: numbe
     const today = moment(getTodayString())
     let latestDate = moment(selectedDate)
 
-    const monthsDifference = Math.abs(today.diff(latestDate, 'months')) + offset
+    const monthsDifference = Math.ceil(today.diff(latestDate, 'months', true)) + offset
 
     return monthsDifference
 }

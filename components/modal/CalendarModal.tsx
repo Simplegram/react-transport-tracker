@@ -20,7 +20,7 @@ interface CalendarModalProps {
 export default function CalendarModal({ dates, markedDates, currentSelectedDate, modalElements }: CalendarModalProps) {
     const { theme } = useTheme()
 
-    const pastScrollRange = getMonthsSinceEarliestDate(dates)
+    const pastScrollRange = getMonthsSinceEarliestDate(dates, currentSelectedDate)
     const futureScrollRange = getFutureMonthFromLatestDate(currentSelectedDate, 1)
     const [currentDate] = useState(new Date().toISOString().split('T')[0])
 
