@@ -34,6 +34,7 @@ const lightCalendarStyles = StyleSheet.create({
 })
 
 const lightCalendarTheme: Theme = {
+    calendarBackground: colors.dimWhite,
     selectedDayBackgroundColor: '#00adf5',
     selectedDayTextColor: '#ffffff',
     todayTextColor: '#00adf5',
