@@ -248,7 +248,7 @@ export default function TravelDetail() {
     const uniqueDestinationsList = [...uniqueDestinations.values()]
 
     return (
-        <CollapsibleHeaderPage>
+        <CollapsibleHeaderPage headerText='Travel Detail'>
             <View style={travelDetailStyles[theme].container}>
                 <View style={travelDetailStyles[theme].card}>
                     <Text style={travelDetailStyles[theme].cardTitle}>Efficiency Overview</Text>
