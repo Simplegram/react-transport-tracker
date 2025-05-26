@@ -44,7 +44,7 @@ const NavigationPage: React.FC = () => {
     const handleItemPress = (selectedModification: string) => {
         if (selectedModification) {
             setSelectedModification(selectedModification)
-            router.push("manage/dataList")
+            router.push("manage/datalist")
         }
     }
 
