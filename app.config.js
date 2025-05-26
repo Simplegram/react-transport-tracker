@@ -30,7 +30,7 @@ export default {
     expo: {
         name: getAppName(),
         slug: "TransportTracker",
-        version: "1.6.0b5",
+        version: "1.6.0b6",
         icon: "./assets/images/icon.png",
         ios: {
             bundleIdentifier: getUniqueIdentifier(),
