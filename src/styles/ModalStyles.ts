@@ -75,7 +75,6 @@ const lightModalStyles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     modalContainer: {
-        marginTop: 'auto',
         padding: 20,
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
