@@ -47,7 +47,7 @@ export const sumTimesMs = (times: number[]) => {
     for (const time of times) {
         const momentTime = moment(time, "HH:mm:ss")
 
-        timeSum = timeSum.add(momentTime.minutes(), 'minutes').add(momentTime.seconds(), 'seconds')
+        timeSum = timeSum.add(momentTime.hours(), 'hours').add(momentTime.minutes(), 'minutes').add(momentTime.seconds(), 'seconds')
     }
 
     const startOfDay = moment().startOf('day')
