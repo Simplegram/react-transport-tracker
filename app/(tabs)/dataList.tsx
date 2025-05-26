@@ -145,7 +145,6 @@ export default function DataListScreen() {
                         placeholderTextColor={colors.text.placeholderGray}
                         value={searchQuery}
                         onChangeText={setSearchQuery}
-                        autoFocus={true}
                     />
 
                     <View style={DatalistStyles[theme].addButtonContainer}>
