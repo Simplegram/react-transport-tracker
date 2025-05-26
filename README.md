@@ -87,6 +87,31 @@ CREATE SCHEMA public_transport_tracker;
 GRANT ALL ON ALL TABLES IN SCHEMA public_transport_tracker TO authenticated;
 ```
 
+### Create Average Route Travel Time Function
+```pgsql
+create or replace function public_transport_tracker.calculate_average_travel_time(
+  route_id_param int,
+  direction_id_param int,
+  first_stop_id_param int,
+  last_stop_id_param int
+)
+returns interval
+language sql
+as $$
+  SELECT AVG(bus_final_arrival - bus_initial_departure) as average_travel_time
+  FROM (
+      SELECT bus_final_arrival, bus_initial_arrival, bus_initial_departure
+      FROM public_transport_tracker.travels
+      WHERE route_id = route_id_param
+      AND direction_id = direction_id_param
+      AND first_stop_id = first_stop_id_param
+      AND last_stop_id = last_stop_id_param
+      AND bus_initial_departure is not null
+      AND bus_final_arrival is not null
+  ) as average_travel_time;
+$$;
+```
+
 ### Directions Table
 
 ```pgsql

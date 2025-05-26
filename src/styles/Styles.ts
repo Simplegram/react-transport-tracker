@@ -23,15 +23,15 @@ const lightCollapsibleHeaderStyles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 5,
-        paddingBottom: 10,
         paddingHorizontal: 15,
         backgroundColor: colors.text.dimWhite,
     },
     contentContainer: {
         flexGrow: 1,
+        overflow: 'hidden',
     },
     fillerContainer: {
-        height: screenHeight * 0.45,
+        height: screenHeight * 0.43,
         justifyContent: 'flex-end',
     },
     headerText: {
@@ -41,6 +41,7 @@ const lightCollapsibleHeaderStyles = StyleSheet.create({
     },
     scrollContainer: {
         flexGrow: 1,
+        paddingBottom: 20,
     }
 })
 

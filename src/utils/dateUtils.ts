@@ -33,3 +33,25 @@ export const getFutureMonthFromLatestDate = (selectedDate: string, offset: numbe
 
     return monthsDifference
 }
+
+export const timeToMinutes = (averageTime: number) => {
+    const momentTime = moment(averageTime, "HH:mm:ss")
+    const formattedTime = momentTime.format("HH:mm:ss")
+
+    return formattedTime
+}
+
+export const sumTimesMs = (times: number[]) => {
+    let timeSum = moment("00:00:00", "HH:mm:ss")
+
+    for (const time of times) {
+        const momentTime = moment(time, "HH:mm:ss")
+
+        timeSum = timeSum.add(momentTime.minutes(), 'minutes').add(momentTime.seconds(), 'seconds')
+    }
+
+    const startOfDay = moment().startOf('day')
+    const milliseconds = timeSum.diff(startOfDay);
+
+    return milliseconds
+}

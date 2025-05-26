@@ -1,12 +1,15 @@
 import AnnotationContent from '@/components/AnnotationContent'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import LoadingScreen from '@/components/LoadingScreen'
+import { colors } from '@/const/color'
 import { useTravelContext } from '@/context/PageContext'
 import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
 import { DataItem, Stop } from '@/src/types/Travels'
+import { sumTimesMs, timeToMinutes } from '@/src/utils/dateUtils'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
+import { formatLapTimeDisplay } from '@/src/utils/utils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
@@ -14,12 +17,13 @@ import { Dimensions, StyleSheet, Text, View } from 'react-native'
 
 const { width: screenWidth } = Dimensions.get("screen")
 
-const formatDurationMinutes = (milliseconds: number): string => {
-    if (isNaN(milliseconds) || milliseconds < 0) {
+const formatDurationMinutes = (milliseconds: number, showSign: boolean = false): string => {
+    if (isNaN(milliseconds)) {
         return 'N/A'
     }
     const minutes = Math.floor(milliseconds / (1000 * 60))
-    return `${minutes} mins`
+    const sign = showSign ? Math.sign(milliseconds) < 0 ? '' : '+' : ''
+    return `${sign}${minutes} mins`
 }
 
 const formatDurationHoursMinutes = (milliseconds: number): string => {
@@ -48,10 +52,12 @@ export default function TravelDetail() {
     const {
         fullVehicleTypes,
         travelLaps, getTravelLaps,
-        refetchTravelData
+        refetchTravelData,
+        averageTime, getTravelTime,
     } = useGetTravelData()
 
     const [dataToUse, setDataToUse] = useState<DataItem[]>([])
+    const [travelTimes, setTravelTimes] = useState<number[]>([])
 
     if (!selectedTravelItems) {
         return (
@@ -64,7 +70,28 @@ export default function TravelDetail() {
 
         const allLaps = selectedTravelItems.map(travel => travel.id)
         getTravelLaps(allLaps)
+
+        setTravelTimes([])
+
+        const time = async () => {
+            for (const travelItem of selectedTravelItems) {
+                const route_id = travelItem.routes.id
+                const direction_id = travelItem.directions.id
+                const first_stop_id = travelItem.first_stop_id.id
+                const last_stop_id = travelItem.last_stop_id.id
+
+                await getTravelTime(route_id, direction_id, first_stop_id, last_stop_id)
+            }
+        }
+
+        time()
     }, [selectedTravelItems])
+
+    useEffect(() => {
+        if (averageTime !== undefined) {
+            setTravelTimes([...travelTimes, averageTime])
+        }
+    }, [averageTime])
 
     useFocusEffect(
         React.useCallback(() => {
@@ -154,17 +181,9 @@ export default function TravelDetail() {
 
     const centerLatLon = getSimpleCentroid(validCoords)
 
+    let averageRouteDurationMilliseconds = sumTimesMs(travelTimes)
     let totalOnRoadMilliseconds = 0
-    let earliestStartMillis: number | null = null
-    let latestEndMillis: number | null = null
-    let validTripCount = 0
     let sumInitialStopDurationMilliseconds = 0
-    let uniqueVehicles = new Set<string>()
-    let uniqueRoutes = new Set<string>()
-    let uniqueOrigins = new Set<string>()
-    let uniqueDestinations = new Set<string>()
-    let tripsByType: { [key: string]: number } = {}
-
 
     sortedData.forEach(trip => {
         try {
@@ -179,16 +198,6 @@ export default function TravelDetail() {
             if (departureValid && finalArrivalValid) {
                 if (finalArrivalDate.getTime() >= departureDate.getTime()) {
                     totalOnRoadMilliseconds += finalArrivalDate.getTime() - departureDate.getTime()
-                    validTripCount++
-
-                    if (earliestStartMillis === null || departureDate.getTime() < earliestStartMillis) {
-                        earliestStartMillis = departureDate.getTime()
-                    }
-
-                    if (latestEndMillis === null || finalArrivalDate.getTime() > latestEndMillis) {
-                        latestEndMillis = finalArrivalDate.getTime()
-                    }
-
                 } else {
                     console.warn(`Trip ID ${trip.id}: Final arrival (${trip.bus_final_arrival}) is before initial departure (${trip.bus_initial_departure}). Excluding from duration calcs.`)
                 }
@@ -207,60 +216,39 @@ export default function TravelDetail() {
                 console.warn(`Trip ID ${trip.id}: Invalid initial arrival or departure date for stop time calc.`)
             }
 
-
-            if (trip.vehicle_code) {
-                uniqueVehicles.add(trip.vehicle_code)
-            }
-            if (trip.routes?.name) {
-                uniqueRoutes.add(trip.routes.name)
-            }
-            if (trip.first_stop_id?.name) {
-                uniqueOrigins.add(trip.first_stop_id.name)
-            }
-            if (trip.last_stop_id?.name) {
-                uniqueDestinations.add(trip.last_stop_id.name)
-            }
-
-            if (trip.types?.name) {
-                tripsByType[trip.types.name] = (tripsByType[trip.types.name] || 0) + 1
-            }
-
-
         } catch (error) {
             console.error(`Error processing trip ID ${trip.id || 'unknown'}:`, error)
         }
     })
 
-
-    let totalCalendarSpanMilliseconds = 0
-    if (earliestStartMillis !== null && latestEndMillis !== null && latestEndMillis > earliestStartMillis) {
-        totalCalendarSpanMilliseconds = latestEndMillis - earliestStartMillis
-    }
-
     let efficiencyPercentage = 0
-    if (totalCalendarSpanMilliseconds > 0) {
-        efficiencyPercentage = (totalOnRoadMilliseconds / totalCalendarSpanMilliseconds) * 100
+    if (averageRouteDurationMilliseconds > 0) {
+        efficiencyPercentage = (averageRouteDurationMilliseconds / totalOnRoadMilliseconds) * 100
     }
 
-    const uniqueVehiclesList = [...uniqueVehicles.values()]
-    const uniqueRoutesList = [...uniqueRoutes.values()]
-    const uniqueOriginsList = [...uniqueOrigins.values()]
-    const uniqueDestinationsList = [...uniqueDestinations.values()]
+    const timeDiff = formatDurationMinutes(totalOnRoadMilliseconds - averageRouteDurationMilliseconds, true)
+    const diffColor = Math.sign(totalOnRoadMilliseconds - averageRouteDurationMilliseconds) < 0 ? colors.dimGreenPositive : colors.dimRedCancel
 
     return (
         <CollapsibleHeaderPage headerText='Travel Detail'>
             <View style={travelDetailStyles[theme].container}>
                 <View style={travelDetailStyles[theme].card}>
-                    <Text style={travelDetailStyles[theme].cardTitle}>Efficiency Overview</Text>
+                    <Text style={travelDetailStyles[theme].cardTitle}>Efficiency Overview (vs. Average)</Text>
 
                     <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Total Time Span:</Text>
-                        <Text style={travelDetailStyles[theme].valueText}>{formatDurationMinutes(totalCalendarSpanMilliseconds)}</Text>
+                        <Text style={travelDetailStyles[theme].label}>Average Route Duration:</Text>
+                        <Text style={travelDetailStyles[theme].valueText}>{formatDurationMinutes(averageRouteDurationMilliseconds)}</Text>
                     </View>
 
                     <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Total On-Road Time:</Text>
-                        <Text style={travelDetailStyles[theme].valueText}>{formatDurationMinutes(totalOnRoadMilliseconds)}</Text>
+                        <Text style={travelDetailStyles[theme].label}>Total On-Road Duration:</Text>
+                        <View style={{
+                            gap: 5,
+                            flexDirection: 'row',
+                        }}>
+                            <Text style={travelDetailStyles[theme].valueText}>{formatDurationMinutes(totalOnRoadMilliseconds)}</Text>
+                            <Text style={[travelDetailStyles[theme].valueText, { color: diffColor }]}>{`(${timeDiff})`}</Text>
+                        </View>
                     </View>
 
                     <View style={travelDetailStyles[theme].detailRow}>
@@ -274,19 +262,33 @@ export default function TravelDetail() {
                 {sortedData.length > 0 && (
                     <View style={travelDetailStyles[theme].card}>
                         <Text style={travelDetailStyles[theme].cardTitle}>Individual Trip Durations</Text>
-                        {sortedData.sort(data => data.id).map((trip) => {
+                        {sortedData.sort(data => data.id).map((trip, index) => {
                             try {
                                 const departureDate = new Date(trip.bus_initial_departure)
                                 const finalArrivalDate = new Date(trip.bus_final_arrival)
                                 const durationMillis = finalArrivalDate.getTime() - departureDate.getTime()
                                 const durationString = formatDurationHoursMinutes(durationMillis)
 
-                                const tripIdentifier = `${trip.vehicle_code || 'N/A'} - ${trip.routes?.name || 'N/A'}`
+                                const departureTime = formatLapTimeDisplay(trip.bus_initial_departure, true)
+                                const arrivalTime = formatLapTimeDisplay(trip.bus_final_arrival, true)
+                                const timeString = `${departureTime} - ${arrivalTime}`
+
+                                const stopString = `${trip.first_stop_id.name} to ${trip.last_stop_id.name}`
+                                const tripIdentifier = `${trip.routes.code} | ${trip.vehicle_code || 'N/A'}`
 
                                 return (
                                     <View key={trip.id} style={travelDetailStyles[theme].detailRow}>
-                                        <Text style={travelDetailStyles[theme].label}>{tripIdentifier}:</Text>
-                                        <Text style={travelDetailStyles[theme].valueText}>{durationString}</Text>
+                                        <Text style={travelDetailStyles[theme].specialValue}>{tripIdentifier}</Text>
+                                        <Text style={travelDetailStyles[theme].valueText}>{stopString}</Text>
+                                        <View style={{
+                                            flexDirection: 'row',
+                                            alignItems: 'center',
+                                            gap: 5,
+                                        }}>
+                                            <Text style={travelDetailStyles[theme].valueText}>{timeString}</Text>
+                                            <Text style={travelDetailStyles[theme].valueText}>({durationString})</Text>
+                                        </View>
+                                        <Text style={travelDetailStyles[theme].valueText}>{`Route Average: ${timeToMinutes(travelTimes[index])}`}</Text>
                                     </View>
                                 )
                             } catch (error) {
@@ -336,81 +338,6 @@ export default function TravelDetail() {
                             ))}
                     </MapView>
                 </View>
-
-                <View style={travelDetailStyles[theme].card}>
-                    <Text style={travelDetailStyles[theme].cardTitle}>Activity Counts</Text>
-
-                    <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Total Trips Processed:</Text>
-                        <Text style={travelDetailStyles[theme].valueText}>{sortedData.length}</Text>
-                    </View>
-
-                    <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Valid Trips for Duration:</Text>
-                        <Text style={travelDetailStyles[theme].valueText}>{validTripCount}</Text>
-                    </View>
-
-                    {Object.keys(tripsByType).length > 0 && (
-                        <View style={travelDetailStyles[theme].detailRow}>
-                            <Text style={travelDetailStyles[theme].label}>Trips by Type:</Text>
-                            <View style={travelDetailStyles[theme].value}>
-                                {Object.entries(tripsByType).map(([type, count]) => (
-                                    <Text key={type} style={[travelDetailStyles[theme].valueText, travelDetailStyles[theme].specialValue]}>{type}: {count}</Text>
-                                ))}
-                            </View>
-                        </View>
-                    )}
-                </View>
-
-                {(uniqueVehiclesList.length > 0 || uniqueRoutesList.length > 0 || uniqueOriginsList.length > 0 || uniqueDestinationsList.length > 0) && (
-                    <View style={travelDetailStyles[theme].card}>
-                        <Text style={travelDetailStyles[theme].cardTitle}>Unique Items</Text>
-
-                        {uniqueVehiclesList.length > 0 && (
-                            <View style={travelDetailStyles[theme].detailRow}>
-                                <Text style={travelDetailStyles[theme].label}>Unique Vehicles ({uniqueVehiclesList.length}):</Text>
-                                <View style={travelDetailStyles[theme].value}>
-                                    {uniqueVehiclesList.map((item, index) => (
-                                        <Text key={index} style={[travelDetailStyles[theme].valueText, travelDetailStyles[theme].specialValue]}>{item}</Text>
-                                    ))}
-                                </View>
-                            </View>
-                        )}
-
-                        {uniqueRoutesList.length > 0 && (
-                            <View style={travelDetailStyles[theme].detailRow}>
-                                <Text style={travelDetailStyles[theme].label}>Unique Routes ({uniqueRoutesList.length}):</Text>
-                                <View style={travelDetailStyles[theme].value}>
-                                    {uniqueRoutesList.map((item, index) => (
-                                        <Text key={index} style={travelDetailStyles[theme].valueText}>{item}</Text>
-                                    ))}
-                                </View>
-                            </View>
-                        )}
-
-                        {uniqueOriginsList.length > 0 && (
-                            <View style={travelDetailStyles[theme].detailRow}>
-                                <Text style={travelDetailStyles[theme].label}>Unique Origins ({uniqueOriginsList.length}):</Text>
-                                <View style={travelDetailStyles[theme].value}>
-                                    {uniqueOriginsList.map((item, index) => (
-                                        <Text key={index} style={travelDetailStyles[theme].valueText}>{item}</Text>
-                                    ))}
-                                </View>
-                            </View>
-                        )}
-
-                        {uniqueDestinationsList.length > 0 && (
-                            <View style={travelDetailStyles[theme].detailRow}>
-                                <Text style={travelDetailStyles[theme].label}>Unique Destinations ({uniqueDestinationsList.length}):</Text>
-                                <View style={travelDetailStyles[theme].value}>
-                                    {uniqueDestinationsList.map((item, index) => (
-                                        <Text key={index} style={travelDetailStyles[theme].valueText}>{item}</Text>
-                                    ))}
-                                </View>
-                            </View>
-                        )}
-                    </View>
-                )}
             </View>
         </CollapsibleHeaderPage>
     )
