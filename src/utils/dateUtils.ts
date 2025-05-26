@@ -33,3 +33,9 @@ export const getFutureMonthFromLatestDate = (selectedDate: string, offset: numbe
 
     return monthsDifference
 }
+
+export const timeToMinutes = (averageTime: number) => {
+    const time = moment(averageTime, "HH:mm:ss").format("HH:mm:ss")
+
+    return time
+}

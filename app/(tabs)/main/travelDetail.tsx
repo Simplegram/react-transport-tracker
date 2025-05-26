@@ -6,6 +6,7 @@ import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
 import { DataItem, Stop } from '@/src/types/Travels'
+import { timeToMinutes } from '@/src/utils/dateUtils'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
 import { formatLapTimeDisplay } from '@/src/utils/utils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
@@ -49,10 +50,12 @@ export default function TravelDetail() {
     const {
         fullVehicleTypes,
         travelLaps, getTravelLaps,
-        refetchTravelData
+        refetchTravelData,
+        averageTime, getTravelTime,
     } = useGetTravelData()
 
     const [dataToUse, setDataToUse] = useState<DataItem[]>([])
+    const [travelTimes, setTravelTimes] = useState<number[]>([])
 
     if (!selectedTravelItems) {
         return (
@@ -65,7 +68,26 @@ export default function TravelDetail() {
 
         const allLaps = selectedTravelItems.map(travel => travel.id)
         getTravelLaps(allLaps)
+
+        setTravelTimes([])
+
+        const time = async () => {
+            for (const travelItem of selectedTravelItems) {
+                const route_id = travelItem.routes.id
+                const direction_id = travelItem.directions.id
+                const first_stop_id = travelItem.first_stop_id.id
+                const last_stop_id = travelItem.last_stop_id.id
+
+                await getTravelTime(route_id, direction_id, first_stop_id, last_stop_id)
+            }
+        }
+
+        time()
     }, [selectedTravelItems])
+
+    useEffect(() => {
+        if (averageTime !== undefined) setTravelTimes([...travelTimes, averageTime])
+    }, [averageTime])
 
     useFocusEffect(
         React.useCallback(() => {
@@ -243,7 +265,7 @@ export default function TravelDetail() {
                 {sortedData.length > 0 && (
                     <View style={travelDetailStyles[theme].card}>
                         <Text style={travelDetailStyles[theme].cardTitle}>Individual Trip Durations</Text>
-                        {sortedData.sort(data => data.id).map((trip) => {
+                        {sortedData.sort(data => data.id).map((trip, index) => {
                             try {
                                 const departureDate = new Date(trip.bus_initial_departure)
                                 const finalArrivalDate = new Date(trip.bus_final_arrival)
@@ -269,6 +291,7 @@ export default function TravelDetail() {
                                             <Text style={travelDetailStyles[theme].valueText}>{timeString}</Text>
                                             <Text style={travelDetailStyles[theme].valueText}>({durationString})</Text>
                                         </View>
+                                        <Text style={travelDetailStyles[theme].valueText}>{`Route Average: ${timeToMinutes(travelTimes[index])}`}</Text>
                                     </View>
                                 )
                             } catch (error) {
