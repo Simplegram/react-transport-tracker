@@ -161,7 +161,7 @@ export const datetimePickerStyles = {
         adjButton: {
             ...lightDatetimePickerStyles.adjButton,
             borderWidth: 1,
-            borderColor: colors.dimmerAppBlue,
+            borderColor: colors.dimAppBlue,
             backgroundColor: colors.black,
         },
         adjButtonText: {

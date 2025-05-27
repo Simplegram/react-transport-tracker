@@ -100,7 +100,7 @@ export const travelDetailStyles = {
         },
         specialValue: {
             ...lightTravelDetailStyles.specialValue,
-            color: colors.dimmerAppBlue,
+            color: colors.dimAppBlue,
         },
     })
 }

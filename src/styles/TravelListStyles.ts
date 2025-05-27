@@ -93,7 +93,7 @@ export const travelCardStyles = {
         },
         routeText: {
             ...lightTravelCardStyles.routeText,
-            color: colors.dimmerAppBlue,
+            color: colors.dimAppBlue,
         },
         vehicleText: {
             ...lightTravelCardStyles.vehicleText,
@@ -107,7 +107,7 @@ export const travelCardStyles = {
         },
         stopText: {
             ...lightTravelCardStyles.stopText,
-            color: colors.dimmerAppBlue,
+            color: colors.dimAppBlue,
         },
         timeText: {
             ...lightTravelCardStyles.timeText,

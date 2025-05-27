@@ -127,12 +127,12 @@ export const ItemStyles = {
         },
         itemSubtitle: {
             ...lightItemStyles.itemSubtitle,
-            color: colors.dimmerAppBlue,
+            color: colors.dimAppBlue,
         },
         modifyButton: {
             ...lightItemStyles.modifyButton,
             borderWidth: 1,
-            borderColor: colors.dimmerAppBlue,
+            borderColor: colors.dimAppBlue,
             backgroundColor: colors.black,
         },
         modifyButtonText: {

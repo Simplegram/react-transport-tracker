@@ -172,7 +172,7 @@ const iconPickerStyles = {
             backgroundColor: colors.black,
         },
         selectedIcon: {
-            color: colors.dimmerAppBlue
+            color: colors.dimAppBlue
         }
     })
 }

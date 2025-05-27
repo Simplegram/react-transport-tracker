@@ -1,43 +1,32 @@
-const allColors = {
+import { darkenHexColor } from "../utils/colorsUtils"
+
+const allColor = {
     white: '#ffffff',
     black: '#000000',
-    dimWhite: '#e8e8e8',
-    dimmerWhite: '#b3b3b3',
-    dimmerWhite2: '#cfcfcf',
-    darkBlue: '#012359',
-    redCancel: '#f0473e',
-    dimRedCancel: '#b83730',
-    greenPositive: '#4CAF50',
-    dimGreenPositive: '#39823c',
+    appBlue: '#007bff',
     lightBlue: '#e3f2fd',
-    dimLightBlue: '#97babd',
+    redCancel: '#f0473e',
+    greenPositive: '#4CAF50',
     placeholderGray: '#9E9E9E',
 }
 
+const white = {
+    dimWhite: darkenHexColor(allColor.white, 90),
+    dimWhite2: darkenHexColor(allColor.white, 80),
+    dimmerWhite: darkenHexColor(allColor.white, 70),
+    dimmerWhite2: darkenHexColor(allColor.white, 60),
+    dimmestWhite: darkenHexColor(allColor.white, 50),
+}
+
+const appBlue = {
+    dimAppBlue: darkenHexColor(allColor.appBlue, 90),
+    dimmerAppBlue: darkenHexColor(allColor.appBlue, 70),
+}
+
 export const colors = {
-    ...allColors,
-    appBlue: '#007bff',
-    dimmerAppBlue: '#0261c7',
-    background: {
-        white: '#ffffff',
-        black: '#000000',
-        darkBlue: '#012359',
-        dimWhite: '#e8e8e8',
-        redCancel: '#f0473e',
-        dimRedCancel: '#b83730',
-        greenPositive: '#4CAF50',
-        dimGreenPositive: '#39823c',
-        lightBlue: '#e3f2fd',
-        dimLightBlue: '#97babd',
-    },
-    text: {
-        white: '#ffffff',
-        black: '#000000',
-        dimWhite: '#e8e8e8',
-        dimmerWhite: '#b3b3b3',
-        dimmerWhite2: '#cfcfcf',
-        placeholderGray: '#9E9E9E',
-        lightBlue: '#e3f2fd',
-        dimLightBlue: '#97babd',
-    }
+    ...allColor,
+    ...white,
+    ...appBlue,
+    dimRedCancel: darkenHexColor(allColor.redCancel, 90),
+    dimGreenPositive: darkenHexColor(allColor.greenPositive, 90)
 }

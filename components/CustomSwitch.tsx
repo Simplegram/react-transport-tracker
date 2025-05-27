@@ -46,8 +46,8 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
         outputRange: [1, 0.6, 1]
     })
 
-    const trackColor = theme === 'light' ? colors.appBlue : colors.dimmerAppBlue
-    const ballColor = theme === 'light' ? colors.dimWhite : colors.dimmerWhite2
+    const trackColor = theme === 'light' ? colors.appBlue : colors.dimAppBlue
+    const ballColor = theme === 'light' ? colors.dimWhite : colors.dimWhite2
 
     const colorTransition = useRef(new Animated.Value(overrideIsEnabled ? 1 : 0)).current
     const colorAnimation = (toValue: number, easing: EasingFunction) => {
