@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton"
-import { colors } from "@/const/color"
 import { useTheme } from "@/context/ThemeContext"
+import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { styles } from "@/src/styles/Styles"

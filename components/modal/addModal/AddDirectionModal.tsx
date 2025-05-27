@@ -1,7 +1,7 @@
 import Button from "@/components/BaseButton"
-import { colors } from "@/const/color"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
+import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { AddableDirection } from "@/src/types/AddableTravels"

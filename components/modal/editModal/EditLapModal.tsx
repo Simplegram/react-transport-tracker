@@ -1,9 +1,10 @@
 import Button from '@/components/BaseButton'
+import Divider from '@/components/Divider'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
-import { colors } from '@/const/color'
 import { useTheme } from '@/context/ThemeContext'
 import useStopModal from '@/hooks/useStopModal'
+import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
@@ -20,7 +21,6 @@ import {
     View
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
-import Divider from '@/components/Divider'
 
 export default function EditLapModal({ stops, selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
     const { theme } = useTheme()

@@ -1,4 +1,4 @@
-import { colors } from "@/const/color"
+import { colors } from "@/src/const/color"
 import { Dimensions, StyleSheet } from "react-native"
 
 const { width, height } = Dimensions.get('window')

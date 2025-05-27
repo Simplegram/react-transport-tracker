@@ -1,5 +1,5 @@
-import { colors } from '@/const/color'
 import { useTheme } from '@/context/ThemeContext'
+import { colors } from '@/src/const/color'
 import { darkenColor, getBackgroundColorFromStyle, getColorFromStyle } from '@/src/utils/colorsUtils'
 import { Pressable, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native'
 

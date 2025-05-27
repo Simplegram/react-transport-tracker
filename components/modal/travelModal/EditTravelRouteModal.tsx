@@ -1,5 +1,5 @@
-import { colors } from "@/const/color"
 import { useTheme } from "@/context/ThemeContext"
+import { colors } from "@/src/const/color"
 import { inputStyles } from "@/src/styles/InputStyles"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { styles } from "@/src/styles/Styles"

@@ -22,6 +22,47 @@ export const darkenColor = (hexColor: string, amount: number) => {
     return `#${darkenRHex}${darkenGHex}${darkenBHex}`
 }
 
+interface DarkenHexColorProps {
+    hexColor: string
+    darkenPercentage: number
+}
+
+export function DarkenHexColor({ hexColor, darkenPercentage }: DarkenHexColorProps): string {
+    // Validate hex color format
+    if (!/^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/.test(hexColor)) {
+        console.error('Invalid hex color format:', hexColor)
+        return hexColor
+    }
+
+    const cleanedHex = hexColor.replace(/^#/, '')
+
+    const fullHex = cleanedHex.length === 3
+        ? cleanedHex.split('').map(char => char + char).join('')
+        : cleanedHex
+
+    const r = parseInt(fullHex.substring(0, 2), 16)
+    const g = parseInt(fullHex.substring(2, 4), 16)
+    const b = parseInt(fullHex.substring(4, 6), 16)
+
+    const darkenFactor = 1 - Math.max(0, Math.min(100, darkenPercentage)) / 100
+
+    const darkenedR = Math.floor(r * darkenFactor)
+    const darkenedG = Math.floor(g * darkenFactor)
+    const darkenedB = Math.floor(b * darkenFactor)
+
+    const finalR = Math.max(0, Math.min(255, darkenedR))
+    const finalG = Math.max(0, Math.min(255, darkenedG))
+    const finalB = Math.max(0, Math.min(255, darkenedB))
+
+    const toHex = (c: number): string => {
+        const hex = c.toString(16)
+        return hex.length === 1 ? '0' + hex : hex
+    }
+
+    return `#${toHex(finalR)}${toHex(finalG)}${toHex(finalB)}`
+}
+
+
 export const getBackgroundColorFromStyle = (buttonStyle: StyleProp<ViewStyle>): string | undefined => {
     if (!buttonStyle) {
         return undefined

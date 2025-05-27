@@ -1,7 +1,7 @@
 import Button from '@/components/BaseButton'
-import { colors } from '@/const/color'
 import { useTheme } from '@/context/ThemeContext'
 import useStopModal from '@/hooks/useStopModal'
+import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'

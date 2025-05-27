@@ -1,5 +1,5 @@
-import { colors } from "@/const/color"
 import { useTheme } from "@/context/ThemeContext"
+import { colors } from "@/src/const/color"
 import { hexToRgbA } from "@/src/utils/colorsUtils"
 import React, { useEffect, useRef, useState } from "react"
 import { Animated, Easing, EasingFunction, StyleSheet, TouchableOpacity, Vibration } from "react-native"

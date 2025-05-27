@@ -1,4 +1,4 @@
-import { colors } from "@/const/color"
+import { colors } from "@/src/const/color"
 import { StyleSheet } from "react-native"
 
 const lightFlatlistStyles = StyleSheet.create({
