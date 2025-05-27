@@ -37,7 +37,7 @@ const lightButtonStyles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 8,
         alignItems: 'center',
-        backgroundColor: colors.background.redCancel,
+        backgroundColor: colors.redCancel,
     },
 })
 
@@ -50,7 +50,7 @@ export const buttonStyles = {
         addButton: {
             ...lightButtonStyles.addButton,
             borderColor: colors.dimmerAppBlue,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
         },
         addButtonText: {
             ...lightButtonStyles.addButtonText,
@@ -59,7 +59,7 @@ export const buttonStyles = {
         cancelButton: {
             ...lightButtonStyles.cancelButton,
             borderColor: colors.dimmerWhite,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
         },
         cancelButtonText: {
             ...lightButtonStyles.cancelButtonText,
@@ -67,8 +67,8 @@ export const buttonStyles = {
         },
         redButton: {
             ...lightButtonStyles.redButton,
-            borderColor: colors.background.dimRedCancel,
-            backgroundColor: colors.background.black,
+            borderColor: colors.dimRedCancel,
+            backgroundColor: colors.black,
         },
     })
 }

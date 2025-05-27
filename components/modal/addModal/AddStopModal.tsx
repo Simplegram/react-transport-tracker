@@ -66,7 +66,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             <TextInput
                                 style={inputStyles[theme].textInput}
                                 placeholder="Stop name..."
-                                placeholderTextColor={colors.text.placeholderGray}
+                                placeholderTextColor={colors.placeholderGray}
                                 value={stop.name}
                                 onChangeText={text => (setStop({ ...stop, "name": text }))}
                             />
@@ -78,14 +78,14 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                                 <TextInput
                                     style={[inputStyles[theme].textInput, inputStyles[theme].pressableInputCoord]}
                                     placeholder="Stop latitude..."
-                                    placeholderTextColor={colors.text.placeholderGray}
+                                    placeholderTextColor={colors.placeholderGray}
                                     value={stop.lat?.toString()}
                                     onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
                                 />
                                 <TextInput
                                     style={[inputStyles[theme].textInput, inputStyles[theme].pressableInputCoord]}
                                     placeholder="Stop longitude..."
-                                    placeholderTextColor={colors.text.placeholderGray}
+                                    placeholderTextColor={colors.placeholderGray}
                                     value={stop.lon?.toString()}
                                     onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
                                 />
@@ -102,7 +102,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             <TextInput
                                 style={inputStyles[theme].textInput}
                                 placeholder="Alternative name..."
-                                placeholderTextColor={colors.text.placeholderGray}
+                                placeholderTextColor={colors.placeholderGray}
                                 value={stop.name_alt ? stop.name_alt : ''}
                                 onChangeText={text => (setStop({ ...stop, "name_alt": text }))}
                             />

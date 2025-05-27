@@ -13,8 +13,8 @@ import Icon from 'react-native-vector-icons/FontAwesome6'
 const TabsLayout = () => {
     const { theme } = useTheme()
 
-    const barColor = theme === 'light' ? colors.text.dimWhite : colors.background.black
-    const iconColor = theme === 'light' ? colors.background.black : colors.text.dimmerWhite2
+    const barColor = theme === 'light' ? colors.dimWhite : colors.black
+    const iconColor = theme === 'light' ? colors.black : colors.dimmerWhite2
 
     const [selectedItem, setSelectedItem] = useState<DataItem | undefined>(undefined)
     const [selectedTravelItems, setSelectedTravelItems] = useState<DataItem[] | undefined>(undefined)

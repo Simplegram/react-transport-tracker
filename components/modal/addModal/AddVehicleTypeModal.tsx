@@ -39,7 +39,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
                             <TextInput
                                 style={inputStyles[theme].textInput}
                                 placeholder="e.g., Standard Bus"
-                                placeholderTextColor={colors.text.placeholderGray}
+                                placeholderTextColor={colors.placeholderGray}
                                 value={vehicleType.name}
                                 onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}
                             />

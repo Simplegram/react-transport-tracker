@@ -14,7 +14,7 @@ export const styles = {
     dark: StyleSheet.create({
         icon: {
             ...lightStyles.icon,
-            color: colors.text.dimmerWhite,
+            color: colors.dimmerWhite,
         }
     })
 }
@@ -24,7 +24,7 @@ const lightCollapsibleHeaderStyles = StyleSheet.create({
         flex: 1,
         paddingTop: 5,
         paddingHorizontal: 15,
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.dimWhite,
     },
     contentContainer: {
         flexGrow: 1,
@@ -50,7 +50,7 @@ export const collapsibleHeaderStyles = {
     dark: StyleSheet.create({
         container: {
             ...lightCollapsibleHeaderStyles.container,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
         },
         contentContainer: {
             ...lightCollapsibleHeaderStyles.contentContainer,
@@ -60,7 +60,7 @@ export const collapsibleHeaderStyles = {
         },
         headerText: {
             ...lightCollapsibleHeaderStyles.headerText,
-            color: colors.text.dimWhite,
+            color: colors.dimWhite,
         },
         scrollContainer: {
             ...lightCollapsibleHeaderStyles.scrollContainer,
@@ -69,11 +69,11 @@ export const collapsibleHeaderStyles = {
 }
 
 export const dividerStyles = {
-    light: colors.background.black,
-    dark: colors.text.dimmerWhite,
+    light: colors.black,
+    dark: colors.dimmerWhite,
 }
 
 export const statusBarStyles = {
-    light: colors.text.dimWhite,
-    dark: colors.background.black,
+    light: colors.dimWhite,
+    dark: colors.black,
 }

@@ -273,7 +273,7 @@ export default function EditTravelItem() {
                                     style={inputStyles[theme].textInput}
                                     value={vehicleTypes.find(type => type.id === travel.type_id)?.name}
                                     placeholder="Vehicle type..."
-                                    placeholderTextColor={colors.text.placeholderGray}
+                                    placeholderTextColor={colors.placeholderGray}
                                 />
                             </View>
 
@@ -284,7 +284,7 @@ export default function EditTravelItem() {
                                     value={travel.vehicle_code || ''}
                                     onChangeText={(text) => handleChangeText('vehicle_code', text)}
                                     placeholder="Enter vehicle code"
-                                    placeholderTextColor={colors.text.placeholderGray}
+                                    placeholderTextColor={colors.placeholderGray}
                                 />
                             </View>
                         </View>
@@ -334,7 +334,7 @@ export default function EditTravelItem() {
                                     multiline={true}
                                     numberOfLines={4}
                                     placeholder="Enter notes (optional)"
-                                    placeholderTextColor={colors.text.placeholderGray}
+                                    placeholderTextColor={colors.placeholderGray}
                                 />
                             </View>
                         </View>

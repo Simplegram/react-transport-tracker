@@ -52,7 +52,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                             <TextInput
                                 style={inputStyles[theme].textInput}
                                 placeholder="e.g., Standard Bus"
-                                placeholderTextColor={colors.text.placeholderGray}
+                                placeholderTextColor={colors.placeholderGray}
                                 value={vehicleType.name}
                                 onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}
                             />

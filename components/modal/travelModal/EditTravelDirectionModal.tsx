@@ -36,7 +36,7 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
                 <TextInput
                     style={inputStyles[theme].textInput}
                     placeholder="Search direction..."
-                    placeholderTextColor={colors.text.placeholderGray}
+                    placeholderTextColor={colors.placeholderGray}
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                 />

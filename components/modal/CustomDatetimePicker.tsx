@@ -141,7 +141,7 @@ export default function CustomDateTimePicker({
                 keyboardType="numeric"
                 maxLength={maxLength}
                 placeholder={placeholder}
-                placeholderTextColor={colors.text.placeholderGray}
+                placeholderTextColor={colors.placeholderGray}
                 textAlign='center'
             />
         </View>

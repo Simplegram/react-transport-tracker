@@ -106,7 +106,7 @@ const lightDatetimePickerStyles = StyleSheet.create({
         backgroundColor: '#4CAF50',
     },
     cancelButton: {
-        backgroundColor: colors.background.redCancel,
+        backgroundColor: colors.redCancel,
     },
     buttonText: {
         color: 'white',
@@ -125,15 +125,15 @@ export const datetimePickerStyles = {
         modalContainer: {
             ...lightDatetimePickerStyles.modalContainer,
             borderWidth: 1,
-            borderColor: colors.background.dimWhite,
-            backgroundColor: colors.background.black,
+            borderColor: colors.dimWhite,
+            backgroundColor: colors.black,
         },
         scrollContainer: {
             ...lightDatetimePickerStyles.scrollContainer,
         },
         modalTitle: {
             ...lightDatetimePickerStyles.modalTitle,
-            color: colors.text.dimWhite,
+            color: colors.dimWhite,
         },
         dateTimeSection: {
             ...lightDatetimePickerStyles.dateTimeSection,
@@ -149,11 +149,11 @@ export const datetimePickerStyles = {
         },
         inputLabel: {
             ...lightDatetimePickerStyles.inputLabel,
-            color: colors.text.dimWhite,
+            color: colors.dimWhite,
         },
         textInput: {
             ...lightDatetimePickerStyles.textInput,
-            color: colors.text.dimWhite,
+            color: colors.dimWhite,
         },
         timeAdjustmentButtons: {
             ...lightDatetimePickerStyles.timeAdjustmentButtons,
@@ -162,7 +162,7 @@ export const datetimePickerStyles = {
             ...lightDatetimePickerStyles.adjButton,
             borderWidth: 1,
             borderColor: colors.dimmerAppBlue,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
         },
         adjButtonText: {
             ...lightDatetimePickerStyles.adjButtonText,
@@ -171,7 +171,7 @@ export const datetimePickerStyles = {
             ...lightDatetimePickerStyles.nowButton,
             borderWidth: 1,
             borderColor: colors.dimmerWhite,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
         },
         actionButtons: {
             ...lightDatetimePickerStyles.actionButtons,
@@ -182,14 +182,14 @@ export const datetimePickerStyles = {
         confirmButton: {
             ...lightDatetimePickerStyles.confirmButton,
             borderWidth: 1,
-            borderColor: colors.background.greenPositive,
-            backgroundColor: colors.background.black,
+            borderColor: colors.greenPositive,
+            backgroundColor: colors.black,
         },
         cancelButton: {
             ...lightDatetimePickerStyles.cancelButton,
             borderWidth: 1,
-            borderColor: colors.background.dimRedCancel,
-            backgroundColor: colors.background.black,
+            borderColor: colors.dimRedCancel,
+            backgroundColor: colors.black,
         },
         buttonText: {
             ...lightDatetimePickerStyles.buttonText,

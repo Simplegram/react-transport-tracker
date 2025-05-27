@@ -45,7 +45,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
                     <TextInput
                         style={[inputStyles[theme].textInput, { flex: 1 }]}
                         placeholder="e.g., train-subway"
-                        placeholderTextColor={colors.text.placeholderGray}
+                        placeholderTextColor={colors.placeholderGray}
                         value={iconQuery}
                         onChangeText={changeIcon}
                         autoFocus={true}

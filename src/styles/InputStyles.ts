@@ -44,7 +44,7 @@ const inputElementStyles = {
     dark: StyleSheet.create({
         inputContainer: {
             ...lightInputElementStyles.inputContainer,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
         },
         inputGroup: {
             ...lightInputElementStyles.inputGroup,
@@ -60,7 +60,7 @@ const inputElementStyles = {
         },
         inputLabel: {
             ...lightInputElementStyles.inputLabel,
-            color: colors.text.dimWhite,
+            color: colors.dimWhite,
         },
         inputLabelLight: {
             ...lightInputElementStyles.inputLabelLight,
@@ -68,14 +68,14 @@ const inputElementStyles = {
         },
         insideLabel: {
             ...lightInputElementStyles.insideLabel,
-            color: colors.text.dimmerWhite,
+            color: colors.dimmerWhite,
         },
     })
 }
 
 const lightInputStyles = StyleSheet.create({
     textInput: {
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.dimWhite,
         borderRadius: 10,
         paddingHorizontal: 14,
         paddingVertical: 8,
@@ -83,21 +83,21 @@ const lightInputStyles = StyleSheet.create({
         fontSize: 14,
         color: '#333333',
         borderWidth: 1,
-        borderColor: colors.text.dimmerWhite,
+        borderColor: colors.dimmerWhite,
     },
     multilineTextInput: {
         minHeight: 100,
         textAlignVertical: 'top',
     },
     pressableInput: {
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.dimWhite,
         borderRadius: 10,
         paddingHorizontal: 14,
         paddingVertical: Platform.OS === 'ios' ? 14 : 12,
         justifyContent: 'center',
         minHeight: Platform.OS === 'ios' ? 50 : 48,
         borderWidth: 1,
-        borderColor: colors.text.dimmerWhite,
+        borderColor: colors.dimmerWhite,
     },
     pressableInputCoord: {
         flex: 1,
@@ -109,7 +109,7 @@ const inputStyles = {
     dark: StyleSheet.create({
         textInput: {
             ...lightInputStyles.textInput,
-            color: colors.text.dimmerWhite,
+            color: colors.dimmerWhite,
             backgroundColor: '#000'
         },
         multilineTextInput: {
@@ -119,7 +119,7 @@ const inputStyles = {
         pressableInput: {
             ...lightInputStyles.pressableInput,
             backgroundColor: '#000',
-            color: colors.text.dimmerWhite,
+            color: colors.dimmerWhite,
         },
         pressableInputCoord: {
             ...lightInputStyles.pressableInputCoord,
@@ -151,7 +151,7 @@ const lightIconPickerStyles = StyleSheet.create({
     },
     selectedIconContainer: {
         borderColor: colors.appBlue,
-        backgroundColor: colors.background.lightBlue,
+        backgroundColor: colors.lightBlue,
     },
     selectedIcon: {
         color: colors.black

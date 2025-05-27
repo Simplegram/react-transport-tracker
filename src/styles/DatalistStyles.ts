@@ -8,7 +8,7 @@ const lightDatalistStyles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 10,
         paddingHorizontal: 15,
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.dimWhite,
     },
     listContent: {
         gap: 10,
@@ -28,11 +28,11 @@ const lightDatalistStyles = StyleSheet.create({
     },
     modalSearchInput: {
         borderWidth: 1,
-        borderColor: colors.background.black,
+        borderColor: colors.black,
         borderRadius: 5,
         padding: 10,
         fontSize: 16,
-        backgroundColor: colors.background.white,
+        backgroundColor: colors.white,
     }
 })
 
@@ -43,10 +43,10 @@ const lightItemStyles = StyleSheet.create({
     itemContainer: {
         padding: 10,
         flexDirection: 'column',
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.dimWhite,
         borderWidth: 1,
         borderRadius: 8,
-        borderColor: colors.background.black,
+        borderColor: colors.black,
         gap: 10,
     },
     textContainer: {
@@ -71,7 +71,7 @@ const lightItemStyles = StyleSheet.create({
         borderRadius: 8,
     },
     modifyButtonText: {
-        color: colors.background.white,
+        color: colors.white,
         fontSize: 14,
         fontWeight: 'bold',
     },
@@ -85,7 +85,7 @@ export const DatalistStyles = {
     dark: StyleSheet.create({
         container: {
             ...lightDatalistStyles.container,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
         },
         listContent: {
             ...lightDatalistStyles.listContent,
@@ -101,8 +101,8 @@ export const DatalistStyles = {
         },
         modalSearchInput: {
             ...lightDatalistStyles.modalSearchInput,
-            borderColor: colors.text.dimWhite,
-            backgroundColor: colors.background.black,
+            borderColor: colors.dimWhite,
+            backgroundColor: colors.black,
         }
     })
 }
@@ -115,15 +115,15 @@ export const ItemStyles = {
         },
         itemContainer: {
             ...lightItemStyles.itemContainer,
-            borderColor: colors.text.dimWhite,
-            backgroundColor: colors.background.black,
+            borderColor: colors.dimWhite,
+            backgroundColor: colors.black,
         },
         textContainer: {
             ...lightItemStyles.textContainer,
         },
         itemTitle: {
             ...lightItemStyles.itemTitle,
-            color: colors.text.dimWhite,
+            color: colors.dimWhite,
         },
         itemSubtitle: {
             ...lightItemStyles.itemSubtitle,
@@ -133,11 +133,11 @@ export const ItemStyles = {
             ...lightItemStyles.modifyButton,
             borderWidth: 1,
             borderColor: colors.dimmerAppBlue,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
         },
         modifyButtonText: {
             ...lightItemStyles.modifyButtonText,
-            color: colors.text.dimWhite,
+            color: colors.dimWhite,
         },
         fillerContainer: {
             ...lightItemStyles.fillerContainer,

@@ -38,7 +38,7 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
                 <TextInput
                     style={inputStyles[theme].textInput}
                     placeholder="Search stop..."
-                    placeholderTextColor={colors.text.placeholderGray}
+                    placeholderTextColor={colors.placeholderGray}
                     value={searchQuery}
                     onChangeText={setSearchQuery}
                 />

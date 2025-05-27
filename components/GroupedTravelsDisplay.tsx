@@ -42,8 +42,8 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
         router.push("main/travelDetail")
     }
 
-    const borderColor = theme === 'light' ? colors.background.black : colors.text.dimmerWhite
-    const dateLabelColor = theme === 'light' ? '#2c3e50' : colors.text.dimWhite
+    const borderColor = theme === 'light' ? colors.black : colors.dimmerWhite
+    const dateLabelColor = theme === 'light' ? '#2c3e50' : colors.dimWhite
 
     return (
         <View style={styles.mainContainer}>

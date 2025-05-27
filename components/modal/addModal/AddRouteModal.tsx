@@ -68,7 +68,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             <TextInput
                                 style={inputStyles[theme].textInput}
                                 placeholder="Route code..."
-                                placeholderTextColor={colors.text.placeholderGray}
+                                placeholderTextColor={colors.placeholderGray}
                                 value={route.code}
                                 onChangeText={text => (setRoute({ ...route, "code": text }))}
                             />
@@ -79,7 +79,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             <TextInput
                                 style={inputStyles[theme].textInput}
                                 placeholder="Route name..."
-                                placeholderTextColor={colors.text.placeholderGray}
+                                placeholderTextColor={colors.placeholderGray}
                                 value={route.name}
                                 onChangeText={text => (setRoute({ ...route, "name": text }))}
                             />

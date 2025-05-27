@@ -148,7 +148,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 <Text style={inputElementStyles[theme].inputLabel}>Note:</Text>
                                 <TextInput
                                     placeholder="Optional notes"
-                                    placeholderTextColor={colors.text.placeholderGray}
+                                    placeholderTextColor={colors.placeholderGray}
                                     value={lap.note || ''}
                                     onChangeText={text => setLap({ ...lap, note: text })}
                                     keyboardType="default"

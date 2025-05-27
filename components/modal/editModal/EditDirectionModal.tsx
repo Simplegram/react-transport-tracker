@@ -40,7 +40,7 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
                             <TextInput
                                 style={inputStyles[theme].textInput}
                                 placeholder="Direction name..."
-                                placeholderTextColor={colors.text.placeholderGray}
+                                placeholderTextColor={colors.placeholderGray}
                                 value={direction.name}
                                 onChangeText={text => (setDirection({ ...direction, "name": text }))}
                             />

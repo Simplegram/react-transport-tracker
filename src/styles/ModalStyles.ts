@@ -10,8 +10,8 @@ const lightFlatlistStyles = StyleSheet.create({
         paddingVertical: 15,
         paddingHorizontal: 10,
         borderBottomWidth: 1,
-        borderBottomColor: colors.text.dimmerWhite2,
-        backgroundColor: colors.text.dimWhite,
+        borderBottomColor: colors.dimmerWhite2,
+        backgroundColor: colors.dimWhite,
     },
 })
 
@@ -20,7 +20,7 @@ const flatlistStyles = {
     dark: StyleSheet.create({
         item: {
             ...lightFlatlistStyles.item,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
         },
     })
 }
@@ -52,18 +52,18 @@ const modalElementStyles = {
     dark: StyleSheet.create({
         label: {
             ...lightModalElementStyles.label,
-            color: colors.text.dimmerWhite,
+            color: colors.dimmerWhite,
         },
         header: {
             ...lightModalElementStyles.header,
         },
         title: {
             ...lightModalElementStyles.title,
-            color: colors.text.dimWhite,
+            color: colors.dimWhite,
         },
         closeLabel: {
             ...lightModalElementStyles.closeLabel,
-            color: colors.text.dimWhite,
+            color: colors.dimWhite,
         },
     })
 }
@@ -78,7 +78,7 @@ const lightModalStyles = StyleSheet.create({
         padding: 20,
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.dimWhite,
         justifyContent: 'space-between',
         gap: 10,
     },
@@ -123,8 +123,8 @@ const modalStyles = {
             ...lightModalStyles.modalContainer,
             borderRadius: 16,
             borderWidth: 1,
-            borderTopColor: colors.text.dimmerWhite,
-            backgroundColor: colors.background.black,
+            borderTopColor: colors.dimmerWhite,
+            backgroundColor: colors.black,
         },
         lapModalContainer: {
             ...lightModalStyles.lapModalContainer,

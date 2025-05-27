@@ -142,7 +142,7 @@ export default function DataListScreen() {
                     <TextInput
                         style={inputStyles[theme].textInput}
                         placeholder={`Search ${dataType}...`}
-                        placeholderTextColor={colors.text.placeholderGray}
+                        placeholderTextColor={colors.placeholderGray}
                         value={searchQuery}
                         onChangeText={setSearchQuery}
                     />

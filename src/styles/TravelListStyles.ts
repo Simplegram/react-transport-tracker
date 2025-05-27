@@ -8,7 +8,7 @@ const lightTravelCardStyles = StyleSheet.create({
     card: {
         gap: 8,
         padding: 12,
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.dimWhite,
         borderRadius: 8,
         borderWidth: 1,
         borderColor: '#000',
@@ -85,8 +85,8 @@ export const travelCardStyles = {
         },
         card: {
             ...lightTravelCardStyles.card,
-            backgroundColor: colors.background.black,
-            borderColor: colors.text.dimmerWhite,
+            backgroundColor: colors.black,
+            borderColor: colors.dimmerWhite,
         },
         routeInfoSection: {
             ...lightTravelCardStyles.routeInfoSection,
@@ -97,7 +97,7 @@ export const travelCardStyles = {
         },
         vehicleText: {
             ...lightTravelCardStyles.vehicleText,
-            color: colors.text.dimmerWhite,
+            color: colors.dimmerWhite,
         },
         stopsTimeSection: {
             ...lightTravelCardStyles.stopsTimeSection,
@@ -111,32 +111,32 @@ export const travelCardStyles = {
         },
         timeText: {
             ...lightTravelCardStyles.timeText,
-            color: colors.text.dimmerWhite,
+            color: colors.dimmerWhite,
         },
         stopArrowBlock: {
             ...lightTravelCardStyles.stopArrowBlock,
         },
         stopArrowText: {
             ...lightTravelCardStyles.stopArrowText,
-            color: colors.text.dimmerWhite,
+            color: colors.dimmerWhite,
         },
         lapsSection: {
             ...lightTravelCardStyles.lapsSection,
         },
         lapText: {
             ...lightTravelCardStyles.lapText,
-            color: colors.text.dimmerWhite,
+            color: colors.dimmerWhite,
         },
         notesSection: {
             ...lightTravelCardStyles.notesSection,
         },
         notesLabel: {
             ...lightTravelCardStyles.notesLabel,
-            color: colors.text.dimmerWhite,
+            color: colors.dimmerWhite,
         },
         notesText: {
             ...lightTravelCardStyles.notesText,
-            color: colors.text.dimmerWhite,
+            color: colors.dimmerWhite,
         },
     })
 }
@@ -168,7 +168,7 @@ export const travelEmptyContainer = {
         },
         noDataText: {
             ...lightTravelEmptyContainer.noDataText,
-            color: colors.text.dimWhite,
+            color: colors.dimWhite,
         },
     })
 }

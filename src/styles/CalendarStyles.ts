@@ -11,7 +11,7 @@ const lightCalendarStyles = StyleSheet.create({
     calendarContainer: {
         flex: 1,
         height: 500,
-        backgroundColor: colors.background.white,
+        backgroundColor: colors.white,
         position: 'relative',
     },
     todayButton: {
@@ -27,7 +27,7 @@ const lightCalendarStyles = StyleSheet.create({
         zIndex: 1,
     },
     todayButtonText: {
-        color: colors.background.white,
+        color: colors.white,
         fontWeight: 'bold',
         fontSize: 16,
     },
@@ -53,8 +53,8 @@ export const calendarTheme = {
     dark: {
         ...lightCalendarTheme,
         calendarBackground: '#000',
-        dayTextColor: colors.text.dimmerWhite2,
-        monthTextColor: colors.text.dimmerWhite2,
+        dayTextColor: colors.dimmerWhite2,
+        monthTextColor: colors.dimmerWhite2,
     },
 }
 
@@ -66,14 +66,14 @@ export const calendarStyles = {
         },
         calendarContainer: {
             ...lightCalendarStyles.calendarContainer,
-            color: colors.background.black,
+            color: colors.black,
         },
         todayButton: {
             ...lightCalendarStyles.todayButton,
         },
         todayButtonText: {
             ...lightCalendarStyles.todayButtonText,
-            color: colors.text.dimmerWhite2,
+            color: colors.dimmerWhite2,
         },
     }),
 }
