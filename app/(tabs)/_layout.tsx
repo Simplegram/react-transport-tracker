@@ -23,7 +23,7 @@ const TabsLayout = () => {
     const [modalData, setModalData] = useState<string | undefined>(undefined)
 
     const getDisplayValue = () => {
-        const paths = ["/manage/settings", "/main/editTravel", "/main/travelDetail"]
+        const paths = ["/manage/settings", "/manage/datalist", "/main/editTravel", "/main/travelDetail"]
 
         const currentPathname = usePathname()
         if (paths.indexOf(currentPathname) <= -1) return "flex"
