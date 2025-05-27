@@ -11,7 +11,7 @@ const TabsLayout = () => {
     const { theme } = useTheme()
 
     const barColor = theme === 'light' ? colors.dimWhite : colors.black
-    const iconColor = theme === 'light' ? colors.black : colors.dimmerWhite2
+    const iconColor = theme === 'light' ? colors.black : colors.dimWhite2
 
     const getDisplayValue = () => {
         const paths = ["/manage/settings", "/manage/datalist", "/main/editTravel", "/main/travelDetail"]
