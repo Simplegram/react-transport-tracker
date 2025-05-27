@@ -1,4 +1,4 @@
-import { darkenHexColor } from "../utils/colorsUtils"
+import { darkenHexColor } from "../utils/colorUtils"
 
 const allColor = {
     white: '#ffffff',

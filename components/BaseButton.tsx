@@ -1,6 +1,6 @@
 import { useTheme } from '@/context/ThemeContext'
 import { colors } from '@/src/const/color'
-import { darkenColor, getBackgroundColorFromStyle, getColorFromStyle } from '@/src/utils/colorsUtils'
+import { darkenColor, getBackgroundColorFromStyle, getColorFromStyle } from '@/src/utils/colorUtils'
 import { Pressable, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native'
 
 type Props = {
