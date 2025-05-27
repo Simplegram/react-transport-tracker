@@ -1,5 +1,6 @@
 import { colors } from "@/const/color"
 import { useTheme } from "@/context/ThemeContext"
+import { hexToRgbA } from "@/src/utils/colorsUtils"
 import React, { useEffect, useRef, useState } from "react"
 import { Animated, Easing, EasingFunction, StyleSheet, TouchableOpacity, Vibration } from "react-native"
 
@@ -14,20 +15,16 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
     const [isEnabled, setIsEnabled] = useState(false)
 
     useEffect(() => {
-        if (overrideIsEnabled) {
-            setIsEnabled(overrideIsEnabled)
-            if (overrideIsEnabled === true) ballMovingAnimation(1, Easing.bezier(0, .54, .47, .71))
-            else ballMovingAnimation(0, Easing.bezier(0, .54, .47, .71))
-        }
+        if (overrideIsEnabled) setIsEnabled(overrideIsEnabled)
     }, [overrideIsEnabled])
 
-    const ballTranslateX = useRef(new Animated.Value(0)).current
+    const ballTranslateX = useRef(new Animated.Value(overrideIsEnabled ? 1 : 0)).current
     const ballMovingAnimation = (toValue: number, easing: EasingFunction) => {
         Animated.timing(ballTranslateX, {
             toValue,
             duration: 150,
             easing,
-            useNativeDriver: false,
+            useNativeDriver: true,
         }).start()
     }
     const ballTranslate = ballTranslateX.interpolate({
@@ -35,13 +32,13 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
         outputRange: [0, 20],
     })
 
-    const ballScale = useRef(new Animated.Value(0)).current
+    const ballScale = useRef(new Animated.Value(overrideIsEnabled ? 1 : 0)).current
     const ballScaleAnimation = (toValue: number, easing: EasingFunction) => {
         Animated.timing(ballScale, {
             toValue,
             duration: 125,
             easing,
-            useNativeDriver: false,
+            useNativeDriver: true,
         }).start()
     }
     const ballScaleTranslate = ballScale.interpolate({
@@ -52,12 +49,27 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
     const trackColor = theme === 'light' ? colors.appBlue : colors.dimmerAppBlue
     const ballColor = theme === 'light' ? colors.dimWhite : colors.dimmerWhite2
 
+    const colorTransition = useRef(new Animated.Value(overrideIsEnabled ? 1 : 0)).current
+    const colorAnimation = (toValue: number, easing: EasingFunction) => {
+        Animated.timing(colorTransition, {
+            toValue,
+            duration: 350,
+            easing,
+            useNativeDriver: true,
+        }).start()
+    }
+    const colorValue = ballScale.interpolate({
+        inputRange: [0, 1],
+        outputRange: [hexToRgbA('#767577'), hexToRgbA(trackColor)]
+    })
+
     const onChangeHandler = () => {
         const newValue = !isEnabled
         setIsEnabled(newValue)
 
         ballMovingAnimation(newValue ? 1 : 0, Easing.bezier(0, .54, .47, .71))
         ballScaleAnimation(newValue ? 1 : 0, Easing.bezier(0, .54, .47, .71))
+        colorAnimation(newValue ? 1 : 0, Easing.bounce)
         Vibration.vibrate(5)
 
         onPress()
@@ -65,10 +77,7 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
 
     return (
         <TouchableOpacity
-            style={[
-                styles.switchContainer,
-                { backgroundColor: isEnabled ? trackColor : '#767577' },
-            ]}
+            style={[styles.switchContainer, { backgroundColor: colorValue }]}
             onPress={onChangeHandler}
             activeOpacity={1}
         >
