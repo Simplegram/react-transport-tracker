@@ -39,18 +39,18 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
     const ballScaleAnimation = (toValue: number, easing: EasingFunction) => {
         Animated.timing(ballScale, {
             toValue,
-            duration: 200,
+            duration: 125,
             easing,
             useNativeDriver: false,
         }).start()
     }
     const ballScaleTranslate = ballScale.interpolate({
-        inputRange: [0, 0.2, 1],
-        outputRange: [1, 0.7, 1]
+        inputRange: [0, 0.5, 1],
+        outputRange: [1, 0.6, 1]
     })
 
     const trackColor = theme === 'light' ? colors.appBlue : colors.dimmerAppBlue
-    const ballColor = theme === 'light' ? colors.white : colors.dimWhite
+    const ballColor = theme === 'light' ? colors.dimWhite : colors.dimmerWhite2
 
     const onChangeHandler = () => {
         const newValue = !isEnabled
