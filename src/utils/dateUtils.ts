@@ -55,3 +55,22 @@ export const sumTimesMs = (times: number[]) => {
 
     return milliseconds
 }
+
+export const formatMsToMinutes = (milliseconds: number, showSign: boolean = false): string => {
+    if (isNaN(milliseconds)) {
+        return 'N/A'
+    }
+    const minutes = Math.floor(milliseconds / (1000 * 60))
+    const sign = showSign ? Math.sign(milliseconds) < 0 ? '' : '+' : ''
+    return `${sign}${minutes} mins`
+}
+
+export const formatMsToHoursMinutes = (milliseconds: number): string => {
+    if (isNaN(milliseconds) || milliseconds < 0) {
+        return 'N/A'
+    }
+    const totalMinutes = Math.floor(milliseconds / (1000 * 60))
+    const hours = Math.floor(totalMinutes / 60)
+    const minutes = totalMinutes % 60
+    return `${hours}h ${minutes}m / ${totalMinutes}m`
+}

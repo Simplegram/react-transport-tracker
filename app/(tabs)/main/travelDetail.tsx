@@ -7,7 +7,7 @@ import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
 import { DataItem, Stop } from '@/src/types/Travels'
-import { sumTimesMs, timeToMinutes } from '@/src/utils/dateUtils'
+import { formatMsToHoursMinutes, formatMsToMinutes, sumTimesMs, timeToMinutes } from '@/src/utils/dateUtils'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
 import { formatLapTimeDisplay } from '@/src/utils/utils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
@@ -16,25 +16,6 @@ import React, { useEffect, useState } from 'react'
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
 
 const { width: screenWidth } = Dimensions.get("screen")
-
-const formatDurationMinutes = (milliseconds: number, showSign: boolean = false): string => {
-    if (isNaN(milliseconds)) {
-        return 'N/A'
-    }
-    const minutes = Math.floor(milliseconds / (1000 * 60))
-    const sign = showSign ? Math.sign(milliseconds) < 0 ? '' : '+' : ''
-    return `${sign}${minutes} mins`
-}
-
-const formatDurationHoursMinutes = (milliseconds: number): string => {
-    if (isNaN(milliseconds) || milliseconds < 0) {
-        return 'N/A'
-    }
-    const totalMinutes = Math.floor(milliseconds / (1000 * 60))
-    const hours = Math.floor(totalMinutes / 60)
-    const minutes = totalMinutes % 60
-    return `${hours}h ${minutes}m / ${totalMinutes}m`
-}
 
 interface LapLatLon {
     id: string
@@ -226,7 +207,7 @@ export default function TravelDetail() {
         efficiencyPercentage = (averageRouteDurationMilliseconds / totalOnRoadMilliseconds) * 100
     }
 
-    const timeDiff = formatDurationMinutes(totalOnRoadMilliseconds - averageRouteDurationMilliseconds, true)
+    const timeDiff = formatMsToMinutes(totalOnRoadMilliseconds - averageRouteDurationMilliseconds, true)
     const diffColor = Math.sign(totalOnRoadMilliseconds - averageRouteDurationMilliseconds) < 0 ? colors.dimGreenPositive : colors.dimRedCancel
 
     return (
@@ -237,7 +218,7 @@ export default function TravelDetail() {
 
                     <View style={travelDetailStyles[theme].detailRow}>
                         <Text style={travelDetailStyles[theme].label}>Average Route Duration:</Text>
-                        <Text style={travelDetailStyles[theme].valueText}>{formatDurationMinutes(averageRouteDurationMilliseconds)}</Text>
+                        <Text style={travelDetailStyles[theme].valueText}>{formatMsToMinutes(averageRouteDurationMilliseconds)}</Text>
                     </View>
 
                     <View style={travelDetailStyles[theme].detailRow}>
@@ -246,7 +227,7 @@ export default function TravelDetail() {
                             gap: 5,
                             flexDirection: 'row',
                         }}>
-                            <Text style={travelDetailStyles[theme].valueText}>{formatDurationMinutes(totalOnRoadMilliseconds)}</Text>
+                            <Text style={travelDetailStyles[theme].valueText}>{formatMsToMinutes(totalOnRoadMilliseconds)}</Text>
                             <Text style={[travelDetailStyles[theme].valueText, { color: diffColor }]}>{`(${timeDiff})`}</Text>
                         </View>
                     </View>
@@ -267,7 +248,7 @@ export default function TravelDetail() {
                                 const departureDate = new Date(trip.bus_initial_departure)
                                 const finalArrivalDate = new Date(trip.bus_final_arrival)
                                 const durationMillis = finalArrivalDate.getTime() - departureDate.getTime()
-                                const durationString = formatDurationHoursMinutes(durationMillis)
+                                const durationString = formatMsToHoursMinutes(durationMillis)
 
                                 const departureTime = formatLapTimeDisplay(trip.bus_initial_departure, true)
                                 const arrivalTime = formatLapTimeDisplay(trip.bus_final_arrival, true)
