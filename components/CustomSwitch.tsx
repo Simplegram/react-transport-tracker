@@ -46,7 +46,8 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
         outputRange: [1, 0.7, 0.7, 1]
     })
 
-    const trackColor = theme === 'light' ? colors.appBlue : colors.dimAppBlue
+    const trackBaseColor = theme === 'light' ? colors.dimmerWhite2 : colors.dimmestWhite2
+    const trackEnabledColor = theme === 'light' ? colors.appBlue : colors.dimAppBlue
     const ballColor = theme === 'light' ? colors.dimWhite : colors.dimWhite2
 
     const colorTransition = useRef(new Animated.Value(overrideIsEnabled ? 1 : 0)).current
@@ -60,7 +61,7 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
     }
     const colorValue = ballScale.interpolate({
         inputRange: [0, 1],
-        outputRange: [hexToRgbA('#767577'), hexToRgbA(trackColor)]
+        outputRange: [hexToRgbA(trackBaseColor), hexToRgbA(trackEnabledColor)]
     })
 
     const onChangeHandler = () => {

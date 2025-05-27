@@ -16,6 +16,7 @@ const white = {
     dimmerWhite: darkenHexColor(allColor.white, 70),
     dimmerWhite2: darkenHexColor(allColor.white, 60),
     dimmestWhite: darkenHexColor(allColor.white, 50),
+    dimmestWhite2: darkenHexColor(allColor.white, 35),
 }
 
 const appBlue = {
