@@ -37,7 +37,7 @@ const navigationButtons: ButtonConfig[] = [
 ]
 
 
-const NavigationPage: React.FC = () => {
+export default function NavigationPage() {
     const { theme } = useTheme()
     const { setSelectedModification } = useTravelContext()
 
@@ -91,5 +91,3 @@ const styles = StyleSheet.create({
         gap: 10,
     },
 })
-
-export default NavigationPage
