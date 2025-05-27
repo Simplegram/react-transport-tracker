@@ -1,14 +1,23 @@
 import Button from "@/components/BaseButton"
 import CollapsibleHeaderPage from "@/components/CollapsibleHeaderPage"
 import Divider from "@/components/Divider"
+import Switcher from "@/components/Switcher"
 import { useAuth } from "@/context/AuthContext"
+import { useSettings } from "@/context/SettingsContext"
 import { useTheme } from "@/context/ThemeContext"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
+import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
 import { router } from "expo-router"
 import { StyleSheet, View } from "react-native"
 
 export default function Settings() {
-    const { theme, setTheme } = useTheme()
+    const { 
+        theme, setTheme
+    } = useTheme()
+
+    const {
+        enableSwipeZone, setEnableSwipeZone
+    } = useSettings()
 
     const { signOut } = useAuth()
 
@@ -22,11 +31,21 @@ export default function Settings() {
         else setTheme('light')
     }
 
+    const handleSwipeZone = () => {
+        if (enableSwipeZone === true) setEnableSwipeZone(false)
+        else setEnableSwipeZone(true)
+    }
+
     return (
         <CollapsibleHeaderPage
             headerText="Settings"
         >
             <View style={styles.container}>
+                <View style={travelDetailStyles[theme].card}>
+                    <Switcher onPress={handleSwipeZone} overrideIsEnabled={enableSwipeZone}>Enable "Safe Swipe Zone"</Switcher>
+                    <Divider />
+                    <Switcher onPress={handleThemeChange} overrideIsEnabled={theme === 'light' ? false : true}>Dark mode</Switcher>
+                </View>
                 <View style={styles.buttonContainer}>
                     <Button
                         title={`Enable ${theme === 'light' ? 'dark' : 'light'} mode`}

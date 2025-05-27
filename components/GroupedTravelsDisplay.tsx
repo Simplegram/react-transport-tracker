@@ -6,6 +6,7 @@ import Divider from './Divider'
 import TravelFlatlist from '@/components/TravelFlatlist'
 import { colors } from '@/const/color'
 import { useTravelContext } from '@/context/PageContext'
+import { useSettings } from '@/context/SettingsContext'
 import { useTheme } from '@/context/ThemeContext'
 import { travelEmptyContainer } from '@/src/styles/TravelListStyles'
 import { DataItemWithNewKey } from '@/src/utils/dataUtils'
@@ -20,6 +21,7 @@ interface GroupedDataDisplayProps {
 
 export default function GroupedDataDisplay({ data: finalGroupedData, currentDate, refetch }: GroupedDataDisplayProps) {
     const { theme } = useTheme()
+    const { enableSwipeZone } = useSettings()
 
     const { setSelectedItem, setSelectedTravelItems } = useTravelContext()
 
@@ -73,7 +75,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                     refetch={refetch}
                                 />
                             </View>
-                            {directionNames.length > 1 && (
+                            {(directionNames.length > 1) && enableSwipeZone && (
                                 <>
                                     <Divider />
                                     <View style={styles.swipeZone}>
