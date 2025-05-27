@@ -42,8 +42,8 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
         }).start()
     }
     const ballScaleTranslate = ballScale.interpolate({
-        inputRange: [0, 0.5, 1],
-        outputRange: [1, 0.6, 1]
+        inputRange: [0, 0.1, 0.9, 1],
+        outputRange: [1, 0.7, 0.7, 1]
     })
 
     const trackColor = theme === 'light' ? colors.appBlue : colors.dimAppBlue
