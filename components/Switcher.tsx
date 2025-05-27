@@ -6,16 +6,17 @@ import CustomSwitch from "./CustomSwitch"
 interface SwitcherProps {
     title?: string
     onPress: () => void
+    overrideIsEnabled?: boolean
     children?: string
 }
 
-export default function Switcher({ title, onPress, children }: SwitcherProps) {
+export default function Switcher({ title, onPress, overrideIsEnabled, children }: SwitcherProps) {
     const { theme } = useTheme()
 
     return (
         <View style={styles.container}>
             <Text style={inputElementStyles[theme].inputLabel}>{title ? title : children}</Text>
-            <CustomSwitch onPress={onPress} />
+            <CustomSwitch onPress={onPress} overrideIsEnabled={overrideIsEnabled} />
         </View>
     )
 }

@@ -1,16 +1,25 @@
 import { colors } from "@/const/color"
 import { useTheme } from "@/context/ThemeContext"
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Animated, Easing, EasingFunction, StyleSheet, TouchableOpacity, Vibration } from "react-native"
 
 interface SwitchProps {
     onPress: () => void
+    overrideIsEnabled?: boolean
 }
 
-export default function CustomSwitch({ onPress }: SwitchProps) {
+export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps) {
     const { theme } = useTheme()
 
     const [isEnabled, setIsEnabled] = useState(false)
+
+    useEffect(() => {
+        if (overrideIsEnabled) {
+            setIsEnabled(overrideIsEnabled)
+            if (overrideIsEnabled === true) ballMovingAnimation(1, Easing.bezier(0, .54, .47, .71))
+            else ballMovingAnimation(0, Easing.bezier(0, .54, .47, .71))
+        }
+    }, [overrideIsEnabled])
 
     const ballTranslateX = useRef(new Animated.Value(0)).current
     const ballMovingAnimation = (toValue: number, easing: EasingFunction) => {
