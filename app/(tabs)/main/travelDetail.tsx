@@ -6,8 +6,9 @@ import { colors } from '@/const/color'
 import { useTravelContext } from '@/context/PageContext'
 import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
+import useTravelDetail from '@/hooks/useTravelDetail'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
-import { DataItem, Stop } from '@/src/types/Travels'
+import { AverageTimes, DataItem, Stop } from '@/src/types/Travels'
 import { formatMsToMinutes, sumTimesToMs } from '@/src/utils/dateUtils'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
@@ -34,11 +35,12 @@ export default function TravelDetail() {
         fullVehicleTypes,
         travelLaps, getTravelLaps,
         refetchTravelData,
-        averageTime, getTravelTime,
     } = useGetTravelData()
 
+    const { averageTime, getTravelTime } = useTravelDetail()
+
     const [dataToUse, setDataToUse] = useState<DataItem[]>([])
-    const [travelTimes, setTravelTimes] = useState<number[]>([])
+    const [travelTimes, setTravelTimes] = useState<AverageTimes[]>([])
 
     if (!selectedTravelItems) {
         return (
@@ -162,7 +164,8 @@ export default function TravelDetail() {
 
     const centerLatLon = getSimpleCentroid(validCoords)
 
-    let averageRouteDurationMilliseconds = sumTimesToMs(travelTimes)
+    const averageTravelTimes = travelTimes.map(time => time['avg_travel_time'])
+    let averageRouteDurationMilliseconds = sumTimesToMs(averageTravelTimes)
     let totalOnRoadMilliseconds = 0
     let sumInitialStopDurationMilliseconds = 0
 
@@ -247,7 +250,7 @@ export default function TravelDetail() {
                             <IndividualTravelDetailCard
                                 key={index}
                                 travel={travel}
-                                travelTimes={travelTimes}
+                                travelTimes={averageTravelTimes}
                                 index={index}
                             />
                         ))}

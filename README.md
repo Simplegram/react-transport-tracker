@@ -89,26 +89,47 @@ GRANT ALL ON ALL TABLES IN SCHEMA public_transport_tracker TO authenticated;
 
 ### Create Average Route Travel Time Function
 ```pgsql
-create or replace function public_transport_tracker.calculate_average_travel_time(
+create or replace function public_transport_tracker.calculate_average_travel_times(
   route_id_param int,
   direction_id_param int,
   first_stop_id_param int,
   last_stop_id_param int
 )
-returns interval
+returns table(
+  avg_travel_time interval,
+  avg_top_5_longest interval,
+  min_top_5_longest interval,
+  max_top_5_longest interval,
+  avg_top_5_shortest interval,
+  min_top_5_shortest interval,
+  max_top_5_shortest interval
+)
 language sql
 as $$
-  SELECT AVG(bus_final_arrival - bus_initial_departure) as average_travel_time
-  FROM (
-      SELECT bus_final_arrival, bus_initial_arrival, bus_initial_departure
-      FROM public_transport_tracker.travels
-      WHERE route_id = route_id_param
-      AND direction_id = direction_id_param
-      AND first_stop_id = first_stop_id_param
-      AND last_stop_id = last_stop_id_param
-      AND bus_initial_departure is not null
-      AND bus_final_arrival is not null
-  ) as average_travel_time;
+  WITH RankedTravels AS (
+    SELECT
+        bus_final_arrival - bus_initial_departure AS travel_duration,
+        ROW_NUMBER() OVER (ORDER BY (bus_final_arrival - bus_initial_departure) DESC) as rank_longest,
+        ROW_NUMBER() OVER (ORDER BY (bus_final_arrival - bus_initial_departure) ASC) as rank_shortest
+    FROM public_transport_tracker.travels
+    WHERE route_id = route_id_param
+    AND direction_id = direction_id_param
+    AND first_stop_id = first_stop_id_param
+    AND last_stop_id = last_stop_id_param
+    AND bus_initial_departure IS NOT NULL
+    AND bus_final_arrival IS NOT NULL
+)
+SELECT
+    AVG(travel_duration) AS avg_travel_time,
+
+    AVG(CASE WHEN rank_longest <= 5 THEN travel_duration ELSE NULL END) AS avg_top_5_longest,
+    MIN(CASE WHEN rank_longest <= 5 THEN travel_duration ELSE NULL END) AS min_top_5_longest,
+    MAX(CASE WHEN rank_longest <= 5 THEN travel_duration ELSE NULL END) AS max_top_5_longest,
+
+    AVG(CASE WHEN rank_shortest <= 5 THEN travel_duration ELSE NULL END) AS avg_top_5_shortest,
+    MIN(CASE WHEN rank_shortest <= 5 THEN travel_duration ELSE NULL END) AS min_top_5_shortest,
+    MAX(CASE WHEN rank_shortest <= 5 THEN travel_duration ELSE NULL END) AS max_top_5_shortest
+FROM RankedTravels;
 $$;
 ```
 
