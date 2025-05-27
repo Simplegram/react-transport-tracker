@@ -46,14 +46,6 @@ export default function Settings() {
                     <Divider />
                     <Switcher onPress={handleThemeChange} overrideIsEnabled={theme === 'light' ? false : true}>Dark mode</Switcher>
                 </View>
-                <View style={styles.buttonContainer}>
-                    <Button
-                        title={`Enable ${theme === 'light' ? 'dark' : 'light'} mode`}
-                        style={buttonStyles[theme].addButton}
-                        textStyle={buttonStyles[theme].addButtonText}
-                        onPress={handleThemeChange}
-                    />
-                </View>
                 <Divider />
                 <Button
                     style={buttonStyles[theme].redButton}
