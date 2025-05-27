@@ -1,6 +1,7 @@
 import AnnotationContent from '@/components/AnnotationContent'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import LoadingScreen from '@/components/LoadingScreen'
+import IndividualTravelDetailCard from '@/components/travelDetail/IndividualTravelDetailCard'
 import { colors } from '@/const/color'
 import { useTravelContext } from '@/context/PageContext'
 import { useTheme } from '@/context/ThemeContext'
@@ -242,46 +243,15 @@ export default function TravelDetail() {
 
                 {sortedData.length > 0 && (
                     <View style={travelDetailStyles[theme].card}>
-                        <Text style={travelDetailStyles[theme].cardTitle}>Individual Trip Durations</Text>
-                        {sortedData.sort(data => data.id).map((trip, index) => {
-                            try {
-                                const departureDate = new Date(trip.bus_initial_departure)
-                                const finalArrivalDate = new Date(trip.bus_final_arrival)
-                                const durationMillis = finalArrivalDate.getTime() - departureDate.getTime()
-                                const durationString = formatMsToHoursMinutes(durationMillis)
-
-                                const departureTime = formatLapTimeDisplay(trip.bus_initial_departure, true)
-                                const arrivalTime = formatLapTimeDisplay(trip.bus_final_arrival, true)
-                                const timeString = `${departureTime} - ${arrivalTime}`
-
-                                const stopString = `${trip.first_stop_id.name} to ${trip.last_stop_id.name}`
-                                const tripIdentifier = `${trip.routes.code} | ${trip.vehicle_code || 'N/A'}`
-
-                                return (
-                                    <View key={trip.id} style={travelDetailStyles[theme].detailRow}>
-                                        <Text style={travelDetailStyles[theme].specialValue}>{tripIdentifier}</Text>
-                                        <Text style={travelDetailStyles[theme].valueText}>{stopString}</Text>
-                                        <View style={{
-                                            flexDirection: 'row',
-                                            alignItems: 'center',
-                                            gap: 5,
-                                        }}>
-                                            <Text style={travelDetailStyles[theme].valueText}>{timeString}</Text>
-                                            <Text style={travelDetailStyles[theme].valueText}>({durationString})</Text>
-                                        </View>
-                                        <Text style={travelDetailStyles[theme].valueText}>{`Route Average: ${timeToMinutes(travelTimes[index])}`}</Text>
-                                    </View>
-                                )
-                            } catch (error) {
-                                console.error(`Error calculating duration for trip ID ${trip.id || 'unknown'}:`, error)
-                                return (
-                                    <View key={trip.id} style={travelDetailStyles[theme].detailRow}>
-                                        <Text style={travelDetailStyles[theme].label}>Trip ID {trip.id || 'N/A'} Duration:</Text>
-                                        <Text style={travelDetailStyles[theme].valueText}>Calculation Error</Text>
-                                    </View>
-                                )
-                            }
-                        })}
+                        <Text style={travelDetailStyles[theme].cardTitle}>Individual Travel Detail</Text>
+                        {sortedData.sort(data => data.id).map((travel, index) => (
+                            <IndividualTravelDetailCard
+                                key={index} 
+                                travel={travel}
+                                travelTimes={travelTimes}
+                                index={index}
+                            />
+                        ))}
                     </View>
                 )}
 
