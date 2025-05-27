@@ -11,7 +11,7 @@ import { router } from "expo-router"
 import { StyleSheet, View } from "react-native"
 
 export default function Settings() {
-    const { 
+    const {
         theme, setTheme
     } = useTheme()
 
@@ -41,7 +41,7 @@ export default function Settings() {
             headerText="Settings"
         >
             <View style={styles.container}>
-                <View style={travelDetailStyles[theme].card}>
+                <View style={[travelDetailStyles[theme].card, { gap: 10 }]}>
                     <Switcher onPress={handleSwipeZone} overrideIsEnabled={enableSwipeZone}>Enable "Safe Swipe Zone"</Switcher>
                     <Divider />
                     <Switcher onPress={handleThemeChange} overrideIsEnabled={theme === 'light' ? false : true}>Dark mode</Switcher>
