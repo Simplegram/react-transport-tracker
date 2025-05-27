@@ -8,9 +8,8 @@ import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
 import { DataItem, Stop } from '@/src/types/Travels'
-import { formatMsToHoursMinutes, formatMsToMinutes, sumTimesMs, timeToMinutes } from '@/src/utils/dateUtils'
+import { formatMsToMinutes, sumTimesMs } from '@/src/utils/dateUtils'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
-import { formatLapTimeDisplay } from '@/src/utils/utils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
@@ -246,7 +245,7 @@ export default function TravelDetail() {
                         <Text style={travelDetailStyles[theme].cardTitle}>Individual Travel Detail</Text>
                         {sortedData.sort(data => data.id).map((travel, index) => (
                             <IndividualTravelDetailCard
-                                key={index} 
+                                key={index}
                                 travel={travel}
                                 travelTimes={travelTimes}
                                 index={index}
