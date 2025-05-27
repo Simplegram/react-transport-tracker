@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react"
+import React, { createContext, PropsWithChildren, useContext } from "react"
 import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage"
 
 interface SettingsContextType {
@@ -8,13 +8,9 @@ interface SettingsContextType {
     setTheme: (key: 'light' | 'dark') => void
 }
 
-interface SettingsProviderProps {
-    children: React.ReactNode
-}
-
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined)
 
-export const SettingsProvider = ({ children }: SettingsProviderProps) => {
+export const SettingsProvider = ({ children }: PropsWithChildren) => {
     const storage = new MMKVLoader().initialize()
     const [theme, setTheme] = useMMKVStorage<'light' | 'dark'>('appTheme', storage, 'light')
     const [enableSwipeZone, setEnableSwipeZone] = useMMKVStorage<boolean>('settings_swipeZone', storage, true)
