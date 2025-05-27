@@ -41,7 +41,7 @@ export const timeToMinutes = (averageTime: number) => {
     return formattedTime
 }
 
-export const sumTimesMs = (times: number[]) => {
+export const sumTimesToMs = (times: number[]) => {
     let timeSum = moment("00:00:00", "HH:mm:ss")
 
     for (const time of times) {
