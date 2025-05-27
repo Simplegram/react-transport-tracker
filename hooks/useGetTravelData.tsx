@@ -130,19 +130,6 @@ export default function useGetTravelData() {
         }
     }
 
-    const getTravelTime = async (route_id: number, direction_id: number, first_stop_id: number, last_stop_id: number) => {
-        const { data, error } = await supabase
-            .rpc('calculate_average_travel_time', {
-                'route_id_param': route_id,
-                'direction_id_param': direction_id,
-                'first_stop_id_param': first_stop_id,
-                'last_stop_id_param': last_stop_id,
-            })
-
-        if (data) setAverageTime(data)
-        if (error) console.log(error)
-    }
-
     const getTravelData = async (timeout: number = 0) => {
         // listening to database changes might be a better idea?
         setTimeout(async () => {
@@ -168,6 +155,5 @@ export default function useGetTravelData() {
         laps, setLaps, getLaps, getAllLaps,
         travelLaps, getTravelLaps,
         refetchTravelData: getTravelData,
-        averageTime, getTravelTime,
     }
 }
