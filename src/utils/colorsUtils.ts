@@ -22,13 +22,7 @@ export const darkenColor = (hexColor: string, amount: number) => {
     return `#${darkenRHex}${darkenGHex}${darkenBHex}`
 }
 
-interface DarkenHexColorProps {
-    hexColor: string
-    darkenPercentage: number
-}
-
-export function DarkenHexColor({ hexColor, darkenPercentage }: DarkenHexColorProps): string {
-    // Validate hex color format
+export const darkenHexColor = (hexColor: string, darkenPercentage: number): string => {
     if (!/^#?([a-fA-F0-9]{6}|[a-fA-F0-9]{3})$/.test(hexColor)) {
         console.error('Invalid hex color format:', hexColor)
         return hexColor
@@ -44,11 +38,11 @@ export function DarkenHexColor({ hexColor, darkenPercentage }: DarkenHexColorPro
     const g = parseInt(fullHex.substring(2, 4), 16)
     const b = parseInt(fullHex.substring(4, 6), 16)
 
-    const darkenFactor = 1 - Math.max(0, Math.min(100, darkenPercentage)) / 100
+    const reductionAmount = Math.max(0, Math.min(100, darkenPercentage)) / 100
 
-    const darkenedR = Math.floor(r * darkenFactor)
-    const darkenedG = Math.floor(g * darkenFactor)
-    const darkenedB = Math.floor(b * darkenFactor)
+    const darkenedR = Math.floor(r * reductionAmount)
+    const darkenedG = Math.floor(g * reductionAmount)
+    const darkenedB = Math.floor(b * reductionAmount)
 
     const finalR = Math.max(0, Math.min(255, darkenedR))
     const finalG = Math.max(0, Math.min(255, darkenedG))
