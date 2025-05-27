@@ -37,7 +37,7 @@ export default function Button({
         <Pressable style={buttonContainerStyle} onPress={onPress}>
             {({ pressed }) => {
                 const styleTextColor = getColorFromStyle(textStyle)
-                const baseTextColor = styleTextColor || styles.buttonText.color || theme === 'light' ? colors.white : colors.dimWhite
+                const baseTextColor = styleTextColor || styles.buttonText.color || (theme === 'light' ? colors.white : colors.dimWhite)
 
                 const effectiveTextColor = (pressed && theme === 'dark') ? darkenColor(baseTextColor, darkenAmount) : baseTextColor
 
