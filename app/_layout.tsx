@@ -1,4 +1,5 @@
 import { AuthProvider, useAuth } from '@/context/AuthContext'
+import { SettingsProvider } from '@/context/SettingsContext'
 import { SupabaseProvider } from '@/context/SupabaseContext'
 import { ThemeProvider } from '@/context/ThemeContext'
 import { Slot, useRouter, useSegments } from 'expo-router'
@@ -28,9 +29,11 @@ const RootLayout = () => {
     return (
         <SupabaseProvider>
             <AuthProvider>
-                <ThemeProvider>
-                    <InitialLayout />
-                </ThemeProvider>
+                <SettingsProvider>
+                    <ThemeProvider>
+                        <InitialLayout />
+                    </ThemeProvider>
+                </SettingsProvider>
             </AuthProvider>
         </SupabaseProvider>
     )
