@@ -1,4 +1,3 @@
-import { TravelProvider } from "@/context/PageContext"
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
 import { statusBarStyles } from "@/src/styles/Styles"
@@ -22,7 +21,7 @@ const TabsLayout = () => {
     }
 
     return (
-        <TravelProvider>
+        <>
             <StatusBar
                 backgroundColor={statusBarStyles[theme]}
             />
@@ -69,7 +68,7 @@ const TabsLayout = () => {
                     }}
                 />
             </Tabs>
-        </TravelProvider>
+        </>
     )
 }
 
