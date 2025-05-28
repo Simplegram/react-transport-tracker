@@ -70,10 +70,11 @@ export const calendarStyles = {
         },
         todayButton: {
             ...lightCalendarStyles.todayButton,
+            backgroundColor: colors.dimAppBlue,
         },
         todayButtonText: {
             ...lightCalendarStyles.todayButtonText,
-            color: colors.dimmerWhite2,
+            color: colors.dimmerWhite,
         },
     }),
 }
