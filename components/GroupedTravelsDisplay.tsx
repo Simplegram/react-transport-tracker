@@ -60,19 +60,16 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                     {directionNames.map((directionNameKey, index) => (
                         <View key={directionNameKey} style={[styles.pagerViewContentContainer, { borderColor: borderColor }]}>
                             <View key={directionNameKey} style={styles.cardCanvas}>
-                                <View>
-                                    <Pressable onPress={() => handleViewTravelDetails(directionNameKey)}>
-                                        <Text style={[styles.groupTitle, { color: dateLabelColor }]}>
-                                            Direction ({index + 1}/{directionNames.length}): {directionNameKey}
-                                        </Text>
-                                    </Pressable>
-                                </View>
-
                                 <TravelFlatlist
                                     items={finalGroupedData[directionNameKey]}
-                                    directionNameKey={directionNameKey}
                                     onPress={handleItemPress}
                                     refetch={refetch}
+                                    travelHeaderProps={{
+                                        directionNameKey: directionNameKey,
+                                        directionNamesLength: directionNames.length,
+                                        index: index,
+                                        onPress: handleViewTravelDetails
+                                    }}
                                 />
                             </View>
                             {(directionNames.length > 1) && enableSwipeZone && (
