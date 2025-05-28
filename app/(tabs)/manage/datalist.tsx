@@ -2,7 +2,7 @@ import Button from '@/components/BaseButton'
 import LoadingScreen from '@/components/LoadingScreen'
 import ModalTemplate from '@/components/ModalTemplate'
 import { EmptyHeaderComponent } from '@/components/TravelFlatlist'
-import { useModalContext } from '@/context/ModalContext'
+import { useDataEditContext } from '@/context/DataEditContext'
 import { useTheme } from '@/context/ThemeContext'
 import useDataList from '@/hooks/useDataList'
 import useDatalistModal from '@/hooks/useDatalistModal'
@@ -28,7 +28,7 @@ interface ItemTemplate {
 export default function DataListScreen() {
     const { theme } = useTheme()
 
-    const { setModalData } = useModalContext()
+    const { setModalData } = useDataEditContext()
 
     const {
         directions,

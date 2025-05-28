@@ -1,8 +1,6 @@
 import { DataItem } from "@/src/types/Travels"
 import { createContext, PropsWithChildren, useContext, useState } from "react"
 
-export const ScrollContext = createContext<boolean>(false)
-
 interface TravelContextValue {
     selectedItem: any | undefined
     setSelectedItem: (item: any | undefined) => void

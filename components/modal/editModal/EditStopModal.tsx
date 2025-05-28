@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import { useModalContext } from "@/context/ModalContext"
+import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
@@ -20,7 +20,7 @@ import AddCoordModal from "../addModal/AddCoordModal"
 export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()
 
-    const { modalData: data } = useModalContext()
+    const { modalData: data } = useDataEditContext()
 
     const { fullVehicleTypes } = useGetTravelData()
     const [stop, setStop] = useState<EditableStop>({ ...data, vehicle_type: data.vehicle_type?.id })

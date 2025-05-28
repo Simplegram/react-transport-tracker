@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import { useModalContext } from "@/context/ModalContext"
+import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/FontAwesome6'
 export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()
 
-    const { modalData: data } = useModalContext()
+    const { modalData: data } = useDataEditContext()
 
     const [icon, setIcon] = useState<AddableIconType>(data)
     const [iconQuery, setIconQuery] = useState<string>(data.name)

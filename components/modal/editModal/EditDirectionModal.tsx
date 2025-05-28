@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import { useModalContext } from "@/context/ModalContext"
+import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
 import { colors } from "@/src/const/color"
@@ -13,7 +13,7 @@ import { Alert, Text, TextInput, View } from "react-native"
 export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()
 
-    const { modalData: data } = useModalContext()
+    const { modalData: data } = useDataEditContext()
 
     const { loading } = useLoading()
 

@@ -1,4 +1,3 @@
-import { ModalProvider } from "@/context/ModalContext"
 import { TravelProvider } from "@/context/PageContext"
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
@@ -24,54 +23,52 @@ const TabsLayout = () => {
 
     return (
         <TravelProvider>
-            <ModalProvider>
-                <StatusBar
-                    backgroundColor={statusBarStyles[theme]}
-                />
-                <Tabs
-                    screenOptions={{
-                        tabBarStyle: {
-                            height: 60,
-                            backgroundColor: barColor,
-                            borderTopWidth: 0,
-                            display: getDisplayValue()
-                        },
-                        tabBarLabelStyle: {
-                            fontSize: 13,
-                            fontWeight: 'bold',
-                        },
-                        tabBarActiveTintColor: colors.appBlue,
-                        tabBarInactiveTintColor: iconColor,
-                        headerShown: false,
-                        sceneStyle: {
-                            backgroundColor: barColor
-                        }
+            <StatusBar
+                backgroundColor={statusBarStyles[theme]}
+            />
+            <Tabs
+                screenOptions={{
+                    tabBarStyle: {
+                        height: 60,
+                        backgroundColor: barColor,
+                        borderTopWidth: 0,
+                        display: getDisplayValue()
+                    },
+                    tabBarLabelStyle: {
+                        fontSize: 13,
+                        fontWeight: 'bold',
+                    },
+                    tabBarActiveTintColor: colors.appBlue,
+                    tabBarInactiveTintColor: iconColor,
+                    headerShown: false,
+                    sceneStyle: {
+                        backgroundColor: barColor
+                    }
+                }}
+                backBehavior="order"
+            >
+                <Tabs.Screen
+                    name="main"
+                    options={{
+                        title: "Home",
+                        tabBarIcon: ({ color }) => <Icon size={24} name="house" color={color} />,
                     }}
-                    backBehavior="order"
-                >
-                    <Tabs.Screen
-                        name="main"
-                        options={{
-                            title: "Home",
-                            tabBarIcon: ({ color }) => <Icon size={24} name="house" color={color} />,
-                        }}
-                    />
-                    <Tabs.Screen
-                        name="addTravel"
-                        options={{
-                            title: "Add",
-                            tabBarIcon: ({ color }) => <Icon size={24} name="square-plus" color={color} />,
-                        }}
-                    />
-                    <Tabs.Screen
-                        name="manage"
-                        options={{
-                            title: "Modify",
-                            tabBarIcon: ({ color }) => <Icon size={24} name="pen-to-square" color={color} />,
-                        }}
-                    />
-                </Tabs>
-            </ModalProvider>
+                />
+                <Tabs.Screen
+                    name="addTravel"
+                    options={{
+                        title: "Add",
+                        tabBarIcon: ({ color }) => <Icon size={24} name="square-plus" color={color} />,
+                    }}
+                />
+                <Tabs.Screen
+                    name="manage"
+                    options={{
+                        title: "Modify",
+                        tabBarIcon: ({ color }) => <Icon size={24} name="pen-to-square" color={color} />,
+                    }}
+                />
+            </Tabs>
         </TravelProvider>
     )
 }
