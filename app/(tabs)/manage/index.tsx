@@ -1,7 +1,7 @@
 import Button from '@/components/BaseButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
-import { useTravelContext } from '@/context/PageContext'
+import { useDataEditContext } from '@/context/DataEditContext'
 import { useTheme } from '@/context/ThemeContext'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { router } from 'expo-router'
@@ -39,11 +39,11 @@ const navigationButtons: ButtonConfig[] = [
 
 export default function NavigationPage() {
     const { theme } = useTheme()
-    const { setSelectedModification } = useTravelContext()
+    const { setEditCategory } = useDataEditContext()
 
-    const handleItemPress = (selectedModification: string) => {
-        if (selectedModification) {
-            setSelectedModification(selectedModification)
+    const handleItemPress = (editCategory: string) => {
+        if (editCategory) {
+            setEditCategory(editCategory)
             router.push("manage/datalist")
         }
     }
