@@ -1,9 +1,9 @@
-import { ModalProvider } from "@/context/DataEditContext"
+import { DataEditProvider } from "@/context/DataEditContext"
 import { Stack } from "expo-router"
 
 export default function Layout() {
     return (
-        <ModalProvider>
+        <DataEditProvider>
             <Stack screenOptions={{
                 headerShown: false,
                 animation: "ios_from_right",
@@ -18,6 +18,6 @@ export default function Layout() {
                     name="settings"
                 />
             </Stack>
-        </ModalProvider>
+        </DataEditProvider>
     )
 }
