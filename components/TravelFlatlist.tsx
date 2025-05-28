@@ -2,9 +2,9 @@ import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
 import { travelCardStyles } from "@/src/styles/TravelListStyles"
 import { DataItemWithNewKey } from "@/src/utils/dataUtils"
-import { FlatList } from "react-native"
-import TravelCard from "./TravelCard"
+import { Dimensions, FlatList, useWindowDimensions, View } from "react-native"
 import LoadingScreen from "./LoadingScreen"
+import TravelCard from "./TravelCard"
 
 interface TravelFlatlistProps {
     items: DataItemWithNewKey[]
@@ -38,8 +38,20 @@ export default function TravelFlatlist({ items, directionNameKey, onPress, refet
                         />
                     )}
                     contentContainerStyle={travelCardStyles[theme].cardHolder}
+                    ListHeaderComponent={EmptyHeaderComponent}
+                    ListHeaderComponentStyle={{ flex: 1 }}
                 />
             )}
         </>
+    )
+}
+
+export function EmptyHeaderComponent() {
+    const {height, width} = useWindowDimensions()
+
+    const minHeight = width < height ? height * 0.25 : 0
+
+    return (
+        <View style={{ minHeight: minHeight }}></View>
     )
 }

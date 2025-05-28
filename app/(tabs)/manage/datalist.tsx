@@ -1,6 +1,7 @@
 import Button from '@/components/BaseButton'
 import LoadingScreen from '@/components/LoadingScreen'
 import ModalTemplate from '@/components/ModalTemplate'
+import { EmptyHeaderComponent } from '@/components/TravelFlatlist'
 import { useModalContext } from '@/context/ModalContext'
 import { useTheme } from '@/context/ThemeContext'
 import useDataList from '@/hooks/useDataList'
@@ -136,6 +137,8 @@ export default function DataListScreen() {
                             keyExtractor={item => item.id.toString()}
                             contentContainerStyle={DatalistStyles[theme].listContent}
                             keyboardShouldPersistTaps={'always'}
+                            ListHeaderComponent={EmptyHeaderComponent}
+                            ListHeaderComponentStyle={{ flex: 1 }}
                         />
                     )}
 

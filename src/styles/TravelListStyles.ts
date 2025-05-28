@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native"
 const lightTravelCardStyles = StyleSheet.create({
     cardHolder: {
         gap: 12,
+        flexGrow: 1,
     },
     card: {
         gap: 8,
