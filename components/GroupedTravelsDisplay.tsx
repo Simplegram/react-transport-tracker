@@ -7,11 +7,12 @@ import TravelFlatlist from '@/components/TravelFlatlist'
 import { useTravelContext } from '@/context/PageContext'
 import { useSettings } from '@/context/SettingsContext'
 import { useTheme } from '@/context/ThemeContext'
+import { useLoading } from '@/hooks/useLoading'
 import { colors } from '@/src/const/color'
 import { travelEmptyContainer } from '@/src/styles/TravelListStyles'
 import { DataItemWithNewKey } from '@/src/utils/dataUtils'
 import { router } from 'expo-router'
-import { StyleSheet, Text, View } from 'react-native'
+import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
 
 interface GroupedDataDisplayProps {
     data: Record<string, DataItemWithNewKey[]>
@@ -22,6 +23,8 @@ interface GroupedDataDisplayProps {
 export default function GroupedDataDisplay({ data: finalGroupedData, currentDate, refetch }: GroupedDataDisplayProps) {
     const { theme } = useTheme()
     const { enableSwipeZone } = useSettings()
+
+    const { loading } = useLoading()
 
     const { setSelectedItem, setSelectedTravelItems } = useTravelContext()
 
@@ -85,12 +88,20 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                     ))}
                 </PagerView>
             ) : (
-                <View style={[
-                    travelEmptyContainer[theme].noDataContainer,
-                    { borderColor: borderColor }
-                ]}>
+                <ScrollView
+                    contentContainerStyle={[
+                        travelEmptyContainer[theme].noDataContainer,
+                        { borderColor: borderColor }
+                    ]}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={loading}
+                            onRefresh={refetch}
+                        />
+                    }
+                >
                     <Text style={travelEmptyContainer[theme].noDataText}>No data available to display</Text>
-                </View>
+                </ScrollView>
             )}
         </View>
     )
