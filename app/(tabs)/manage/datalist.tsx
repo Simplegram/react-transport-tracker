@@ -15,8 +15,8 @@ import { DatalistStyles, ItemStyles } from '@/src/styles/DatalistStyles'
 import { inputStyles } from '@/src/styles/InputStyles'
 import { styles } from '@/src/styles/Styles'
 import { useFocusEffect } from 'expo-router'
-import React from 'react'
-import { Alert, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Alert, FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 interface ItemTemplate {
@@ -58,6 +58,22 @@ export default function DataListScreen() {
     const {
         loading
     } = useLoading()
+
+    const [keyboardShown, setKeyboardShown] = useState<boolean>(false)
+
+    useEffect(() => {
+        const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+            setKeyboardShown(true)
+        })
+        const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardShown(false)
+        })
+
+        return () => {
+            showSubscription.remove()
+            hideSubscription.remove()
+        }
+    }, [])
 
     useFocusEffect(
         React.useCallback(() => {
@@ -137,8 +153,8 @@ export default function DataListScreen() {
                             keyExtractor={item => item.id.toString()}
                             contentContainerStyle={DatalistStyles[theme].listContent}
                             keyboardShouldPersistTaps={'always'}
-                            ListHeaderComponent={EmptyHeaderComponent}
-                            ListHeaderComponentStyle={{ flex: 1 }}
+                            ListHeaderComponent={!keyboardShown ? EmptyHeaderComponent : null}
+                            ListHeaderComponentStyle={!keyboardShown ? { flex: 1 } : {}}
                         />
                     )}
 
