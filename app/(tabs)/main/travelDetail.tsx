@@ -7,6 +7,7 @@ import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import useTravelDetail from '@/hooks/useTravelDetail'
 import { colors } from '@/src/const/color'
+import { iconPickerStyles, inputElementStyles } from '@/src/styles/InputStyles'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
 import { AverageTimes, DataItem, Stop } from '@/src/types/Travels'
 import { formatMsToMinutes, sumTimesToMs } from '@/src/utils/dateUtils'
@@ -15,6 +16,7 @@ import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import { TypeButton } from './estimate'
 
 const { width: screenWidth } = Dimensions.get("screen")
 
@@ -24,6 +26,12 @@ interface LapLatLon {
     name: string | undefined
     coords: number[]
     time: string
+}
+
+const typeIndex = {
+    best: 'min_top_5_shortest',
+    average: 'avg_travel_time',
+    worst: 'max_top_5_longest'
 }
 
 export default function TravelDetail() {
@@ -41,6 +49,7 @@ export default function TravelDetail() {
 
     const [dataToUse, setDataToUse] = useState<DataItem[]>([])
     const [travelTimes, setTravelTimes] = useState<AverageTimes[]>([])
+    const [type, setType] = useState<'best' | 'average' | 'worst'>('average')
 
     if (!selectedTravelItems) {
         return (
@@ -164,7 +173,7 @@ export default function TravelDetail() {
 
     const centerLatLon = getSimpleCentroid(validCoords)
 
-    const averageTravelTimes = travelTimes.map(time => time['avg_travel_time'])
+    const averageTravelTimes = travelTimes.map(time => time[typeIndex[type]])
     let averageRouteDurationMilliseconds = sumTimesToMs(averageTravelTimes)
     let totalOnRoadMilliseconds = 0
     let sumInitialStopDurationMilliseconds = 0
@@ -216,11 +225,34 @@ export default function TravelDetail() {
     return (
         <CollapsibleHeaderPage headerText='Travel Detail'>
             <View style={travelDetailStyles[theme].container}>
+                <View style={inputElementStyles[theme].inputGroup}>
+                    <View style={{ gap: 10, flexDirection: 'row' }}>
+                        <TypeButton onPress={() => setType('best')}>
+                            <Text style={[
+                                inputElementStyles[theme].inputLabel,
+                                type === 'best' && iconPickerStyles[theme].selectedText
+                            ]}>Best</Text>
+                        </TypeButton>
+                        <TypeButton onPress={() => setType('average' )}>
+                            <Text style={[
+                                inputElementStyles[theme].inputLabel,
+                                type === 'average' && iconPickerStyles[theme].selectedText
+                            ]}>Average</Text>
+                        </TypeButton>
+                        <TypeButton onPress={() => setType('worst')}>
+                            <Text style={[
+                                inputElementStyles[theme].inputLabel,
+                                type === 'worst' && iconPickerStyles[theme].selectedText
+                            ]}>Worst</Text>
+                        </TypeButton>
+                    </View>
+                </View>
+
                 <View style={travelDetailStyles[theme].card}>
                     <Text style={travelDetailStyles[theme].cardTitle}>Efficiency Overview (vs. Average)</Text>
 
                     <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Average Route Duration:</Text>
+                        <Text style={travelDetailStyles[theme].label}>Estimated Duration:</Text>
                         <Text style={travelDetailStyles[theme].valueText}>{formatMsToMinutes(averageRouteDurationMilliseconds)}</Text>
                     </View>
 

@@ -29,7 +29,7 @@ interface TypeButtonProps {
     children: React.ReactNode
 }
 
-function TypeButton({ onPress, children }: TypeButtonProps) {
+export function TypeButton({ onPress, children }: TypeButtonProps) {
     const { theme } = useTheme()
 
     return (
