@@ -68,6 +68,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                         directionNameKey: directionNameKey,
                                         directionNamesLength: directionNames.length,
                                         index: index,
+                                        theme: theme,
                                         onPress: handleViewTravelDetails
                                     }}
                                 />

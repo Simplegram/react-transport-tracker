@@ -34,7 +34,7 @@ export default function HomePage() {
         dates, selectedDate, setSelectedDate,
     } = useTravelCalendar()
 
-    const { loading, toggleLoading } = useToggleLoading()
+    const { toggleLoading } = useToggleLoading()
 
     const { laps, getAllLaps } = useGetTravelData()
 

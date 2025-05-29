@@ -1,4 +1,3 @@
-import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
 import { colors } from "@/src/const/color"
 import { travelCardStyles } from "@/src/styles/TravelListStyles"
@@ -7,6 +6,7 @@ import { PropsWithChildren } from "react"
 import { FlatList, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native"
 import LoadingScreen from "./LoadingScreen"
 import TravelCard from "./TravelCard"
+import Divider from "./Divider"
 
 interface TravelHeaderProps {
     index: number
@@ -24,8 +24,6 @@ interface TravelFlatlistProps {
 }
 
 export default function TravelFlatlist({ items, onPress, refetch, travelHeaderProps }: TravelFlatlistProps) {
-    const { theme } = useTheme()
-
     const {
         loading
     } = useLoading(150)
@@ -47,8 +45,8 @@ export default function TravelFlatlist({ items, onPress, refetch, travelHeaderPr
                             onPress={onPress}
                         />
                     )}
-                    contentContainerStyle={travelCardStyles[theme].cardHolder}
-                    ListHeaderComponent={TravelFlatlistHeader({ ...travelHeaderProps, theme: theme })}
+                    contentContainerStyle={travelCardStyles[travelHeaderProps.theme].cardHolder}
+                    ListHeaderComponent={TravelFlatlistHeader({ ...travelHeaderProps, theme: travelHeaderProps.theme })}
                     ListHeaderComponentStyle={{ flex: 1 }}
                 />
             )}
@@ -59,10 +57,10 @@ export default function TravelFlatlist({ items, onPress, refetch, travelHeaderPr
 export function EmptyHeaderComponent({ children }: PropsWithChildren) {
     const { height, width } = useWindowDimensions()
 
-    const minHeight = width < height ? height * 0.3 : 0
+    const minMaxHeight = width < height ? height * 0.25 : 0
 
     return (
-        <View style={{ flex: 1, minHeight: minHeight, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{ flex: 1, height: minMaxHeight, justifyContent: 'center', alignItems: 'center' }}>
             {children}
         </View>
     )
@@ -71,7 +69,17 @@ export function EmptyHeaderComponent({ children }: PropsWithChildren) {
 export function TravelFlatlistHeader({ index, directionNameKey, directionNamesLength, theme, onPress }: TravelHeaderProps) {
     return (
         <EmptyHeaderComponent>
-            <Pressable onPress={() => onPress(directionNameKey)}>
+            <Pressable
+                onPress={() => onPress(directionNameKey)}
+                style={{
+                    gap: 5,
+                    flex: 1,
+                    width: '100%',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}
+            >
                 <Text style={styles[theme].title}>
                     Direction ({index + 1}/{directionNamesLength}):
                 </Text>
