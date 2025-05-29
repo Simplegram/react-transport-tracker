@@ -8,8 +8,8 @@ import Icon from 'react-native-vector-icons/FontAwesome6'
 const TabsLayout = () => {
     const { theme } = useTheme()
 
-    const barColor = theme === 'light' ? colors.dimWhite : colors.black
-    const iconColor = theme === 'light' ? colors.black : colors.dimWhite2
+    const barColor = theme === 'light' ? colors.white_100 : colors.black
+    const iconColor = theme === 'light' ? colors.black : colors.white_200
 
     const getDisplayValue = () => {
         const paths = ["/manage/settings", "/manage/datalist", "/main/editTravel", "/main/travelDetail"]
@@ -37,7 +37,7 @@ const TabsLayout = () => {
                         fontSize: 13,
                         fontWeight: 'bold',
                     },
-                    tabBarActiveTintColor: colors.appBlue,
+                    tabBarActiveTintColor: colors.primary,
                     tabBarInactiveTintColor: iconColor,
                     headerShown: false,
                     sceneStyle: {

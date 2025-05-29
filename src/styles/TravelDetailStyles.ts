@@ -18,7 +18,7 @@ const lightTravelDetailStyles = StyleSheet.create({
         color: '#333',
     },
     card: {
-        backgroundColor: colors.dimWhite,
+        backgroundColor: colors.white_100,
         borderRadius: 8,
         padding: 15,
         borderWidth: 1,
@@ -57,7 +57,7 @@ const lightTravelDetailStyles = StyleSheet.create({
     specialValue: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: colors.appBlue,
+        color: colors.primary,
     },
 })
 
@@ -76,31 +76,31 @@ export const travelDetailStyles = {
         card: {
             ...lightTravelDetailStyles.card,
             borderWidth: 1,
-            borderColor: colors.dimWhite,
+            borderColor: colors.white_100,
             backgroundColor: colors.black,
         },
         cardTitle: {
             ...lightTravelDetailStyles.cardTitle,
-            color: colors.dimWhite,
+            color: colors.white_100,
         },
         detailRow: {
             ...lightTravelDetailStyles.detailRow,
-            borderColor: colors.dimmerWhite,
+            borderColor: colors.white_300,
         },
         label: {
             ...lightTravelDetailStyles.label,
-            color: colors.dimmerWhite2,
+            color: colors.white_400,
         },
         value: {
             ...lightTravelDetailStyles.value,
         },
         valueText: {
             ...lightTravelDetailStyles.valueText,
-            color: colors.dimmerWhite,
+            color: colors.white_300,
         },
         specialValue: {
             ...lightTravelDetailStyles.specialValue,
-            color: colors.dimAppBlue,
+            color: colors.primary_100,
         },
     })
 }

@@ -8,7 +8,7 @@ const lightDatalistStyles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 10,
         paddingHorizontal: 15,
-        backgroundColor: colors.dimWhite,
+        backgroundColor: colors.white_100,
     },
     listContent: {
         gap: 10,
@@ -44,7 +44,7 @@ const lightItemStyles = StyleSheet.create({
     itemContainer: {
         padding: 10,
         flexDirection: 'column',
-        backgroundColor: colors.dimWhite,
+        backgroundColor: colors.white_100,
         borderWidth: 1,
         borderRadius: 8,
         borderColor: colors.black,
@@ -63,7 +63,7 @@ const lightItemStyles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
         fontWeight: 'bold',
-        color: colors.appBlue,
+        color: colors.primary,
     },
     modifyButton: {
         backgroundColor: '#007bff',
@@ -102,7 +102,7 @@ export const DatalistStyles = {
         },
         modalSearchInput: {
             ...lightDatalistStyles.modalSearchInput,
-            borderColor: colors.dimWhite,
+            borderColor: colors.white_100,
             backgroundColor: colors.black,
         }
     })
@@ -116,7 +116,7 @@ export const ItemStyles = {
         },
         itemContainer: {
             ...lightItemStyles.itemContainer,
-            borderColor: colors.dimWhite,
+            borderColor: colors.white_100,
             backgroundColor: colors.black,
         },
         textContainer: {
@@ -124,21 +124,21 @@ export const ItemStyles = {
         },
         itemTitle: {
             ...lightItemStyles.itemTitle,
-            color: colors.dimWhite,
+            color: colors.white_100,
         },
         itemSubtitle: {
             ...lightItemStyles.itemSubtitle,
-            color: colors.dimAppBlue,
+            color: colors.primary_100,
         },
         modifyButton: {
             ...lightItemStyles.modifyButton,
             borderWidth: 1,
-            borderColor: colors.dimAppBlue,
+            borderColor: colors.primary_100,
             backgroundColor: colors.black,
         },
         modifyButtonText: {
             ...lightItemStyles.modifyButtonText,
-            color: colors.dimWhite,
+            color: colors.white_100,
         },
         fillerContainer: {
             ...lightItemStyles.fillerContainer,

@@ -161,7 +161,7 @@ const styles = {
         },
         header: {
             ...lightStyles.header,
-            color: colors.dimWhite,
+            color: colors.white_100,
         },
     })
 }

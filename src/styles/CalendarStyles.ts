@@ -34,7 +34,7 @@ const lightCalendarStyles = StyleSheet.create({
 })
 
 const lightCalendarTheme: Theme = {
-    calendarBackground: colors.dimWhite,
+    calendarBackground: colors.white_100,
     selectedDayBackgroundColor: '#00adf5',
     selectedDayTextColor: '#ffffff',
     todayTextColor: '#00adf5',
@@ -53,8 +53,8 @@ export const calendarTheme = {
     dark: {
         ...lightCalendarTheme,
         calendarBackground: '#000',
-        dayTextColor: colors.dimmerWhite2,
-        monthTextColor: colors.dimmerWhite2,
+        dayTextColor: colors.white_400,
+        monthTextColor: colors.white_400,
     },
 }
 
@@ -70,11 +70,11 @@ export const calendarStyles = {
         },
         todayButton: {
             ...lightCalendarStyles.todayButton,
-            backgroundColor: colors.dimAppBlue,
+            backgroundColor: colors.primary_100,
         },
         todayButtonText: {
             ...lightCalendarStyles.todayButtonText,
-            color: colors.dimmerWhite,
+            color: colors.white_300,
         },
     }),
 }

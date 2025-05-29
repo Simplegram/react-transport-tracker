@@ -9,7 +9,7 @@ const lightMainmenuStyles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 10,
         paddingHorizontal: 15,
-        backgroundColor: colors.dimWhite,
+        backgroundColor: colors.white_100,
     },
     listContainer: {
         flex: 1,
@@ -24,7 +24,7 @@ const lightMainmenuStyles = StyleSheet.create({
         flexGrow: 1,
     },
     listItem: {
-        backgroundColor: colors.dimWhite,
+        backgroundColor: colors.white_100,
         padding: 15,
         borderRadius: 8,
         marginBottom: 10,

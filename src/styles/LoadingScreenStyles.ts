@@ -35,12 +35,12 @@ export const loadingStyles = {
         modalContent: {
             ...lightLoadingStyles.modalContent,
             borderWidth: 1,
-            borderColor: colors.dimmerWhite,
+            borderColor: colors.white_300,
             backgroundColor: colors.black,
         },
         loadingText: {
             ...lightLoadingStyles.loadingText,
-            color: colors.dimWhite,
+            color: colors.white_100,
         },
     })
 }

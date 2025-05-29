@@ -211,7 +211,7 @@ export default function TravelDetail() {
     }
 
     const timeDiff = formatMsToMinutes(totalOnRoadMilliseconds - averageRouteDurationMilliseconds, true)
-    const diffColor = Math.sign(totalOnRoadMilliseconds - averageRouteDurationMilliseconds) < 0 ? colors.dimGreenPositive : colors.dimRedCancel
+    const diffColor = Math.sign(totalOnRoadMilliseconds - averageRouteDurationMilliseconds) < 0 ? colors.greenPositive_100 : colors.redCancel_100
 
     return (
         <CollapsibleHeaderPage headerText='Travel Detail'>

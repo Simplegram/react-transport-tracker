@@ -172,7 +172,7 @@ const addButtonStyles = StyleSheet.create({
     buttonContainer: {
         borderColor: 'black',
         borderRadius: 10,
-        backgroundColor: colors.appBlue,
+        backgroundColor: colors.primary,
     },
     plusText: {
         color: 'white',

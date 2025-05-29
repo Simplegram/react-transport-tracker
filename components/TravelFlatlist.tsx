@@ -93,15 +93,15 @@ const lightStyles = StyleSheet.create({
 })
 
 const styles = {
-    light: {...lightStyles, label: lightStyles.title},
+    light: { ...lightStyles, label: lightStyles.title },
     dark: StyleSheet.create({
         title: {
             ...lightStyles.title,
-            color: colors.dimmerWhite,
+            color: colors.white_300,
         },
         label: {
             ...lightStyles.title,
-            color: colors.dimWhite,
+            color: colors.white_100,
         },
     })
 }

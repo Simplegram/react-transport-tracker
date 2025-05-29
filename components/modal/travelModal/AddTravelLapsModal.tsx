@@ -106,7 +106,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                                             </Pressable>
                                         </View>
                                         {stops.find(stop => stop.id === lap.stop_id) ? (
-                                            <Text style={[inputElementStyles[theme].inputLabel, { color: colors.appBlue }]}>
+                                            <Text style={[inputElementStyles[theme].inputLabel, { color: colors.primary }]}>
                                                 {stops.find(stop => stop.id === lap.stop_id)?.name}
                                             </Text>
                                         ) : null}
@@ -121,7 +121,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Add lap' color={colors.appBlue} onPress={openLapModal} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                        <Button title='Add lap' color={colors.primary} onPress={openLapModal} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>

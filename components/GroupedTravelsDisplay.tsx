@@ -11,7 +11,7 @@ import { colors } from '@/src/const/color'
 import { travelEmptyContainer } from '@/src/styles/TravelListStyles'
 import { DataItemWithNewKey } from '@/src/utils/dataUtils'
 import { router } from 'expo-router'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 interface GroupedDataDisplayProps {
     data: Record<string, DataItemWithNewKey[]>
@@ -42,8 +42,8 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
         router.push("main/travelDetail")
     }
 
-    const borderColor = theme === 'light' ? colors.black : colors.dimmerWhite
-    const dateLabelColor = theme === 'light' ? '#2c3e50' : colors.dimWhite
+    const borderColor = theme === 'light' ? colors.black : colors.white_300
+    const dateLabelColor = theme === 'light' ? '#2c3e50' : colors.white_100
 
     return (
         <View style={styles.mainContainer}>

@@ -8,7 +8,7 @@ const lightButtonStyles = StyleSheet.create({
         gap: 10,
     },
     addButton: {
-        backgroundColor: colors.appBlue,
+        backgroundColor: colors.primary,
         paddingVertical: 12,
         borderRadius: 8,
         flex: 1,
@@ -26,7 +26,7 @@ const lightButtonStyles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         borderWidth: 1,
-        backgroundColor: colors.dimWhite
+        backgroundColor: colors.white_100
     },
     cancelButtonText: {
         color: colors.black,
@@ -49,25 +49,25 @@ export const buttonStyles = {
         },
         addButton: {
             ...lightButtonStyles.addButton,
-            borderColor: colors.dimAppBlue,
+            borderColor: colors.primary_100,
             backgroundColor: colors.black,
         },
         addButtonText: {
             ...lightButtonStyles.addButtonText,
-            color: colors.dimWhite,
+            color: colors.white_100,
         },
         cancelButton: {
             ...lightButtonStyles.cancelButton,
-            borderColor: colors.dimmerWhite,
+            borderColor: colors.white_300,
             backgroundColor: colors.black,
         },
         cancelButtonText: {
             ...lightButtonStyles.cancelButtonText,
-            color: colors.dimmerWhite,
+            color: colors.white_300,
         },
         redButton: {
             ...lightButtonStyles.redButton,
-            borderColor: colors.dimRedCancel,
+            borderColor: colors.redCancel_100,
             backgroundColor: colors.black,
         },
     })
