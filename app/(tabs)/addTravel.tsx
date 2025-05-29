@@ -11,6 +11,7 @@ import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import useModifyTravelData from '@/hooks/useModifyTravelData'
 import useStopModal from '@/hooks/useStopModal'
+import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
 import { AddableLap, AddableTravel } from '@/src/types/AddableTravels'
@@ -26,8 +27,6 @@ import {
     TextInput,
     View,
 } from 'react-native'
-
-const PLACEHOLDER_TEXT_COLOR = '#9E9E9E'
 
 export default function AddTravel() {
     const { theme } = useTheme()
@@ -263,7 +262,7 @@ export default function AddTravel() {
                             style={inputStyles[theme].textInput}
                             value={vehicleTypes.find(type => type.id === travel.type_id)?.name || ''}
                             placeholder="Vehicle type (auto-filled)"
-                            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                            placeholderTextColor={colors.placeholderGray}
                         />
                     </View>
 
@@ -274,7 +273,7 @@ export default function AddTravel() {
                             value={travel.vehicle_code || ''}
                             onChangeText={(text) => handleChangeText('vehicle_code', text)}
                             placeholder="Enter vehicle code"
-                            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                            placeholderTextColor={colors.placeholderGray}
                         />
                     </View>
                 </View>
@@ -324,7 +323,7 @@ export default function AddTravel() {
                             multiline={true}
                             numberOfLines={4}
                             placeholder="Enter notes (optional)"
-                            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
+                            placeholderTextColor={colors.placeholderGray}
                         />
                     </View>
                 </View>
