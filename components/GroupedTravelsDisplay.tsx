@@ -10,7 +10,7 @@ import { useTheme } from '@/context/ThemeContext'
 import { useLoading } from '@/hooks/useLoading'
 import { colors } from '@/src/const/color'
 import { travelEmptyContainer } from '@/src/styles/TravelListStyles'
-import { DataItemWithNewKey } from '@/src/utils/dataUtils'
+import { DataItemWithNewKey, getKeysSortedByCreatedAt } from '@/src/utils/dataUtils'
 import { router } from 'expo-router'
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
 
@@ -30,7 +30,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
 
     const formattedCurrentDate = moment(currentDate).format('LL')
 
-    const directionNames = Object.keys(finalGroupedData).sort()
+    const directionNames = getKeysSortedByCreatedAt(finalGroupedData)
 
     const handleItemPress = (directionNameKey: string, itemIndex: number) => {
         const itemToSelect = finalGroupedData[directionNameKey][itemIndex]

@@ -41,3 +41,15 @@ export const getGroupedData = (data: DataItem[], laps: Lap[]) => {
 
     return finalGroupedDataWithNewKey
 }
+
+export function getKeysSortedByCreatedAt(data: Record<string, DataItemWithNewKey[]>) {
+    const keys = Object.keys(data)
+
+    keys.sort((a, b) => {
+        const createdAtA = new Date(data[a][0].created_at)
+        const createdAtB = new Date(data[b][0].created_at)
+        return createdAtA - createdAtB
+    })
+
+    return keys
+}
