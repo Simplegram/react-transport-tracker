@@ -43,6 +43,7 @@ interface AddableTravel {
 }
 
 interface AddableLap {
+    id?: number | string | undefined
     travel_id?: number | undefined
     time: string | undefined
     lat: number | null

@@ -12,6 +12,7 @@ import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
 import { formatDateForDisplay, formatLapTimeDisplay } from '@/src/utils/utils'
 import { useFocusEffect } from '@react-navigation/native'
+import * as Crypto from 'expo-crypto'
 import moment from 'moment-timezone'
 import React, { useRef, useState } from 'react'
 import {
@@ -66,10 +67,10 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
             const currentTime = new Date().toISOString()
             const formattedTime = formatLapTimeDisplay(currentTime)
 
-            setLap({ ...lap, time: formattedTime, lon: 0, lat: 0, stop_id: null, note: null })
+            setLap({ ...lap, id: Crypto.randomUUID(), time: formattedTime, lon: null, lat: null, stop_id: null, note: null })
 
             return () => {
-                setLap({ ...lap, time: formattedTime, lon: 0, lat: 0, stop_id: null, note: null })
+                setLap({ ...lap, id: Crypto.randomUUID(), time: formattedTime, lon: null, lat: null, stop_id: null, note: null })
             }
         }, [isModalVisible])
     )
