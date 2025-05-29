@@ -42,7 +42,7 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
         }).start()
     }
     const ballScaleTranslate = ballScale.interpolate({
-        inputRange: [0, 0.1, 0.9, 1],
+        inputRange: [0, 0.2, 0.8, 1],
         outputRange: [1, 0.7, 0.7, 1]
     })
 
@@ -69,17 +69,22 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
         setIsEnabled(newValue)
 
         ballMovingAnimation(newValue ? 1 : 0, Easing.bezier(0, .54, .47, .71))
-        ballScaleAnimation(newValue ? 1 : 0, Easing.bezier(0, .54, .47, .71))
         colorAnimation(newValue ? 1 : 0, Easing.bounce)
         Vibration.vibrate(5)
 
         onPress()
     }
 
+    const onPresssIn = () => {
+        const newValue = !isEnabled
+        ballScaleAnimation(newValue ? 1 : 0, Easing.bounce)
+    }
+
     return (
         <TouchableOpacity
             style={[styles.switchContainer, { backgroundColor: colorValue }]}
-            onPress={onChangeHandler}
+            onPressIn={onPresssIn}
+            onPressOut={onChangeHandler}
             activeOpacity={1}
         >
             <Animated.View
