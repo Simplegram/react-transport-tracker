@@ -88,7 +88,7 @@ interface EditableLapsModalProp {
     stops: Stop[]
     isModalVisible: boolean
     onClose: () => void
-    onSelect: (lap: EditableLap) => void
+    onSelect: (lap: EditableLap[]) => void
 }
 
 interface EditableLapModalProp {

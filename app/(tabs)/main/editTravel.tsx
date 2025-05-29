@@ -15,6 +15,7 @@ import useModifyTravelData from '@/hooks/useModifyTravelData'
 import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
+import { AddableLap } from '@/src/types/AddableTravels'
 import { EditableTravel } from '@/src/types/EditableTravels'
 import { DataItem, Lap } from '@/src/types/Travels'
 import { formatDateForDisplay } from '@/src/utils/utils'
@@ -48,7 +49,7 @@ export default function EditTravelItem() {
     } = useModifyTravelData()
 
     const [lapsCount, setLapsCount] = useState<number>(0)
-    const [travel, setTravel] = useState<EditableTravel>()
+    const [travel, setTravel] = useState<EditableTravel | null>()
 
     useFocusEffect(
         React.useCallback(() => {
@@ -120,10 +121,12 @@ export default function EditTravelItem() {
 
     const handleChangeText = (field: keyof EditableTravel, value: string) => {
         setTravel(prev => {
-            if (field in prev) {
-                return { ...prev, [field]: value }
+            if (prev) {
+                if (field in prev) {
+                    return { ...prev, [field]: value }
+                }
+                return prev
             }
-            return prev
         })
     }
 
@@ -148,23 +151,27 @@ export default function EditTravelItem() {
 
     const handleStopSelect = (stopId: number) => {
         if (stopEditingField && travel) {
-            setTravel(prev => ({
-                ...prev,
-                [stopEditingField]: stopId
-            }))
+            setTravel(prev => {
+                if (prev) return {
+                    ...prev,
+                    [stopEditingField]: stopId
+                }
+            })
         }
         closeStopModal()
     }
 
     const handleRouteSelect = (routeId: number) => {
         if (travel) {
-            setTravel(prev => ({
-                ...prev,
-                route_id: routeId,
-                type_id: routes.find(route => route.id === routeId)?.vehicle_type_id.id,
-                first_stop_id: routes.find(route => route.id === routeId)?.first_stop_id.id,
-                last_stop_id: routes.find(route => route.id === routeId)?.last_stop_id.id,
-            }))
+            setTravel(prev => {
+                if (prev) return {
+                    ...prev,
+                    route_id: routeId,
+                    type_id: routes.find(route => route.id === routeId)?.vehicle_type_id.id,
+                    first_stop_id: routes.find(route => route.id === routeId)?.first_stop_id.id,
+                    last_stop_id: routes.find(route => route.id === routeId)?.last_stop_id.id,
+                }
+            })
         }
         closeRouteModal()
     }
@@ -213,7 +220,8 @@ export default function EditTravelItem() {
                     const { id, ...cleanNewLap } = item
                     return cleanNewLap
                 }
-            })
+                return undefined
+            }).filter(item => item !== undefined) as AddableLap[]
 
             if (lapsToEdit.length > 0) {
                 editLaps(lapsToEdit)
