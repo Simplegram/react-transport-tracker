@@ -6,7 +6,7 @@ import { useSupabase } from "@/context/SupabaseContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useToggleLoading } from "@/hooks/useLoading"
-import useStopModal from "@/hooks/useStopModal"
+import useModalHandler from "@/hooks/useModalHandler"
 import useTravelCalendar from "@/hooks/useTravelCalendar"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
@@ -41,10 +41,10 @@ export default function HomePage() {
     const [groupedData, setGroupedData] = useState<Record<string, DataItemWithNewKey[]>>()
 
     const {
-        showStopModal: showCalendarModal,
-        openStopModal: openCalendarModal,
-        closeStopModal: closeCalendarModal
-    } = useStopModal()
+        showModal: showCalendarModal,
+        openModalWithSearch: openCalendarModal,
+        closeModal: closeCalendarModal
+    } = useModalHandler()
 
     const markedDates = useMemo(() => {
         const marked: any = {}

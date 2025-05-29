@@ -3,7 +3,7 @@ import Divider from '@/components/Divider'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import { useTheme } from '@/context/ThemeContext'
-import useStopModal from '@/hooks/useStopModal'
+import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
@@ -26,12 +26,12 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
     const { theme } = useTheme()
 
     const {
-        showStopModal,
-        stopSearchQuery,
-        setStopSearchQuery,
-        openStopModal,
-        closeStopModal
-    } = useStopModal()
+        showModal,
+        searchQuery,
+        setSearchQuery,
+        openModalWithSearch,
+        closeModal
+    } = useModalHandler()
 
     const [lap, setLap] = useState<EditableLap>()
 
@@ -73,7 +73,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
         }
 
         setLap({ ...lap, stop_id: stopId })
-        closeStopModal()
+        closeModal()
     }
 
     const handleOnSubmit = () => {
@@ -112,7 +112,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             <Text style={inputElementStyles[theme].insideLabel}>Stop:</Text>
                             <Pressable
                                 style={inputStyles[theme].pressableInput}
-                                onPress={() => openStopModal('last_stop_id')}>
+                                onPress={() => openModalWithSearch('last_stop_id')}>
                                 <Text style={[inputElementStyles[theme].inputLabel, { marginBottom: 0 }]}>
                                     {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
                                 </Text>
@@ -144,11 +144,11 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
 
                     <EditTravelStopModal
                         stops={stops}
-                        isModalVisible={showStopModal}
-                        searchQuery={stopSearchQuery}
-                        setSearchQuery={setStopSearchQuery}
+                        isModalVisible={showModal}
+                        searchQuery={searchQuery}
+                        setSearchQuery={setSearchQuery}
                         onSelect={handleStopSelect}
-                        onClose={closeStopModal}
+                        onClose={closeModal}
                     />
 
                     {showDatetimePicker && (

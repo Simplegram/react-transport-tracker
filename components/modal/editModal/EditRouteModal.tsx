@@ -3,7 +3,7 @@ import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
-import useStopModal from "@/hooks/useStopModal"
+import useModalHandler from "@/hooks/useModalHandler"
 import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
@@ -26,13 +26,13 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
     const { fullVehicleTypes } = useGetTravelData()
 
     const {
-        showStopModal,
-        editingStopField,
-        stopSearchQuery,
-        setStopSearchQuery,
-        openStopModal,
-        closeStopModal
-    } = useStopModal()
+        showModal,
+        editingField,
+        searchQuery,
+        setSearchQuery,
+        openModalWithSearch,
+        closeModal
+    } = useModalHandler()
 
     const [route, setRoute] = useState<EditableRoute>({
         ...data,
@@ -46,12 +46,12 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
     const { loading } = useLoading()
 
     const handleStopSelect = (stopId: number) => {
-        if (!editingStopField) {
+        if (!editingField) {
             return
         }
 
-        setRoute({ ...route, [editingStopField]: stopId })
-        closeStopModal()
+        setRoute({ ...route, [editingField]: stopId })
+        closeModal()
     }
 
     const handleOnSubmit = () => {
@@ -96,7 +96,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                             <Text style={inputElementStyles[theme].inputLabel}>First Stop:</Text>
                             <Pressable
                                 style={inputStyles[theme].pressableInput}
-                                onPress={() => openStopModal('first_stop_id')}>
+                                onPress={() => openModalWithSearch('first_stop_id')}>
                                 <Text style={[inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}</Text>
                             </Pressable>
                         </View>
@@ -105,7 +105,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                             <Text style={inputElementStyles[theme].inputLabel}>Last Stop:</Text>
                             <Pressable
                                 style={inputStyles[theme].pressableInput}
-                                onPress={() => openStopModal('last_stop_id')}>
+                                onPress={() => openModalWithSearch('last_stop_id')}>
                                 <Text style={[inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}</Text>
                             </Pressable>
                         </View>
@@ -152,11 +152,11 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
 
                     <EditTravelStopModal
                         stops={stops}
-                        isModalVisible={showStopModal}
-                        searchQuery={stopSearchQuery}
-                        setSearchQuery={setStopSearchQuery}
+                        isModalVisible={showModal}
+                        searchQuery={searchQuery}
+                        setSearchQuery={setSearchQuery}
                         onSelect={handleStopSelect}
-                        onClose={closeStopModal}
+                        onClose={closeModal}
                     />
 
                     <View style={buttonStyles[theme].buttonRow}>

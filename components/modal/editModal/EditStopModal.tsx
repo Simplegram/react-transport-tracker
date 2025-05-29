@@ -3,7 +3,7 @@ import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
-import useStopModal from "@/hooks/useStopModal"
+import useModalHandler from "@/hooks/useModalHandler"
 import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
@@ -28,10 +28,10 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
     const { loading } = useLoading()
 
     const {
-        showStopModal: showCoordModal,
-        openStopModal: openCoordModal,
-        closeStopModal: closeCoordModal
-    } = useStopModal()
+        showModal: showCoordModal,
+        openModalWithSearch: openCoordModal,
+        closeModal: closeCoordModal
+    } = useModalHandler()
 
     const savedVehicleTypeId = useRef(stop.vehicle_type)
 

@@ -1,12 +1,14 @@
 import Button from '@/components/BaseButton'
+import Divider from '@/components/Divider'
 import { useTheme } from '@/context/ThemeContext'
-import useStopModal from '@/hooks/useStopModal'
+import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapsModalProp } from '@/src/types/AddableTravels'
 import { formatLapTimeDisplay } from '@/src/utils/utils'
+import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import {
     Modal,
@@ -18,23 +20,21 @@ import {
 } from 'react-native'
 import AddLapModal from '../addModal/AddLapModal'
 import EditLapModal from '../editModal/EditLapModal'
-import Divider from '@/components/Divider'
-import { useFocusEffect } from 'expo-router'
 
 export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
     const { theme } = useTheme()
 
     const {
-        showStopModal: showLapModal,
-        openStopModal: openLapModal,
-        closeStopModal: closeLapModal
-    } = useStopModal()
+        showModal: showLapModal,
+        openModal: openLapModal,
+        closeModal: closeLapModal
+    } = useModalHandler()
 
     const {
-        showStopModal: showEditLapModal,
-        openStopModal: openEditLapModal,
-        closeStopModal: closeEditLapModal
-    } = useStopModal()
+        showModal: showEditLapModal,
+        openModal: openEditLapModal,
+        closeModal: closeEditLapModal
+    } = useModalHandler()
 
     const [laps, setLaps] = useState<AddableLap[]>([])
     const [selectedLap, setSelectedLap] = useState<AddableLap | undefined>(undefined)

@@ -4,7 +4,7 @@ import MapDisplay from '@/components/MapDisplay'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import { useTheme } from '@/context/ThemeContext'
 import useLocation from '@/hooks/useLocation'
-import useStopModal from '@/hooks/useStopModal'
+import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
@@ -29,12 +29,12 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
     const { theme } = useTheme()
 
     const {
-        showStopModal,
-        stopSearchQuery,
-        setStopSearchQuery,
-        openStopModal,
-        closeStopModal
-    } = useStopModal()
+        showModal,
+        searchQuery,
+        setSearchQuery,
+        openModalWithSearch,
+        closeModal
+    } = useModalHandler()
 
     const { location, refetchLocation } = useLocation()
 
@@ -92,7 +92,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
             setCenterCoordinate([stop.lon, stop.lat])
         }
 
-        closeStopModal()
+        closeModal()
     }
 
     const handleOnSubmit = () => {
@@ -128,7 +128,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 <Text style={inputElementStyles[theme].inputLabel}>Stop:</Text>
                                 <Pressable
                                     style={inputStyles[theme].pressableInput}
-                                    onPress={() => openStopModal('last_stop_id')}>
+                                    onPress={() => openModalWithSearch('last_stop_id')}>
                                     <Text style={[inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>
                                         {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
                                     </Text>
@@ -170,11 +170,11 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
                         <EditTravelStopModal
                             stops={stops}
-                            isModalVisible={showStopModal}
-                            searchQuery={stopSearchQuery}
-                            setSearchQuery={setStopSearchQuery}
+                            isModalVisible={showModal}
+                            searchQuery={searchQuery}
+                            setSearchQuery={setSearchQuery}
                             onSelect={handleStopSelect}
-                            onClose={closeStopModal}
+                            onClose={closeModal}
                         />
 
                         {showDatetimePicker && (

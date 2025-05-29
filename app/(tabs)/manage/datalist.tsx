@@ -8,7 +8,7 @@ import useDataList from '@/hooks/useDataList'
 import useDatalistModal from '@/hooks/useDatalistModal'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import { useLoading } from '@/hooks/useLoading'
-import useStopModal from '@/hooks/useStopModal'
+import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { DatalistStyles, ItemStyles } from '@/src/styles/DatalistStyles'
@@ -46,9 +46,9 @@ export default function DataListScreen() {
     } = useDataList({ directions, stops, routes, vehicleTypes, icons })
 
     const {
-        showStopModal,
-        openModal, closeStopModal
-    } = useStopModal()
+        showModal,
+        openModal, closeModal
+    } = useModalHandler()
 
     const {
         activeModalConfig,
@@ -83,7 +83,7 @@ export default function DataListScreen() {
             console.error("No data handler defined for this modal config.")
             Alert.alert("Error", "Configuration error: Could not process data.")
         }
-        closeStopModal()
+        closeModal()
     }
 
     const renderItem = ({ item }: { item: ItemTemplate }) => (
@@ -160,8 +160,8 @@ export default function DataListScreen() {
                     </View>
 
                     <ModalTemplate
-                        isModalVisible={showStopModal}
-                        handleCloseModal={closeStopModal}
+                        isModalVisible={showModal}
+                        handleCloseModal={closeModal}
                         title={activeModalConfig?.title}
                     >
                         {ModalContentComponent ? (
@@ -169,7 +169,7 @@ export default function DataListScreen() {
                                 stops={stops}
                                 icons={icons}
                                 onSubmit={handleSubmitFromModal}
-                                onCancel={closeStopModal}
+                                onCancel={closeModal}
                             />
                         ) : (
                             <Text>Loading...</Text>

@@ -9,8 +9,8 @@ import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRoute
 import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal'
 import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
+import useModalHandler from '@/hooks/useModalHandler'
 import useModifyTravelData from '@/hooks/useModifyTravelData'
-import useStopModal from '@/hooks/useStopModal'
 import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
@@ -44,35 +44,35 @@ export default function AddTravel() {
     const [editingDateField, setEditingDateField] = useState<keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'> | null>(null)
 
     const {
-        showStopModal,
-        editingStopField,
-        stopSearchQuery,
-        setStopSearchQuery,
-        openStopModal,
-        closeStopModal
-    } = useStopModal()
+        showModal: showStopModal,
+        editingField: stopEditingField,
+        searchQuery: stopSearchQuery,
+        setSearchQuery: setStopSearchQuery,
+        openModalWithSearch: openStopModal,
+        closeModal: closeStopModal
+    } = useModalHandler()
 
     const {
-        showStopModal: showRouteModal,
-        stopSearchQuery: routeSearchQuery,
-        setStopSearchQuery: setRouteSearchQuery,
-        openStopModal: openRouteModal,
-        closeStopModal: closeRouteModal
-    } = useStopModal()
+        showModal: showRouteModal,
+        searchQuery: routeSearchQuery,
+        setSearchQuery: setRouteSearchQuery,
+        openModalWithSearch: openRouteModal,
+        closeModal: closeRouteModal
+    } = useModalHandler()
 
     const {
-        showStopModal: showDirectionModal,
-        stopSearchQuery: directionSearchQuery,
-        setStopSearchQuery: setDirectionSearchQuery,
-        openStopModal: openDirectionModal,
-        closeStopModal: closeDirectionModal
-    } = useStopModal()
+        showModal: showDirectionModal,
+        searchQuery: directionSearchQuery,
+        setSearchQuery: setDirectionSearchQuery,
+        openModalWithSearch: openDirectionModal,
+        closeModal: closeDirectionModal
+    } = useModalHandler()
 
     const {
-        showStopModal: showLapsModal,
-        openStopModal: openLapsModal,
-        closeStopModal: closeLapsModal
-    } = useStopModal()
+        showModal: showLapsModal,
+        openModalWithSearch: openLapsModal,
+        closeModal: closeLapsModal
+    } = useModalHandler()
 
     const setDefaultTravel = () => {
         setTravel({
@@ -142,10 +142,10 @@ export default function AddTravel() {
     }
 
     const handleStopSelect = (stopId: number) => {
-        if (editingStopField && travel) {
+        if (stopEditingField && travel) {
             setTravel(prev => prev ? ({
                 ...prev,
-                [editingStopField]: stopId
+                [stopEditingField]: stopId
             }) : null)
         }
         closeStopModal()
