@@ -10,7 +10,7 @@ type Props = {
     textStyle?: StyleProp<TextStyle>
     color?: string
     darkenAmount?: number
-    children?: string
+    children?: string | React.ReactNode
 }
 
 export default function Button({
