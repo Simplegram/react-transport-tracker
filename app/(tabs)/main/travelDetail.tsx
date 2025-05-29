@@ -11,7 +11,7 @@ import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
 import { AverageTimes, DataItem, Stop } from '@/src/types/Travels'
 import { formatMsToMinutes, sumTimesToMs } from '@/src/utils/dateUtils'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
-import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
+import { Camera, LineLayer, MapView, MarkerView, ShapeSource } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
@@ -158,9 +158,21 @@ export default function TravelDetail() {
 
     const fullLatLon = [...stopLatLon, ...lapLatLon]
 
-    const validCoords = fullLatLon
+    function sortByTime(data: LapLatLon[]) {
+        return data.sort((a, b) => {
+            const timeA = new Date(a.time)
+            const timeB = new Date(b.time)
+            return timeA - timeB
+        })
+    }
+
+    const sortedTimeData = sortByTime(fullLatLon);
+
+    const validCoords = sortedTimeData
         .map(data => data?.coords)
         .filter((coords): coords is number[] => coords !== undefined && coords !== null)
+
+    console.log(validCoords)
 
     const centerLatLon = getSimpleCentroid(validCoords)
 
@@ -263,6 +275,25 @@ export default function TravelDetail() {
                         rotateEnabled={false}
                         mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
                     >
+                        <ShapeSource
+                            id="source1"
+                            lineMetrics
+                            shape={{
+                                type: "Feature",
+                                properties: {},
+                                geometry: {
+                                    type: 'LineString',
+                                    coordinates: [[106.626649, -6.232917], [106.6266445, -6.2320647], [106.6267899, -6.2321517], [106.6268445, -6.2366006], [106.628392, -6.2370434], [106.6305939, -6.2379874], [106.63183, -6.2354558], [106.6297922, -6.2410035], [106.6289343, -6.2436147], [106.6264973, -6.2474966], [106.6255101, -6.2509772], [106.6211811, -6.2556398], [106.6182462, -6.2630768], [106.6169964, -6.2656275], [106.6206067, -6.2664783], [106.6206733, -6.2666287], [106.621196, -6.266349]]
+                                },
+                            }}
+                        >
+                            <LineLayer id="layer1" style={{
+                                lineColor: "red",
+                                lineCap: "round",
+                                lineJoin: "round",
+                                lineWidth: 10,
+                            }} />
+                        </ShapeSource>
                         {centerLatLon && (
                             <Camera
                                 centerCoordinate={[centerLatLon?.center.lon, centerLatLon?.center.lat]}
