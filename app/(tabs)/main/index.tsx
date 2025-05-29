@@ -11,7 +11,7 @@ import useTravelCalendar from "@/hooks/useTravelCalendar"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
 import { DataItemWithNewKey, getGroupedData } from "@/src/utils/dataUtils"
-import { getTodayString } from "@/src/utils/dateUtils"
+import { getDateString } from "@/src/utils/dateUtils"
 import { useFocusEffect } from "@react-navigation/native"
 import { router } from "expo-router"
 import React, { useEffect, useMemo, useState } from "react"
@@ -81,7 +81,7 @@ export default function HomePage() {
     }
 
     useEffect(() => {
-        setSelectedDate(getTodayString())
+        setSelectedDate(getDateString())
     }, [])
 
     useFocusEffect(

@@ -7,16 +7,49 @@ import useGetTravelData from "@/hooks/useGetTravelData"
 import useModalHandler from "@/hooks/useModalHandler"
 import useTravelDetail from "@/hooks/useTravelDetail"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
-import { useState } from "react"
-import { Pressable, Text, View } from "react-native"
+import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
+import { AverageTimes } from "@/src/types/Travels"
+import { addTime, getTimeString, timeToMinutes } from "@/src/utils/dateUtils"
+import { useFocusEffect } from "expo-router"
+import React, { useEffect, useState } from "react"
+import { Pressable, Text, TouchableOpacity, View } from "react-native"
 
 interface TravelTimeInput {
     route_id: number | undefined
     direction_id: number | undefined
     first_stop_id: number | undefined
     last_stop_id: number | undefined
+    estimate_type: 'best' | 'average' | 'worst'
+}
+
+interface TypeButtonProps {
+    onPress: () => void
+    children: React.ReactNode
+}
+
+function TypeButton({ onPress, children }: TypeButtonProps) {
+    const { theme } = useTheme()
+
+    return (
+        <TouchableOpacity
+            activeOpacity={0.7}
+            style={[
+                inputStyles[theme].pressableInput, 
+                { flex: 1, alignItems: 'center' }
+            ]}
+            onPress={onPress}
+        >
+            {children}
+        </TouchableOpacity>
+    )
+}
+
+const typeIndex = {
+    best: 'min_top_5_shortest',
+    average: 'avg_travel_time',
+    worst: 'max_top_5_longest'
 }
 
 export default function EstimationPage() {
@@ -51,7 +84,23 @@ export default function EstimationPage() {
         closeModal: closeStopModal
     } = useModalHandler()
 
-    const [input, setInput] = useState<TravelTimeInput>({ route_id: undefined, direction_id: undefined, first_stop_id: undefined, last_stop_id: undefined })
+    const [travelTimes, setTravelTimes] = useState<string>()
+    const [input, setInput] = useState<TravelTimeInput>({
+        route_id: undefined,
+        direction_id: undefined,
+        first_stop_id: undefined,
+        last_stop_id: undefined,
+        estimate_type: 'average'
+    })
+
+    useFocusEffect(
+        React.useCallback(() => {
+            if (averageTime) {
+                const estimatedTime = timeToMinutes(averageTime[typeIndex[input.estimate_type]])
+                setTravelTimes(estimatedTime)
+            }
+        }, [averageTime])
+    )
 
     const handleRouteSelect = (routeId: number) => {
         setInput({ ...input, route_id: routeId })
@@ -71,15 +120,36 @@ export default function EstimationPage() {
     }
 
     const handleOnSubmit = async () => {
-        console.log(input)
+        if (input.route_id && input.direction_id && input.first_stop_id && input.last_stop_id) {
+            await getTravelTime(input.route_id, input.direction_id, input.first_stop_id, input.last_stop_id)
+        }
     }
+
+    const route = routes.find(item => item.id === input.route_id)
+    const tripIdentifier = `${route && route.code} | ${route && route.name}`
+
+    const first_stop = stops.find(stop => stop.id === input.first_stop_id)
+    const last_stop = stops.find(stop => stop.id === input.last_stop_id)
+    const stopString = `${first_stop && first_stop.name} to ${last_stop && last_stop.name}`
 
     return (
         <View style={mainMenuStyles[theme].container}>
             <View style={{
                 flex: 1,
             }}>
-                
+                <View style={travelDetailStyles[theme].detailRow}>
+                    <Text style={travelDetailStyles[theme].specialValue}>{tripIdentifier}</Text>
+                    <Text style={travelDetailStyles[theme].valueText}>{stopString}</Text>
+                </View>
+                <View style={travelDetailStyles[theme].detailRow}>
+                    <Text style={travelDetailStyles[theme].specialValue}>{`Current Time: ${getTimeString()}`}</Text>
+                </View>
+                <View style={travelDetailStyles[theme].detailRow}>
+                    <Text style={travelDetailStyles[theme].specialValue}>{`Route Average: ${travelTimes === 'Invalid date' ? 'not found' : travelTimes}`}</Text>
+                </View>
+                <View style={travelDetailStyles[theme].detailRow}>
+                    <Text style={travelDetailStyles[theme].specialValue}>{`Estimated Arrival: ${travelTimes && addTime(travelTimes)}`}</Text>
+                </View>
             </View>
             <View style={inputElementStyles[theme].inputContainer}>
                 <View style={inputElementStyles[theme].inputLargeGroup}>
@@ -121,6 +191,30 @@ export default function EstimationPage() {
                             onPress={() => openStopModal('last_stop_id')}>
                             <Text style={inputElementStyles[theme].insideLabel}>{stops.find(stop => stop.id === input.last_stop_id)?.name || 'Select Last Stop...'}</Text>
                         </Pressable>
+                    </View>
+
+                    <View style={inputElementStyles[theme].inputGroup}>
+                        <Text style={inputElementStyles[theme].inputLabel}>Estimate Type:</Text>
+                        <View style={{ gap: 10, flexDirection: 'row' }}>
+                            <TypeButton onPress={() => setInput({ ...input, estimate_type: 'best' })}>
+                                <Text style={[
+                                    inputElementStyles[theme].inputLabel,
+                                    input.estimate_type === 'best' && iconPickerStyles[theme].selectedText
+                                ]}>Best</Text>
+                            </TypeButton>
+                            <TypeButton onPress={() => setInput({ ...input, estimate_type: 'average' })}>
+                                <Text style={[
+                                    inputElementStyles[theme].inputLabel,
+                                    input.estimate_type === 'average' && iconPickerStyles[theme].selectedText
+                                ]}>Average</Text>
+                            </TypeButton>
+                            <TypeButton onPress={() => setInput({ ...input, estimate_type: 'worst' })}>
+                                <Text style={[
+                                    inputElementStyles[theme].inputLabel,
+                                    input.estimate_type === 'worst' && iconPickerStyles[theme].selectedText
+                                ]}>Worst</Text>
+                            </TypeButton>
+                        </View>
                     </View>
                 </View>
             </View>

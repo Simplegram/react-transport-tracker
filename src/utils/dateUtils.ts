@@ -1,6 +1,17 @@
 import moment from "moment"
 
-export const getTodayString = () => {
+const getCurrentTime = () => {
+    const todaysDate = new Date().toISOString().toString()
+    return todaysDate
+}
+
+export const getTimeString = () => {
+    const todaysDate = new Date().toISOString()
+    const cleanDate = moment(todaysDate).format("HH:mm:ss")
+    return cleanDate
+}
+
+export const getDateString = () => {
     const todaysDate = new Date().toISOString().split('T')[0].toString()
     return todaysDate
 }
@@ -26,7 +37,7 @@ export const getMonthsSinceEarliestDate = (dates: string[], selectedDate: string
 }
 
 export const getFutureMonthFromLatestDate = (selectedDate: string, offset: number = 1): number => {
-    const today = moment(getTodayString())
+    const today = moment(getDateString())
     let latestDate = moment(selectedDate)
 
     const monthsDifference = Math.ceil(today.diff(latestDate, 'months', true)) + offset
@@ -34,9 +45,19 @@ export const getFutureMonthFromLatestDate = (selectedDate: string, offset: numbe
     return monthsDifference
 }
 
-export const timeToMinutes = (averageTime: number) => {
-    const momentTime = moment(averageTime, "HH:mm:ss")
+export const timeToMinutes = (averageTime: number | string) => {
+    const momentTime = moment(averageTime, "HH:mm:ss.S")
     const formattedTime = momentTime.format("HH:mm:ss")
+
+    return formattedTime
+}
+
+export const addTime = (time: string) => {
+    const today = moment(getCurrentTime())
+    const momentTime = moment(time, "HH:mm:ss")
+
+    const addedTime = today.add(momentTime.hours(), 'hours').add(momentTime.minutes(), 'minutes').add(momentTime.seconds(), 'seconds')
+    const formattedTime = addedTime.format("HH:mm:ss")
 
     return formattedTime
 }
@@ -51,7 +72,7 @@ export const sumTimesToMs = (times: number[]) => {
     }
 
     const startOfDay = moment().startOf('day')
-    const milliseconds = timeSum.diff(startOfDay);
+    const milliseconds = timeSum.diff(startOfDay)
 
     return milliseconds
 }
