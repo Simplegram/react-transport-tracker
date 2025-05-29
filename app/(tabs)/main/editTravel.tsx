@@ -205,7 +205,7 @@ export default function EditTravelItem() {
         if (laps) {
             const idedLaps = laps.map(lap => { return { ...lap, travel_id: travel.id } })
 
-            const lapsToEdit = idedLaps.filter(lap => lap.id)
+            const lapsToEdit = idedLaps.filter(lap => typeof lap.id === 'number')
             const lapsToAdd = idedLaps.filter(lap => typeof lap.id === 'string')
 
             const cleanedLapsToAdd = lapsToAdd.map(item => {
