@@ -1,4 +1,5 @@
 import Button from '@/components/BaseButton'
+import Divider from '@/components/Divider'
 import { useTheme } from '@/context/ThemeContext'
 import useStopModal from '@/hooks/useStopModal'
 import { colors } from '@/src/const/color'
@@ -19,7 +20,7 @@ import {
 } from 'react-native'
 import AddLapModal from '../addModal/AddLapModal'
 import EditLapModal from '../editModal/EditLapModal'
-import Divider from '@/components/Divider'
+import { useFocusEffect } from 'expo-router'
 
 export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { theme } = useTheme()
@@ -69,6 +70,12 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
     useEffect(() => {
         setLaps(currentLaps)
     }, [currentLaps])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setLaps(currentLaps)
+        }, [isModalVisible])
+    )
 
     return (
         <Modal

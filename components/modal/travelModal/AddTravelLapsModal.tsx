@@ -19,6 +19,7 @@ import {
 import AddLapModal from '../addModal/AddLapModal'
 import EditLapModal from '../editModal/EditLapModal'
 import Divider from '@/components/Divider'
+import { useFocusEffect } from 'expo-router'
 
 export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
     const { theme } = useTheme()
@@ -74,6 +75,12 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
     useEffect(() => {
         setLaps(currentLaps)
     }, [currentLaps])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setLaps(currentLaps)
+        }, [isModalVisible])
+    )
 
     return (
         <Modal

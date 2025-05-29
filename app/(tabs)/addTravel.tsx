@@ -36,6 +36,8 @@ export default function AddTravel() {
     const { addTravel, addLaps } = useModifyTravelData()
 
     const [laps, setLaps] = useState<AddableLap[]>([])
+    const [lapsCount, setLapsCount] = useState<number>(0)
+
     const [travel, setTravel] = useState<AddableTravel | null>(null)
 
     const [showCustomPicker, setShowCustomPicker] = useState(false)
@@ -96,6 +98,12 @@ export default function AddTravel() {
         React.useCallback(() => {
             refetchTravelData()
         }, [])
+    )
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setLapsCount(laps.length)
+        }, [laps])
     )
 
     const handleChangeText = (field: keyof AddableTravel, value: string) => {
@@ -334,7 +342,7 @@ export default function AddTravel() {
                         <Pressable
                             style={inputStyles[theme].pressableInput}
                             onPress={() => openLapsModal()}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{`${laps.length} lap${laps.length !== 1 ? 's' : ''} selected`}</Text>
+                            <Text style={inputElementStyles[theme].insideLabel}>{`${lapsCount} lap${lapsCount !== 1 ? 's' : ''} selected`}</Text>
                         </Pressable>
                     </View>
                 </View>

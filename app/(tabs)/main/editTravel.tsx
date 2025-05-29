@@ -47,7 +47,20 @@ export default function EditTravelItem() {
         addLaps, editLaps
     } = useModifyTravelData()
 
+    const [lapsCount, setLapsCount] = useState<number>(0)
     const [travel, setTravel] = useState<EditableTravel>()
+
+    useFocusEffect(
+        React.useCallback(() => {
+            refetchTravelData()
+        }, [])
+    )
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setLapsCount(laps.length)
+        }, [laps])
+    )
 
     useFocusEffect(
         React.useCallback(() => {
@@ -352,7 +365,7 @@ export default function EditTravelItem() {
                                 <Pressable
                                     style={inputStyles[theme].pressableInput}
                                     onPress={() => openLapsModal()}>
-                                    <Text style={inputElementStyles[theme].insideLabel}>{`${laps.length} laps`}</Text>
+                                    <Text style={inputElementStyles[theme].insideLabel}>{`${lapsCount} laps`}</Text>
                                 </Pressable>
                             </View>
                         </View>
