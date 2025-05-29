@@ -19,6 +19,7 @@ import {
 } from 'react-native'
 import AddLapModal from '../addModal/AddLapModal'
 import EditLapModal from '../editModal/EditLapModal'
+import Divider from '@/components/Divider'
 
 export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { theme } = useTheme()
@@ -88,18 +89,21 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                                 contentContainerStyle={modalStyles[theme].scrollView}
                             >
                                 {laps.map((lap: EditableLap, index) => (
-                                    <Pressable key={index} style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
-                                        <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
-                                        {stops.find(stop => stop.id === lap.stop_id) ? (
-                                            <Text style={[inputElementStyles[theme].inputLabel, { color: colors.primary }]}>
-                                                {stops.find(stop => stop.id === lap.stop_id)?.name}
-                                            </Text>
-                                        ) : null}
+                                    <React.Fragment key={index}>
+                                        <Pressable style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
+                                            <Text style={inputElementStyles[theme].insideLabel}>{formatLapTimeDisplay(lap.time)}</Text>
+                                            {stops.find(stop => stop.id === lap.stop_id) ? (
+                                                <Text style={[inputElementStyles[theme].inputLabel, { color: colors.primary }]}>
+                                                    {stops.find(stop => stop.id === lap.stop_id)?.name}
+                                                </Text>
+                                            ) : null}
 
-                                        {lap.note && (
-                                            <Text style={inputElementStyles[theme].inputLabelLight}>{lap.note}</Text>
-                                        )}
-                                    </Pressable>
+                                            {lap.note && (
+                                                <Text style={inputElementStyles[theme].inputLabelLight}>{lap.note}</Text>
+                                            )}
+                                        </Pressable>
+                                        {index < laps.length - 1 && <Divider />}
+                                    </React.Fragment>
                                 ))}
                             </ScrollView>
                         )}
@@ -145,10 +149,7 @@ const lightStyles = StyleSheet.create({
     detailRow: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        paddingVertical: 10,
-        paddingHorizontal: 10,
         alignItems: 'flex-start',
-        borderWidth: 1,
         borderRadius: 10,
     },
 })

@@ -18,6 +18,7 @@ import {
 } from 'react-native'
 import AddLapModal from '../addModal/AddLapModal'
 import EditLapModal from '../editModal/EditLapModal'
+import Divider from '@/components/Divider'
 
 export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
     const { theme } = useTheme()
@@ -93,28 +94,31 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                                 contentContainerStyle={modalStyles[theme].scrollView}
                             >
                                 {laps.map((lap: AddableLap, index) => (
-                                    <Pressable key={index} style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
-                                        <View style={{
-                                            flex: 1,
-                                            width: '100%',
-                                            justifyContent: 'space-between',
-                                            flexDirection: 'row',
-                                        }}>
-                                            <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
-                                            <Pressable onPress={() => handleLapRemove(index)}>
-                                                <Text style={[inputElementStyles[theme].inputLabel, { color: 'red' }]}>Remove</Text>
-                                            </Pressable>
-                                        </View>
-                                        {stops.find(stop => stop.id === lap.stop_id) ? (
-                                            <Text style={[inputElementStyles[theme].inputLabel, { color: colors.primary }]}>
-                                                {stops.find(stop => stop.id === lap.stop_id)?.name}
-                                            </Text>
-                                        ) : null}
+                                    <React.Fragment key={index}>
+                                        <Pressable style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
+                                            <View style={{
+                                                flex: 1,
+                                                width: '100%',
+                                                justifyContent: 'space-between',
+                                                flexDirection: 'row',
+                                            }}>
+                                                <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
+                                                <Pressable onPress={() => handleLapRemove(index)}>
+                                                    <Text style={[inputElementStyles[theme].insideLabel, { color: 'red' }]}>Remove</Text>
+                                                </Pressable>
+                                            </View>
+                                            {stops.find(stop => stop.id === lap.stop_id) ? (
+                                                <Text style={[inputElementStyles[theme].inputLabel, { color: colors.primary }]}>
+                                                    {stops.find(stop => stop.id === lap.stop_id)?.name}
+                                                </Text>
+                                            ) : null}
 
-                                        {lap.note && (
-                                            <Text style={inputElementStyles[theme].inputLabelLight}>{lap.note}</Text>
-                                        )}
-                                    </Pressable>
+                                            {lap.note && (
+                                                <Text style={inputElementStyles[theme].inputLabelLight}>{lap.note}</Text>
+                                            )}
+                                        </Pressable>
+                                        {index < laps.length - 1 && <Divider />}
+                                    </React.Fragment>
                                 ))}
                             </ScrollView>
                         )}
@@ -159,10 +163,7 @@ const lightStyles = StyleSheet.create({
     detailRow: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        paddingVertical: 10,
-        paddingHorizontal: 10,
         alignItems: 'flex-start',
-        borderWidth: 1,
         borderRadius: 10,
     },
 })
