@@ -1,5 +1,6 @@
 import { colors } from "@/src/const/color"
 import { Platform, StyleSheet } from "react-native"
+import FontAwesome6Icon from "react-native-vector-icons/FontAwesome6"
 
 const lightInputElementStyles = StyleSheet.create({
     inputContainer: {
@@ -141,7 +142,7 @@ const lightIconPickerStyles = StyleSheet.create({
     iconTextContainer: {
         width: 75,
         borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: colors.dimmestWhite,
         borderRadius: 8,
         paddingTop: 10,
         flexDirection: 'column',
@@ -151,10 +152,14 @@ const lightIconPickerStyles = StyleSheet.create({
     },
     selectedIconContainer: {
         borderColor: colors.appBlue,
-        backgroundColor: colors.lightBlue,
+        backgroundColor: colors.appBlue,
     },
     selectedIcon: {
-        color: colors.black
+        color: colors.dimWhite,
+    },
+    selectedText: {
+        color: colors.dimWhite,
+        fontWeight: 'bold',
     }
 })
 
@@ -172,6 +177,10 @@ const iconPickerStyles = {
             backgroundColor: colors.black,
         },
         selectedIcon: {
+            color: colors.dimAppBlue
+        },
+        selectedText: {
+            ...lightIconPickerStyles.selectedText,
             color: colors.dimAppBlue
         }
     })

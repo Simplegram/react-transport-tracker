@@ -132,7 +132,10 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                                                 name={type.icon_id.name}
                                                 size={20}
                                             />
-                                            <Text style={inputElementStyles[theme].inputLabel}>{type.name.slice(0, 5)}</Text>
+                                            <Text style={[
+                                                inputElementStyles[theme].inputLabel,
+                                                route.vehicle_type_id === type.id && iconPickerStyles[theme].selectedText,
+                                            ]}>{type.name.slice(0, 5)}</Text>
                                         </TouchableOpacity>
                                     ))}
                                 </ScrollView>

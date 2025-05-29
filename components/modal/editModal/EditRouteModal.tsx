@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import { useModalContext } from "@/context/ModalContext"
+import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
@@ -21,7 +21,7 @@ import EditTravelStopModal from "../travelModal/EditTravelStopModal"
 export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: ModalProp) {
     const { theme } = useTheme()
 
-    const { modalData: data } = useModalContext()
+    const { modalData: data } = useDataEditContext()
 
     const { fullVehicleTypes } = useGetTravelData()
 
@@ -139,7 +139,10 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                                                 name={type.icon_id.name}
                                                 size={20}
                                             />
-                                            <Text style={inputElementStyles[theme].inputLabel}>{type.name.slice(0, 5)}</Text>
+                                            <Text style={[
+                                                inputElementStyles[theme].inputLabel,
+                                                route.vehicle_type_id === type.id && iconPickerStyles[theme].selectedText,
+                                            ]}>{type.name.slice(0, 5)}</Text>
                                         </TouchableOpacity>
                                     ))}
                                 </ScrollView>

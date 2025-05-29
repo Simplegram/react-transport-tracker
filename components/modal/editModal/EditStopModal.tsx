@@ -137,7 +137,10 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                                                 name={type.icon_id.name}
                                                 size={20}
                                             />
-                                            <Text style={inputElementStyles[theme].inputLabel}>{type.name.slice(0, 5)}</Text>
+                                            <Text style={[
+                                                inputElementStyles[theme].inputLabel,
+                                                stop.vehicle_type === type.id && iconPickerStyles[theme].selectedText,
+                                            ]}>{type.name.slice(0, 5)}</Text>
                                         </TouchableOpacity>
                                     ))}
                                 </ScrollView>
