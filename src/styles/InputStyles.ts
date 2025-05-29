@@ -4,7 +4,7 @@ import { Platform, StyleSheet } from "react-native"
 const lightInputElementStyles = StyleSheet.create({
     inputContainer: {
         gap: 12,
-        paddingBottom: 20,
+        paddingBottom: 15,
     },
     inputGroup: {},
     inputLargeGroup: {

@@ -13,6 +13,7 @@ import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
 import { DataItemWithNewKey, getGroupedData } from "@/src/utils/dataUtils"
 import { getTodayString } from "@/src/utils/dateUtils"
 import { useFocusEffect } from "@react-navigation/native"
+import { router } from "expo-router"
 import React, { useEffect, useMemo, useState } from "react"
 import { View } from "react-native"
 
@@ -117,13 +118,26 @@ export default function HomePage() {
                     <GroupedDataDisplay data={groupedData} currentDate={selectedDate} refetch={refetchTravels}></GroupedDataDisplay>
                 )}
             </View>
-            <Button
-                style={[buttonStyles[theme].addButton, { flex: 0 }]}
-                textStyle={buttonStyles[theme].addButtonText}
-                onPress={() => openCalendarModal()}
-            >
-                View Calendar
-            </Button>
+            <View style={{
+                gap: 8,
+                width: '100%',
+                flexDirection: 'row',
+            }}>
+                <Button
+                    style={buttonStyles[theme].addButton}
+                    textStyle={buttonStyles[theme].addButtonText}
+                    onPress={() => router.push("main/estimate")}
+                >
+                    Time Estimation
+                </Button>
+                <Button
+                    style={buttonStyles[theme].addButton}
+                    textStyle={buttonStyles[theme].addButtonText}
+                    onPress={() => openCalendarModal()}
+                >
+                    View Calendar
+                </Button>
+            </View>
             <CalendarModal
                 dates={dates}
                 markedDates={markedDates}
