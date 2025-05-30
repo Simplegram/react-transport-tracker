@@ -7,11 +7,10 @@ import { Text, View } from "react-native"
 
 interface TravelDetailCardProp {
     travel: DataItem
-    travelTimes: number[]
-    index: number
+    travelTime: number
 }
 
-export default function IndividualTravelDetailCard({ travel, travelTimes, index }: TravelDetailCardProp) {
+export default function IndividualTravelDetailCard({ travel, travelTime }: TravelDetailCardProp) {
     const { theme } = useTheme()
 
     try {
@@ -39,7 +38,7 @@ export default function IndividualTravelDetailCard({ travel, travelTimes, index 
                     <Text style={travelDetailStyles[theme].valueText}>{timeString}</Text>
                     <Text style={travelDetailStyles[theme].valueText}>({durationString})</Text>
                 </View>
-                <Text style={travelDetailStyles[theme].valueText}>{`Route Average: ${timeToMinutes(travelTimes[index])}`}</Text>
+                <Text style={travelDetailStyles[theme].valueText}>{`Route Average: ${timeToMinutes(travelTime)}`}</Text>
             </View>
         )
     } catch (error) {

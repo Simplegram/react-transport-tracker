@@ -305,8 +305,7 @@ export default function TravelDetail() {
                             <IndividualTravelDetailCard
                                 key={index}
                                 travel={travel}
-                                travelTimes={averageTravelTimes}
-                                index={index}
+                                travelTime={averageTravelTimes[index]}
                             />
                         ))}
                     </View>
