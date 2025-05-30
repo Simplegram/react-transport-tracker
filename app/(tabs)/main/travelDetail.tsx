@@ -273,6 +273,29 @@ export default function TravelDetail() {
                             {efficiencyPercentage.toFixed(2)}%
                         </Text>
                     </View>
+
+                    <View style={inputElementStyles[theme].inputGroup}>
+                        <View style={{ gap: 10, flexDirection: 'row' }}>
+                            <TypeButton onPress={() => setType('best')}>
+                                <Text style={[
+                                    inputElementStyles[theme].inputLabel,
+                                    type === 'best' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
+                                ]}>Best</Text>
+                            </TypeButton>
+                            <TypeButton onPress={() => setType('average')}>
+                                <Text style={[
+                                    inputElementStyles[theme].inputLabel,
+                                    type === 'average' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
+                                ]}>Average</Text>
+                            </TypeButton>
+                            <TypeButton onPress={() => setType('worst')}>
+                                <Text style={[
+                                    inputElementStyles[theme].inputLabel,
+                                    type === 'worst' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
+                                ]}>Worst</Text>
+                            </TypeButton>
+                        </View>
+                    </View>
                 </View>
 
                 {sortedData.length > 0 && (
