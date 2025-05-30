@@ -258,19 +258,19 @@ export default function TravelDetail() {
                             <TypeButton onPress={() => setType('best')}>
                                 <Text style={[
                                     inputElementStyles[theme].inputLabel,
-                                    type === 'best' && iconPickerStyles[theme].selectedText
+                                    type === 'best' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
                                 ]}>Best</Text>
                             </TypeButton>
                             <TypeButton onPress={() => setType('average')}>
                                 <Text style={[
                                     inputElementStyles[theme].inputLabel,
-                                    type === 'average' && iconPickerStyles[theme].selectedText
+                                    type === 'average' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
                                 ]}>Average</Text>
                             </TypeButton>
                             <TypeButton onPress={() => setType('worst')}>
                                 <Text style={[
                                     inputElementStyles[theme].inputLabel,
-                                    type === 'worst' && iconPickerStyles[theme].selectedText
+                                    type === 'worst' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
                                 ]}>Worst</Text>
                             </TypeButton>
                         </View>
