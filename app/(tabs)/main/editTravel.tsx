@@ -232,7 +232,7 @@ export default function EditTravelItem() {
             }
         }
 
-        router.push('/(tabs)/main')
+        router.back()
     }
 
     return (
