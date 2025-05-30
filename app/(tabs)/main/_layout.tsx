@@ -1,4 +1,4 @@
-import { TravelProvider } from "@/context/PageContext"
+import { TravelProvider } from "@/context/TravelContext"
 import { Stack } from "expo-router"
 
 export default function Layout() {
