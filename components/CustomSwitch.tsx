@@ -48,7 +48,7 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
         outputRange: [1, 0.7, 0.7, 1]
     })
 
-    const trackBaseColor = theme === 'light' ? colors.white_400 : colors.white_600
+    const trackBaseColor = theme === 'light' ? colors.white_400 : colors.white_650
     const trackEnabledColor = theme === 'light' ? colors.primary : colors.primary_100
     const ballColor = theme === 'light' ? colors.white_100 : colors.white_200
 

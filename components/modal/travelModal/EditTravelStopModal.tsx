@@ -1,24 +1,32 @@
+import Button from "@/components/BaseButton"
+import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
-import { inputStyles } from "@/src/styles/InputStyles"
+import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { styles } from "@/src/styles/Styles"
 import { EditableTravelStopModalProp } from "@/src/types/EditableTravels"
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import { Modal, Pressable, Text, TextInput, View } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome6"
 import FlatlistPicker from "../FlatlistPicker"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
 
 export default function EditTravelStopModal({ stops, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelStopModalProp) {
     const { theme } = useTheme()
+    const { vehicleTypeId } = useModalContext()
+
+    const [enableFilter, setEnableFilter] = useState<boolean>(vehicleTypeId ? true : false)
 
     const filteredStops = useMemo(() => {
         if (!stops) return []
         const query = searchQuery.toLowerCase()
-        return stops.filter(stop =>
+        const stopsByQuery = stops.filter(stop =>
             stop.name.toLowerCase().includes(query)
         )
-    }, [stops, searchQuery])
+        const stopsByVehicleId = stopsByQuery.filter(stop => stop.vehicle_type?.id === vehicleTypeId)
+        return (enableFilter && vehicleTypeId) ? stopsByVehicleId : stopsByQuery
+    }, [stops, searchQuery, enableFilter, vehicleTypeId])
 
     return (
         <Modal
@@ -35,13 +43,23 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                         <Text style={modalElementStyles[theme].closeLabel}>Close</Text>
                     </Pressable>
                 </View>
-                <TextInput
-                    style={inputStyles[theme].textInput}
-                    placeholder="Search stop..."
-                    placeholderTextColor={colors.placeholderGray}
-                    value={searchQuery}
-                    onChangeText={setSearchQuery}
-                />
+                <View style={{
+                    gap: 5,
+                    flexDirection: 'row'
+                }}>
+                    <TextInput
+                        style={[inputStyles[theme].textInput, { flex: 5 }]}
+                        placeholder="Search stop..."
+                        placeholderTextColor={colors.placeholderGray}
+                        value={searchQuery}
+                        onChangeText={setSearchQuery}
+                    />
+                    <Button
+                        style={enableFilter ? buttonStyles[theme].addButton : buttonStyles[theme].inactiveButton}
+                        textStyle={enableFilter ? buttonStyles[theme].addButtonText : buttonStyles[theme].inactiveButtonText}
+                        onPress={() => setEnableFilter(!enableFilter)}
+                    >Filter</Button>
+                </View>
                 {filteredStops.length === 0 ? (
                     <View style={modalStyles[theme].emptyList}>
                         <Text style={modalElementStyles[theme].label}>No stop found</Text>

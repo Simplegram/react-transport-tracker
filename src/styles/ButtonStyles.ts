@@ -39,6 +39,20 @@ const lightButtonStyles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: colors.redCancel,
     },
+    inactiveButton: {
+        flex: 1,
+        paddingVertical: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: colors.white_500,
+        backgroundColor: colors.white_100,
+    },
+    inactiveButtonText: {
+        color: colors.white_500,
+        fontSize: 16,
+        fontWeight: '600',
+    },
 })
 
 export const buttonStyles = {
@@ -69,6 +83,13 @@ export const buttonStyles = {
             ...lightButtonStyles.redButton,
             borderColor: colors.redCancel_100,
             backgroundColor: colors.black,
+        },
+        inactiveButton: {
+            ...lightButtonStyles.inactiveButton,
+            backgroundColor: colors.black,
+        },
+        inactiveButtonText: {
+            ...lightButtonStyles.inactiveButtonText,
         },
     })
 }

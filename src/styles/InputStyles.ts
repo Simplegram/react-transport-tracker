@@ -81,7 +81,7 @@ const lightInputStyles = StyleSheet.create({
         paddingVertical: 8,
         minHeight: Platform.OS === 'ios' ? 50 : 48,
         fontSize: 14,
-        color: '#333333',
+        color: colors.white_800,
         borderWidth: 1,
         borderColor: colors.white_500,
     },

@@ -7,6 +7,7 @@ import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelD
 import EditTravelLapsModal from '@/components/modal/travelModal/EditTravelLapsModal'
 import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal'
 import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal'
+import { useModalContext } from '@/context/ModalContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useTravelContext } from '@/context/TravelContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
@@ -33,6 +34,7 @@ import {
 export default function EditTravelItem() {
     const { theme } = useTheme()
     const { selectedItem: data } = useTravelContext()
+    const { setVehicleTypeId } = useModalContext()
 
     const {
         stops,
@@ -80,6 +82,8 @@ export default function EditTravelItem() {
                 route_id: data.routes.id,
                 type_id: data.types.id
             })
+
+            setVehicleTypeId(data.types.id)
 
             getLaps(data.id)
         }, [data])

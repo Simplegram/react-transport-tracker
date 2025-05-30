@@ -1,4 +1,5 @@
 import Button from "@/components/BaseButton"
+import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
@@ -9,13 +10,15 @@ import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/
 import { styles } from "@/src/styles/Styles"
 import { AddableRoute } from "@/src/types/AddableTravels"
 import { ModalProp } from "@/src/types/TravelModal"
-import { useState } from "react"
+import { useCallback, useState } from "react"
 import { Alert, Pressable, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import EditTravelStopModal from "../travelModal/EditTravelStopModal"
+import { useFocusEffect } from "expo-router"
 
 export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: ModalProp) {
     const { theme } = useTheme()
+    const { setVehicleTypeId } = useModalContext()
 
     const { fullVehicleTypes } = useGetTravelData()
 
@@ -37,6 +40,12 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
         name: undefined,
         vehicle_type_id: undefined
     })
+
+    useFocusEffect(
+        useCallback(() => {
+            setVehicleTypeId(null)
+        }, [])
+    )
 
     const handleStopSelect = (stopId: number) => {
         if (!editingField) {

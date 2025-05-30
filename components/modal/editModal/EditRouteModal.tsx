@@ -1,5 +1,6 @@
 import Button from "@/components/BaseButton"
 import { useDataEditContext } from "@/context/DataEditContext"
+import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
@@ -12,14 +13,16 @@ import { EditableRoute } from "@/src/types/EditableTravels"
 import { ModalProp } from "@/src/types/TravelModal"
 import { VehicleType } from "@/src/types/Travels"
 import { sortByIdToFront } from "@/src/utils/utils"
-import { useRef, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import { Alert, Pressable, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import EditTravelStopModal from "../travelModal/EditTravelStopModal"
+import { useFocusEffect } from "expo-router"
 
 
 export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: ModalProp) {
     const { theme } = useTheme()
+    const { setVehicleTypeId } = useModalContext()
 
     const { modalData: data } = useDataEditContext()
 
@@ -44,6 +47,12 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
     const savedVehicleTypeId = useRef(route.vehicle_type_id)
 
     const { loading } = useLoading()
+
+    useFocusEffect(
+        useCallback(() => {
+            setVehicleTypeId(null)
+        }, [])
+    )
 
     const handleStopSelect = (stopId: number) => {
         if (!editingField) {
