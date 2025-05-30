@@ -225,39 +225,18 @@ export default function TravelDetail() {
     return (
         <CollapsibleHeaderPage headerText='Travel Detail'>
             <View style={travelDetailStyles[theme].container}>
-                <View style={inputElementStyles[theme].inputGroup}>
-                    <View style={{ gap: 10, flexDirection: 'row' }}>
-                        <TypeButton onPress={() => setType('best')}>
-                            <Text style={[
-                                inputElementStyles[theme].inputLabel,
-                                type === 'best' && iconPickerStyles[theme].selectedText
-                            ]}>Best</Text>
-                        </TypeButton>
-                        <TypeButton onPress={() => setType('average' )}>
-                            <Text style={[
-                                inputElementStyles[theme].inputLabel,
-                                type === 'average' && iconPickerStyles[theme].selectedText
-                            ]}>Average</Text>
-                        </TypeButton>
-                        <TypeButton onPress={() => setType('worst')}>
-                            <Text style={[
-                                inputElementStyles[theme].inputLabel,
-                                type === 'worst' && iconPickerStyles[theme].selectedText
-                            ]}>Worst</Text>
-                        </TypeButton>
-                    </View>
-                </View>
-
-                <View style={travelDetailStyles[theme].card}>
-                    <Text style={travelDetailStyles[theme].cardTitle}>Efficiency Overview (vs. Average)</Text>
+                <View style={{
+                    gap: 15,
+                }}>
+                    <Text style={travelDetailStyles[theme].cardTitle}>Duration Overview</Text>
 
                     <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Estimated Duration:</Text>
+                        <Text style={travelDetailStyles[theme].label}>Estimated On-Road Duration:</Text>
                         <Text style={travelDetailStyles[theme].valueText}>{formatMsToMinutes(averageRouteDurationMilliseconds)}</Text>
                     </View>
 
                     <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Total On-Road Duration:</Text>
+                        <Text style={travelDetailStyles[theme].label}>Real On-Road Duration:</Text>
                         <View style={{
                             gap: 5,
                             flexDirection: 'row',
@@ -268,15 +247,40 @@ export default function TravelDetail() {
                     </View>
 
                     <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Calculated Efficiency:</Text>
+                        <Text style={travelDetailStyles[theme].label}>Travel Score:</Text>
                         <Text style={[travelDetailStyles[theme].valueText, travelDetailStyles[theme].specialValue]}>
-                            {efficiencyPercentage.toFixed(2)}%
+                            {efficiencyPercentage.toFixed(1)}%
                         </Text>
+                    </View>
+
+                    <View style={inputElementStyles[theme].inputGroup}>
+                        <View style={{ gap: 10, flexDirection: 'row' }}>
+                            <TypeButton onPress={() => setType('best')}>
+                                <Text style={[
+                                    inputElementStyles[theme].inputLabel,
+                                    type === 'best' && iconPickerStyles[theme].selectedText
+                                ]}>Best</Text>
+                            </TypeButton>
+                            <TypeButton onPress={() => setType('average')}>
+                                <Text style={[
+                                    inputElementStyles[theme].inputLabel,
+                                    type === 'average' && iconPickerStyles[theme].selectedText
+                                ]}>Average</Text>
+                            </TypeButton>
+                            <TypeButton onPress={() => setType('worst')}>
+                                <Text style={[
+                                    inputElementStyles[theme].inputLabel,
+                                    type === 'worst' && iconPickerStyles[theme].selectedText
+                                ]}>Worst</Text>
+                            </TypeButton>
+                        </View>
                     </View>
                 </View>
 
                 {sortedData.length > 0 && (
-                    <View style={travelDetailStyles[theme].card}>
+                    <View style={{
+                        gap: 15,
+                    }}>
                         <Text style={travelDetailStyles[theme].cardTitle}>Individual Travel Detail</Text>
                         {sortedData.sort(data => data.id).map((travel, index) => (
                             <IndividualTravelDetailCard
