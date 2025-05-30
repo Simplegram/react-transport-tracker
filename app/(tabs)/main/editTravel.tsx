@@ -239,7 +239,7 @@ export default function EditTravelItem() {
         <CollapsibleHeaderPage
             headerText='Edit Travel'
         >
-            {(!travel || !laps || !travel) ? (
+            {(!travel || !laps) ? (
                 <LoadingScreen />
             ) : (
                 <>
