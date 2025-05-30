@@ -36,7 +36,7 @@ export function TypeButton({ onPress, children }: TypeButtonProps) {
         <TouchableOpacity
             activeOpacity={0.7}
             style={[
-                inputStyles[theme].pressableInput,
+                travelDetailStyles[theme].detailRow,
                 { flex: 1, alignItems: 'center' }
             ]}
             onPress={onPress}
