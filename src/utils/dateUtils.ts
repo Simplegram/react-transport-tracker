@@ -1,4 +1,5 @@
 import moment from "moment"
+import { padNumber } from "./utils"
 
 const getCurrentTime = () => {
     const todaysDate = new Date().toISOString().toString()
@@ -49,7 +50,9 @@ export const timeToMinutes = (averageTime: number | string) => {
     const momentTime = moment(averageTime, "HH:mm:ss.S")
     const formattedTime = momentTime.format("HH:mm:ss")
 
-    return formattedTime
+    const stringTime = `${momentTime.hours()}h ${padNumber(momentTime.minutes())}m ${padNumber(momentTime.seconds())}s`
+
+    return stringTime
 }
 
 export const addTime = (time: string) => {
@@ -94,4 +97,20 @@ export const formatMsToHoursMinutes = (milliseconds: number): string => {
     const hours = Math.floor(totalMinutes / 60)
     const minutes = totalMinutes % 60
     return `${hours}h ${minutes}m / ${totalMinutes}m`
+}
+
+export const getDiffString = (duration: moment.Duration, usePrefix: boolean = false) => {
+    const hours = duration.hours()
+    const minutes = duration.minutes()
+    const seconds = duration.seconds()
+
+    const hoursString = hours !== 0 ? `${Math.abs(hours)}h ` : ``
+    const minutesString = minutes !== 0 ? `${padNumber(Math.abs(minutes))}m ` : ``
+    const secondsString = `${padNumber(Math.abs(seconds))}s`
+
+    const prefix = usePrefix ? (hours < 0 || minutes < 0 || seconds < 0) ? "+" : "-" : ""
+
+    const diffString = `${prefix} ${hoursString}${minutesString}${secondsString}`
+
+    return diffString
 }
