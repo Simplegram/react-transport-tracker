@@ -90,6 +90,10 @@ export const formatLapTimeDisplay = (isoString: string | undefined | null, timeO
     return timeString
 }
 
+export const padNumber = (num: number) => {
+    return String(num).padStart(2, "0")
+}
+
 export {
     calculateDuration,
     formatDateForDisplay, sortByIdToFront

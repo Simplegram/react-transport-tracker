@@ -3,7 +3,7 @@ import { StyleSheet } from "react-native"
 
 const lightTravelDetailStyles = StyleSheet.create({
     container: {
-        gap: 15,
+        gap: 20,
     },
     centered: {
         flex: 1,
@@ -36,7 +36,6 @@ const lightTravelDetailStyles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: 10,
-        alignItems: 'flex-start',
         borderWidth: 1,
         borderRadius: 10,
     },
