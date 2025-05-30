@@ -16,7 +16,8 @@ export default function Settings() {
     } = useTheme()
 
     const {
-        enableSwipeZone, setEnableSwipeZone
+        enableSwipeZone, setEnableSwipeZone,
+        enableVibration, setEnableVibration,
     } = useSettings()
 
     const { signOut } = useAuth()
@@ -31,18 +32,15 @@ export default function Settings() {
         else setTheme('light')
     }
 
-    const handleSwipeZone = () => {
-        if (enableSwipeZone === true) setEnableSwipeZone(false)
-        else setEnableSwipeZone(true)
-    }
-
     return (
         <CollapsibleHeaderPage
             headerText="Settings"
         >
             <View style={styles.container}>
                 <View style={[travelDetailStyles[theme].card, { gap: 10 }]}>
-                    <Switcher onPress={handleSwipeZone} overrideIsEnabled={enableSwipeZone}>Enable "Safe Swipe Zone"</Switcher>
+                    <Switcher onPress={() => setEnableSwipeZone(!enableSwipeZone)} overrideIsEnabled={enableSwipeZone}>Enable "Safe Swipe Zone"</Switcher>
+                    <Divider />
+                    <Switcher onPress={() => setEnableVibration(!enableVibration)} overrideIsEnabled={enableVibration}>Enable vibration</Switcher>
                     <Divider />
                     <Switcher onPress={handleThemeChange} overrideIsEnabled={theme === 'light' ? false : true}>Dark mode</Switcher>
                 </View>

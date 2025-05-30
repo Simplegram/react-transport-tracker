@@ -1,3 +1,4 @@
+import { useSettings } from "@/context/SettingsContext"
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
 import { hexToRgbA } from "@/src/utils/colorUtils"
@@ -11,6 +12,7 @@ interface SwitchProps {
 
 export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps) {
     const { theme } = useTheme()
+    const { enableVibration } = useSettings()
 
     const [isEnabled, setIsEnabled] = useState(false)
 
@@ -70,7 +72,7 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
 
         ballMovingAnimation(newValue ? 1 : 0, Easing.bezier(0, .54, .47, .71))
         colorAnimation(newValue ? 1 : 0, Easing.bounce)
-        Vibration.vibrate(5)
+        enableVibration && Vibration.vibrate(5)
 
         onPress()
     }
