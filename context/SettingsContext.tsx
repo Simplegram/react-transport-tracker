@@ -4,6 +4,8 @@ import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage"
 interface SettingsContextType {
     enableSwipeZone: boolean
     setEnableSwipeZone: (key: boolean) => void
+    enableVibration: boolean
+    setEnableVibration: (key: boolean) => void
     theme: 'light' | 'dark'
     setTheme: (key: 'light' | 'dark') => void
 }
@@ -14,11 +16,13 @@ export const SettingsProvider = ({ children }: PropsWithChildren) => {
     const storage = new MMKVLoader().initialize()
     const [theme, setTheme] = useMMKVStorage<'light' | 'dark'>('appTheme', storage, 'light')
     const [enableSwipeZone, setEnableSwipeZone] = useMMKVStorage<boolean>('settings_swipeZone', storage, true)
+    const [enableVibration, setEnableVibration] = useMMKVStorage<boolean>('settings_vibration', storage, true)
 
     return (
         <SettingsContext.Provider value={{
-            theme, setTheme,
             enableSwipeZone, setEnableSwipeZone,
+            enableVibration, setEnableVibration,
+            theme, setTheme,
         }}>
             {children}
         </SettingsContext.Provider>
