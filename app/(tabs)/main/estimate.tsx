@@ -6,14 +6,14 @@ import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import useModalHandler from "@/hooks/useModalHandler"
 import useTravelDetail from "@/hooks/useTravelDetail"
+import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
 import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
-import { AverageTimes } from "@/src/types/Travels"
 import { addTime, getTimeString, timeToMinutes } from "@/src/utils/dateUtils"
 import { useFocusEffect } from "expo-router"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { Pressable, Text, TouchableOpacity, View } from "react-native"
 
 interface TravelTimeInput {
@@ -36,7 +36,7 @@ export function TypeButton({ onPress, children }: TypeButtonProps) {
         <TouchableOpacity
             activeOpacity={0.7}
             style={[
-                inputStyles[theme].pressableInput, 
+                inputStyles[theme].pressableInput,
                 { flex: 1, alignItems: 'center' }
             ]}
             onPress={onPress}
@@ -196,22 +196,23 @@ export default function EstimationPage() {
                     <View style={inputElementStyles[theme].inputGroup}>
                         <Text style={inputElementStyles[theme].inputLabel}>Estimate Type:</Text>
                         <View style={{ gap: 10, flexDirection: 'row' }}>
-                            <TypeButton onPress={() => setInput({ ...input, estimate_type: 'best' })}>
+                            <TypeButton
+                                onPress={() => setInput({ ...input, estimate_type: 'best' })}>
                                 <Text style={[
                                     inputElementStyles[theme].inputLabel,
-                                    input.estimate_type === 'best' && iconPickerStyles[theme].selectedText
+                                    input.estimate_type === 'best' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
                                 ]}>Best</Text>
                             </TypeButton>
                             <TypeButton onPress={() => setInput({ ...input, estimate_type: 'average' })}>
                                 <Text style={[
                                     inputElementStyles[theme].inputLabel,
-                                    input.estimate_type === 'average' && iconPickerStyles[theme].selectedText
+                                    input.estimate_type === 'average' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
                                 ]}>Average</Text>
                             </TypeButton>
                             <TypeButton onPress={() => setInput({ ...input, estimate_type: 'worst' })}>
                                 <Text style={[
                                     inputElementStyles[theme].inputLabel,
-                                    input.estimate_type === 'worst' && iconPickerStyles[theme].selectedText
+                                    input.estimate_type === 'worst' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
                                 ]}>Worst</Text>
                             </TypeButton>
                         </View>
