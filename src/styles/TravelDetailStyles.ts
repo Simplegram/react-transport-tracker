@@ -27,9 +27,9 @@ const lightTravelDetailStyles = StyleSheet.create({
     cardTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-        paddingBottom: 8,
+        borderBottomWidth: 0.5,
+        borderBottomColor: colors.black,
+        paddingBottom: 5,
         color: '#555',
     },
     detailRow: {
@@ -81,6 +81,7 @@ export const travelDetailStyles = {
         cardTitle: {
             ...lightTravelDetailStyles.cardTitle,
             color: colors.white_100,
+            borderBottomColor: colors.white_100,
         },
         detailRow: {
             ...lightTravelDetailStyles.detailRow,
