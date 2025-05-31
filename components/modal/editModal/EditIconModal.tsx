@@ -1,14 +1,14 @@
 import Button from "@/components/BaseButton"
+import { ATextInput } from "@/components/input/CTextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
-import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { styles } from "@/src/styles/Styles"
 import { AddableIconType } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, Text, TextInput, View } from "react-native"
+import { Alert, Text, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentProps) {
@@ -45,13 +45,11 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
             <View style={inputElementStyles[theme].inputContainer}>
                 <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupIcon]}>
                     <Icon style={styles[theme].icon} name={icon.name ? icon.name : 'xmark'} size={32} />
-                    <TextInput
-                        style={[inputStyles[theme].textInput, { flex: 1 }]}
-                        placeholder="e.g., train-subway"
-                        placeholderTextColor={colors.placeholderGray}
+                    <ATextInput
                         value={iconQuery}
+                        placeholder="e.g., train-subway"
                         onChangeText={changeIcon}
-                        autoFocus={true}
+                        style={{ flex: 1 }}
                     />
                 </View>
             </View>
