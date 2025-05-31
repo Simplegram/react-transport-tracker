@@ -1,4 +1,5 @@
 import Button from "@/components/BaseButton"
+import CTextInput from "@/components/input/CTextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
@@ -35,16 +36,12 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
-                            <TextInput
-                                style={inputStyles[theme].textInput}
-                                placeholder="Direction name..."
-                                placeholderTextColor={colors.placeholderGray}
-                                value={direction.name}
-                                onChangeText={text => (setDirection({ ...direction, "name": text }))}
-                            />
-                        </View>
+                        <CTextInput
+                            value={direction.name}
+                            label="Name:"
+                            placeholder="Direction name..."
+                            onChangeText={(text) => setDirection({ ...direction, "name": text })}
+                        />
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>

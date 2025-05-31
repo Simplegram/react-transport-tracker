@@ -1,4 +1,5 @@
 import Button from "@/components/BaseButton"
+import CTextInput from "@/components/input/CTextInput"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
 import { colors } from "@/src/const/color"
@@ -32,16 +33,12 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
-                            <TextInput
-                                style={inputStyles[theme].textInput}
-                                placeholder="Direction name..."
-                                placeholderTextColor={colors.placeholderGray}
-                                value={direction.name}
-                                onChangeText={text => (setDirection({ ...direction, "name": text }))}
-                            />
-                        </View>
+                        <CTextInput
+                            value={direction.name}
+                            label="Name:"
+                            placeholder="Direction name..."
+                            onChangeText={(text) => setDirection({ ...direction, "name": text })}
+                        />
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>
