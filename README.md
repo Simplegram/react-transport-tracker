@@ -87,37 +87,61 @@ CREATE SCHEMA public_transport_tracker;
 GRANT ALL ON ALL TABLES IN SCHEMA public_transport_tracker TO authenticated;
 ```
 
-### Create Average Route Travel Time Function
+### Create Route Travel Time Function
 ```pgsql
 create or replace function public_transport_tracker.calculate_average_travel_times(
-  route_id_param int,
-  direction_id_param int,
-  first_stop_id_param int,
-  last_stop_id_param int
+    route_id_param int,
+    direction_id_param int,
+    first_stop_id_param bigint,
+    last_stop_id_param bigint
 )
 returns table(
-  avg_travel_time interval,
-  avg_top_5_longest interval,
-  min_top_5_longest interval,
-  max_top_5_longest interval,
-  avg_top_5_shortest interval,
-  min_top_5_shortest interval,
-  max_top_5_shortest interval
+    avg_travel_time interval,
+    avg_top_5_longest interval,
+    min_top_5_longest interval,
+    max_top_5_longest interval,
+    avg_top_5_shortest interval,
+    min_top_5_shortest interval,
+    max_top_5_shortest interval
 )
 language sql
 as $$
-  WITH RankedTravels AS (
+WITH TravelEffectiveTimes AS (
     SELECT
-        bus_final_arrival - bus_initial_departure AS travel_duration,
-        ROW_NUMBER() OVER (ORDER BY (bus_final_arrival - bus_initial_departure) DESC) as rank_longest,
-        ROW_NUMBER() OVER (ORDER BY (bus_final_arrival - bus_initial_departure) ASC) as rank_shortest
-    FROM public_transport_tracker.travels
-    WHERE route_id = route_id_param
-    AND direction_id = direction_id_param
-    AND first_stop_id = first_stop_id_param
-    AND last_stop_id = last_stop_id_param
-    AND bus_initial_departure IS NOT NULL
-    AND bus_final_arrival IS NOT NULL
+        t.id as travel_id,
+        COALESCE(
+            (SELECT l_start.time
+            FROM public_transport_tracker.laps l_start
+            WHERE l_start.travel_id = t.id
+            AND l_start.stop_id = first_stop_id_param
+            ORDER BY l_start.time ASC
+            LIMIT 1
+            ),
+            CASE WHEN t.first_stop_id = first_stop_id_param THEN t.bus_initial_departure ELSE NULL END
+        ) as initial_effective_time,
+
+        COALESCE(
+            (SELECT l_end.time
+            FROM public_transport_tracker.laps l_end
+            WHERE l_end.travel_id = t.id
+            AND l_end.stop_id = last_stop_id_param
+            ORDER BY l_end.time DESC
+            LIMIT 1
+            ),
+            CASE WHEN t.last_stop_id = last_stop_id_param THEN t.bus_final_arrival ELSE NULL END
+        ) as final_effective_time
+    FROM public_transport_tracker.travels t
+    WHERE t.route_id = route_id_param
+    AND t.direction_id = direction_id_param
+),
+RankedTravels AS (
+    SELECT
+        final_effective_time - initial_effective_time AS travel_duration,
+        ROW_NUMBER() OVER (ORDER BY (final_effective_time - initial_effective_time) DESC) as rank_longest,
+        ROW_NUMBER() OVER (ORDER BY (final_effective_time - initial_effective_time) ASC) as rank_shortest
+    FROM TravelEffectiveTimes
+    WHERE (final_effective_time - initial_effective_time) IS NOT NULL -- Ensure duration could be calculated
+    AND (final_effective_time - initial_effective_time) >= '0 seconds' -- Ensure duration is non-negative
 )
 SELECT
     AVG(travel_duration) AS avg_travel_time,
