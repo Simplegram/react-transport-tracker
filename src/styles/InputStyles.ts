@@ -40,11 +40,11 @@ const lightInputElementStyles = StyleSheet.create({
     unselectedLabel: {
         fontSize: 14,
         fontWeight: '500',
-        color: colors.white_700,
+        color: colors.white_500,
     },
     selectedLabel: {
         fontSize: 14,
-        fontWeight: '800',
+        fontWeight: '900',
         color: colors.white_700,
     },
 })
@@ -82,7 +82,7 @@ const inputElementStyles = {
         },
         unselectedLabel: {
             ...lightInputElementStyles.unselectedLabel,
-            color: colors.white_500,
+            color: colors.white_600,
         },
         selectedLabel: {
             ...lightInputElementStyles.selectedLabel,
@@ -99,7 +99,8 @@ const lightInputStyles = StyleSheet.create({
         paddingVertical: 8,
         minHeight: Platform.OS === 'ios' ? 50 : 48,
         fontSize: 14,
-        color: colors.white_800,
+        fontWeight: '200',
+        color: colors.white_700,
         borderWidth: 1,
         borderColor: colors.white_500,
     },

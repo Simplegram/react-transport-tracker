@@ -1,7 +1,9 @@
 import Button from '@/components/BaseButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
-import ConditionalText from '@/components/ConditionalText'
 import Divider from '@/components/Divider'
+import HighlightedText from '@/components/HighlightedText'
+import CTextInput from '@/components/input/CTextInput'
+import MultilineTextInput from '@/components/input/MultilineTextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModal'
@@ -218,27 +220,27 @@ export default function AddTravel() {
                     <View style={inputElementStyles[theme].inputGroup}>
                         <Text style={inputElementStyles[theme].inputLabel}>Bus Initial Arrival:</Text>
                         <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={inputStyles[theme].pressableInput}>
-                            <ConditionalText condition={travel.bus_initial_arrival}>
+                            <HighlightedText condition={travel.bus_initial_arrival}>
                                 {formatDateForDisplay(travel.bus_initial_arrival)}
-                            </ConditionalText>
+                            </HighlightedText>
                         </Pressable>
                     </View>
 
                     <View style={inputElementStyles[theme].inputGroup}>
                         <Text style={inputElementStyles[theme].inputLabel}>Bus Initial Departure:</Text>
                         <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={inputStyles[theme].pressableInput}>
-                            <ConditionalText condition={travel.bus_initial_departure}>
+                            <HighlightedText condition={travel.bus_initial_departure}>
                                 {formatDateForDisplay(travel.bus_initial_departure)}
-                            </ConditionalText>
+                            </HighlightedText>
                         </Pressable>
                     </View>
 
                     <View style={[inputElementStyles[theme].inputGroup]}>
                         <Text style={inputElementStyles[theme].inputLabel}>Bus Final Arrival:</Text>
                         <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={inputStyles[theme].pressableInput}>
-                            <ConditionalText condition={travel.bus_final_arrival}>
+                            <HighlightedText condition={travel.bus_final_arrival}>
                                 {formatDateForDisplay(travel.bus_final_arrival)}
-                            </ConditionalText>
+                            </HighlightedText>
                         </Pressable>
                     </View>
                 </View>
@@ -264,33 +266,25 @@ export default function AddTravel() {
                         <Pressable
                             style={inputStyles[theme].pressableInput}
                             onPress={() => openRouteModal()}>
-                            <ConditionalText condition={travel.route_id}>{
+                            <HighlightedText condition={travel.route_id}>{
                                 travel.route_id ? `${routes.find(route => route.id === travel.route_id)?.code || ''} | ${routes.find(route => route.id === travel.route_id)?.name || ''}` : 'Select Route...'
-                            }</ConditionalText>
+                            }</HighlightedText>
                         </Pressable>
                     </View>
 
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Type:</Text>
-                        <TextInput
-                            editable={false}
-                            style={inputStyles[theme].textInput}
-                            value={vehicleTypes.find(type => type.id === travel.type_id)?.name || ''}
-                            placeholder="Vehicle type (auto-filled)"
-                            placeholderTextColor={colors.placeholderGray}
-                        />
-                    </View>
+                    <CTextInput 
+                        editable={false}
+                        label='Type:'
+                        placeholder='Vehicle type (auto-filled)'
+                        value={vehicleTypes.find(type => type.id === travel.type_id)?.name}
+                    />
 
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Vehicle Code:</Text>
-                        <TextInput
-                            style={inputStyles[theme].textInput}
-                            value={travel.vehicle_code || ''}
-                            onChangeText={(text) => handleChangeText('vehicle_code', text)}
-                            placeholder="Enter vehicle code"
-                            placeholderTextColor={colors.placeholderGray}
-                        />
-                    </View>
+                    <CTextInput 
+                        label='Vehicle Code:'
+                        placeholder='Enter vehicle code'
+                        value={travel.vehicle_code}
+                        onChangeText={(text) => handleChangeText('vehicle_code', text)}
+                    />
                 </View>
 
                 <Divider />
@@ -301,9 +295,9 @@ export default function AddTravel() {
                         <Pressable
                             style={inputStyles[theme].pressableInput}
                             onPress={() => openDirectionModal()}>
-                            <ConditionalText condition={travel.direction_id}>
+                            <HighlightedText condition={travel.direction_id}>
                                 {directions.find(direction => direction.id === travel.direction_id)?.name || 'Select Direction...'}
-                            </ConditionalText>
+                            </HighlightedText>
                         </Pressable>
                     </View>
 
@@ -312,9 +306,9 @@ export default function AddTravel() {
                         <Pressable
                             style={inputStyles[theme].pressableInput}
                             onPress={() => openStopModal('first_stop_id')}>
-                            <ConditionalText condition={travel.first_stop_id}>
+                            <HighlightedText condition={travel.first_stop_id}>
                                 {stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}
-                            </ConditionalText>
+                            </HighlightedText>
                         </Pressable>
                     </View>
 
@@ -323,9 +317,9 @@ export default function AddTravel() {
                         <Pressable
                             style={inputStyles[theme].pressableInput}
                             onPress={() => openStopModal('last_stop_id')}>
-                            <ConditionalText condition={travel.last_stop_id}>
+                            <HighlightedText condition={travel.last_stop_id}>
                                 {stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}
-                            </ConditionalText>
+                            </HighlightedText>
                         </Pressable>
                     </View>
                 </View>
@@ -333,18 +327,12 @@ export default function AddTravel() {
                 <Divider />
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Notes:</Text>
-                        <TextInput
-                            style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput]}
-                            value={travel.notes || ''}
-                            onChangeText={(text) => handleChangeText('notes', text)}
-                            multiline={true}
-                            numberOfLines={4}
-                            placeholder="Enter notes (optional)"
-                            placeholderTextColor={colors.placeholderGray}
-                        />
-                    </View>
+                    <MultilineTextInput 
+                        label='Notes:'
+                        value={travel.notes}
+                        placeholder='Enter notes (optional)'
+                        onChangeText={(text) => handleChangeText('notes', text)}
+                    />
                 </View>
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
@@ -353,9 +341,9 @@ export default function AddTravel() {
                         <Pressable
                             style={inputStyles[theme].pressableInput}
                             onPress={() => openLapsModal()}>
-                            <ConditionalText condition={lapsCount > 0}>
+                            <HighlightedText condition={lapsCount > 0}>
                                 {`${lapsCount} lap${lapsCount !== 1 ? 's' : ''} selected`}
-                            </ConditionalText>
+                            </HighlightedText>
                         </Pressable>
                     </View>
                 </View>

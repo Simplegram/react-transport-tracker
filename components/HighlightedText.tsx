@@ -7,7 +7,7 @@ interface ConditionalTextProps {
     children: string | React.ReactNode
 }
 
-export default function ConditionalText({ condition, children }: ConditionalTextProps) {
+export default function HighlightedText({ condition, children }: ConditionalTextProps) {
     const { theme } = useTheme()
 
     return (
