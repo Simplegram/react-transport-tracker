@@ -1,4 +1,5 @@
 import Button from '@/components/BaseButton'
+import CTextInput from '@/components/input/CTextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import ModalTemplate from '@/components/ModalTemplate'
 import { EmptyHeaderComponent } from '@/components/TravelFlatlist'
@@ -158,12 +159,11 @@ export default function DataListScreen() {
                         />
                     )}
 
-                    <TextInput
-                        style={inputStyles[theme].textInput}
-                        placeholder={`Search ${dataType}...`}
-                        placeholderTextColor={colors.placeholderGray}
+                    <CTextInput
                         value={searchQuery}
+                        placeholder={`Search ${dataType}...`}
                         onChangeText={setSearchQuery}
+                        style={theme === 'light' ? { borderColor: colors.black } : { borderColor: colors.white_100 }}
                     />
 
                     <View style={DatalistStyles[theme].addButtonContainer}>
