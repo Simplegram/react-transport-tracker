@@ -120,7 +120,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                             <View style={inputElementStyles[theme].inputGroup}>
                                 <Text style={inputElementStyles[theme].inputLabel}>Time:</Text>
                                 <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles[theme].pressableInput}>
-                                    <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(lap.time)}</Text>
+                                    <Text style={inputElementStyles[theme].inputLabel}>{formatDateForDisplay(lap.time)}</Text>
                                 </Pressable>
                             </View>
 
@@ -129,7 +129,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 <Pressable
                                     style={inputStyles[theme].pressableInput}
                                     onPress={() => openModalWithSearch('last_stop_id')}>
-                                    <Text style={[inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>
+                                    <Text style={[lap.stop_id ? inputElementStyles[theme].inputLabel : inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>
                                         {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
                                     </Text>
                                 </Pressable>

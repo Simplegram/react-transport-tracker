@@ -113,7 +113,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             <Pressable
                                 style={inputStyles[theme].pressableInput}
                                 onPress={() => openModalWithSearch('last_stop_id')}>
-                                <Text style={[inputElementStyles[theme].inputLabel, { marginBottom: 0 }]}>
+                                <Text style={[lap.stop_id ? inputElementStyles[theme].inputLabel : inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>
                                     {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
                                 </Text>
                             </Pressable>
