@@ -1,5 +1,6 @@
 import Button from '@/components/BaseButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
+import ConditionalText from '@/components/ConditionalText'
 import Divider from '@/components/Divider'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
@@ -217,21 +218,27 @@ export default function AddTravel() {
                     <View style={inputElementStyles[theme].inputGroup}>
                         <Text style={inputElementStyles[theme].inputLabel}>Bus Initial Arrival:</Text>
                         <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={inputStyles[theme].pressableInput}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(travel.bus_initial_arrival)}</Text>
+                            <ConditionalText condition={travel.bus_initial_arrival}>
+                                {formatDateForDisplay(travel.bus_initial_arrival)}
+                            </ConditionalText>
                         </Pressable>
                     </View>
 
                     <View style={inputElementStyles[theme].inputGroup}>
                         <Text style={inputElementStyles[theme].inputLabel}>Bus Initial Departure:</Text>
                         <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={inputStyles[theme].pressableInput}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(travel.bus_initial_departure)}</Text>
+                            <ConditionalText condition={travel.bus_initial_departure}>
+                                {formatDateForDisplay(travel.bus_initial_departure)}
+                            </ConditionalText>
                         </Pressable>
                     </View>
 
                     <View style={[inputElementStyles[theme].inputGroup]}>
                         <Text style={inputElementStyles[theme].inputLabel}>Bus Final Arrival:</Text>
                         <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={inputStyles[theme].pressableInput}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
+                            <ConditionalText condition={travel.bus_final_arrival}>
+                                {formatDateForDisplay(travel.bus_final_arrival)}
+                            </ConditionalText>
                         </Pressable>
                     </View>
                 </View>
@@ -257,9 +264,9 @@ export default function AddTravel() {
                         <Pressable
                             style={inputStyles[theme].pressableInput}
                             onPress={() => openRouteModal()}>
-                            <Text style={inputElementStyles[theme].insideLabel}>
-                                {travel.route_id ? `${routes.find(route => route.id === travel.route_id)?.code || ''} | ${routes.find(route => route.id === travel.route_id)?.name || ''}` : 'Select Route...'}
-                            </Text>
+                            <ConditionalText condition={travel.route_id}>{
+                                travel.route_id ? `${routes.find(route => route.id === travel.route_id)?.code || ''} | ${routes.find(route => route.id === travel.route_id)?.name || ''}` : 'Select Route...'
+                            }</ConditionalText>
                         </Pressable>
                     </View>
 
@@ -294,9 +301,9 @@ export default function AddTravel() {
                         <Pressable
                             style={inputStyles[theme].pressableInput}
                             onPress={() => openDirectionModal()}>
-                            <Text style={inputElementStyles[theme].insideLabel}>
+                            <ConditionalText condition={travel.direction_id}>
                                 {directions.find(direction => direction.id === travel.direction_id)?.name || 'Select Direction...'}
-                            </Text>
+                            </ConditionalText>
                         </Pressable>
                     </View>
 
@@ -305,7 +312,9 @@ export default function AddTravel() {
                         <Pressable
                             style={inputStyles[theme].pressableInput}
                             onPress={() => openStopModal('first_stop_id')}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}</Text>
+                            <ConditionalText condition={travel.first_stop_id}>
+                                {stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}
+                            </ConditionalText>
                         </Pressable>
                     </View>
 
@@ -314,7 +323,9 @@ export default function AddTravel() {
                         <Pressable
                             style={inputStyles[theme].pressableInput}
                             onPress={() => openStopModal('last_stop_id')}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}</Text>
+                            <ConditionalText condition={travel.last_stop_id}>
+                                {stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}
+                            </ConditionalText>
                         </Pressable>
                     </View>
                 </View>
@@ -342,7 +353,9 @@ export default function AddTravel() {
                         <Pressable
                             style={inputStyles[theme].pressableInput}
                             onPress={() => openLapsModal()}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{`${lapsCount} lap${lapsCount !== 1 ? 's' : ''} selected`}</Text>
+                            <ConditionalText condition={lapsCount > 0}>
+                                {`${lapsCount} lap${lapsCount !== 1 ? 's' : ''} selected`}
+                            </ConditionalText>
                         </Pressable>
                     </View>
                 </View>
