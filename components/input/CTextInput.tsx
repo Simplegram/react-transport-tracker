@@ -12,7 +12,7 @@ interface TextInputProps {
     onChangeText?: (text: string) => void
 }
 
-export default function CTextInput({ editable = true, value, label, placeholder, style, onChangeText }: TextInputProps) {
+export default function CTextInput({ editable = true, label, value, placeholder, style, onChangeText }: TextInputProps) {
     const { theme } = useTheme()
 
     return (
@@ -27,5 +27,20 @@ export default function CTextInput({ editable = true, value, label, placeholder,
                 onChangeText={onChangeText}
             />
         </View>
+    )
+}
+
+export function ATextInput({ editable = true, value, placeholder, style, onChangeText }: TextInputProps) {
+    const { theme } = useTheme()
+
+    return (
+        <TextInput
+            editable={editable}
+            style={[inputStyles[theme].textInput, value && { fontWeight: '900' }, style]}
+            value={value || ''}
+            placeholder={placeholder}
+            placeholderTextColor={theme === 'light' ? colors.white_500 : colors.white_600}
+            onChangeText={onChangeText}
+        />
     )
 }
