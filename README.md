@@ -140,8 +140,8 @@ RankedTravels AS (
         ROW_NUMBER() OVER (ORDER BY (final_effective_time - initial_effective_time) DESC) as rank_longest,
         ROW_NUMBER() OVER (ORDER BY (final_effective_time - initial_effective_time) ASC) as rank_shortest
     FROM TravelEffectiveTimes
-    WHERE (final_effective_time - initial_effective_time) IS NOT NULL -- Ensure duration could be calculated
-    AND (final_effective_time - initial_effective_time) >= '0 seconds' -- Ensure duration is non-negative
+    WHERE (final_effective_time - initial_effective_time) IS NOT NULL
+    AND (final_effective_time - initial_effective_time) >= '0 seconds'
 )
 SELECT
     AVG(travel_duration) AS avg_travel_time,
