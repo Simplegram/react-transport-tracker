@@ -9,6 +9,7 @@ interface TextInputProps {
     label?: string
     placeholder: string
     style?: StyleProp<ViewStyle>
+    maxLength?: number
     onChangeText?: (text: string) => void
 }
 
@@ -27,6 +28,24 @@ export default function CTextInput({ editable = true, label, value, placeholder,
                 onChangeText={onChangeText}
             />
         </View>
+    )
+}
+
+export function NumericTextInput({ editable = true, value, placeholder, maxLength, style, onChangeText }: TextInputProps) {
+    const { theme } = useTheme()
+
+    return (
+        <TextInput
+            editable={editable}
+            keyboardType="numeric"
+            maxLength={maxLength}
+            style={[inputStyles[theme].textInput, { width: '100%' }, value && { fontWeight: '900' }, style]}
+            value={value || ''}
+            placeholder={placeholder}
+            placeholderTextColor={theme === 'light' ? colors.white_500 : colors.white_600}
+            onChangeText={onChangeText}
+            textAlign='center'
+        />
     )
 }
 
