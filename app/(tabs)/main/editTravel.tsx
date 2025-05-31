@@ -14,6 +14,7 @@ import { useModalContext } from '@/context/ModalContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useTravelContext } from '@/context/TravelContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
+import { useToggleLoading } from '@/hooks/useLoading'
 import useModalHandler from '@/hooks/useModalHandler'
 import useModifyTravelData from '@/hooks/useModifyTravelData'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
@@ -34,6 +35,8 @@ export default function EditTravelItem() {
     const { theme } = useTheme()
     const { selectedItem: data } = useTravelContext()
     const { setVehicleTypeId } = useModalContext()
+
+    const { loading, setLoading } = useToggleLoading()
 
     const {
         stops,
@@ -194,6 +197,8 @@ export default function EditTravelItem() {
     }
 
     const handleOnSubmit = () => {
+        setLoading(true)
+
         if (!travel) {
             Alert.alert('Input Required', 'Data is broken.')
             return
@@ -235,6 +240,8 @@ export default function EditTravelItem() {
             }
         }
 
+        setLoading(false)
+
         router.back()
     }
 
@@ -242,7 +249,7 @@ export default function EditTravelItem() {
         <CollapsibleHeaderPage
             headerText='Edit Travel'
         >
-            {(!travel || !laps) ? (
+            {(loading || !travel || !laps) ? (
                 <LoadingScreen />
             ) : (
                 <>

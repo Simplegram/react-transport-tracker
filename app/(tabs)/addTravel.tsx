@@ -12,6 +12,7 @@ import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRoute
 import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal'
 import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
+import { useToggleLoading } from '@/hooks/useLoading'
 import useModalHandler from '@/hooks/useModalHandler'
 import useModifyTravelData from '@/hooks/useModifyTravelData'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
@@ -29,10 +30,10 @@ import {
 
 export default function AddTravel() {
     const { theme } = useTheme()
-
+    const { addTravel, addLaps } = useModifyTravelData()
     const { stops, routes, directions, vehicleTypes, refetchTravelData } = useGetTravelData()
 
-    const { addTravel, addLaps } = useModifyTravelData()
+    const { loading, setLoading } = useToggleLoading()
 
     const [laps, setLaps] = useState<AddableLap[]>([])
     const [lapsCount, setLapsCount] = useState<number>(0)
@@ -178,6 +179,8 @@ export default function AddTravel() {
     }
 
     const handleOnSubmit = async () => {
+        setLoading(true)
+
         if (
             !travel.direction_id ||
             !travel.first_stop_id ||
@@ -203,6 +206,8 @@ export default function AddTravel() {
 
 
         setDefaultTravel()
+
+        setLoading(false)
 
         router.push('/(tabs)/main')
     }
