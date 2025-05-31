@@ -1,13 +1,14 @@
 import Button from '@/components/BaseButton'
 import Divider from '@/components/Divider'
+import ModalButton from '@/components/input/ModalButton'
+import MultilineTextInput from '@/components/input/MultilineTextInput'
 import MapDisplay from '@/components/MapDisplay'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import { useTheme } from '@/context/ThemeContext'
 import useLocation from '@/hooks/useLocation'
 import useModalHandler from '@/hooks/useModalHandler'
-import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
-import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
+import { inputElementStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
 import { formatDateForDisplay, formatLapTimeDisplay } from '@/src/utils/utils'
@@ -20,7 +21,6 @@ import {
     Modal,
     Pressable,
     Text,
-    TextInput,
     View
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
@@ -32,7 +32,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
         showModal,
         searchQuery,
         setSearchQuery,
-        openModalWithSearch,
+        openModal,
         closeModal
     } = useModalHandler()
 
@@ -117,23 +117,19 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                 ) : (
                     <>
                         <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
-                            <View style={inputElementStyles[theme].inputGroup}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Time:</Text>
-                                <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles[theme].pressableInput}>
-                                    <Text style={inputElementStyles[theme].inputLabel}>{formatDateForDisplay(lap.time)}</Text>
-                                </Pressable>
-                            </View>
+                            <ModalButton
+                                label='Time:'
+                                condition={lap.time}
+                                value={formatDateForDisplay(lap.time)}
+                                onPress={() => setShowDatetimePicker(true)}
+                            />
 
-                            <View style={inputElementStyles[theme].inputGroup}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Stop:</Text>
-                                <Pressable
-                                    style={inputStyles[theme].pressableInput}
-                                    onPress={() => openModalWithSearch('last_stop_id')}>
-                                    <Text style={[lap.stop_id ? inputElementStyles[theme].inputLabel : inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>
-                                        {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
-                                    </Text>
-                                </Pressable>
-                            </View>
+                            <ModalButton
+                                label='Stop:'
+                                condition={lap.stop_id}
+                                value={stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
+                                onPress={() => openModal()}
+                            />
 
                             <View style={[inputElementStyles[theme].inputGroup, { height: 160 }]}>
                                 <MapDisplay
@@ -145,20 +141,12 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 />
                             </View>
 
-                            <View style={inputElementStyles[theme].inputGroup}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Note:</Text>
-                                <TextInput
-                                    placeholder="Optional notes"
-                                    placeholderTextColor={colors.placeholderGray}
-                                    value={lap.note || ''}
-                                    onChangeText={text => setLap({ ...lap, note: text })}
-                                    keyboardType="default"
-                                    returnKeyType="done"
-                                    multiline={true}
-                                    numberOfLines={3}
-                                    style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput, inputElementStyles[theme].insideLabel]}
-                                />
-                            </View>
+                            <MultilineTextInput
+                                label='Note:'
+                                value={lap.note}
+                                placeholder='Notes (optional)'
+                                onChangeText={(text) => setLap({ ...lap, note: text })}
+                            />
 
                             <Divider />
 
