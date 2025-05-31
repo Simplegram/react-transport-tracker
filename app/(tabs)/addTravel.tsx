@@ -18,7 +18,6 @@ import useModifyTravelData from '@/hooks/useModifyTravelData'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap, AddableTravel } from '@/src/types/AddableTravels'
-import { DataItem } from '@/src/types/Travels'
 import { formatDateForDisplay } from '@/src/utils/utils'
 import { router, useFocusEffect } from 'expo-router'
 import moment from 'moment-timezone'
@@ -40,8 +39,12 @@ export default function AddTravel() {
 
     const [travel, setTravel] = useState<AddableTravel | null>(null)
 
-    const [showCustomPicker, setShowCustomPicker] = useState(false)
-    const [editingDateField, setEditingDateField] = useState<keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'> | null>(null)
+    const {
+        showModal: showDatetimeModal,
+        editingField: datetimeField,
+        openModalWithSearch: openDatetimeModal,
+        closeModal: closeDatetimeModal
+    } = useModalHandler()
 
     const {
         showModal: showStopModal,
@@ -116,23 +119,13 @@ export default function AddTravel() {
         })
     }
 
-    const openCustomPickerModal = (field: keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'>) => {
-        setEditingDateField(field)
-        setShowCustomPicker(true)
-    }
-
     const handleCustomDateConfirm = (selectedDate: Date) => {
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
 
-        if (editingDateField) {
-            setTravel(prev => prev ? ({ ...prev, [editingDateField]: isoSelectedDate }) : null)
+        if (datetimeField) {
+            setTravel(prev => prev ? ({ ...prev, [datetimeField]: isoSelectedDate }) : null)
         }
-        closeCustomPicker()
-    }
-
-    const closeCustomPicker = () => {
-        setShowCustomPicker(false)
-        setEditingDateField(null)
+        closeDatetimeModal()
     }
 
     if (!travel) {
@@ -204,7 +197,6 @@ export default function AddTravel() {
             }
         }
 
-
         setDefaultTravel()
 
         setLoading(false)
@@ -216,44 +208,52 @@ export default function AddTravel() {
         <CollapsibleHeaderPage
             headerText='Add New Travel'
         >
+            {loading && (
+                <LoadingScreen></LoadingScreen>
+            )}
             <View style={inputElementStyles[theme].inputContainer}>
                 <View style={inputElementStyles[theme].inputLargeGroup}>
                     <ModalButton
                         label='Bus Initial Arrival:'
                         condition={travel.bus_initial_arrival}
                         value={formatDateForDisplay(travel.bus_initial_arrival)}
-                        onPress={() => openCustomPickerModal('bus_initial_arrival')}
+                        onPress={() => openDatetimeModal('bus_initial_arrival')}
                     />
 
                     <ModalButton
                         label='Bus Initial Departure:'
                         condition={travel.bus_initial_departure}
                         value={formatDateForDisplay(travel.bus_initial_departure)}
-                        onPress={() => openCustomPickerModal('bus_initial_departure')}
+                        onPress={() => openDatetimeModal('bus_initial_departure')}
                     />
 
                     <ModalButton
                         label='Bus Final Arrival:'
                         condition={travel.bus_final_arrival}
                         value={formatDateForDisplay(travel.bus_final_arrival)}
-                        onPress={() => openCustomPickerModal('bus_final_arrival')}
+                        onPress={() => openDatetimeModal('bus_final_arrival')}
                     />
                 </View>
 
                 <Divider />
 
-                {showCustomPicker && editingDateField && (
-                    <CustomDateTimePicker
-                        visible={showCustomPicker}
-                        initialDateTime={
-                            travel && travel[editingDateField]
-                                ? new Date(travel[editingDateField] as string)
-                                : new Date()
-                        }
-                        onClose={closeCustomPicker}
-                        onConfirm={handleCustomDateConfirm}
-                    />
-                )}
+                {showDatetimeModal && datetimeField && (
+                    datetimeField === 'bus_initial_arrival' ||
+                    datetimeField === 'bus_initial_departure' ||
+                    datetimeField === 'bus_final_arrival'
+                ) && (
+                        <CustomDateTimePicker
+                            visible={showDatetimeModal}
+                            initialDateTime={
+                                travel && travel[datetimeField]
+                                    ? new Date(travel[datetimeField] as string)
+                                    : new Date()
+                            }
+                            onClose={closeDatetimeModal}
+                            onConfirm={handleCustomDateConfirm}
+                        />
+                    )
+                }
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
                     <ModalButton
@@ -309,7 +309,7 @@ export default function AddTravel() {
                     <MultilineTextInput
                         label='Notes:'
                         value={travel.notes}
-                        placeholder='Enter notes (optional)'
+                        placeholder='Notes (optional)'
                         onChangeText={(text) => handleChangeText('notes', text)}
                     />
                 </View>
