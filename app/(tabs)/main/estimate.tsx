@@ -1,4 +1,5 @@
 import Button from "@/components/BaseButton"
+import ModalButton from "@/components/input/ModalButton"
 import EditTravelDirectionModal from "@/components/modal/travelModal/EditTravelDirectionModal"
 import EditTravelRouteModal from "@/components/modal/travelModal/EditTravelRouteModal"
 import EditTravelStopModal from "@/components/modal/travelModal/EditTravelStopModal"
@@ -153,45 +154,33 @@ export default function EstimationPage() {
             </View>
             <View style={inputElementStyles[theme].inputContainer}>
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Route:</Text>
-                        <Pressable
-                            style={inputStyles[theme].pressableInput}
-                            onPress={() => openRouteModal()}>
-                            <Text style={inputElementStyles[theme].insideLabel}>
-                                {input.route_id ? `${routes.find(route => route.id === input.route_id)?.code || ''} | ${routes.find(route => route.id === input.route_id)?.name || ''}` : 'Select Route...'}
-                            </Text>
-                        </Pressable>
-                    </View>
+                    <ModalButton
+                        label='Route:'
+                        condition={input.route_id}
+                        value={input.route_id ? `${routes.find(route => route.id === input.route_id)?.code || ''} | ${routes.find(route => route.id === input.route_id)?.name || ''}` : 'Select Route...'}
+                        onPress={() => openRouteModal()}
+                    />
 
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Direction:</Text>
-                        <Pressable
-                            style={inputStyles[theme].pressableInput}
-                            onPress={() => openDirectionModal()}>
-                            <Text style={inputElementStyles[theme].insideLabel}>
-                                {directions.find(direction => direction.id === input.direction_id)?.name || 'Select Direction...'}
-                            </Text>
-                        </Pressable>
-                    </View>
+                    <ModalButton
+                        label='Direction:'
+                        condition={input.direction_id}
+                        value={directions.find(direction => direction.id === input.direction_id)?.name || 'Select Direction...'}
+                        onPress={() => openDirectionModal()}
+                    />
 
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>First Stop:</Text>
-                        <Pressable
-                            style={inputStyles[theme].pressableInput}
-                            onPress={() => openStopModal('first_stop_id')}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{stops.find(stop => stop.id === input.first_stop_id)?.name || 'Select First Stop...'}</Text>
-                        </Pressable>
-                    </View>
+                    <ModalButton
+                        label='First Stop:'
+                        condition={input.first_stop_id}
+                        value={stops.find(stop => stop.id === input.first_stop_id)?.name || 'Select First Stop...'}
+                        onPress={() => openStopModal('first_stop_id')}
+                    />
 
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Last Stop:</Text>
-                        <Pressable
-                            style={inputStyles[theme].pressableInput}
-                            onPress={() => openStopModal('last_stop_id')}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{stops.find(stop => stop.id === input.last_stop_id)?.name || 'Select Last Stop...'}</Text>
-                        </Pressable>
-                    </View>
+                    <ModalButton
+                        label='Last Stop:'
+                        condition={input.last_stop_id}
+                        value={stops.find(stop => stop.id === input.last_stop_id)?.name || 'Select Last Stop...'}
+                        onPress={() => openStopModal('last_stop_id')}
+                    />
 
                     <View style={inputElementStyles[theme].inputGroup}>
                         <Text style={inputElementStyles[theme].inputLabel}>Estimate Type:</Text>

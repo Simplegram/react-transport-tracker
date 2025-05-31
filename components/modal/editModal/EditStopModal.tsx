@@ -1,4 +1,6 @@
 import Button from "@/components/BaseButton"
+import CTextInput, { ATextInput } from "@/components/input/CTextInput"
+import { AModalButton } from "@/components/input/ModalButton"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
@@ -6,14 +8,14 @@ import { useLoading } from "@/hooks/useLoading"
 import useModalHandler from "@/hooks/useModalHandler"
 import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { iconPickerStyles, inputElementStyles } from "@/src/styles/InputStyles"
 import { styles } from "@/src/styles/Styles"
 import { AddableCoordinates } from "@/src/types/AddableTravels"
 import { EditableStop } from "@/src/types/EditableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { sortByIdToFront } from "@/src/utils/utils"
 import { useRef, useState } from "react"
-import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import AddCoordModal from "../addModal/AddCoordModal"
 
@@ -61,52 +63,43 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
-                            <TextInput
-                                style={inputStyles[theme].textInput}
-                                placeholder="Stop name..."
-                                placeholderTextColor={colors.placeholderGray}
-                                value={stop.name}
-                                onChangeText={text => (setStop({ ...stop, "name": text }))}
-                            />
-                        </View>
+                        <CTextInput
+                            label="Name:"
+                            value={stop.name}
+                            placeholder="Stop name..."
+                            onChangeText={(text) => setStop({ ...stop, "name": text })}
+                        />
 
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].inputLabel}>Latitude and Longitude:</Text>
                             <View style={inputElementStyles[theme].inputGroupCoord}>
-                                <TextInput
-                                    style={[inputStyles[theme].textInput, inputStyles[theme].pressableInputCoord]}
-                                    placeholder="Stop latitude..."
-                                    placeholderTextColor={colors.placeholderGray}
+                                <ATextInput
                                     value={stop.lat?.toString()}
-                                    onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
+                                    placeholder="Stop latitude..."
+                                    onChangeText={(text) => setStop({ ...stop, "lat": Number(text) })}
+                                    style={{ flex: 1 }}
                                 />
-                                <TextInput
-                                    style={[inputStyles[theme].textInput, inputStyles[theme].pressableInputCoord]}
-                                    placeholder="Stop longitude..."
-                                    placeholderTextColor={colors.placeholderGray}
+                                <ATextInput
                                     value={stop.lon?.toString()}
-                                    onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
+                                    placeholder="Stop longitude..."
+                                    onChangeText={(text) => setStop({ ...stop, "lon": Number(text) })}
+                                    style={{ flex: 1 }}
                                 />
                             </View>
-                            <Pressable
-                                style={[inputStyles[theme].pressableInput, { marginTop: 10 }]}
-                                onPress={() => openCoordModal()}>
-                                <Text style={inputElementStyles[theme].insideLabel}>Pick Latitude and Longitude...</Text>
-                            </Pressable>
-                        </View>
-
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Alternative name:</Text>
-                            <TextInput
-                                style={inputStyles[theme].textInput}
-                                placeholder="Alternative name..."
-                                placeholderTextColor={colors.placeholderGray}
-                                value={stop.name_alt}
-                                onChangeText={text => (setStop({ ...stop, "name_alt": text }))}
+                            <AModalButton
+                                condition={false}
+                                value="Pick Latitude and Longitude..."
+                                onPress={() => openCoordModal()}
+                                style={{ marginTop: 10 }}
                             />
                         </View>
+
+                        <CTextInput
+                            label="Alternative name:"
+                            value={stop.name_alt}
+                            placeholder="Alternative name..."
+                            onChangeText={(text) => setStop({ ...stop, "name_alt": text })}
+                        />
 
                         <View style={inputElementStyles[theme].inputGroup}>
                             <View style={{

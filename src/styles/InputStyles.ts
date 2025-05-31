@@ -23,7 +23,7 @@ const lightInputElementStyles = StyleSheet.create({
     inputLabel: {
         fontSize: 15,
         fontWeight: '500',
-        color: '#333333',
+        color: colors.white_800,
         marginBottom: 4,
     },
     inputLabelLight: {
@@ -35,7 +35,17 @@ const lightInputElementStyles = StyleSheet.create({
     insideLabel: {
         fontSize: 14,
         fontWeight: '500',
-        color: '#333333',
+        color: colors.white_800,
+    },
+    unselectedLabel: {
+        fontSize: 14,
+        fontWeight: '500',
+        color: colors.white_500,
+    },
+    selectedLabel: {
+        fontSize: 14,
+        fontWeight: '900',
+        color: colors.white_700,
     },
 })
 
@@ -70,6 +80,14 @@ const inputElementStyles = {
             ...lightInputElementStyles.insideLabel,
             color: colors.white_300,
         },
+        unselectedLabel: {
+            ...lightInputElementStyles.unselectedLabel,
+            color: colors.white_600,
+        },
+        selectedLabel: {
+            ...lightInputElementStyles.selectedLabel,
+            color: colors.white_300,
+        }
     })
 }
 
@@ -81,7 +99,8 @@ const lightInputStyles = StyleSheet.create({
         paddingVertical: 8,
         minHeight: Platform.OS === 'ios' ? 50 : 48,
         fontSize: 14,
-        color: colors.white_800,
+        fontWeight: '200',
+        color: colors.white_700,
         borderWidth: 1,
         borderColor: colors.white_500,
     },

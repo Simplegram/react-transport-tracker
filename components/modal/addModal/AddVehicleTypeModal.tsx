@@ -1,14 +1,14 @@
 import Button from "@/components/BaseButton"
+import CTextInput from "@/components/input/CTextInput"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
-import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { iconPickerStyles, inputElementStyles } from "@/src/styles/InputStyles"
 import { styles } from "@/src/styles/Styles"
 import { AddableVehicleType } from "@/src/types/AddableTravels"
 import { VehicleTypeModalProp } from "@/src/types/TravelModal"
 import { useState } from "react"
-import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: VehicleTypeModalProp) {
@@ -34,16 +34,12 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
-                            <TextInput
-                                style={inputStyles[theme].textInput}
-                                placeholder="e.g., Standard Bus"
-                                placeholderTextColor={colors.placeholderGray}
-                                value={vehicleType.name}
-                                onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}
-                            />
-                        </View>
+                        <CTextInput
+                            label="Name:"
+                            value={vehicleType.name}
+                            placeholder="e.g., Standard Bus"
+                            onChangeText={(text) => setVehicleType({ ...vehicleType, "name": text })}
+                        />
 
                         <View style={inputElementStyles[theme].inputGroup}>
                             <View style={{
