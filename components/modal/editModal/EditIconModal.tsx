@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import { ATextInput } from "@/components/input/CTextInput"
+import { TextInputBase } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
@@ -45,7 +45,7 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
             <View style={inputElementStyles[theme].inputContainer}>
                 <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupIcon]}>
                     <Icon style={styles[theme].icon} name={icon.name ? icon.name : 'xmark'} size={32} />
-                    <ATextInput
+                    <TextInputBase
                         value={iconQuery}
                         placeholder="e.g., train-subway"
                         onChangeText={changeIcon}

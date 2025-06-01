@@ -1,9 +1,9 @@
 import Button from '@/components/BaseButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
-import CTextInput from '@/components/input/CTextInput'
 import ModalButton from '@/components/input/ModalButton'
 import MultilineTextInput from '@/components/input/MultilineTextInput'
+import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal'
@@ -299,14 +299,14 @@ export default function EditTravelItem() {
                                 onPress={() => openRouteModal()}
                             />
 
-                            <CTextInput
+                            <TextInputBlock
                                 editable={false}
                                 label='Type:'
                                 placeholder='Vehicle type (auto-filled)'
                                 value={vehicleTypes.find(type => type.id === travel.type_id)?.name}
                             />
 
-                            <CTextInput
+                            <TextInputBlock
                                 label='Vehicle Code:'
                                 placeholder='Enter vehicle code'
                                 value={travel.vehicle_code}

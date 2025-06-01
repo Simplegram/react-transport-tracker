@@ -1,5 +1,5 @@
 import Button from '@/components/BaseButton'
-import CTextInput from '@/components/input/CTextInput'
+import { TextInputBase } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import ModalTemplate from '@/components/ModalTemplate'
 import { EmptyHeaderComponent } from '@/components/TravelFlatlist'
@@ -13,11 +13,10 @@ import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { DatalistStyles, ItemStyles } from '@/src/styles/DatalistStyles'
-import { inputStyles } from '@/src/styles/InputStyles'
 import { styles } from '@/src/styles/Styles'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { Alert, FlatList, Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, FlatList, Keyboard, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 interface ItemTemplate {
@@ -159,7 +158,7 @@ export default function DataListScreen() {
                         />
                     )}
 
-                    <CTextInput
+                    <TextInputBase
                         value={searchQuery}
                         placeholder={`Search ${dataType}...`}
                         onChangeText={setSearchQuery}

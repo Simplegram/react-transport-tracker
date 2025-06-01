@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton"
-import CTextInput, { ATextInput } from "@/components/input/CTextInput"
 import { AModalButton } from "@/components/input/ModalButton"
+import { TextInputBase, TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
@@ -63,7 +63,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
-                        <CTextInput
+                        <TextInputBlock
                             label="Name:"
                             value={stop.name}
                             placeholder="Stop name..."
@@ -73,13 +73,13 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                         <View style={inputElementStyles[theme].inputGroup}>
                             <Text style={inputElementStyles[theme].inputLabel}>Latitude and Longitude:</Text>
                             <View style={inputElementStyles[theme].inputGroupCoord}>
-                                <ATextInput
+                                <TextInputBase
                                     value={stop.lat?.toString()}
                                     placeholder="Stop latitude..."
                                     onChangeText={(text) => setStop({ ...stop, "lat": Number(text) })}
                                     style={{ flex: 1 }}
                                 />
-                                <ATextInput
+                                <TextInputBase
                                     value={stop.lon?.toString()}
                                     placeholder="Stop longitude..."
                                     onChangeText={(text) => setStop({ ...stop, "lon": Number(text) })}
@@ -94,7 +94,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                             />
                         </View>
 
-                        <CTextInput
+                        <TextInputBlock
                             label="Alternative name:"
                             value={stop.name_alt}
                             placeholder="Alternative name..."

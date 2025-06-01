@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import CTextInput from "@/components/input/CTextInput"
+import { TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
@@ -47,7 +47,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
-                        <CTextInput
+                        <TextInputBlock
                             label="Name:"
                             value={vehicleType.name}
                             placeholder="e.g., Standard Bus"

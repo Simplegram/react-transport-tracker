@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import CTextInput from "@/components/input/CTextInput"
+import { TextInputBlock } from "@/components/input/TextInput"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
@@ -34,7 +34,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
-                        <CTextInput
+                        <TextInputBlock
                             label="Name:"
                             value={vehicleType.name}
                             placeholder="e.g., Standard Bus"

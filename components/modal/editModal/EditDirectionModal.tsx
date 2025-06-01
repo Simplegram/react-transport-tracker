@@ -1,15 +1,14 @@
 import Button from "@/components/BaseButton"
-import CTextInput from "@/components/input/CTextInput"
+import { TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
-import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { Direction } from "@/src/types/Travels"
 import { useState } from "react"
-import { Alert, Text, TextInput, View } from "react-native"
+import { Alert, Text, View } from "react-native"
 
 export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()
@@ -36,7 +35,7 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
-                        <CTextInput
+                        <TextInputBlock
                             value={direction.name}
                             label="Name:"
                             placeholder="Direction name..."

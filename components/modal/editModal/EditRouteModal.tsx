@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton"
-import CTextInput from "@/components/input/CTextInput"
 import ModalButton from "@/components/input/ModalButton"
+import { TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
@@ -80,14 +80,14 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
-                        <CTextInput
+                        <TextInputBlock
                             label="Code:"
                             value={route.code}
                             placeholder="Route code..."
                             onChangeText={(text) => setRoute({ ...route, "code": text })}
                         />
 
-                        <CTextInput
+                        <TextInputBlock
                             label="Name:"
                             value={route.name}
                             placeholder="Route name..."
