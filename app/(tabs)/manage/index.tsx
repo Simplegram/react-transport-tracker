@@ -63,7 +63,7 @@ export default function NavigationPage() {
                     <FlatList
                         data={navigationButtons}
                         numColumns={2}
-                        renderItem={({ item, index }) => (
+                        renderItem={({ item }) => (
                             <DataButton
                                 key={item.id}
                                 label={item.label}
@@ -73,6 +73,7 @@ export default function NavigationPage() {
                         )}
                         contentContainerStyle={{ gap: 8 }}
                         columnWrapperStyle={{ gap: 8 }}
+                        scrollEnabled={false}
                     />
                 </View>
                 <Divider />
