@@ -190,8 +190,6 @@ export default function EditTravelItem() {
     }
 
     const handleOnSubmit = () => {
-        setLoading(true)
-
         if (!travel) {
             Alert.alert('Input Required', 'Data is broken.')
             return
@@ -207,6 +205,8 @@ export default function EditTravelItem() {
             Alert.alert('Input Required', 'Please choose a route/direction/stops.')
             return
         }
+
+        setLoading(true)
 
         editTravel(travel)
 

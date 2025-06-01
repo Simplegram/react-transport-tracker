@@ -171,8 +171,6 @@ export default function AddTravel() {
     }
 
     const handleOnSubmit = async () => {
-        setLoading(true)
-
         if (
             !travel.direction_id ||
             !travel.first_stop_id ||
@@ -183,6 +181,8 @@ export default function AddTravel() {
             Alert.alert('Input Required', 'Please choose a route/direction/stops.')
             return
         }
+
+        setLoading(true)
 
         const newTravel = await addTravel(travel, true)
 
