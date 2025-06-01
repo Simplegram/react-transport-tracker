@@ -2,11 +2,10 @@ import { useLoading } from "@/hooks/useLoading"
 import { colors } from "@/src/const/color"
 import { travelCardStyles } from "@/src/styles/TravelListStyles"
 import { DataItemWithNewKey } from "@/src/utils/dataUtils"
-import { PropsWithChildren } from "react"
-import { FlatList, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native"
+import { PropsWithChildren, useEffect, useState } from "react"
+import { FlatList, Keyboard, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native"
 import LoadingScreen from "./LoadingScreen"
 import TravelCard from "./TravelCard"
-import Divider from "./Divider"
 
 interface TravelHeaderProps {
     index: number
@@ -57,10 +56,32 @@ export default function TravelFlatlist({ items, onPress, refetch, travelHeaderPr
 export function EmptyHeaderComponent({ children }: PropsWithChildren) {
     const { height, width } = useWindowDimensions()
 
+    const [keyboardShown, setKeyboardShown] = useState<boolean>(false)
+
+    useEffect(() => {
+        const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+            setKeyboardShown(true)
+        })
+        const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardShown(false)
+        })
+
+        return () => {
+            showSubscription.remove()
+            hideSubscription.remove()
+        }
+    }, [])
+
     const minMaxHeight = width < height ? height * 0.25 : 0
+    const minHeight = width < height ? height * 0.15 : 0
 
     return (
-        <View style={{ flex: 1, height: minMaxHeight, justifyContent: 'center', alignItems: 'center' }}>
+        <View style={{
+            flex: 1,
+            height: keyboardShown ? minHeight : minMaxHeight,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
             {children}
         </View>
     )
