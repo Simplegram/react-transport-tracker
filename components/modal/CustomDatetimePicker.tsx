@@ -12,7 +12,7 @@ import {
     View
 } from 'react-native'
 import Divider from '../Divider'
-import { TextInputNumeric } from '../input/TextInput'
+import { TextInputBase } from '../input/TextInput'
 
 interface CustomDateTimePickerProps {
     visible: boolean
@@ -132,7 +132,7 @@ export default function CustomDateTimePicker({
     const inputRow = (label: string, value: string, onChangeText: (text: string) => void, placeholder: string, maxLength?: number) => (
         <View style={datetimePickerStyles[theme].inputRow}>
             <Text style={datetimePickerStyles[theme].inputLabel}>{label}</Text>
-            <TextInputNumeric
+            <TextInputBase.Numeric
                 value={value}
                 placeholder={placeholder}
                 maxLength={maxLength}

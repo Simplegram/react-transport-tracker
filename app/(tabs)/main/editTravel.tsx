@@ -2,7 +2,7 @@ import Button from '@/components/BaseButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
 import ModalButton from '@/components/input/ModalButton'
-import { TextInputBlock, TextInputMultiline } from '@/components/input/TextInput'
+import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal'
@@ -341,7 +341,7 @@ export default function EditTravelItem() {
                         <Divider />
 
                         <View style={inputElementStyles[theme].inputLargeGroup}>
-                            <TextInputMultiline
+                            <TextInputBlock.Multiline
                                 label='Notes:'
                                 value={travel.notes}
                                 placeholder='Notes (optional)'

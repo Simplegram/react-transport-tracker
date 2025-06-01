@@ -30,11 +30,11 @@ interface AddableIconType {
 }
 
 interface AddableTravel {
-    bus_initial_arrival: string | null
-    bus_initial_departure: string | null
-    bus_final_arrival: string | null
-    notes: string | null
-    vehicle_code: string | null
+    bus_initial_arrival: string | undefined
+    bus_initial_departure: string | undefined
+    bus_final_arrival: string | undefined
+    notes: string | undefined
+    vehicle_code: string | undefined
     route_id: number | undefined
     first_stop_id: number | undefined
     last_stop_id: number | undefined
@@ -46,10 +46,10 @@ interface AddableLap {
     id?: number | string | undefined
     travel_id?: number | undefined
     time: string | undefined
-    lat: number | null
-    lon: number | null
-    stop_id: number | null
-    note: string | null
+    lat: number | undefined
+    lon: number | undefined
+    stop_id: number | undefined
+    note: string | undefined
 }
 
 interface AddableCoordinates {

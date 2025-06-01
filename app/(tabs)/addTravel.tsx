@@ -2,7 +2,7 @@ import Button from '@/components/BaseButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
 import ModalButton from '@/components/input/ModalButton'
-import { TextInputBlock, TextInputMultiline } from '@/components/input/TextInput'
+import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModal'
@@ -83,11 +83,11 @@ export default function AddTravel() {
             last_stop_id: undefined,
             route_id: undefined,
             type_id: undefined,
-            bus_final_arrival: null,
-            bus_initial_arrival: null,
-            bus_initial_departure: null,
-            vehicle_code: null,
-            notes: null,
+            bus_final_arrival: undefined,
+            bus_initial_arrival: undefined,
+            bus_initial_departure: undefined,
+            vehicle_code: undefined,
+            notes: undefined,
         })
         setLaps([])
     }
@@ -305,7 +305,7 @@ export default function AddTravel() {
                 <Divider />
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <TextInputMultiline
+                    <TextInputBlock.Multiline
                         label='Notes:'
                         value={travel.notes}
                         placeholder='Notes (optional)'

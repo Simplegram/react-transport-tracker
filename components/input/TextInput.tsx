@@ -3,12 +3,7 @@ import { colors } from "@/src/const/color"
 import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { Text, TextInput, TextInputProps, View } from "react-native"
 
-interface TextInputBlockProps extends Omit<TextInputProps, 'value'> {
-    value: string | undefined | null
-    label: string
-}
-
-export default function TextInputBase(props: TextInputProps) {
+export function TextInputBase(props: TextInputProps) {
     const { theme } = useTheme()
 
     const { placeholderTextColor, value, style, ...restOfProps } = props
@@ -23,61 +18,51 @@ export default function TextInputBase(props: TextInputProps) {
     )
 }
 
-export function TextInputBlock(props: TextInputBlockProps) {
-    const { theme } = useTheme()
-
-    const { placeholderTextColor, value, style, ...restOfProps } = props
+function TextInputNumeric(props: TextInputProps) {
+    const { textAlign, keyboardType, ...restOfProps } = props
 
     return (
-        <View style={inputElementStyles[theme].inputGroup}>
-            {props.label && <Text style={inputElementStyles[theme].inputLabel}>{props.label}</Text>}
-            <TextInput
-                value={props.value || ''}
-                style={[inputStyles[theme].textInput, props.value && { fontWeight: '900' }, props.style]}
-                placeholderTextColor={theme === 'light' ? colors.white_500 : colors.white_600}
-                {...restOfProps}
-            />
-        </View>
-    )
-}
-
-export function TextInputNumeric(props: TextInputProps) {
-    const { theme } = useTheme()
-
-    const { placeholderTextColor, value, style, keyboardType, ...restOfProps } = props
-
-    return (
-        <TextInput
-            value={props.value || ''}
-            style={[inputStyles[theme].textInput, { width: '100%' }, props.value && { fontWeight: '900' }, props.style]}
+        <TextInputBase
+            style={{ width: '100%' }}
             textAlign='center'
             keyboardType="numeric"
-            placeholderTextColor={theme === 'light' ? colors.white_500 : colors.white_600}
             {...restOfProps}
         />
     )
 }
 
-export function TextInputMultiline(props: TextInputBlockProps) {
+interface TextInputBlockProps extends TextInputProps {
+    label: string
+}
+
+export function TextInputBlock(props: TextInputBlockProps) {
     const { theme } = useTheme()
 
-    const { placeholderTextColor, value, style, ...restOfProps } = props
+    const { label, ...restOfProps } = props
 
     return (
         <View style={inputElementStyles[theme].inputGroup}>
-            <Text style={inputElementStyles[theme].inputLabel}>{props.label}</Text>
-            <TextInput
-                value={value || ''}
-                style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput, props.value && { fontWeight: '900' }, props.style]}
-                multiline={true}
-                numberOfLines={4}
-                placeholderTextColor={theme === 'light' ? colors.white_500 : colors.white_600}
-                {...restOfProps}
-            />
+            {props.label && <Text style={inputElementStyles[theme].inputLabel}>{props.label}</Text>}
+            <TextInputBase {...restOfProps} />
         </View>
     )
 }
 
-TextInputBase.Block = TextInputBlock
+function TextInputMultiline(props: TextInputBlockProps) {
+    const { theme } = useTheme()
+
+    const { multiline, ...restOfProps } = props
+
+    return (
+        <TextInputBlock
+            style={inputStyles[theme].multilineTextInput}
+            multiline={true}
+            numberOfLines={4}
+            {...restOfProps}
+        />
+    )
+}
+
 TextInputBase.Numeric = TextInputNumeric
-TextInputBase.Multiline = TextInputMultiline
+
+TextInputBlock.Multiline = TextInputMultiline

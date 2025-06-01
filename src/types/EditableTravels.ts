@@ -43,8 +43,8 @@ interface EditableLap {
     id: number
     travel_id: number
     time: string
-    stop_id: number | null
-    note: string | null
+    stop_id: number | undefined
+    note: string | undefined
 }
 
 interface EditableTravelModalProp {
