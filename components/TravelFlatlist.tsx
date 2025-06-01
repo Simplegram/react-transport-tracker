@@ -72,7 +72,7 @@ export function EmptyHeaderComponent({ children }: PropsWithChildren) {
         }
     }, [])
 
-    const minMaxHeight = width < height ? height * 0.25 : 0
+    const minMaxHeight = width < height ? height * 0.3 : 0
     const minHeight = width < height ? height * 0.15 : 0
 
     return (
