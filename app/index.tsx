@@ -1,15 +1,16 @@
 import Button from '@/components/BaseButton'
+import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import { useSupabase } from '@/context/SupabaseContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useToggleLoading } from '@/hooks/useLoading'
 import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
-import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
+import { inputElementStyles } from '@/src/styles/InputStyles'
 import { statusBarStyles } from '@/src/styles/Styles'
 import { SupabaseClient } from '@supabase/supabase-js'
 import React, { useEffect, useState } from 'react'
-import { Alert, KeyboardAvoidingView, StatusBar, StyleSheet, Text, TextInput, View } from 'react-native'
+import { Alert, KeyboardAvoidingView, StatusBar, StyleSheet, Text, View } from 'react-native'
 
 const Login = () => {
     const {
@@ -34,21 +35,25 @@ const Login = () => {
         setSupabaseUrl(currentSupabaseUrl)
         setSupabaseAnonKey(currentSupabaseAnonKey)
 
-        try {
-            const { error } = await currentSupabaseClient.auth.signInWithPassword({
-                email,
-                password,
-            })
+        if (currentSupabaseClient) {
+            try {
+                const { error } = await currentSupabaseClient.auth.signInWithPassword({
+                    email,
+                    password,
+                })
 
-            if (error) Alert.alert(
-                error.name,
-                error.message
-            )
-        } catch (err: any) {
-            console.error("An unexpected error during sign-in:", err)
-            Alert.alert('Supabase URL or Anon Key missing', 'The Supabase client could not be initialized with missing Supabase URL or Anon Key')
-        } finally {
-            setLoading(false)
+                if (error) Alert.alert(
+                    error.name,
+                    error.message
+                )
+            } catch (err: any) {
+                console.error("An unexpected error during sign-in:", err)
+                Alert.alert('Supabase URL or Anon Key missing', 'The Supabase client could not be initialized with missing Supabase URL or Anon Key')
+            } finally {
+                setLoading(false)
+            }
+        } else {
+            return
         }
     }
 
@@ -77,52 +82,37 @@ const Login = () => {
                         <>
                             <Text style={styles[theme].header}>Transport Tracker</Text>
                             <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
-                                <View style={inputElementStyles[theme].inputGroup}>
-                                    <Text style={inputElementStyles[theme].inputLabel}>Supabase URL</Text>
-                                    <TextInput
-                                        autoCapitalize="none"
-                                        placeholder="https://my-example-brand.supabase.co"
-                                        placeholderTextColor={colors.placeholderGray}
-                                        value={currentSupabaseUrl}
-                                        onChangeText={setCurrentSupabaseUrl}
-                                        style={inputStyles[theme].textInput}
-                                        numberOfLines={1}
-                                    />
-                                </View>
-                                <View style={inputElementStyles[theme].inputGroup}>
-                                    <Text style={inputElementStyles[theme].inputLabel}>Supabase Anon Key</Text>
-                                    <TextInput
-                                        autoCapitalize="none"
-                                        placeholder="abcdefghijklmnopqrstuvwxyz1234567890"
-                                        placeholderTextColor={colors.placeholderGray}
-                                        value={currentSupabaseAnonKey}
-                                        onChangeText={setCurrentSupabaseAnonKey}
-                                        style={inputStyles[theme].textInput}
-                                        numberOfLines={1}
-                                    />
-                                </View>
-                                <View style={inputElementStyles[theme].inputGroup}>
-                                    <Text style={inputElementStyles[theme].inputLabel}>Supabase Account Email</Text>
-                                    <TextInput
-                                        autoCapitalize="none"
-                                        placeholder="john@doe.com"
-                                        placeholderTextColor={colors.placeholderGray}
-                                        value={email}
-                                        onChangeText={setEmail}
-                                        style={inputStyles[theme].textInput}
-                                    />
-                                </View>
-                                <View style={inputElementStyles[theme].inputGroup}>
-                                    <Text style={inputElementStyles[theme].inputLabel}>Supabase Account Password</Text>
-                                    <TextInput
-                                        placeholder="password"
-                                        placeholderTextColor={colors.placeholderGray}
-                                        value={password}
-                                        onChangeText={setPassword}
-                                        secureTextEntry
-                                        style={inputStyles[theme].textInput}
-                                    />
-                                </View>
+                                <TextInputBlock
+                                    label='Supabase URL'
+                                    autoCapitalize="none"
+                                    placeholder="https://my-example-brand.supabase.co"
+                                    value={currentSupabaseUrl}
+                                    onChangeText={setCurrentSupabaseUrl}
+                                    numberOfLines={1}
+                                />
+                                <TextInputBlock
+                                    label='Supabase Anon Key'
+                                    autoCapitalize="none"
+                                    placeholder="abcdefghijklmnopqrstuvwxyz1234567890"
+                                    value={currentSupabaseAnonKey}
+                                    onChangeText={setCurrentSupabaseAnonKey}
+                                    numberOfLines={1}
+                                />
+                                <TextInputBlock
+                                    label='Supabase Account Email'
+                                    autoCapitalize="none"
+                                    placeholder="john@doe.com"
+                                    value={email}
+                                    onChangeText={setEmail}
+                                />
+                                <TextInputBlock
+                                    label='Supabase Account Password'
+                                    autoCapitalize="none"
+                                    placeholder="password"
+                                    value={password}
+                                    onChangeText={setPassword}
+                                    secureTextEntry
+                                />
                             </View>
                             <Button onPress={onSignInPress} style={buttonStyles[theme].addButton} textStyle={{ color: '#fff' }}>Sign in</Button>
                         </>
