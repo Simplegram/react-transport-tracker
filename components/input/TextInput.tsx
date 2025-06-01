@@ -8,6 +8,21 @@ interface TextInputBlockProps extends Omit<TextInputProps, 'value'> {
     label: string
 }
 
+export default function TextInputBase(props: TextInputProps) {
+    const { theme } = useTheme()
+
+    const { placeholderTextColor, value, style, ...restOfProps } = props
+
+    return (
+        <TextInput
+            value={props.value || ''}
+            style={[inputStyles[theme].textInput, props.value && { fontWeight: '900' }, props.style]}
+            placeholderTextColor={theme === 'light' ? colors.white_500 : colors.white_600}
+            {...restOfProps}
+        />
+    )
+}
+
 export function TextInputBlock(props: TextInputBlockProps) {
     const { theme } = useTheme()
 
@@ -23,21 +38,6 @@ export function TextInputBlock(props: TextInputBlockProps) {
                 {...restOfProps}
             />
         </View>
-    )
-}
-
-export function TextInputBase(props: TextInputProps) {
-    const { theme } = useTheme()
-
-    const { placeholderTextColor, value, style, ...restOfProps } = props
-
-    return (
-        <TextInput
-            value={props.value || ''}
-            style={[inputStyles[theme].textInput, props.value && { fontWeight: '900' }, props.style]}
-            placeholderTextColor={theme === 'light' ? colors.white_500 : colors.white_600}
-            {...restOfProps}
-        />
     )
 }
 
@@ -57,3 +57,27 @@ export function TextInputNumeric(props: TextInputProps) {
         />
     )
 }
+
+export function TextInputMultiline(props: TextInputBlockProps) {
+    const { theme } = useTheme()
+
+    const { placeholderTextColor, value, style, ...restOfProps } = props
+
+    return (
+        <View style={inputElementStyles[theme].inputGroup}>
+            <Text style={inputElementStyles[theme].inputLabel}>{props.label}</Text>
+            <TextInput
+                value={value || ''}
+                style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput, props.value && { fontWeight: '900' }, props.style]}
+                multiline={true}
+                numberOfLines={4}
+                placeholderTextColor={theme === 'light' ? colors.white_500 : colors.white_600}
+                {...restOfProps}
+            />
+        </View>
+    )
+}
+
+TextInputBase.Block = TextInputBlock
+TextInputBase.Numeric = TextInputNumeric
+TextInputBase.Multiline = TextInputMultiline

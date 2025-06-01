@@ -1,7 +1,7 @@
 import Button from '@/components/BaseButton'
 import Divider from '@/components/Divider'
 import ModalButton from '@/components/input/ModalButton'
-import MultilineTextInput from '@/components/input/MultilineTextInput'
+import { TextInputMultiline } from '@/components/input/TextInput'
 import MapDisplay from '@/components/MapDisplay'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import { useTheme } from '@/context/ThemeContext'
@@ -141,7 +141,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 />
                             </View>
 
-                            <MultilineTextInput
+                            <TextInputMultiline
                                 label='Note:'
                                 value={lap.note}
                                 placeholder='Notes (optional)'

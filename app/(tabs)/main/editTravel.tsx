@@ -2,8 +2,7 @@ import Button from '@/components/BaseButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
 import ModalButton from '@/components/input/ModalButton'
-import MultilineTextInput from '@/components/input/MultilineTextInput'
-import { TextInputBlock } from '@/components/input/TextInput'
+import { TextInputBlock, TextInputMultiline } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal'
@@ -342,10 +341,10 @@ export default function EditTravelItem() {
                         <Divider />
 
                         <View style={inputElementStyles[theme].inputLargeGroup}>
-                            <MultilineTextInput
+                            <TextInputMultiline
                                 label='Notes:'
                                 value={travel.notes}
-                                placeholder='Enter notes (optional)'
+                                placeholder='Notes (optional)'
                                 onChangeText={(text) => handleChangeText('notes', text)}
                             />
                         </View>

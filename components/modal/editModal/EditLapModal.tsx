@@ -1,7 +1,7 @@
 import Button from '@/components/BaseButton'
 import Divider from '@/components/Divider'
 import ModalButton from '@/components/input/ModalButton'
-import MultilineTextInput from '@/components/input/MultilineTextInput'
+import { TextInputMultiline } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import { useTheme } from '@/context/ThemeContext'
@@ -113,7 +113,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             onPress={openModal}
                         />
 
-                        <MultilineTextInput
+                        <TextInputMultiline
                             label='Note:'
                             value={lap.note}
                             placeholder='Notes (optional)'
