@@ -1,38 +1,43 @@
-import Button from '@/components/BaseButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
+import DataButton from '@/components/datalist/DataButton'
 import Divider from '@/components/Divider'
 import { useDataEditContext } from '@/context/DataEditContext'
 import { useTheme } from '@/context/ThemeContext'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { router } from 'expo-router'
 import React from 'react'
-import { StyleSheet, View } from 'react-native'
+import { FlatList, StyleSheet, View } from 'react-native'
 
 interface ButtonConfig {
     id: string
-    text: string
+    label: string
+    iconName: string
 }
 
 const navigationButtons: ButtonConfig[] = [
     {
         id: 'Directions',
-        text: 'Manage directions',
+        label: 'Directions',
+        iconName: 'signs-post',
     },
     {
         id: 'Stops',
-        text: 'Manage stops',
+        label: 'Stops',
+        iconName: 'location-dot',
     },
     {
         id: 'Routes',
-        text: 'Manage routes',
-    },
-    {
-        id: 'VehicleTypes',
-        text: 'Manage vehicle types',
+        label: 'Routes',
+        iconName: 'route',
     },
     {
         id: 'Icons',
-        text: 'Manage icons',
+        label: 'Icons',
+        iconName: 'icons',
+    },
+    {
+        id: 'VehicleTypes',
+        label: 'Vehicle Types',
+        iconName: 'truck-plane',
     },
 ]
 
@@ -55,21 +60,25 @@ export default function NavigationPage() {
             <View style={styles.container}>
                 <View style={styles.fillingContainer} />
                 <View style={styles.buttonContainer}>
-                    {navigationButtons.map((button) => (
-                        <Button
-                            key={button.text}
-                            title={button.text}
-                            style={buttonStyles[theme].addButton}
-                            textStyle={buttonStyles[theme].addButtonText}
-                            onPress={() => handleItemPress(button.id)}
-                        />
-                    ))}
+                    <FlatList
+                        data={navigationButtons}
+                        numColumns={2}
+                        renderItem={({ item, index }) => (
+                            <DataButton
+                                key={item.id}
+                                label={item.label}
+                                iconName={item.iconName}
+                                onPress={() => handleItemPress(item.id)}
+                            />
+                        )}
+                        contentContainerStyle={{ gap: 8 }}
+                        columnWrapperStyle={{ gap: 8 }}
+                    />
                 </View>
                 <Divider />
-                <Button
-                    title={'Manage settings'}
-                    style={buttonStyles[theme].addButton}
-                    textStyle={buttonStyles[theme].addButtonText}
+                <DataButton
+                    label='Settings'
+                    iconName='gear'
                     onPress={() => router.push("manage/settings")}
                 />
             </View>

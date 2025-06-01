@@ -20,6 +20,7 @@ const white = {
     white_650: darkenHexColor(baseColor.white, 35),
     white_700: darkenHexColor(baseColor.white, 30),
     white_800: darkenHexColor(baseColor.white, 20),
+    white_900: darkenHexColor(baseColor.white, 10),
 }
 
 const primary = {
