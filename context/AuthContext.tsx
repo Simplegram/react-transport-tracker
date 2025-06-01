@@ -1,4 +1,5 @@
 import { useSupabase } from '@/context/SupabaseContext'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Session, User } from '@supabase/supabase-js'
 import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
 
@@ -37,7 +38,10 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
     }, [supabaseClient])
 
     const signOut = async () => {
-        if (supabaseClient) await supabaseClient.auth.signOut()
+        if (supabaseClient) {
+            AsyncStorage.clear()
+            await supabaseClient.auth.signOut()
+        }
     }
 
     const value = {
