@@ -11,7 +11,7 @@ const lightDatalistStyles = StyleSheet.create({
         backgroundColor: colors.white_100,
     },
     listContent: {
-        gap: 10,
+        gap: 8,
         flexGrow: 1,
     },
     addButtonContainer: {

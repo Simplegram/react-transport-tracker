@@ -1,4 +1,5 @@
 import Button from '@/components/BaseButton'
+import Divider from '@/components/Divider'
 import { TextInputBase } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import ModalTemplate from '@/components/ModalTemplate'
@@ -103,7 +104,14 @@ export default function DataListScreen() {
     }
 
     const renderItem = ({ item }: { item: ItemTemplate }) => (
-        <View style={ItemStyles[theme].itemContainer}>
+        <TouchableOpacity
+            style={[
+                ItemStyles[theme].itemContainer,
+                { flex: 1, justifyContent: 'space-between' }
+            ]}
+            activeOpacity={0.8}
+            onPress={() => handleModify(item)}
+        >
             <View style={ItemStyles[theme].textContainer}>
                 {dataType === "Stops" ? (
                     <>
@@ -119,17 +127,7 @@ export default function DataListScreen() {
                 ) : null}
                 <Text style={ItemStyles[theme].itemTitle}>{item.name}</Text>
             </View>
-            <View style={ItemStyles[theme].buttonContainer}>
-                <View style={ItemStyles[theme].fillerContainer}></View>
-                <TouchableOpacity
-                    style={ItemStyles[theme].modifyButton}
-                    onPress={() => handleModify(item)}
-                    activeOpacity={0.8}
-                >
-                    <Text style={ItemStyles[theme].modifyButtonText}>Modify</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+        </TouchableOpacity>
     )
 
     const ModalContentComponent = activeModalConfig?.content
@@ -152,11 +150,15 @@ export default function DataListScreen() {
                             renderItem={renderItem}
                             keyExtractor={item => item.id.toString()}
                             contentContainerStyle={DatalistStyles[theme].listContent}
+                            columnWrapperStyle={{ gap: 8 }}
                             keyboardShouldPersistTaps={'always'}
-                            ListHeaderComponent={!keyboardShown ? EmptyHeaderComponent : null}
-                            ListHeaderComponentStyle={!keyboardShown ? { flex: 1 } : {}}
+                            ListHeaderComponent={EmptyHeaderComponent}
+                            ListHeaderComponentStyle={{ flex: 1 }}
+                            numColumns={2}
                         />
                     )}
+
+                    <Divider />
 
                     <TextInputBase
                         value={searchQuery}
