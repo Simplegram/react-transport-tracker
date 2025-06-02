@@ -56,12 +56,12 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
     const colorAnimation = (toValue: number, easing: EasingFunction) => {
         Animated.timing(colorTransition, {
             toValue,
-            duration: 350,
+            duration: 225,
             easing,
             useNativeDriver: true,
         }).start()
     }
-    const colorValue = ballScale.interpolate({
+    const colorValue = colorTransition.interpolate({
         inputRange: [0, 1],
         outputRange: [hexToRgbA(trackBaseColor), hexToRgbA(trackEnabledColor)]
     })
@@ -70,8 +70,8 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
         const newValue = !isEnabled
         setIsEnabled(newValue)
 
-        ballMovingAnimation(newValue ? 1 : 0, Easing.bezier(0, .54, .47, .71))
         colorAnimation(newValue ? 1 : 0, Easing.bounce)
+        ballMovingAnimation(newValue ? 1 : 0, Easing.bezier(0, .54, .47, .71))
         enableVibration && Vibration.vibrate(5)
 
         onPress()
@@ -82,11 +82,12 @@ export default function CustomSwitch({ onPress, overrideIsEnabled }: SwitchProps
         ballScaleAnimation(newValue ? 1 : 0, Easing.bounce)
     }
 
+
     return (
         <TouchableOpacity
             style={[styles.switchContainer, { backgroundColor: colorValue }]}
             onPressIn={onPresssIn}
-            onPressOut={onChangeHandler}
+            onPress={onChangeHandler}
             activeOpacity={1}
         >
             <Animated.View
