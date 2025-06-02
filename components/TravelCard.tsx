@@ -1,12 +1,13 @@
 import { useTheme } from "@/context/ThemeContext"
+import { colors } from "@/src/const/color"
 import { travelCardStyles } from "@/src/styles/TravelListStyles"
 import { DataItemWithNewKey } from "@/src/utils/dataUtils"
 import { formatDate } from "@/src/utils/dateUtils"
 import { calculateDuration } from "@/src/utils/utils"
 import React from "react"
-import { Pressable, Text, View } from "react-native"
+import { Text, View } from "react-native"
 import { Gesture, GestureDetector } from "react-native-gesture-handler"
-import Animated, { interpolate, runOnJS, SharedValue, useAnimatedStyle } from "react-native-reanimated"
+import Animated, { interpolate, interpolateColor, runOnJS, SharedValue, useAnimatedStyle, useSharedValue, withDelay, withSequence, withTiming } from "react-native-reanimated"
 import Divider from "./Divider"
 
 interface TravelCardProps {
@@ -54,17 +55,36 @@ export default function TravelCard({ item, index, directionNameKey, activeIndex,
         }
     })
 
+    const borderColor = useSharedValue(0)
+    const cardStyles = useAnimatedStyle(() => {
+        return {
+            borderRadius: 8,
+            borderColor: interpolateColor(
+                borderColor.value,
+                [0, 1],
+                [travelCardStyles[theme].card.borderColor, theme === 'light' ? colors.primary : colors.primary_100]
+            ),
+            borderWidth: 1,
+        }
+    })
+
     const doubleTap = Gesture.Tap()
         .maxDuration(100)
         .numberOfTaps(2)
-        .onEnd(() => {
+        .onBegin(() => {
+            borderColor.value = withSequence(
+                withTiming(1, { duration: 100 }),
+                withDelay(50, withTiming(0, { duration: 100 }))
+            )
+        })
+        .onStart(() => {
             runOnJS(onPress)(directionNameKey, index)
         })
 
     return (
-        <Animated.View style={styles}>
+        <Animated.View style={[styles, cardStyles]}>
             <GestureDetector gesture={Gesture.Exclusive(doubleTap)}>
-                <Pressable
+                <Animated.View
                     key={item.id}
                     style={travelCardStyles[theme].card}
                 >
@@ -113,7 +133,7 @@ export default function TravelCard({ item, index, directionNameKey, activeIndex,
                             {item.notes || 'No notes'}
                         </Text>
                     </View>
-                </Pressable>
+                </Animated.View>
             </GestureDetector>
         </Animated.View>
     )
