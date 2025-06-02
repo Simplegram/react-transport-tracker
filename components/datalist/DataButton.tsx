@@ -25,7 +25,7 @@ export default function DataButton({ label, iconName, onPress }: DataButtonProps
     }
 
     const backgroundScale = useRef(new Animated.Value(0)).current
-    const backgrounScaleAnimation = (toValue: number, easing: EasingFunction) => {
+    const backgroundScaleAnimation = (toValue: number, easing: EasingFunction) => {
         Animated.timing(backgroundScale, {
             toValue,
             duration: 100,
@@ -36,12 +36,12 @@ export default function DataButton({ label, iconName, onPress }: DataButtonProps
 
     const onPressIn = () => {
         itemScaleAnimation(0.9, Easing.bounce)
-        backgrounScaleAnimation(1, Easing.bounce)
+        backgroundScaleAnimation(1, Easing.bounce)
     }
 
     const onPressOut = () => {
         itemScaleAnimation(1, Easing.bounce)
-        backgrounScaleAnimation(0, Easing.bounce)
+        backgroundScaleAnimation(0, Easing.bounce)
     }
 
     return (
