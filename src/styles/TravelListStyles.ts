@@ -13,6 +13,8 @@ const lightTravelCardStyles = StyleSheet.create({
         borderRadius: 8,
         borderWidth: 1,
         borderColor: '#000',
+        height: 300,
+        justifyContent: 'space-between',
     },
     routeInfoSection: {},
     routeText: {
