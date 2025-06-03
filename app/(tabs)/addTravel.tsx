@@ -321,6 +321,18 @@ export default function AddTravel() {
                         onPress={() => openLapsModal()}
                     />
                 </View>
+
+                <Divider />
+
+                <View style={buttonStyles[theme].buttonRow}>
+                    <Button
+                        title='Add Travel'
+                        color='#0284f5'
+                        onPress={handleOnSubmit}
+                        style={buttonStyles[theme].addButton}
+                        textStyle={buttonStyles[theme].addButtonText}
+                    />
+                </View>
             </View>
 
             <AddTravelLapsModal
@@ -357,16 +369,6 @@ export default function AddTravel() {
                 onSelect={handleStopSelect}
                 onClose={closeStopModal}
             />
-
-            <View style={buttonStyles[theme].buttonRow}>
-                <Button
-                    title='Add Travel'
-                    color='#0284f5'
-                    onPress={handleOnSubmit}
-                    style={buttonStyles[theme].addButton}
-                    textStyle={buttonStyles[theme].addButtonText}
-                />
-            </View>
         </CollapsibleHeaderPage>
     )
 }

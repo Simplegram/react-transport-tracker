@@ -7,7 +7,7 @@ const lightMainmenuStyles = StyleSheet.create({
         flexGrow: 1,
         justifyContent: 'center',
         paddingTop: 5,
-        paddingBottom: 10,
+        paddingBottom: 20,
         paddingHorizontal: 15,
         backgroundColor: colors.white_100,
     },
