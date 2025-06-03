@@ -6,7 +6,7 @@ const lightDatalistStyles = StyleSheet.create({
         gap: 10,
         flex: 1,
         paddingTop: 5,
-        paddingBottom: 10,
+        paddingBottom: 20,
         paddingHorizontal: 15,
         backgroundColor: colors.white_100,
     },
