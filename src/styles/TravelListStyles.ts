@@ -11,8 +11,9 @@ const lightTravelCardStyles = StyleSheet.create({
         padding: 12,
         backgroundColor: colors.white_100,
         borderRadius: 8,
-        borderWidth: 1,
         borderColor: '#000',
+        height: 300,
+        justifyContent: 'space-between',
     },
     routeInfoSection: {},
     routeText: {

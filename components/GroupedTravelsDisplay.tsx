@@ -3,7 +3,6 @@ import React from 'react'
 import PagerView from 'react-native-pager-view'
 import Divider from './Divider'
 
-import TravelFlatlist from '@/components/TravelFlatlist'
 import { useSettings } from '@/context/SettingsContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useTravelContext } from '@/context/TravelContext'
@@ -13,6 +12,9 @@ import { travelEmptyContainer } from '@/src/styles/TravelListStyles'
 import { DataItemWithNewKey, getKeysSortedByCreatedAt } from '@/src/utils/dataUtils'
 import { router } from 'expo-router'
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
+
+import TravelCards from './travelDetail/TravelCards'
+import { Header } from './TravelFlatlist'
 
 interface GroupedDataDisplayProps {
     data: Record<string, DataItemWithNewKey[]>
@@ -62,18 +64,17 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                 >
                     {directionNames.map((directionNameKey, index) => (
                         <View key={directionNameKey} style={[styles.pagerViewContentContainer, { borderColor: borderColor }]}>
+                            <Header
+                                index={index}
+                                directionNameKey={directionNameKey}
+                                directionNamesLength={directionNames.length}
+                                onPress={handleViewTravelDetails}
+                            />
                             <View key={directionNameKey} style={styles.cardCanvas}>
-                                <TravelFlatlist
-                                    items={finalGroupedData[directionNameKey]}
+                                <TravelCards
+                                    data={finalGroupedData[directionNameKey]}
+                                    directionNameKey={directionNameKey}
                                     onPress={handleItemPress}
-                                    refetch={refetch}
-                                    travelHeaderProps={{
-                                        directionNameKey: directionNameKey,
-                                        directionNamesLength: directionNames.length,
-                                        index: index,
-                                        theme: theme,
-                                        onPress: handleViewTravelDetails
-                                    }}
                                 />
                             </View>
                             {(directionNames.length > 1) && enableSwipeZone && (
@@ -102,8 +103,9 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                 >
                     <Text style={travelEmptyContainer[theme].noDataText}>No data available to display</Text>
                 </ScrollView>
-            )}
-        </View>
+            )
+            }
+        </View >
     )
 }
 
@@ -116,18 +118,11 @@ const styles = StyleSheet.create({
     },
     pagerViewContentContainer: {
         flex: 1,
-        paddingTop: 6,
-        paddingLeft: 10,
-        paddingBottom: 10,
-        paddingRight: 10,
-        borderWidth: 1,
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10,
+        overflow: 'hidden',
+        justifyContent: 'flex-end',
     },
     cardCanvas: {
-        flex: 7,
+        height: 315,
     },
     swipeZone: {
         flex: 1,
@@ -145,3 +140,26 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 })
+
+const lightTextStyles = StyleSheet.create({
+    title: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        color: '#2c3e50'
+    },
+})
+
+const textStyles = {
+    light: { ...lightTextStyles, label: lightTextStyles.title },
+    dark: StyleSheet.create({
+        title: {
+            ...lightTextStyles.title,
+            color: colors.white_300,
+        },
+        label: {
+            ...lightTextStyles.title,
+            color: colors.white_100,
+        },
+    })
+}

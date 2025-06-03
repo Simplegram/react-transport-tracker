@@ -1,56 +1,13 @@
-import { useLoading } from "@/hooks/useLoading"
+import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
-import { travelCardStyles } from "@/src/styles/TravelListStyles"
-import { DataItemWithNewKey } from "@/src/utils/dataUtils"
 import { PropsWithChildren, useEffect, useState } from "react"
-import { FlatList, Keyboard, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native"
-import LoadingScreen from "./LoadingScreen"
-import TravelCard from "./TravelCard"
+import { Keyboard, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native"
 
 interface TravelHeaderProps {
     index: number
     directionNameKey: string
     directionNamesLength: number
-    theme: 'light' | 'dark'
     onPress: (key: string) => void
-}
-
-interface TravelFlatlistProps {
-    items: DataItemWithNewKey[]
-    onPress: (directionNameKey: string, itemIndex: number) => void
-    refetch: () => void
-    travelHeaderProps: TravelHeaderProps
-}
-
-export default function TravelFlatlist({ items, onPress, refetch, travelHeaderProps }: TravelFlatlistProps) {
-    const {
-        loading
-    } = useLoading(150)
-
-    return (
-        <>
-            {loading ? (
-                <LoadingScreen />
-            ) : (
-                <FlatList
-                    refreshing={loading}
-                    onRefresh={refetch}
-                    data={items}
-                    renderItem={({ item, index }) => (
-                        <TravelCard
-                            item={item}
-                            index={index}
-                            directionNameKey={travelHeaderProps.directionNameKey}
-                            onPress={onPress}
-                        />
-                    )}
-                    contentContainerStyle={travelCardStyles[travelHeaderProps.theme].cardHolder}
-                    ListHeaderComponent={TravelFlatlistHeader({ ...travelHeaderProps, theme: travelHeaderProps.theme })}
-                    ListHeaderComponentStyle={{ flex: 1 }}
-                />
-            )}
-        </>
-    )
 }
 
 export function EmptyHeaderComponent({ children }: PropsWithChildren) {
@@ -87,28 +44,28 @@ export function EmptyHeaderComponent({ children }: PropsWithChildren) {
     )
 }
 
-export function TravelFlatlistHeader({ index, directionNameKey, directionNamesLength, theme, onPress }: TravelHeaderProps) {
+export function Header({ index, directionNameKey, directionNamesLength, onPress }: TravelHeaderProps) {
+    const { theme } = useTheme()
+
     return (
-        <EmptyHeaderComponent>
-            <Pressable
-                onPress={() => onPress(directionNameKey)}
-                style={{
-                    gap: 5,
-                    flex: 1,
-                    width: '100%',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                }}
-            >
-                <Text style={styles[theme].title}>
-                    Direction ({index + 1}/{directionNamesLength}):
-                </Text>
-                <Text style={styles[theme].label}>
-                    {directionNameKey}
-                </Text>
-            </Pressable>
-        </EmptyHeaderComponent>
+        <Pressable
+            onPress={() => onPress(directionNameKey)}
+            style={{
+                gap: 5,
+                paddingVertical: 20,
+                width: '100%',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}
+        >
+            <Text style={styles[theme].title}>
+                Direction ({index + 1}/{directionNamesLength}):
+            </Text>
+            <Text style={styles[theme].label}>
+                {directionNameKey}
+            </Text>
+        </Pressable>
     )
 }
 
