@@ -40,6 +40,7 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
                         markedDates={markedDates}
                         onDayPress={modalElements.onSelect}
                         theme={calendarTheme[theme]}
+                        contentContainerStyle={{ paddingBottom: 45 }}
                     />
                     <TouchableOpacity
                         style={calendarStyles[theme].todayButton}
