@@ -53,8 +53,8 @@ export const calendarTheme = {
     dark: {
         ...lightCalendarTheme,
         calendarBackground: '#000',
-        dayTextColor: colors.white_400,
-        monthTextColor: colors.white_400,
+        dayTextColor: colors.white_200,
+        monthTextColor: colors.white_100,
     },
 }
 
