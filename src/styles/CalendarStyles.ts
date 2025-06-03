@@ -16,7 +16,7 @@ const lightCalendarStyles = StyleSheet.create({
     },
     todayButton: {
         position: 'absolute',
-        bottom: 35,
+        bottom: 20,
         left: '50%',
         transform: [{ translateX: -50 }],
         backgroundColor: '#007bff',
