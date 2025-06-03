@@ -30,7 +30,7 @@ Based on my personal experience as a former public transport commuter. I used to
   - react-native-calendars
 - **Other Utilities:**
   - expo-crypto (for generating UUID)
-  - react-native-keyboard-aware-scroll-view (for keyboard handling)
+  - react-native-keyboard-aware-scroll-view (for handling view autoscroll)
   - react-native-gesture-handler (core for touch/gesture handling)
 
 ## Get Started
@@ -45,7 +45,7 @@ This app uses Expo SDK 52.
 2. Start the app
 
     ```bash
-     npx expo start
+    npx expo start
     ```
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
