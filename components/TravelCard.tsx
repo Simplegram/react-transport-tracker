@@ -34,14 +34,14 @@ export default function TravelCard({ item, index, directionNameKey, activeIndex,
             opacity: interpolate(
                 activeIndex.value,
                 [index - 1, index, index + 1],
-                [1 - 1 / 3, 1, 1 - 1 / 2]
+                [1 - 1 / 3, 1, 1 - 1 / 3]
             ),
             transform: [
                 {
                     translateY: interpolate(
                         activeIndex.value,
                         [index - 1, index, index + 1],
-                        [1.5 * travelCardStyles[theme].card.gap, 1, -1.1 * travelCardStyles[theme].card.gap]
+                        [travelCardStyles[theme].card.gap, (totalLength > 1) ? -5 : 0, -2 * travelCardStyles[theme].card.gap]
                     )
                 },
                 {

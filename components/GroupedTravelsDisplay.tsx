@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
         flex: 1,
         paddingLeft: 10,
         paddingRight: 10,
-        paddingBottom: 5,
         borderWidth: 1,
         borderTopLeftRadius: 12,
         borderTopRightRadius: 12,

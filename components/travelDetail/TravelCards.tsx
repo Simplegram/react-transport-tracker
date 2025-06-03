@@ -6,7 +6,6 @@ import { View } from "react-native" // Import Dimensions
 import { Directions, Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler"
 import { useSharedValue, withTiming } from "react-native-reanimated"
 import TravelCard from "../TravelCard"
-import { Text } from "react-native"
 
 interface TravelCardsProps {
     data: DataItemWithNewKey[]
