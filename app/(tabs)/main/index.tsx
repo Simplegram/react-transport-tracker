@@ -1,7 +1,7 @@
 import Button from "@/components/BaseButton"
-import GroupedDataDisplay from "@/components/GroupedTravelsDisplay"
 import LoadingScreen from "@/components/LoadingScreen"
 import CalendarModal from "@/components/modal/CalendarModal"
+import GroupedDataDisplay from "@/components/travel/GroupedTravelsDisplay"
 import { useSupabase } from "@/context/SupabaseContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"

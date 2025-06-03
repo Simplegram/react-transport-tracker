@@ -1,7 +1,7 @@
 import AnnotationContent from '@/components/AnnotationContent'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import LoadingScreen from '@/components/LoadingScreen'
-import IndividualTravelDetailCard from '@/components/travelDetail/IndividualTravelDetailCard'
+import IndividualTravelDetailCard from '@/components/travel/IndividualTravelDetailCard'
 import { useTheme } from '@/context/ThemeContext'
 import { useTravelContext } from '@/context/TravelContext'
 import useGetTravelData from '@/hooks/useGetTravelData'

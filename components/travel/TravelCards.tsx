@@ -1,11 +1,11 @@
 import { useTheme } from "@/context/ThemeContext"
 import { travelCardStyles } from "@/src/styles/TravelListStyles"
 import { DataItemWithNewKey } from "@/src/utils/dataUtils"
-import React from "react" // Import useEffect and useState
-import { View } from "react-native" // Import Dimensions
+import React from "react"
+import { View } from "react-native"
 import { Directions, Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler"
 import { useSharedValue, withTiming } from "react-native-reanimated"
-import TravelCard from "../TravelCard"
+import TravelCard from "./TravelCard"
 
 interface TravelCardsProps {
     data: DataItemWithNewKey[]

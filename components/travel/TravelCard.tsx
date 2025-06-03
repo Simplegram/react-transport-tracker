@@ -8,7 +8,7 @@ import React from "react"
 import { Text, View } from "react-native"
 import { Gesture, GestureDetector } from "react-native-gesture-handler"
 import Animated, { interpolate, interpolateColor, runOnJS, SharedValue, useAnimatedStyle, useSharedValue, withDelay, withSequence, withTiming } from "react-native-reanimated"
-import Divider from "./Divider"
+import Divider from "../Divider"
 
 interface TravelCardProps {
     item: DataItemWithNewKey

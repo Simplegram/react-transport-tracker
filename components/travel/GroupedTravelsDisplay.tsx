@@ -1,7 +1,7 @@
 import moment from 'moment'
 import React from 'react'
 import PagerView from 'react-native-pager-view'
-import Divider from './Divider'
+import Divider from '../Divider'
 
 import { useSettings } from '@/context/SettingsContext'
 import { useTheme } from '@/context/ThemeContext'
@@ -13,7 +13,7 @@ import { DataItemWithNewKey, getKeysSortedByCreatedAt } from '@/src/utils/dataUt
 import { router } from 'expo-router'
 import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
 
-import TravelCards from './travelDetail/TravelCards'
+import TravelCards from './TravelCards'
 import { Header } from './TravelFlatlist'
 
 interface GroupedDataDisplayProps {

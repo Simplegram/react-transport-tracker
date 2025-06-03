@@ -1,7 +1,7 @@
 import Button from "@/components/BaseButton"
 import CollapsibleHeaderPage from "@/components/CollapsibleHeaderPage"
 import Divider from "@/components/Divider"
-import Switcher from "@/components/Switcher"
+import Switcher from "@/components/input/Switcher"
 import { useAuth } from "@/context/AuthContext"
 import { useSettings } from "@/context/SettingsContext"
 import { useTheme } from "@/context/ThemeContext"
