@@ -42,12 +42,32 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
                         theme={calendarTheme[theme]}
                         contentContainerStyle={{ paddingBottom: 30 }}
                     />
-                    <TouchableOpacity
-                        style={calendarStyles[theme].todayButton}
-                        onPress={() => modalElements.onSelect({ dateString: currentDate })}
-                    >
-                        <Text style={calendarStyles[theme].todayButtonText}>Set Today</Text>
-                    </TouchableOpacity>
+                    <View style={{
+                        position: 'absolute',
+                        bottom: 20,
+                        left: 0,
+                        right: 0,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        zIndex: 1,
+                        flexDirection: 'row',
+                        gap: 5
+                    }}>
+                        <TouchableOpacity
+                            activeOpacity={0.8}
+                            style={calendarStyles[theme].todayButton}
+                            onPress={() => modalElements.onSelect({ dateString: currentDate })}
+                        >
+                            <Text style={calendarStyles[theme].todayButtonText}>Set Today</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={0.8}
+                            style={calendarStyles[theme].cancelButton}
+                            onPress={modalElements.onClose}
+                        >
+                            <Text style={calendarStyles[theme].todayButtonText}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </Modal>

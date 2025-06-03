@@ -15,16 +15,11 @@ const lightCalendarStyles = StyleSheet.create({
         position: 'relative',
     },
     todayButton: {
-        position: 'absolute',
-        bottom: 20,
-        left: '50%',
-        transform: [{ translateX: -50 }],
         backgroundColor: '#007bff',
         paddingVertical: 10,
         paddingHorizontal: 15,
         borderRadius: 8,
         borderWidth: 1,
-        zIndex: 1,
     },
     todayButtonText: {
         color: colors.white,
@@ -59,7 +54,14 @@ export const calendarTheme = {
 }
 
 export const calendarStyles = {
-    light: { ...lightCalendarStyles },
+    light: {
+        ...lightCalendarStyles,
+        ...StyleSheet.create({
+            cancelButton: {
+                ...lightCalendarStyles.todayButton,
+            }
+        })
+    },
     dark: StyleSheet.create({
         modalBackdrop: {
             ...lightCalendarStyles.modalBackdrop,
@@ -67,6 +69,11 @@ export const calendarStyles = {
         calendarContainer: {
             ...lightCalendarStyles.calendarContainer,
             color: colors.black,
+        },
+        cancelButton: {
+            ...lightCalendarStyles.todayButton,
+            borderColor: colors.white_400,
+            backgroundColor: colors.black,
         },
         todayButton: {
             ...lightCalendarStyles.todayButton,
