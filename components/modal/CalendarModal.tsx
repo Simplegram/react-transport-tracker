@@ -61,7 +61,7 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
                             <Text style={calendarStyles[theme].todayButtonText}>Set Today</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            activeOpacity={0.8}
+                            activeOpacity={theme === 'light' ? 0.5 : 0.8}
                             style={calendarStyles[theme].cancelButton}
                             onPress={modalElements.onClose}
                         >
