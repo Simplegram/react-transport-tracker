@@ -37,7 +37,7 @@ export const getMonthsSinceEarliestDate = (dates: string[], selectedDate: string
     return monthsDifference
 }
 
-export const getFutureMonthFromLatestDate = (selectedDate: string, offset: number = 1): number => {
+export const getFutureMonthFromLatestDate = (selectedDate: string, offset: number = 0): number => {
     const today = moment(getDateString())
     let latestDate = moment(selectedDate)
 
