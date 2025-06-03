@@ -118,13 +118,6 @@ const styles = StyleSheet.create({
     },
     pagerViewContentContainer: {
         flex: 1,
-        paddingLeft: 10,
-        paddingRight: 10,
-        borderWidth: 1,
-        borderTopLeftRadius: 12,
-        borderTopRightRadius: 12,
-        borderBottomLeftRadius: 10,
-        borderBottomRightRadius: 10,
         overflow: 'hidden',
         justifyContent: 'flex-end',
     },
