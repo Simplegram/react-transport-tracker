@@ -77,7 +77,7 @@ export const buttonStyles = {
         },
         cancelButtonText: {
             ...lightButtonStyles.cancelButtonText,
-            color: colors.white_300,
+            color: colors.white_100,
         },
         redButton: {
             ...lightButtonStyles.redButton,

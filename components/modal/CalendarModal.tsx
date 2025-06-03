@@ -1,4 +1,5 @@
 import { useTheme } from "@/context/ThemeContext"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { calendarStyles, calendarTheme } from "@/src/styles/CalendarStyles"
 import { StandaloneModalProp } from "@/src/types/AddableTravels"
 import { getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils"
@@ -65,7 +66,7 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
                             style={calendarStyles[theme].cancelButton}
                             onPress={modalElements.onClose}
                         >
-                            <Text style={calendarStyles[theme].todayButtonText}>Close</Text>
+                            <Text style={buttonStyles[theme].cancelButtonText}>Close</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
