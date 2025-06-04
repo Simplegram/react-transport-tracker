@@ -45,10 +45,9 @@ export default function TravelDetail() {
         refetchTravelData,
     } = useGetTravelData()
 
-    const { averageTime, getTravelTime } = useTravelDetail()
+    const { travelTimes, getAllTravelTimes } = useTravelDetail()
 
     const [dataToUse, setDataToUse] = useState<DataItem[]>([])
-    const [travelTimes, setTravelTimes] = useState<TravelTimeData>()
     const [type, setType] = useState<'best' | 'average' | 'worst'>('average')
 
     if (!selectedTravelItems) {
@@ -63,29 +62,15 @@ export default function TravelDetail() {
         const allLaps = selectedTravelItems.map(travel => travel.id)
         getTravelLaps(allLaps)
 
-        const time = async () => {
-            for (const travelItem of selectedTravelItems) {
-                const route_id = travelItem.routes.id
-                const direction_id = travelItem.directions.id
-                const first_stop_id = travelItem.first_stop_id.id
-                const last_stop_id = travelItem.last_stop_id.id
-
-                await getTravelTime(route_id, direction_id, first_stop_id, last_stop_id).then(
-                    data => setTravelTimes(
-                        prevTravelTimes => (
-                            {
-                                ...prevTravelTimes,
-                                [travelItem.routes.id]: {
-                                    ...data
-                                }
-                            }
-                        )
-                    )
-                )
+        const inputItems = selectedTravelItems.map((travelItem) => {
+            return {
+                routeId: travelItem.routes.id,
+                directionId: travelItem.directions.id,
+                startStopId: travelItem.first_stop_id.id,
+                endStopId: travelItem.last_stop_id.id
             }
-        }
-
-        time()
+        })
+        getAllTravelTimes(inputItems)
     }, [selectedTravelItems])
 
     useFocusEffect(
@@ -101,6 +86,10 @@ export default function TravelDetail() {
         React.useCallback(() => {
             setDataToUse(selectedTravelItems)
         }, [selectedTravelItems])
+    )
+    
+    if (!travelTimes) return (
+        <LoadingScreen />
     )
 
     const sortedData = [...dataToUse].sort((a, b) => {
@@ -176,13 +165,10 @@ export default function TravelDetail() {
 
     const centerLatLon = getSimpleCentroid(validCoords)
 
-    if (!travelTimes) return (
-        <LoadingScreen />
-    )
-
     const averageTravelTimes = Object.values(travelTimes).map(
         (timeData) => timeData[typeIndex[type]]
     )
+
     const extractedTimes = Object.keys(travelTimes).reduce((acc, routeId) => {
         const timeData = travelTimes[routeId]
         const selectedTime = timeData[typeIndex[type]]
@@ -191,6 +177,7 @@ export default function TravelDetail() {
 
         return acc
     }, {} as { [key: string]: any })
+
     let averageRouteDurationMilliseconds = sumTimesToMs(averageTravelTimes)
     let totalOnRoadMilliseconds = 0
     let sumInitialStopDurationMilliseconds = 0
