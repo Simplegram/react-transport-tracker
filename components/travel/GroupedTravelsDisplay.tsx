@@ -140,26 +140,3 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 })
-
-const lightTextStyles = StyleSheet.create({
-    title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        color: '#2c3e50'
-    },
-})
-
-const textStyles = {
-    light: { ...lightTextStyles, label: lightTextStyles.title },
-    dark: StyleSheet.create({
-        title: {
-            ...lightTextStyles.title,
-            color: colors.white_300,
-        },
-        label: {
-            ...lightTextStyles.title,
-            color: colors.white_100,
-        },
-    })
-}
