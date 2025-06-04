@@ -143,7 +143,7 @@ export default function EstimationPage() {
                     </View>
                 </View>
             </View>
-            <View style={inputElementStyles[theme].inputContainer}>
+            <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
                 <View style={inputElementStyles[theme].inputLargeGroup}>
                     <ModalButtonBlock
                         label='Route:'

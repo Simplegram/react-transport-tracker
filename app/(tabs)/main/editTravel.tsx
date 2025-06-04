@@ -246,7 +246,7 @@ export default function EditTravelItem() {
                 <LoadingScreen />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
+                    <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
                         <View style={inputElementStyles[theme].inputLargeGroup}>
                             <ModalButtonBlock
                                 label='Bus Initial Arrival:'
