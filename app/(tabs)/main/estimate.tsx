@@ -1,21 +1,23 @@
 import Button from "@/components/BaseButton"
+import Divider from "@/components/Divider"
 import ModalButton from "@/components/input/ModalButton"
 import EditTravelDirectionModal from "@/components/modal/travelModal/EditTravelDirectionModal"
 import EditTravelRouteModal from "@/components/modal/travelModal/EditTravelRouteModal"
 import EditTravelStopModal from "@/components/modal/travelModal/EditTravelStopModal"
+import { JustifiedLabelValue } from "@/components/travel/IndividualTravelDetailCard"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import useModalHandler from "@/hooks/useModalHandler"
 import useTravelDetail from "@/hooks/useTravelDetail"
 import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
 import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
 import { addTime, getTimeString, timeToMinutes } from "@/src/utils/dateUtils"
 import { useFocusEffect } from "expo-router"
-import React, { useState } from "react"
-import { Pressable, Text, TouchableOpacity, View } from "react-native"
+import React, { useEffect, useState } from "react"
+import { Text, TouchableOpacity, View } from "react-native"
 
 interface TravelTimeInput {
     route_id: number | undefined
@@ -94,6 +96,15 @@ export default function EstimationPage() {
         estimate_type: 'average'
     })
 
+    const [currentTime, setCurrentTime] = useState<string>(getTimeString())
+    const [selectedTime, setSelectedTime] = useState<string | undefined>(undefined)
+
+    useEffect(() => {
+        setInterval(() => {
+            setCurrentTime(getTimeString())
+        }, 1000)
+    }, [])
+
     useFocusEffect(
         React.useCallback(() => {
             if (averageTime) {
@@ -121,35 +132,38 @@ export default function EstimationPage() {
     }
 
     const handleOnSubmit = async () => {
+        setSelectedTime(currentTime)
         if (input.route_id && input.direction_id && input.first_stop_id && input.last_stop_id) {
             await getTravelTime(input.route_id, input.direction_id, input.first_stop_id, input.last_stop_id)
         }
     }
 
     const route = routes.find(item => item.id === input.route_id)
-    const tripIdentifier = `${route && route.code} | ${route && route.name}`
+    const tripIdentifier = route ? `${route && route.code} | ${route && route.name}` : 'East to West'
 
     const first_stop = stops.find(stop => stop.id === input.first_stop_id)
     const last_stop = stops.find(stop => stop.id === input.last_stop_id)
-    const stopString = `${first_stop && first_stop.name} to ${last_stop && last_stop.name}`
+    const stopString = `${first_stop ? first_stop.name : 'Start'} to ${last_stop ? last_stop.name : 'End'}`
 
     return (
         <View style={mainMenuStyles[theme].container}>
-            <View style={{
-                flex: 1,
-            }}>
+            <View style={{ flex: 1, gap: 10 }}>
+                <View style={travelDetailStyles[theme].detailRow}>
+                    <JustifiedLabelValue label="Current Time:" value={currentTime} />
+                </View>
                 <View style={travelDetailStyles[theme].detailRow}>
                     <Text style={travelDetailStyles[theme].specialValue}>{tripIdentifier}</Text>
                     <Text style={travelDetailStyles[theme].valueText}>{stopString}</Text>
-                </View>
-                <View style={travelDetailStyles[theme].detailRow}>
-                    <Text style={travelDetailStyles[theme].specialValue}>{`Current Time: ${getTimeString()}`}</Text>
-                </View>
-                <View style={travelDetailStyles[theme].detailRow}>
-                    <Text style={travelDetailStyles[theme].specialValue}>{`Route Average: ${travelTimes === 'Invalid date' ? 'not found' : travelTimes}`}</Text>
-                </View>
-                <View style={travelDetailStyles[theme].detailRow}>
-                    <Text style={travelDetailStyles[theme].specialValue}>{`Estimated Arrival: ${travelTimes && addTime(travelTimes)}`}</Text>
+                    <Divider />
+                    <JustifiedLabelValue label="Route Average:" value={((travelTimes === 'Invalid date') || typeof travelTimes === 'undefined') ? '-' : travelTimes} />
+                    <Divider />
+                    <View style={{
+                        alignItems: 'center',
+                        paddingVertical: 10,
+                    }}>
+                        <JustifiedLabelValue label="Start at:" value={travelTimes ? `${selectedTime}` : '-'} />
+                        <JustifiedLabelValue label="Arrive at:" value={travelTimes ? `${addTime(travelTimes, selectedTime)}` : '-'} />
+                    </View>
                 </View>
             </View>
             <View style={inputElementStyles[theme].inputContainer}>

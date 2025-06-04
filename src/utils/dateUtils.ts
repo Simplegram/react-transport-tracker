@@ -55,8 +55,8 @@ export const timeToMinutes = (averageTime: number | string) => {
     return stringTime
 }
 
-export const addTime = (time: string) => {
-    const today = moment(getCurrentTime())
+export const addTime = (time: string, initial_time?: string) => {
+    const today = initial_time ? moment(initial_time, "HH:mm:ss") : moment(getCurrentTime())
     const momentTime = moment(time, "HH:mm:ss")
 
     const addedTime = today.add(momentTime.hours(), 'hours').add(momentTime.minutes(), 'minutes').add(momentTime.seconds(), 'seconds')

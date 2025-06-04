@@ -76,3 +76,19 @@ export default function IndividualTravelDetailCard({ travel, travelTime }: Trave
         )
     }
 }
+
+interface LabelValueProps {
+    label: string
+    value: string
+}
+
+export function JustifiedLabelValue({ label, value }: LabelValueProps) {
+    const { theme } = useTheme()
+
+    return (
+        <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
+            <Text style={travelDetailStyles[theme].valueText}>{label}</Text>
+            <Text style={travelDetailStyles[theme].valueText}>{value}</Text>
+        </View>
+    )
+}
