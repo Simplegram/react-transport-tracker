@@ -53,6 +53,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
 
     const borderColor = theme === 'light' ? colors.black : colors.white_300
     const dateLabelColor = theme === 'light' ? '#2c3e50' : colors.white_100
+    const selectedDateColor = theme === 'light' ? '#2c3e50' : colors.white_300
 
     const styles = StyleSheet.create({
         mainContainer: {
@@ -140,7 +141,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                     alignItems: 'center',
                                     paddingBottom: 18,
                                 }}>
-                                    <Text style={styles.groupTitle}>
+                                    <Text style={[styles.groupTitle, { color: selectedDateColor }]}>
                                         {moment(currentDate).format('LL')}
                                     </Text>
                                     <Header

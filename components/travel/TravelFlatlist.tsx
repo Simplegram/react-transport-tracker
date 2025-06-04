@@ -61,7 +61,7 @@ export function Header({ index, directionNameKey, directionNamesLength, onPress 
             <Text style={styles[theme].title}>
                 Direction ({index + 1}/{directionNamesLength}):
             </Text>
-            <Text style={styles[theme].label}>
+            <Text style={styles[theme].title}>
                 {directionNameKey}
             </Text>
         </Pressable>
