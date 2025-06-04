@@ -1,6 +1,8 @@
 import { useTheme } from "@/context/ThemeContext"
+import { colors } from "@/src/const/color"
 import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
-import { Pressable, StyleProp, Text, View, ViewStyle } from "react-native"
+import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
+import { Pressable, StyleProp, Text, TouchableOpacity, View, ViewStyle } from "react-native"
 import HighlightedText from "../HighlightedText"
 
 interface ModalButtonProps {
@@ -41,5 +43,37 @@ export function AModalButton({ condition, value, style, onPress }: ModalButtonPr
                 {value}
             </HighlightedText>
         </Pressable>
+    )
+}
+
+interface TypeButtonProps {
+    onPress: () => void
+    label: React.ReactNode
+    typeSelected: boolean
+}
+
+export function TypeButton({ label, onPress, typeSelected }: TypeButtonProps) {
+    const { theme } = useTheme()
+
+    return (
+        <TouchableOpacity
+            activeOpacity={0.7}
+            style={[
+                travelDetailStyles[theme].detailRow,
+                {
+                    flex: 1,
+                    alignItems: 'center',
+                    borderColor: colors.white_500
+                },
+                typeSelected && { borderColor: colors.white_200 }
+            ]}
+            onPress={onPress}
+        >
+            <Text style={[
+                inputElementStyles[theme].inputLabel,
+                { color: colors.white_500 },
+                typeSelected && { color: theme === 'light' ? colors.white : colors.white_200 }
+            ]}>{label}</Text>
+        </TouchableOpacity>
     )
 }

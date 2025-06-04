@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton"
 import Divider from "@/components/Divider"
-import ModalButton from "@/components/input/ModalButton"
+import ModalButton, { TypeButton } from "@/components/input/ModalButton"
 import EditTravelDirectionModal from "@/components/modal/travelModal/EditTravelDirectionModal"
 import EditTravelRouteModal from "@/components/modal/travelModal/EditTravelRouteModal"
 import EditTravelStopModal from "@/components/modal/travelModal/EditTravelStopModal"
@@ -9,7 +9,6 @@ import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import useModalHandler from "@/hooks/useModalHandler"
 import useTravelDetail from "@/hooks/useTravelDetail"
-import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { inputElementStyles } from "@/src/styles/InputStyles"
 import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
@@ -17,7 +16,7 @@ import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
 import { addTime, getTimeString, timeToMinutes } from "@/src/utils/dateUtils"
 import { useFocusEffect } from "expo-router"
 import React, { useEffect, useState } from "react"
-import { Text, TouchableOpacity, View } from "react-native"
+import { Text, View } from "react-native"
 
 interface TravelTimeInput {
     route_id: number | undefined
@@ -25,28 +24,6 @@ interface TravelTimeInput {
     first_stop_id: number | undefined
     last_stop_id: number | undefined
     estimate_type: 'best' | 'average' | 'worst'
-}
-
-interface TypeButtonProps {
-    onPress: () => void
-    children: React.ReactNode
-}
-
-export function TypeButton({ onPress, children }: TypeButtonProps) {
-    const { theme } = useTheme()
-
-    return (
-        <TouchableOpacity
-            activeOpacity={0.7}
-            style={[
-                travelDetailStyles[theme].detailRow,
-                { flex: 1, alignItems: 'center' }
-            ]}
-            onPress={onPress}
-        >
-            {children}
-        </TouchableOpacity>
-    )
 }
 
 const typeIndex = {
@@ -200,24 +177,20 @@ export default function EstimationPage() {
                         <Text style={inputElementStyles[theme].inputLabel}>Estimate Type:</Text>
                         <View style={{ gap: 10, flexDirection: 'row' }}>
                             <TypeButton
-                                onPress={() => setInput({ ...input, estimate_type: 'best' })}>
-                                <Text style={[
-                                    inputElementStyles[theme].inputLabel,
-                                    input.estimate_type === 'best' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
-                                ]}>Best</Text>
-                            </TypeButton>
-                            <TypeButton onPress={() => setInput({ ...input, estimate_type: 'average' })}>
-                                <Text style={[
-                                    inputElementStyles[theme].inputLabel,
-                                    input.estimate_type === 'average' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
-                                ]}>Average</Text>
-                            </TypeButton>
-                            <TypeButton onPress={() => setInput({ ...input, estimate_type: 'worst' })}>
-                                <Text style={[
-                                    inputElementStyles[theme].inputLabel,
-                                    input.estimate_type === 'worst' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
-                                ]}>Worst</Text>
-                            </TypeButton>
+                                label='Best'
+                                onPress={() => setInput({ ...input, estimate_type: 'best' })}
+                                typeSelected={input.estimate_type === 'best'}
+                            />
+                            <TypeButton
+                                label='Average'
+                                onPress={() => setInput({ ...input, estimate_type: 'average' })}
+                                typeSelected={input.estimate_type === 'average'}
+                            />
+                            <TypeButton
+                                label='Worst'
+                                onPress={() => setInput({ ...input, estimate_type: 'worst' })}
+                                typeSelected={input.estimate_type === 'worst'}
+                            />
                         </View>
                     </View>
                 </View>
