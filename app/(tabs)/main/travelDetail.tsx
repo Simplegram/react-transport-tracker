@@ -10,7 +10,7 @@ import useTravelDetail from '@/hooks/useTravelDetail'
 import { colors } from '@/src/const/color'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
-import { AverageTimes, DataItem, Stop } from '@/src/types/Travels'
+import { DataItem, Stop, TravelTimeData } from '@/src/types/Travels'
 import { formatMsToMinutes, sumTimesToMs } from '@/src/utils/dateUtils'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
@@ -48,7 +48,7 @@ export default function TravelDetail() {
     const { averageTime, getTravelTime } = useTravelDetail()
 
     const [dataToUse, setDataToUse] = useState<DataItem[]>([])
-    const [travelTimes, setTravelTimes] = useState<AverageTimes[]>([])
+    const [travelTimes, setTravelTimes] = useState<TravelTimeData>()
     const [type, setType] = useState<'best' | 'average' | 'worst'>('average')
 
     if (!selectedTravelItems) {
@@ -63,8 +63,6 @@ export default function TravelDetail() {
         const allLaps = selectedTravelItems.map(travel => travel.id)
         getTravelLaps(allLaps)
 
-        setTravelTimes([])
-
         const time = async () => {
             for (const travelItem of selectedTravelItems) {
                 const route_id = travelItem.routes.id
@@ -72,18 +70,23 @@ export default function TravelDetail() {
                 const first_stop_id = travelItem.first_stop_id.id
                 const last_stop_id = travelItem.last_stop_id.id
 
-                await getTravelTime(route_id, direction_id, first_stop_id, last_stop_id)
+                await getTravelTime(route_id, direction_id, first_stop_id, last_stop_id).then(
+                    data => setTravelTimes(
+                        prevTravelTimes => (
+                            {
+                                ...prevTravelTimes,
+                                [travelItem.routes.id]: {
+                                    ...data
+                                }
+                            }
+                        )
+                    )
+                )
             }
         }
 
         time()
     }, [selectedTravelItems])
-
-    useEffect(() => {
-        if (averageTime !== undefined) {
-            setTravelTimes([...travelTimes, averageTime])
-        }
-    }, [averageTime])
 
     useFocusEffect(
         React.useCallback(() => {
@@ -173,7 +176,21 @@ export default function TravelDetail() {
 
     const centerLatLon = getSimpleCentroid(validCoords)
 
-    const averageTravelTimes = travelTimes.map(time => time[typeIndex[type]])
+    if (!travelTimes) return (
+        <LoadingScreen />
+    )
+
+    const averageTravelTimes = Object.values(travelTimes).map(
+        (timeData) => timeData[typeIndex[type]]
+    )
+    const extractedTimes = Object.keys(travelTimes).reduce((acc, routeId) => {
+        const timeData = travelTimes[routeId]
+        const selectedTime = timeData[typeIndex[type]]
+
+        acc[routeId] = selectedTime
+
+        return acc
+    }, {} as { [key: string]: any })
     let averageRouteDurationMilliseconds = sumTimesToMs(averageTravelTimes)
     let totalOnRoadMilliseconds = 0
     let sumInitialStopDurationMilliseconds = 0
@@ -283,7 +300,7 @@ export default function TravelDetail() {
                             <IndividualTravelDetailCard
                                 key={index}
                                 travel={travel}
-                                travelTime={averageTravelTimes[index]}
+                                travelTime={extractedTimes[travel.routes.id]}
                             />
                         ))}
                     </View>

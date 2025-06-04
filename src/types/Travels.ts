@@ -71,6 +71,7 @@ export interface Coordinates {
 }
 
 export interface AverageTimes {
+    [key: string]: number
     avg_travel_time: number
     avg_top_5_longest: number
     min_top_5_longest: number
@@ -78,4 +79,8 @@ export interface AverageTimes {
     avg_top_5_shortest: number
     min_top_5_shortest: number
     max_top_5_shortest: number
+}
+
+export interface TravelTimeData {
+    [key: string]: AverageTimes
 }

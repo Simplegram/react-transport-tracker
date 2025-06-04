@@ -18,6 +18,7 @@ export default function useTravelDetail() {
             
         if (data) setAverageTime(data[0])
         if (error) console.log(error)
+        return data[0]
     }
 
     return {
