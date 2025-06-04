@@ -11,7 +11,7 @@ import { colors } from '@/src/const/color'
 import { travelEmptyContainer } from '@/src/styles/TravelListStyles'
 import { DataItemWithNewKey, getKeysSortedByCreatedAt } from '@/src/utils/dataUtils'
 import { router } from 'expo-router'
-import { RefreshControl, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { StyleSheet, Text, View } from 'react-native'
 
 import TravelCards from './TravelCards'
 import { Header } from './TravelFlatlist'
@@ -25,8 +25,6 @@ interface GroupedDataDisplayProps {
 export default function GroupedDataDisplay({ data: finalGroupedData, currentDate, refetch }: GroupedDataDisplayProps) {
     const { theme } = useTheme()
     const { enableSwipeZone } = useSettings()
-
-    const { loading } = useLoading()
 
     const { setSelectedItem, setSelectedTravelItems } = useTravelContext()
 
@@ -48,102 +46,110 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
     const borderColor = theme === 'light' ? colors.black : colors.white_300
     const dateLabelColor = theme === 'light' ? '#2c3e50' : colors.white_100
 
+    const styles = StyleSheet.create({
+        mainContainer: {
+            flex: 1,
+        },
+        dashboard: {
+            flex: 1,
+            marginVertical: 10,
+            justifyContent: 'flex-end',
+        },
+        groupTitle: {
+            fontSize: 20,
+            fontWeight: 'bold',
+            color: dateLabelColor,
+        },
+        content: {
+            flex: 1.4,
+            borderWidth: 1,
+            borderColor: borderColor,
+            borderRadius: 12,
+            overflow: 'hidden',
+            paddingHorizontal: 10,
+            paddingBottom: 5,
+        },
+        pagerView: {
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+        },
+        pagerViewContentContainer: {
+            gap: 6,
+            flex: 1,
+            overflow: 'hidden',
+            justifyContent: 'flex-end',
+            borderColor: borderColor,
+        },
+        cardCanvas: {
+            height: 315,
+        },
+        swipeZone: {
+            flex: 1,
+            justifyContent: 'center',
+            alignItems: 'center',
+        },
+        swipeZoneText: {
+            fontSize: 16,
+            fontWeight: 'bold',
+            color: dateLabelColor,
+        },
+    })
+
     return (
         <View style={styles.mainContainer}>
             <View style={styles.dashboard}>
-                <Text style={[styles.groupTitle, { color: dateLabelColor }]}>
+                <Text style={styles.groupTitle}>
                     {moment(currentDate).format('dddd')}
                 </Text>
-                <Text style={[styles.groupTitle, { color: dateLabelColor }]}>
+                <Text style={styles.groupTitle}>
                     {moment(currentDate).format('LL')}
                 </Text>
             </View>
-            {directionNames.length > 0 ? (
+            <View style={styles.content}>
                 <PagerView
                     style={styles.pagerView}
                     initialPage={0}
                     key={directionNames.length}
                     pageMargin={10}
                 >
-                    {directionNames.map((directionNameKey, index) => (
-                        <View key={directionNameKey} style={[styles.pagerViewContentContainer, { borderColor: borderColor }]}>
-                            <Header
-                                index={index}
-                                directionNameKey={directionNameKey}
-                                directionNamesLength={directionNames.length}
-                                onPress={handleViewTravelDetails}
-                            />
-                            <View key={directionNameKey} style={styles.cardCanvas}>
-                                <TravelCards
-                                    data={finalGroupedData[directionNameKey]}
+                    {directionNames.length > 0 ? (
+                        directionNames.map((directionNameKey, index) => (
+                            <View key={directionNameKey} style={styles.pagerViewContentContainer}>
+                                <Header
+                                    index={index}
                                     directionNameKey={directionNameKey}
-                                    onPress={handleItemPress}
+                                    directionNamesLength={directionNames.length}
+                                    onPress={handleViewTravelDetails}
                                 />
+                                <View key={directionNameKey} style={styles.cardCanvas}>
+                                    <TravelCards
+                                        data={finalGroupedData[directionNameKey]}
+                                        directionNameKey={directionNameKey}
+                                        onPress={handleItemPress}
+                                    />
+                                </View>
+                                {(directionNames.length > 1) && enableSwipeZone && (
+                                    <>
+                                        <Divider />
+                                        <View style={styles.swipeZone}>
+                                            <Text style={styles.swipeZoneText}>{`<<< Safe Swipe Zone >>>`}</Text>
+                                        </View>
+                                    </>
+                                )}
                             </View>
-                            {(directionNames.length > 1) && enableSwipeZone && (
-                                <>
-                                    <Divider />
-                                    <View style={styles.swipeZone}>
-                                        <Text style={[styles.swipeZoneText, { color: dateLabelColor }]}>{`<<< Safe Swipe Zone >>>`}</Text>
-                                    </View>
-                                </>
-                            )}
+                        ))
+                    ) : (
+                        <View style={{
+                            flex: 1,
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                        }}>
+                            <Text style={travelEmptyContainer[theme].noDataText}>No data available to display</Text>
                         </View>
-                    ))}
+                    )}
                 </PagerView>
-            ) : (
-                <ScrollView
-                    contentContainerStyle={[
-                        travelEmptyContainer[theme].noDataContainer,
-                        { borderColor: borderColor }
-                    ]}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={loading}
-                            onRefresh={refetch}
-                        />
-                    }
-                >
-                    <Text style={travelEmptyContainer[theme].noDataText}>No data available to display</Text>
-                </ScrollView>
-            )
-            }
+            </View>
         </View >
     )
 }
-
-const styles = StyleSheet.create({
-    mainContainer: {
-        flex: 1,
-    },
-    dashboard: {
-        flex: 1,
-        marginVertical: 10,
-        justifyContent: 'flex-end',
-    },
-    groupTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
-    pagerView: {
-        flex: 1.4,
-    },
-    pagerViewContentContainer: {
-        gap: 10,
-        flex: 1,
-        overflow: 'hidden',
-        justifyContent: 'flex-end',
-    },
-    cardCanvas: {
-        height: 315,
-    },
-    swipeZone: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    swipeZoneText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-})
