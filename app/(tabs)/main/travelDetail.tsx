@@ -255,24 +255,21 @@ export default function TravelDetail() {
 
                     <View style={inputElementStyles[theme].inputGroup}>
                         <View style={{ gap: 10, flexDirection: 'row' }}>
-                            <TypeButton onPress={() => setType('best')}>
-                                <Text style={[
-                                    inputElementStyles[theme].inputLabel,
-                                    type === 'best' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
-                                ]}>Best</Text>
-                            </TypeButton>
-                            <TypeButton onPress={() => setType('average')}>
-                                <Text style={[
-                                    inputElementStyles[theme].inputLabel,
-                                    type === 'average' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
-                                ]}>Average</Text>
-                            </TypeButton>
-                            <TypeButton onPress={() => setType('worst')}>
-                                <Text style={[
-                                    inputElementStyles[theme].inputLabel,
-                                    type === 'worst' && { color: theme === 'light' ? colors.primary : colors.primary_100 }
-                                ]}>Worst</Text>
-                            </TypeButton>
+                            <TypeButton
+                                label='Best'
+                                onPress={() => setType('best')}
+                                typeSelected={type === 'best'}
+                            />
+                            <TypeButton
+                                label='Average'
+                                onPress={() => setType('average')}
+                                typeSelected={type === 'average'}
+                            />
+                            <TypeButton
+                                label='Worst'
+                                onPress={() => setType('worst')}
+                                typeSelected={type === 'worst'}
+                            />
                         </View>
                     </View>
                 </View>
