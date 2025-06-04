@@ -159,7 +159,7 @@ export default function EstimationPage() {
                     <Divider />
                     <View style={{
                         alignItems: 'center',
-                        paddingVertical: 10,
+                        paddingVertical: 5,
                     }}>
                         <JustifiedLabelValue label="Start at:" value={travelTimes ? `${selectedTime}` : '-'} />
                         <JustifiedLabelValue label="Arrive at:" value={travelTimes ? `${addTime(travelTimes, selectedTime)}` : '-'} />
