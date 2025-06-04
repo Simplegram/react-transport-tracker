@@ -34,7 +34,7 @@ export default function HomePage() {
         dates, selectedDate, setSelectedDate,
     } = useTravelCalendar()
 
-    const { toggleLoading } = useToggleLoading()
+    const { loading, toggleLoading } = useToggleLoading(150)
 
     const { laps, getAllLaps } = useGetTravelData()
 
@@ -68,7 +68,7 @@ export default function HomePage() {
     }, [selectedDate, dates])
 
     const onDayPress = (day: DateObject) => {
-        toggleLoading()
+        if (day.dateString !== selectedDate) toggleLoading()
         setSelectedDate(day.dateString)
         closeCalendarModal()
     }
@@ -111,7 +111,7 @@ export default function HomePage() {
     return (
         <View style={mainMenuStyles[theme].container}>
             <View style={mainMenuStyles[theme].listContainer}>
-                {!supabase || !groupedData ? (
+                {loading || !supabase || !groupedData ? (
                     <LoadingScreen></LoadingScreen>
                 ) : (
                     <GroupedDataDisplay data={groupedData} currentDate={selectedDate} refetch={refetchTravels}></GroupedDataDisplay>
