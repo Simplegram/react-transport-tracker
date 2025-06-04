@@ -103,10 +103,10 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                             >
                                 {laps.map((lap: AddableLap, index) => (
                                     <Animated.View
+                                        key={lap.id}
                                         entering={FadeIn.duration(100)}
                                         exiting={FadeOut.duration(125)}
                                         layout={LinearTransition.delay(100)}
-                                        key={lap.id}
                                     >
                                         <Pressable style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
                                             <View style={{
