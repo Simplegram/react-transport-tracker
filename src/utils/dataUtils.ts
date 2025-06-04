@@ -1,4 +1,6 @@
+import { EditableLap } from "../types/EditableTravels"
 import { DataItem, Lap } from "../types/Travels"
+import { getCleanMomentTime } from "./dateUtils"
 
 export interface DataItemWithNewKey extends DataItem {
     lapCount: number
@@ -52,4 +54,12 @@ export function getKeysSortedByCreatedAt(data: Record<string, DataItemWithNewKey
     })
 
     return keys
+}
+
+export function sortLaps(laps: EditableLap[]) {
+    const sortedLaps = laps.sort((a, b) => {
+        return getCleanMomentTime(b.time).diff(getCleanMomentTime(a.time))
+    })
+
+    return sortedLaps
 }

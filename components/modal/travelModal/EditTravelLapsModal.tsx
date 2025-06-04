@@ -21,6 +21,7 @@ import {
 } from 'react-native'
 import AddLapModal from '../addModal/AddLapModal'
 import EditLapModal from '../editModal/EditLapModal'
+import { sortLaps } from '@/src/utils/dataUtils'
 
 export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { theme } = useTheme()
@@ -50,7 +51,7 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
     }
 
     const handleLapAdd = (lap: AddableLap) => {
-        if (laps) setLaps([...laps, lap])
+        if (laps) setLaps([lap, ...laps])
 
         closeLapModal()
     }
@@ -68,7 +69,8 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
     }
 
     useEffect(() => {
-        setLaps(currentLaps)
+        const sortedLaps = sortLaps(currentLaps)
+        setLaps(sortedLaps)
     }, [currentLaps])
 
     useFocusEffect(

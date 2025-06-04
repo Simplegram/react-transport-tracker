@@ -17,6 +17,13 @@ export const getDateString = () => {
     return todaysDate
 }
 
+export const getCleanMomentTime = (date: string) => {
+    const cleanDate = date.replace("T", " ")
+    const momentTime = moment(cleanDate, "YYYY-MM-DD hh:mm:ss")
+
+    return momentTime
+}
+
 export const formatDate = (date: string) => {
     const cleanDate = date.replace("T", " ")
     const formattedDate = moment(cleanDate, "YYYY-MM-DD hh:mm:ss").format("HH:mm:ss")
