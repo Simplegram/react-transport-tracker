@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
 import { PropsWithChildren, useEffect, useState } from "react"
-import { Keyboard, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native"
+import { Keyboard, StyleSheet, Text, useWindowDimensions, View } from "react-native"
 
 export function EmptyHeaderComponent({ children }: PropsWithChildren) {
     const { height, width } = useWindowDimensions()
@@ -47,7 +47,7 @@ export function Header({ index, directionNameKey, directionNamesLength }: Travel
     const { theme } = useTheme()
 
     return (
-        <Pressable
+        <View
             style={{
                 gap: 5,
                 width: '100%',
@@ -62,7 +62,7 @@ export function Header({ index, directionNameKey, directionNamesLength }: Travel
             <Text style={styles[theme].title}>
                 {directionNameKey}
             </Text>
-        </Pressable>
+        </View>
     )
 }
 
