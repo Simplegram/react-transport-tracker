@@ -293,7 +293,7 @@ npx expo prebuild --clean
 
 This command will create the android folder necessary to build with Android Studio. Close any `npx expo start` instance to avoid Android Studio gradle import error.
 
-## Screenshots
+## Screenshots (as of 1.6.0b13)
 ### Light Mode
 ![Light Mode](https://github.com/user-attachments/assets/f3566d1e-d54b-4985-adf0-a435ca3deb29)
 
