@@ -13,25 +13,7 @@ interface ModalButtonProps {
     onPress: () => void
 }
 
-export default function ModalButton({ label, condition, value, style, onPress }: ModalButtonProps) {
-    const { theme } = useTheme()
-
-    return (
-        <View style={inputElementStyles[theme].inputGroup}>
-            <Text style={inputElementStyles[theme].inputLabel}>{label}</Text>
-            <Pressable
-                onPress={onPress}
-                style={[inputStyles[theme].pressableInput, style]}
-            >
-                <HighlightedText condition={condition}>
-                    {value}
-                </HighlightedText>
-            </Pressable>
-        </View>
-    )
-}
-
-export function AModalButton({ condition, value, style, onPress }: ModalButtonProps) {
+export function ModalButtonBase({ condition, value, style, onPress }: ModalButtonProps) {
     const { theme } = useTheme()
 
     return (
@@ -43,6 +25,22 @@ export function AModalButton({ condition, value, style, onPress }: ModalButtonPr
                 {value}
             </HighlightedText>
         </Pressable>
+    )
+}
+
+export default function ModalButtonBlock({ label, condition, value, style, onPress }: ModalButtonProps) {
+    const { theme } = useTheme()
+
+    return (
+        <View style={inputElementStyles[theme].inputGroup}>
+            <Text style={inputElementStyles[theme].inputLabel}>{label}</Text>
+            <ModalButtonBase
+                condition={condition}
+                value={value}
+                onPress={onPress}
+                style={style}
+            />
+        </View>
     )
 }
 

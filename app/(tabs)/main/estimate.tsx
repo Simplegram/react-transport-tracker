@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton"
 import Divider from "@/components/Divider"
-import ModalButton, { TypeButton } from "@/components/input/ModalButton"
+import ModalButtonBlock, { TypeButton } from "@/components/input/ModalButton"
 import EditTravelDirectionModal from "@/components/modal/travelModal/EditTravelDirectionModal"
 import EditTravelRouteModal from "@/components/modal/travelModal/EditTravelRouteModal"
 import EditTravelStopModal from "@/components/modal/travelModal/EditTravelStopModal"
@@ -145,28 +145,28 @@ export default function EstimationPage() {
             </View>
             <View style={inputElementStyles[theme].inputContainer}>
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <ModalButton
+                    <ModalButtonBlock
                         label='Route:'
                         condition={input.route_id}
                         value={input.route_id ? `${routes.find(route => route.id === input.route_id)?.code || ''} | ${routes.find(route => route.id === input.route_id)?.name || ''}` : 'Select Route...'}
                         onPress={() => openRouteModal()}
                     />
 
-                    <ModalButton
+                    <ModalButtonBlock
                         label='Direction:'
                         condition={input.direction_id}
                         value={directions.find(direction => direction.id === input.direction_id)?.name || 'Select Direction...'}
                         onPress={() => openDirectionModal()}
                     />
 
-                    <ModalButton
+                    <ModalButtonBlock
                         label='First Stop:'
                         condition={input.first_stop_id}
                         value={stops.find(stop => stop.id === input.first_stop_id)?.name || 'Select First Stop...'}
                         onPress={() => openStopModal('first_stop_id')}
                     />
 
-                    <ModalButton
+                    <ModalButtonBlock
                         label='Last Stop:'
                         condition={input.last_stop_id}
                         value={stops.find(stop => stop.id === input.last_stop_id)?.name || 'Select Last Stop...'}

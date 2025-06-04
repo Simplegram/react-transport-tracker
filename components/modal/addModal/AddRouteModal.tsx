@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import ModalButton from "@/components/input/ModalButton"
+import ModalButtonBlock from "@/components/input/ModalButton"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
@@ -87,14 +87,14 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             onChangeText={(text) => setRoute({ ...route, "name": text })}
                         />
 
-                        <ModalButton
+                        <ModalButtonBlock
                             label="First Stop:"
                             condition={route.first_stop_id}
                             value={stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}
                             onPress={() => openModalWithSearch('first_stop_id')}
                         />
 
-                        <ModalButton
+                        <ModalButtonBlock
                             label="Last Stop:"
                             condition={route.last_stop_id}
                             value={stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}
