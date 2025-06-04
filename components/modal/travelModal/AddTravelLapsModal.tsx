@@ -66,10 +66,10 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
         closeEditLapModal()
     }
 
-    const handleLapRemove = (index: number) => {
-        const newLaps = [...laps]
-        newLaps.splice(index, 1)
-        setLaps(newLaps)
+    const handleLapRemove = (id: number | string) => {
+        setLaps((laps) => {
+            return laps.filter((lap) => lap.id !== id)
+        })
     }
 
     useEffect(() => {
@@ -110,7 +110,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                                                 flexDirection: 'row',
                                             }}>
                                                 <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
-                                                <Pressable onPress={() => handleLapRemove(index)}>
+                                                <Pressable onPress={() => handleLapRemove(lap.id)}>
                                                     <Text style={[inputElementStyles[theme].insideLabel, { color: 'red' }]}>Remove</Text>
                                                 </Pressable>
                                             </View>
