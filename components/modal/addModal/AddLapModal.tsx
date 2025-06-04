@@ -40,7 +40,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
     const mapRef = useRef(null)
 
-    const [lap, setLap] = useState<AddableLap>({ id: Crypto.randomUUID(), time: undefined, lat: undefined, lon: undefined, stop_id: undefined, note: undefined })
+    const [lap, setLap] = useState<AddableLap>({ id: '', time: undefined, lat: undefined, lon: undefined, stop_id: undefined, note: undefined })
 
     const [showDatetimePicker, setShowDatetimePicker] = useState(false)
 
@@ -67,7 +67,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
             const currentTime = new Date().toISOString()
             const formattedTime = formatLapTimeDisplay(currentTime)
 
-            setLap({ ...lap, time: formattedTime, lon: undefined, lat: undefined, stop_id: undefined, note: undefined })
+            setLap({ ...lap, id: Crypto.randomUUID(), time: formattedTime, lon: undefined, lat: undefined, stop_id: undefined, note: undefined })
 
             return () => {
                 setLap({ ...lap, id: Crypto.randomUUID(), time: formattedTime, lon: undefined, lat: undefined, stop_id: undefined, note: undefined })
