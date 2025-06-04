@@ -50,7 +50,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
     }
 
     const handleLapAdd = (lap: AddableLap) => {
-        if (laps) setLaps([...laps, lap])
+        if (laps) setLaps([lap, ...laps])
 
         closeLapModal()
     }
