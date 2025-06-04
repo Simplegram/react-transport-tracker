@@ -18,6 +18,7 @@ import {
     Text,
     View,
 } from 'react-native'
+import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated'
 import AddLapModal from '../addModal/AddLapModal'
 import EditLapModal from '../editModal/EditLapModal'
 
@@ -101,7 +102,12 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                                 contentContainerStyle={modalStyles[theme].scrollView}
                             >
                                 {laps.map((lap: AddableLap, index) => (
-                                    <React.Fragment key={index}>
+                                    <Animated.View
+                                        entering={FadeIn.duration(100)}
+                                        exiting={FadeOut.duration(125)}
+                                        layout={LinearTransition.delay(100)}
+                                        key={lap.id}
+                                    >
                                         <Pressable style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
                                             <View style={{
                                                 flex: 1,
@@ -125,7 +131,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                                             )}
                                         </Pressable>
                                         {index < laps.length - 1 && <Divider />}
-                                    </React.Fragment>
+                                    </Animated.View>
                                 ))}
                             </ScrollView>
                         )}

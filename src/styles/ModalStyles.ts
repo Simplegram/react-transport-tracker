@@ -90,7 +90,7 @@ const lightModalStyles = StyleSheet.create({
     },
     inputContainer: {
         gap: 10,
-        minHeight: 100,
+        minHeight: 125,
         maxHeight: 325,
         flexDirection: 'column',
     },
