@@ -1,11 +1,10 @@
+import { TextInputBase } from "@/components/input/TextInput"
 import { useTheme } from "@/context/ThemeContext"
-import { colors } from "@/src/const/color"
-import { inputStyles } from "@/src/styles/InputStyles"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { styles } from "@/src/styles/Styles"
 import { EditableTravelRouteModalProp } from "@/src/types/EditableTravels"
 import { useMemo } from "react"
-import { Modal, Pressable, Text, TextInput, View } from "react-native"
+import { Modal, Pressable, Text, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import FlatlistPicker from "../FlatlistPicker"
 
@@ -35,11 +34,9 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
                         <Text style={modalElementStyles[theme].closeLabel}>Close</Text>
                     </Pressable>
                 </View>
-                <TextInput
-                    style={inputStyles[theme].textInput}
-                    placeholder="Search stop..."
-                    placeholderTextColor={colors.placeholderGray}
+                <TextInputBase
                     value={searchQuery}
+                    placeholder="Search route..."
                     onChangeText={setSearchQuery}
                 />
                 {filteredItems.length === 0 ? (

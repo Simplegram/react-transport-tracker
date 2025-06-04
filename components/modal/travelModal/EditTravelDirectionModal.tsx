@@ -1,3 +1,4 @@
+import { TextInputBase } from "@/components/input/TextInput"
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
 import { inputStyles } from "@/src/styles/InputStyles"
@@ -33,11 +34,9 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
                         <Text style={modalElementStyles[theme].closeLabel}>Close</Text>
                     </Pressable>
                 </View>
-                <TextInput
-                    style={inputStyles[theme].textInput}
-                    placeholder="Search direction..."
-                    placeholderTextColor={colors.placeholderGray}
+                <TextInputBase
                     value={searchQuery}
+                    placeholder="Search direction..."
                     onChangeText={setSearchQuery}
                 />
                 {filteredItems.length === 0 ? (

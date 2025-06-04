@@ -1,16 +1,15 @@
 import Button from "@/components/BaseButton"
+import { TextInputBase } from "@/components/input/TextInput"
 import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
-import { colors } from "@/src/const/color"
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { styles } from "@/src/styles/Styles"
 import { EditableTravelStopModalProp } from "@/src/types/EditableTravels"
 import { useMemo, useState } from "react"
-import { Modal, Pressable, Text, TextInput, View } from "react-native"
+import { Modal, Pressable, Text, View } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome6"
 import FlatlistPicker from "../FlatlistPicker"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 
 export default function EditTravelStopModal({ stops, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelStopModalProp) {
     const { theme } = useTheme()
@@ -47,12 +46,11 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                     gap: 5,
                     flexDirection: 'row'
                 }}>
-                    <TextInput
-                        style={[inputStyles[theme].textInput, { flex: 5 }]}
-                        placeholder="Search stop..."
-                        placeholderTextColor={colors.placeholderGray}
+                    <TextInputBase
                         value={searchQuery}
+                        placeholder="Search stop..."
                         onChangeText={setSearchQuery}
+                        style={{ flex: 5 }}
                     />
                     <Button
                         style={enableFilter ? buttonStyles[theme].addButton : buttonStyles[theme].inactiveButton}
