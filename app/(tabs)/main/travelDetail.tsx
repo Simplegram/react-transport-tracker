@@ -1,4 +1,5 @@
 import AnnotationContent from '@/components/AnnotationContent'
+import TypeButton from '@/components/button/TypeButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import LoadingScreen from '@/components/LoadingScreen'
 import IndividualTravelDetailCard from '@/components/travel/IndividualTravelDetailCard'
@@ -16,7 +17,6 @@ import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { Dimensions, StyleSheet, Text, View } from 'react-native'
-import { TypeButton } from './estimate'
 
 const { width: screenWidth } = Dimensions.get("screen")
 

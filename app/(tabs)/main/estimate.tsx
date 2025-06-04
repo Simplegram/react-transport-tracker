@@ -1,6 +1,7 @@
 import Button from "@/components/BaseButton"
+import ModalButtonBlock from "@/components/button/ModalButton"
+import TypeButton from "@/components/button/TypeButton"
 import Divider from "@/components/Divider"
-import ModalButtonBlock, { TypeButton } from "@/components/input/ModalButton"
 import EditTravelDirectionModal from "@/components/modal/travelModal/EditTravelDirectionModal"
 import EditTravelRouteModal from "@/components/modal/travelModal/EditTravelRouteModal"
 import EditTravelStopModal from "@/components/modal/travelModal/EditTravelStopModal"

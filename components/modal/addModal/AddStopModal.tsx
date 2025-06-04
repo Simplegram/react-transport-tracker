@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import { ModalButtonBase } from "@/components/input/ModalButton"
+import { ModalButtonBase } from "@/components/button/ModalButton"
 import { TextInputBase, TextInputBlock } from "@/components/input/TextInput"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"

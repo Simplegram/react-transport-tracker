@@ -1,5 +1,5 @@
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
-import DataButton from '@/components/datalist/DataButton'
+import DataButton from '@/components/button/DataButton'
 import Divider from '@/components/Divider'
 import { useDataEditContext } from '@/context/DataEditContext'
 import { useTheme } from '@/context/ThemeContext'

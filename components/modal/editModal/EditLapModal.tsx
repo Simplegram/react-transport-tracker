@@ -1,6 +1,6 @@
 import Button from '@/components/BaseButton'
+import ModalButtonBlock from '@/components/button/ModalButton'
 import Divider from '@/components/Divider'
-import ModalButtonBlock from '@/components/input/ModalButton'
 import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'

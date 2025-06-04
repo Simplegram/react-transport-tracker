@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import ModalButtonBlock from "@/components/input/ModalButton"
+import ModalButtonBlock from "@/components/button/ModalButton"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useModalContext } from "@/context/ModalContext"
