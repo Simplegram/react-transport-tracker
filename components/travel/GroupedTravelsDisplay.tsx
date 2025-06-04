@@ -30,8 +30,6 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
 
     const { setSelectedItem, setSelectedTravelItems } = useTravelContext()
 
-    const formattedCurrentDate = moment(currentDate).format('LL')
-
     const directionNames = getKeysSortedByCreatedAt(finalGroupedData)
 
     const handleItemPress = (directionNameKey: string, itemIndex: number) => {
@@ -52,9 +50,14 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
 
     return (
         <View style={styles.mainContainer}>
-            <Text style={[styles.groupTitle, { color: dateLabelColor }]}>
-                {formattedCurrentDate}
-            </Text>
+            <View style={styles.dashboard}>
+                <Text style={[styles.groupTitle, { color: dateLabelColor }]}>
+                    {moment(currentDate).format('dddd')}
+                </Text>
+                <Text style={[styles.groupTitle, { color: dateLabelColor }]}>
+                    {moment(currentDate).format('LL')}
+                </Text>
+            </View>
             {directionNames.length > 0 ? (
                 <PagerView
                     style={styles.pagerView}
@@ -113,10 +116,20 @@ const styles = StyleSheet.create({
     mainContainer: {
         flex: 1,
     },
-    pagerView: {
+    dashboard: {
         flex: 1,
+        marginVertical: 10,
+        justifyContent: 'flex-end',
+    },
+    groupTitle: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    pagerView: {
+        flex: 1.4,
     },
     pagerViewContentContainer: {
+        gap: 10,
         flex: 1,
         overflow: 'hidden',
         justifyContent: 'flex-end',
@@ -132,11 +145,5 @@ const styles = StyleSheet.create({
     swipeZoneText: {
         fontSize: 16,
         fontWeight: 'bold',
-    },
-    groupTitle: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        paddingBottom: 8,
-        textAlign: 'center',
     },
 })
