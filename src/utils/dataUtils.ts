@@ -22,7 +22,7 @@ export const getGroupedData = (data: DataItem[], laps: Lap[]) => {
             const timeA = (a.bus_initial_departure && new Date(a.bus_initial_departure).getTime()) || Infinity
             const timeB = (b.bus_initial_departure && new Date(b.bus_initial_departure).getTime()) || Infinity
 
-            return timeA - timeB
+            return timeB - timeA
         })
     })
 
