@@ -52,7 +52,6 @@ export function Header({ index, directionNameKey, directionNamesLength, onPress 
             onPress={() => onPress(directionNameKey)}
             style={{
                 gap: 5,
-                paddingVertical: 10,
                 width: '100%',
                 flexDirection: 'row',
                 justifyContent: 'center',

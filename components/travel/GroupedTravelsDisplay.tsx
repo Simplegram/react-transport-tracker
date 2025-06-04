@@ -1,18 +1,18 @@
 import moment from 'moment'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PagerView from 'react-native-pager-view'
 import Divider from '../Divider'
 
 import { useSettings } from '@/context/SettingsContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useTravelContext } from '@/context/TravelContext'
-import { useLoading } from '@/hooks/useLoading'
 import { colors } from '@/src/const/color'
 import { travelEmptyContainer } from '@/src/styles/TravelListStyles'
 import { DataItemWithNewKey, getKeysSortedByCreatedAt } from '@/src/utils/dataUtils'
 import { router } from 'expo-router'
 import { StyleSheet, Text, View } from 'react-native'
 
+import { getDateString, getTimeString } from '@/src/utils/dateUtils'
 import TravelCards from './TravelCards'
 import { Header } from './TravelFlatlist'
 
@@ -29,6 +29,14 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
     const { setSelectedItem, setSelectedTravelItems } = useTravelContext()
 
     const directionNames = getKeysSortedByCreatedAt(finalGroupedData)
+
+    const [currentTime, setCurrentTime] = useState<string>(getTimeString())
+
+    useEffect(() => {
+        setInterval(() => {
+            setCurrentTime(getTimeString())
+        }, 1000)
+    }, [])
 
     const handleItemPress = (directionNameKey: string, itemIndex: number) => {
         const itemToSelect = finalGroupedData[directionNameKey][itemIndex]
@@ -61,7 +69,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
             color: dateLabelColor,
         },
         content: {
-            flex: 1.4,
+            flex: 1.7,
             borderWidth: 1,
             borderColor: borderColor,
             borderRadius: 12,
@@ -75,7 +83,6 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
             justifyContent: 'center',
         },
         pagerViewContentContainer: {
-            gap: 6,
             flex: 1,
             overflow: 'hidden',
             justifyContent: 'flex-end',
@@ -99,12 +106,24 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
     return (
         <View style={styles.mainContainer}>
             <View style={styles.dashboard}>
-                <Text style={styles.groupTitle}>
-                    {moment(currentDate).format('dddd')}
-                </Text>
-                <Text style={styles.groupTitle}>
-                    {moment(currentDate).format('LL')}
-                </Text>
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'flex-end',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: 5,
+                }}>
+                    <View>
+                        <Text style={styles.groupTitle}>
+                            {moment(getDateString()).format('dddd')}
+                        </Text>
+                        <Text style={styles.groupTitle}>
+                            {moment(getDateString()).format('LL')}
+                        </Text>
+                    </View>
+                    <Text style={styles.groupTitle}>
+                        {currentTime}
+                    </Text>
+                </View>
             </View>
             <View style={styles.content}>
                 <PagerView
@@ -116,12 +135,21 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                     {directionNames.length > 0 ? (
                         directionNames.map((directionNameKey, index) => (
                             <View key={directionNameKey} style={styles.pagerViewContentContainer}>
-                                <Header
-                                    index={index}
-                                    directionNameKey={directionNameKey}
-                                    directionNamesLength={directionNames.length}
-                                    onPress={handleViewTravelDetails}
-                                />
+                                <View style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    paddingBottom: 18,
+                                }}>
+                                    <Text style={styles.groupTitle}>
+                                        {moment(currentDate).format('LL')}
+                                    </Text>
+                                    <Header
+                                        index={index}
+                                        directionNameKey={directionNameKey}
+                                        directionNamesLength={directionNames.length}
+                                        onPress={handleViewTravelDetails}
+                                    />
+                                </View>
                                 <View key={directionNameKey} style={styles.cardCanvas}>
                                     <TravelCards
                                         data={finalGroupedData[directionNameKey]}
