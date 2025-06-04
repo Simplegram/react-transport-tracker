@@ -10,7 +10,7 @@ import { colors } from '@/src/const/color'
 import { travelEmptyContainer } from '@/src/styles/TravelListStyles'
 import { DataItemWithNewKey, getKeysSortedByCreatedAt } from '@/src/utils/dataUtils'
 import { router } from 'expo-router'
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import { getDateString, getTimeString } from '@/src/utils/dateUtils'
 import TravelCards from './TravelCards'
@@ -136,11 +136,14 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                     {directionNames.length > 0 ? (
                         directionNames.map((directionNameKey, index) => (
                             <View key={directionNameKey} style={styles.pagerViewContentContainer}>
-                                <View style={{
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    paddingBottom: 18,
-                                }}>
+                                <Pressable
+                                    style={{
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        paddingBottom: 18,
+                                    }}
+                                    onPress={() => handleViewTravelDetails(directionNameKey)}
+                                >
                                     <Text style={[styles.groupTitle, { color: selectedDateColor }]}>
                                         {moment(currentDate).format('LL')}
                                     </Text>
@@ -148,9 +151,8 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                         index={index}
                                         directionNameKey={directionNameKey}
                                         directionNamesLength={directionNames.length}
-                                        onPress={handleViewTravelDetails}
                                     />
-                                </View>
+                                </Pressable>
                                 <View key={directionNameKey} style={styles.cardCanvas}>
                                     <TravelCards
                                         data={finalGroupedData[directionNameKey]}

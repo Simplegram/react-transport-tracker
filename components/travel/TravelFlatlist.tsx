@@ -3,13 +3,6 @@ import { colors } from "@/src/const/color"
 import { PropsWithChildren, useEffect, useState } from "react"
 import { Keyboard, Pressable, StyleSheet, Text, useWindowDimensions, View } from "react-native"
 
-interface TravelHeaderProps {
-    index: number
-    directionNameKey: string
-    directionNamesLength: number
-    onPress: (key: string) => void
-}
-
 export function EmptyHeaderComponent({ children }: PropsWithChildren) {
     const { height, width } = useWindowDimensions()
 
@@ -44,12 +37,17 @@ export function EmptyHeaderComponent({ children }: PropsWithChildren) {
     )
 }
 
-export function Header({ index, directionNameKey, directionNamesLength, onPress }: TravelHeaderProps) {
+interface TravelHeaderProps {
+    index: number
+    directionNameKey: string
+    directionNamesLength: number
+}
+
+export function Header({ index, directionNameKey, directionNamesLength }: TravelHeaderProps) {
     const { theme } = useTheme()
 
     return (
         <Pressable
-            onPress={() => onPress(directionNameKey)}
             style={{
                 gap: 5,
                 width: '100%',
