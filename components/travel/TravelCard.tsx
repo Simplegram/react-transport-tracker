@@ -41,7 +41,7 @@ export default function TravelCard({ item, index, directionNameKey, activeIndex,
                     translateY: interpolate(
                         activeIndex.value,
                         [index - 1, index, index + 1],
-                        [travelCardStyles[theme].card.gap, (totalLength > 1) ? -5 : 0, -2 * travelCardStyles[theme].card.gap]
+                        [travelCardStyles[theme].card.gap, ((totalLength + 1) > 1) ? -5 : 0, -2 * travelCardStyles[theme].card.gap]
                     )
                 },
                 {
