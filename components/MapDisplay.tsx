@@ -53,7 +53,7 @@ export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, dragga
 const styles = StyleSheet.create({
     mapContainer: {
         flex: 1,
-        borderRadius: 12,
+        borderRadius: 10,
         overflow: 'hidden',
     },
     pointContainer: {

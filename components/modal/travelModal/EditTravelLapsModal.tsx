@@ -8,6 +8,7 @@ import { inputElementStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap } from '@/src/types/AddableTravels'
 import { EditableLap, EditableLapsModalProp } from '@/src/types/EditableTravels'
+import { sortLaps } from '@/src/utils/dataUtils'
 import { formatLapTimeDisplay } from '@/src/utils/utils'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
@@ -21,7 +22,6 @@ import {
 } from 'react-native'
 import AddLapModal from '../addModal/AddLapModal'
 import EditLapModal from '../editModal/EditLapModal'
-import { sortLaps } from '@/src/utils/dataUtils'
 
 export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { theme } = useTheme()

@@ -54,7 +54,7 @@ export default function Button({
 const styles = StyleSheet.create({
     buttonContainer: {
         maxHeight: 55,
-        borderRadius: 8,
+        borderRadius: 10,
         paddingVertical: 12,
         paddingHorizontal: 20,
         alignItems: 'center',

@@ -18,7 +18,7 @@ const lightCalendarStyles = StyleSheet.create({
         backgroundColor: colors.primary,
         paddingVertical: 10,
         paddingHorizontal: 15,
-        borderRadius: 8,
+        borderRadius: 10,
         borderWidth: 1,
     },
     todayButtonText: {

@@ -61,7 +61,7 @@ const lightDatetimePickerStyles = StyleSheet.create({
         width: '100%',
         borderWidth: 1,
         borderColor: '#ccc',
-        borderRadius: 5,
+        borderRadius: 10,
         paddingHorizontal: 10,
         paddingVertical: 8,
         fontSize: 16,
@@ -76,7 +76,7 @@ const lightDatetimePickerStyles = StyleSheet.create({
         backgroundColor: colors.primary,
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 5,
+        borderRadius: 10,
         alignItems: 'center',
     },
     adjButtonText: {
@@ -88,7 +88,7 @@ const lightDatetimePickerStyles = StyleSheet.create({
         backgroundColor: '#4CAF50',
         paddingVertical: 10,
         paddingHorizontal: 20,
-        borderRadius: 5,
+        borderRadius: 10,
         alignItems: 'center',
     },
     actionButtons: {
@@ -100,7 +100,7 @@ const lightDatetimePickerStyles = StyleSheet.create({
         flex: 1,
         paddingVertical: 10,
         paddingHorizontal: 10,
-        borderRadius: 5,
+        borderRadius: 10,
     },
     confirmButton: {
         backgroundColor: '#4CAF50',

@@ -10,7 +10,7 @@ const lightButtonStyles = StyleSheet.create({
     addButton: {
         backgroundColor: colors.primary,
         paddingVertical: 12,
-        borderRadius: 8,
+        borderRadius: 10,
         flex: 1,
         alignItems: 'center',
         borderWidth: 1,
@@ -22,7 +22,7 @@ const lightButtonStyles = StyleSheet.create({
     },
     cancelButton: {
         paddingVertical: 12,
-        borderRadius: 8,
+        borderRadius: 10,
         flex: 1,
         alignItems: 'center',
         borderWidth: 1,
@@ -35,14 +35,14 @@ const lightButtonStyles = StyleSheet.create({
     },
     redButton: {
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 10,
         alignItems: 'center',
         backgroundColor: colors.redCancel,
     },
     inactiveButton: {
         flex: 1,
         paddingVertical: 12,
-        borderRadius: 8,
+        borderRadius: 10,
         alignItems: 'center',
         borderWidth: 1,
         borderColor: colors.white_500,

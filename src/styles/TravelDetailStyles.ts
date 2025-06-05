@@ -19,7 +19,7 @@ const lightTravelDetailStyles = StyleSheet.create({
     },
     card: {
         backgroundColor: colors.white_100,
-        borderRadius: 8,
+        borderRadius: 10,
         padding: 15,
         borderWidth: 1,
         gap: 15,

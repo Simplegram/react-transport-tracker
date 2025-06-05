@@ -30,7 +30,7 @@ const lightDatalistStyles = StyleSheet.create({
     modalSearchInput: {
         borderWidth: 1,
         borderColor: colors.black,
-        borderRadius: 5,
+        borderRadius: 10,
         padding: 10,
         fontSize: 16,
         backgroundColor: colors.white,
@@ -46,7 +46,7 @@ const lightItemStyles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: colors.white_100,
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 10,
         borderColor: colors.black,
         gap: 10,
     },
@@ -69,7 +69,7 @@ const lightItemStyles = StyleSheet.create({
         backgroundColor: '#007bff',
         paddingVertical: 12,
         paddingHorizontal: 12,
-        borderRadius: 8,
+        borderRadius: 10,
     },
     modifyButtonText: {
         color: colors.white,

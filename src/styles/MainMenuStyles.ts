@@ -26,7 +26,7 @@ const lightMainmenuStyles = StyleSheet.create({
     listItem: {
         backgroundColor: colors.white_100,
         padding: 15,
-        borderRadius: 8,
+        borderRadius: 10,
         marginBottom: 10,
     },
     itemText: {

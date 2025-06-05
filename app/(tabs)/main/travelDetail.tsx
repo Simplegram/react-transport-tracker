@@ -10,7 +10,7 @@ import useTravelDetail from '@/hooks/useTravelDetail'
 import { colors } from '@/src/const/color'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
-import { DataItem, Stop, TravelTimeData } from '@/src/types/Travels'
+import { DataItem, Stop } from '@/src/types/Travels'
 import { formatMsToMinutes, sumTimesToMs } from '@/src/utils/dateUtils'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
@@ -87,7 +87,7 @@ export default function TravelDetail() {
             setDataToUse(selectedTravelItems)
         }, [selectedTravelItems])
     )
-    
+
     if (!travelTimes) return (
         <LoadingScreen />
     )
@@ -350,7 +350,7 @@ const styles = StyleSheet.create({
     },
     card: {
         backgroundColor: '#fff',
-        borderRadius: 8,
+        borderRadius: 10,
         padding: 15,
         borderWidth: 1,
         gap: 15,

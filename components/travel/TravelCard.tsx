@@ -58,7 +58,7 @@ export default function TravelCard({ item, index, directionNameKey, activeIndex,
     const borderColor = useSharedValue(0)
     const cardStyles = useAnimatedStyle(() => {
         return {
-            borderRadius: 8,
+            borderRadius: 10,
             borderColor: interpolateColor(
                 borderColor.value,
                 [0, 1],

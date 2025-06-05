@@ -73,7 +73,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
             flex: 1.7,
             borderWidth: 1,
             borderColor: borderColor,
-            borderRadius: 12,
+            borderRadius: 10,
             overflow: 'hidden',
             paddingHorizontal: 10,
             paddingBottom: 5,
