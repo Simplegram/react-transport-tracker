@@ -175,15 +175,3 @@ const styles = {
         },
     })
 }
-
-const addButtonStyles = StyleSheet.create({
-    buttonContainer: {
-        borderWidth: 1,
-        borderColor: 'black',
-        borderRadius: 10,
-    },
-    plusText: {
-        color: 'white',
-        fontWeight: 'bold',
-    },
-})

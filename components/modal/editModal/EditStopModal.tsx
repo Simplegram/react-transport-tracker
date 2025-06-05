@@ -160,15 +160,3 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
         </View>
     )
 }
-
-const addButtonStyles = StyleSheet.create({
-    buttonContainer: {
-        borderColor: 'black',
-        borderRadius: 10,
-        backgroundColor: colors.primary,
-    },
-    plusText: {
-        color: 'white',
-        fontWeight: 'bold',
-    },
-})

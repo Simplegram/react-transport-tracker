@@ -30,25 +30,3 @@ export default function LoadingScreen({ text = "Loading..." }: Props) {
 };
 
 const { width, height } = Dimensions.get('window')
-const styles = StyleSheet.create({
-    modalOverlay: {
-        width: width,
-        height: height,
-        flex: 1,
-        position: "absolute",
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    modalContent: {
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    loadingText: {
-        marginTop: 10,
-        fontSize: 16,
-        fontWeight: "bold",
-    },
-})
