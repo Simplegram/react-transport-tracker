@@ -57,7 +57,8 @@
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
     "expo-crypto": "~14.0.2",
-    "react-native-reanimated": "~3.16.1"
+    "react-native-reanimated": "~3.16.1",
+    "@react-native-community/netinfo": "11.4.1"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
