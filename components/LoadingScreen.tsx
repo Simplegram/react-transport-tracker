@@ -3,9 +3,7 @@ import { loadingStyles } from '@/src/styles/LoadingScreenStyles'
 import React from 'react'
 import {
     ActivityIndicator,
-    Dimensions,
     Modal,
-    StyleSheet,
     Text,
     View
 } from 'react-native'
@@ -27,6 +25,4 @@ export default function LoadingScreen({ text = "Loading..." }: Props) {
             </View>
         </Modal>
     )
-};
-
-const { width, height } = Dimensions.get('window')
+}
