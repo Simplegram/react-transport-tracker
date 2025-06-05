@@ -11,6 +11,7 @@ export default function useGetTravelData() {
     const [fullVehicleTypes, setFullVehicleTypes] = useState<VehicleType[]>([])
     const [vehicleTypes, setVehicleTypes] = useState<VehicleType[]>([])
     const [icons, setIcons] = useState<IconType[]>([])
+    const [averageTime, setAverageTime] = useState()
 
     const [laps, setLaps] = useState<Lap[]>([])
     const [travelLaps, setTravelLaps] = useState<FullLap[] | undefined>(undefined)

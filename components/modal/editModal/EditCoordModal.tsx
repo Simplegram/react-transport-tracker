@@ -6,9 +6,7 @@ import { modalStyles } from "@/src/styles/ModalStyles"
 import { AddableCoordModalProp } from "@/src/types/AddableTravels"
 import { Camera, MapView } from "@maplibre/maplibre-react-native"
 import { useRef } from "react"
-import { Dimensions, Modal, Pressable, StyleSheet, View } from "react-native"
-
-const { height: screenHeight, width: screenWidth } = Dimensions.get('window')
+import { Modal, Pressable, StyleSheet, View } from "react-native"
 
 const pointSize = {
     width: 8,

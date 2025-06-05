@@ -1,21 +1,26 @@
 import Button from '@/components/BaseButton'
+import ModalButtonBlock from '@/components/button/ModalButton'
+import Divider from '@/components/Divider'
+import { TextInputBlock } from '@/components/input/TextInput'
+import MapDisplay from '@/components/MapDisplay'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
-import { colors } from '@/const/color'
 import { useTheme } from '@/context/ThemeContext'
-import useStopModal from '@/hooks/useStopModal'
+import useLocation from '@/hooks/useLocation'
+import useModalHandler from '@/hooks/useModalHandler'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
-import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
+import { inputElementStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
-import { formatDateForDisplay } from '@/src/utils/utils'
+import { formatDateForDisplay, formatLapTimeDisplay } from '@/src/utils/utils'
+import * as Crypto from 'expo-crypto'
+import { useFocusEffect } from 'expo-router'
 import moment from 'moment-timezone'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
     Alert,
     Modal,
     Pressable,
     Text,
-    TextInput,
     View
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
@@ -24,16 +29,51 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
     const { theme } = useTheme()
 
     const {
-        showStopModal,
-        stopSearchQuery,
-        setStopSearchQuery,
-        openStopModal,
-        closeStopModal
-    } = useStopModal()
+        showModal,
+        searchQuery,
+        setSearchQuery,
+        openModal,
+        closeModal
+    } = useModalHandler()
 
-    const [lap, setLap] = useState<AddableLap>({ time: undefined, stop_id: null, note: null })
+    const { location, refetchLocation } = useLocation()
+
+    const mapRef = useRef(null)
+
+    const [lap, setLap] = useState<AddableLap>({ id: '', time: undefined, lat: undefined, lon: undefined, stop_id: undefined, note: undefined })
 
     const [showDatetimePicker, setShowDatetimePicker] = useState(false)
+
+    const [centerCoordinate, setCenterCoordinate] = useState<number[]>([0, 0])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            let lon: number = 0
+            let lat: number = 0
+            if (location) {
+                lon = location.coords.longitude
+                lat = location.coords.latitude
+            }
+
+            setLap({ ...lap, lon: lon, lat: lat })
+            setCenterCoordinate([lon, lat])
+        }, [location])
+    )
+
+    useFocusEffect(
+        React.useCallback(() => {
+            refetchLocation()
+
+            const currentTime = new Date().toISOString()
+            const formattedTime = formatLapTimeDisplay(currentTime)
+
+            setLap({ ...lap, id: Crypto.randomUUID(), time: formattedTime, lon: undefined, lat: undefined, stop_id: undefined, note: undefined })
+
+            return () => {
+                setLap({ ...lap, id: Crypto.randomUUID(), time: formattedTime, lon: undefined, lat: undefined, stop_id: undefined, note: undefined })
+            }
+        }, [isModalVisible])
+    )
 
     const handleCustomDateConfirm = (selectedDate: Date) => {
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
@@ -45,7 +85,14 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
     const handleStopSelect = (stopId: number) => {
         setLap({ ...lap, stop_id: stopId })
-        closeStopModal()
+
+        const stop = stops.find(stop => stop.id === stopId)
+        if (stop && stop.lat && stop.lon) {
+            setLap({ ...lap, lon: stop.lon, lat: stop.lat, stop_id: stopId })
+            setCenterCoordinate([stop.lon, stop.lat])
+        }
+
+        closeModal()
     }
 
     const handleOnSubmit = () => {
@@ -64,53 +111,44 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
             animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose}>
+            <Pressable style={modalStyles[theme].modalBackdrop}>
                 {!stops ? (
                     <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
                 ) : (
                     <>
                         <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
-                            <View style={inputElementStyles[theme].inputGroup}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Time:</Text>
-                                <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles[theme].pressableInput}>
-                                    <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(lap.time)}</Text>
-                                </Pressable>
-                            </View>
+                            <ModalButtonBlock
+                                label='Time:'
+                                condition={lap.time}
+                                value={formatDateForDisplay(lap.time)}
+                                onPress={() => setShowDatetimePicker(true)}
+                            />
 
-                            <View style={inputElementStyles[theme].inputGroup}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Stop:</Text>
-                                <Pressable
-                                    style={inputStyles[theme].pressableInput}
-                                    onPress={() => openStopModal('last_stop_id')}>
-                                    <Text style={[inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>
-                                        {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
-                                    </Text>
-                                </Pressable>
-                            </View>
+                            <ModalButtonBlock
+                                label='Stop:'
+                                condition={lap.stop_id}
+                                value={stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
+                                onPress={() => openModal()}
+                            />
 
-                            {showDatetimePicker && (
-                                <CustomDateTimePicker
-                                    visible={showDatetimePicker}
-                                    initialDateTime={new Date()}
-                                    onClose={() => setShowDatetimePicker(false)}
-                                    onConfirm={handleCustomDateConfirm}
-                                />
-                            )}
-
-                            <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Note:</Text>
-                                <TextInput
-                                    placeholder="Optional notes"
-                                    placeholderTextColor={colors.text.placeholderGray}
-                                    value={lap.note || ''}
-                                    onChangeText={text => setLap({ ...lap, note: text })}
-                                    keyboardType="default"
-                                    returnKeyType="done"
-                                    multiline={true}
-                                    numberOfLines={3}
-                                    style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput, inputElementStyles[theme].insideLabel]}
+                            <View style={[inputElementStyles[theme].inputGroup, { height: 160 }]}>
+                                <MapDisplay
+                                    mapRef={mapRef}
+                                    zoomLevel={15}
+                                    centerCoordinate={centerCoordinate}
+                                    draggable={false}
+                                    getCurrentCoordinate={refetchLocation}
                                 />
                             </View>
+
+                            <TextInputBlock.Multiline
+                                label='Note:'
+                                value={lap.note}
+                                placeholder='Notes (optional)'
+                                onChangeText={(text) => setLap({ ...lap, note: text })}
+                            />
+
+                            <Divider />
 
                             <View style={buttonStyles[theme].buttonRow}>
                                 <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
@@ -120,12 +158,21 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
                         <EditTravelStopModal
                             stops={stops}
-                            isModalVisible={showStopModal}
-                            searchQuery={stopSearchQuery}
-                            setSearchQuery={setStopSearchQuery}
+                            isModalVisible={showModal}
+                            searchQuery={searchQuery}
+                            setSearchQuery={setSearchQuery}
                             onSelect={handleStopSelect}
-                            onClose={closeStopModal}
+                            onClose={closeModal}
                         />
+
+                        {showDatetimePicker && (
+                            <CustomDateTimePicker
+                                visible={showDatetimePicker}
+                                initialDateTime={new Date()}
+                                onClose={() => setShowDatetimePicker(false)}
+                                onConfirm={handleCustomDateConfirm}
+                            />
+                        )}
                     </>
                 )}
             </Pressable>

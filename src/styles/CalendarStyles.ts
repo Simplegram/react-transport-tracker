@@ -1,4 +1,4 @@
-import { colors } from "@/const/color"
+import { colors } from "@/src/const/color"
 import { StyleSheet } from "react-native"
 import { Theme } from "react-native-calendars/src/types"
 
@@ -11,29 +11,25 @@ const lightCalendarStyles = StyleSheet.create({
     calendarContainer: {
         flex: 1,
         height: 500,
-        backgroundColor: colors.background.white,
+        backgroundColor: colors.white,
         position: 'relative',
     },
     todayButton: {
-        position: 'absolute',
-        bottom: 35,
-        left: '50%',
-        transform: [{ translateX: -50 }],
-        backgroundColor: '#007bff',
+        backgroundColor: colors.primary,
         paddingVertical: 10,
         paddingHorizontal: 15,
-        borderRadius: 8,
+        borderRadius: 10,
         borderWidth: 1,
-        zIndex: 1,
     },
     todayButtonText: {
-        color: colors.background.white,
+        color: colors.white,
         fontWeight: 'bold',
         fontSize: 16,
     },
 })
 
 const lightCalendarTheme: Theme = {
+    calendarBackground: colors.white_100,
     selectedDayBackgroundColor: '#00adf5',
     selectedDayTextColor: '#ffffff',
     todayTextColor: '#00adf5',
@@ -52,27 +48,42 @@ export const calendarTheme = {
     dark: {
         ...lightCalendarTheme,
         calendarBackground: '#000',
-        dayTextColor: colors.text.dimmerWhite2,
-        monthTextColor: colors.text.dimmerWhite2,
+        dayTextColor: colors.white_200,
+        monthTextColor: colors.white_100,
     },
 }
 
 export const calendarStyles = {
-    light: { ...lightCalendarStyles },
+    light: {
+        ...lightCalendarStyles,
+        ...StyleSheet.create({
+            cancelButton: {
+                ...lightCalendarStyles.todayButton,
+                backgroundColor: colors.white_100,
+            },
+        })
+    },
     dark: StyleSheet.create({
         modalBackdrop: {
             ...lightCalendarStyles.modalBackdrop,
         },
         calendarContainer: {
             ...lightCalendarStyles.calendarContainer,
-            color: colors.background.black,
+            color: colors.black,
         },
         todayButton: {
             ...lightCalendarStyles.todayButton,
+            borderColor: colors.primary_100,
+            backgroundColor: colors.black,
         },
         todayButtonText: {
             ...lightCalendarStyles.todayButtonText,
-            color: colors.text.dimmerWhite2,
+            color: colors.white_100,
+        },
+        cancelButton: {
+            ...lightCalendarStyles.todayButton,
+            borderColor: colors.white_300,
+            backgroundColor: colors.black,
         },
     }),
 }

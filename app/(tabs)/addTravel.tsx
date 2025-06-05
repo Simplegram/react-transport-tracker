@@ -1,6 +1,8 @@
 import Button from '@/components/BaseButton'
+import ModalButtonBlock from '@/components/button/ModalButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
+import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModal'
@@ -9,71 +11,70 @@ import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRoute
 import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal'
 import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
+import { useToggleLoading } from '@/hooks/useLoading'
+import useModalHandler from '@/hooks/useModalHandler'
 import useModifyTravelData from '@/hooks/useModifyTravelData'
-import useStopModal from '@/hooks/useStopModal'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
-import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
+import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap, AddableTravel } from '@/src/types/AddableTravels'
-import { DataItem } from '@/src/types/Travels'
 import { formatDateForDisplay } from '@/src/utils/utils'
 import { router, useFocusEffect } from 'expo-router'
 import moment from 'moment-timezone'
 import React, { useEffect, useState } from 'react'
 import {
     Alert,
-    Pressable,
-    Text,
-    TextInput,
-    View,
+    View
 } from 'react-native'
-
-const PLACEHOLDER_TEXT_COLOR = '#9E9E9E'
 
 export default function AddTravel() {
     const { theme } = useTheme()
-
-    const { stops, routes, directions, vehicleTypes } = useGetTravelData()
-
     const { addTravel, addLaps } = useModifyTravelData()
+    const { stops, routes, directions, vehicleTypes, refetchTravelData } = useGetTravelData()
+
+    const { loading, setLoading } = useToggleLoading()
 
     const [laps, setLaps] = useState<AddableLap[]>([])
+    const [lapsCount, setLapsCount] = useState<number>(0)
+
     const [travel, setTravel] = useState<AddableTravel | null>(null)
 
-    const [showCustomPicker, setShowCustomPicker] = useState(false)
-    const [editingDateField, setEditingDateField] = useState<keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'> | null>(null)
+    const {
+        showModal: showDatetimeModal,
+        editingField: datetimeField,
+        openModalWithSearch: openDatetimeModal,
+        closeModal: closeDatetimeModal
+    } = useModalHandler()
 
     const {
-        showStopModal,
-        editingStopField,
-        stopSearchQuery,
-        setStopSearchQuery,
-        openStopModal,
-        closeStopModal
-    } = useStopModal()
+        showModal: showStopModal,
+        editingField: stopEditingField,
+        searchQuery: stopSearchQuery,
+        setSearchQuery: setStopSearchQuery,
+        openModalWithSearch: openStopModal,
+        closeModal: closeStopModal
+    } = useModalHandler()
 
     const {
-        showStopModal: showRouteModal,
-        stopSearchQuery: routeSearchQuery,
-        setStopSearchQuery: setRouteSearchQuery,
-        openStopModal: openRouteModal,
-        closeStopModal: closeRouteModal
-    } = useStopModal()
+        showModal: showRouteModal,
+        searchQuery: routeSearchQuery,
+        setSearchQuery: setRouteSearchQuery,
+        openModalWithSearch: openRouteModal,
+        closeModal: closeRouteModal
+    } = useModalHandler()
 
     const {
-        showStopModal: showDirectionModal,
-        stopSearchQuery: directionSearchQuery,
-        setStopSearchQuery: setDirectionSearchQuery,
-        openStopModal: openDirectionModal,
-        closeStopModal: closeDirectionModal
-    } = useStopModal()
+        showModal: showDirectionModal,
+        searchQuery: directionSearchQuery,
+        setSearchQuery: setDirectionSearchQuery,
+        openModalWithSearch: openDirectionModal,
+        closeModal: closeDirectionModal
+    } = useModalHandler()
 
     const {
-        showStopModal: showLapsModal,
-        openStopModal: openLapsModal,
-        closeStopModal: closeLapsModal
-    } = useStopModal()
-
-    const { refetchTravelData } = useGetTravelData()
+        showModal: showLapsModal,
+        openModalWithSearch: openLapsModal,
+        closeModal: closeLapsModal
+    } = useModalHandler()
 
     const setDefaultTravel = () => {
         setTravel({
@@ -82,11 +83,11 @@ export default function AddTravel() {
             last_stop_id: undefined,
             route_id: undefined,
             type_id: undefined,
-            bus_final_arrival: null,
-            bus_initial_arrival: null,
-            bus_initial_departure: null,
-            vehicle_code: null,
-            notes: null,
+            bus_final_arrival: undefined,
+            bus_initial_arrival: undefined,
+            bus_initial_departure: undefined,
+            vehicle_code: undefined,
+            notes: undefined,
         })
         setLaps([])
     }
@@ -101,6 +102,12 @@ export default function AddTravel() {
         }, [])
     )
 
+    useFocusEffect(
+        React.useCallback(() => {
+            setLapsCount(laps.length)
+        }, [laps])
+    )
+
     const handleChangeText = (field: keyof AddableTravel, value: string) => {
         setTravel(prev => {
             if (!prev) return null
@@ -111,23 +118,13 @@ export default function AddTravel() {
         })
     }
 
-    const openCustomPickerModal = (field: keyof Pick<DataItem, 'bus_initial_arrival' | 'bus_initial_departure' | 'bus_final_arrival'>) => {
-        setEditingDateField(field)
-        setShowCustomPicker(true)
-    }
-
     const handleCustomDateConfirm = (selectedDate: Date) => {
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
 
-        if (editingDateField) {
-            setTravel(prev => prev ? ({ ...prev, [editingDateField]: isoSelectedDate }) : null)
+        if (datetimeField) {
+            setTravel(prev => prev ? ({ ...prev, [datetimeField]: isoSelectedDate }) : null)
         }
-        closeCustomPicker()
-    }
-
-    const closeCustomPicker = () => {
-        setShowCustomPicker(false)
-        setEditingDateField(null)
+        closeDatetimeModal()
     }
 
     if (!travel) {
@@ -137,10 +134,10 @@ export default function AddTravel() {
     }
 
     const handleStopSelect = (stopId: number) => {
-        if (editingStopField && travel) {
+        if (stopEditingField && travel) {
             setTravel(prev => prev ? ({
                 ...prev,
-                [editingStopField]: stopId
+                [stopEditingField]: stopId
             }) : null)
         }
         closeStopModal()
@@ -185,6 +182,8 @@ export default function AddTravel() {
             return
         }
 
+        setLoading(true)
+
         const newTravel = await addTravel(travel, true)
 
         let newLaps: AddableLap[] = []
@@ -197,149 +196,142 @@ export default function AddTravel() {
             }
         }
 
-
         setDefaultTravel()
 
-        router.push('/(tabs)/mainMenu')
+        setLoading(false)
+
+        router.push('/(tabs)/main')
     }
 
     return (
         <CollapsibleHeaderPage
             headerText='Add New Travel'
         >
-            <View style={inputElementStyles[theme].inputContainer}>
+            {loading && (
+                <LoadingScreen></LoadingScreen>
+            )}
+            <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Bus Initial Arrival:</Text>
-                        <Pressable onPress={() => openCustomPickerModal('bus_initial_arrival')} style={inputStyles[theme].pressableInput}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(travel.bus_initial_arrival)}</Text>
-                        </Pressable>
-                    </View>
-
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Bus Initial Departure:</Text>
-                        <Pressable onPress={() => openCustomPickerModal('bus_initial_departure')} style={inputStyles[theme].pressableInput}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(travel.bus_initial_departure)}</Text>
-                        </Pressable>
-                    </View>
-
-                    <View style={[inputElementStyles[theme].inputGroup]}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Bus Final Arrival:</Text>
-                        <Pressable onPress={() => openCustomPickerModal('bus_final_arrival')} style={inputStyles[theme].pressableInput}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{formatDateForDisplay(travel.bus_final_arrival)}</Text>
-                        </Pressable>
-                    </View>
-                </View>
-
-                <Divider />
-
-                {showCustomPicker && editingDateField && (
-                    <CustomDateTimePicker
-                        visible={showCustomPicker}
-                        initialDateTime={
-                            travel && travel[editingDateField]
-                                ? new Date(travel[editingDateField] as string)
-                                : new Date()
-                        }
-                        onClose={closeCustomPicker}
-                        onConfirm={handleCustomDateConfirm}
+                    <ModalButtonBlock
+                        label='Bus Initial Arrival:'
+                        condition={travel.bus_initial_arrival}
+                        value={formatDateForDisplay(travel.bus_initial_arrival)}
+                        onPress={() => openDatetimeModal('bus_initial_arrival')}
                     />
-                )}
+
+                    <ModalButtonBlock
+                        label='Bus Initial Departure:'
+                        condition={travel.bus_initial_departure}
+                        value={formatDateForDisplay(travel.bus_initial_departure)}
+                        onPress={() => openDatetimeModal('bus_initial_departure')}
+                    />
+
+                    <ModalButtonBlock
+                        label='Bus Final Arrival:'
+                        condition={travel.bus_final_arrival}
+                        value={formatDateForDisplay(travel.bus_final_arrival)}
+                        onPress={() => openDatetimeModal('bus_final_arrival')}
+                    />
+                </View>
+
+                <Divider />
+
+                {showDatetimeModal && datetimeField && (
+                    datetimeField === 'bus_initial_arrival' ||
+                    datetimeField === 'bus_initial_departure' ||
+                    datetimeField === 'bus_final_arrival'
+                ) && (
+                        <CustomDateTimePicker
+                            visible={showDatetimeModal}
+                            initialDateTime={
+                                travel && travel[datetimeField]
+                                    ? new Date(travel[datetimeField] as string)
+                                    : new Date()
+                            }
+                            onClose={closeDatetimeModal}
+                            onConfirm={handleCustomDateConfirm}
+                        />
+                    )
+                }
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Route:</Text>
-                        <Pressable
-                            style={inputStyles[theme].pressableInput}
-                            onPress={() => openRouteModal()}>
-                            <Text style={inputElementStyles[theme].insideLabel}>
-                                {travel.route_id ? `${routes.find(route => route.id === travel.route_id)?.code || ''} | ${routes.find(route => route.id === travel.route_id)?.name || ''}` : 'Select Route...'}
-                            </Text>
-                        </Pressable>
-                    </View>
+                    <ModalButtonBlock
+                        label='Route:'
+                        condition={travel.route_id}
+                        value={travel.route_id ? `${routes.find(route => route.id === travel.route_id)?.code || ''} | ${routes.find(route => route.id === travel.route_id)?.name || ''}` : 'Select Route...'}
+                        onPress={() => openRouteModal()}
+                    />
 
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Type:</Text>
-                        <TextInput
-                            editable={false}
-                            style={inputStyles[theme].textInput}
-                            value={vehicleTypes.find(type => type.id === travel.type_id)?.name || ''}
-                            placeholder="Vehicle type (auto-filled)"
-                            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-                        />
-                    </View>
+                    <TextInputBlock
+                        editable={false}
+                        label='Type:'
+                        placeholder='Vehicle type (auto-filled)'
+                        value={vehicleTypes.find(type => type.id === travel.type_id)?.name}
+                    />
 
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Vehicle Code:</Text>
-                        <TextInput
-                            style={inputStyles[theme].textInput}
-                            value={travel.vehicle_code || ''}
-                            onChangeText={(text) => handleChangeText('vehicle_code', text)}
-                            placeholder="Enter vehicle code"
-                            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-                        />
-                    </View>
+                    <TextInputBlock
+                        label='Vehicle Code:'
+                        placeholder='Enter vehicle code'
+                        value={travel.vehicle_code}
+                        onChangeText={(text) => handleChangeText('vehicle_code', text)}
+                    />
                 </View>
 
                 <Divider />
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Direction:</Text>
-                        <Pressable
-                            style={inputStyles[theme].pressableInput}
-                            onPress={() => openDirectionModal()}>
-                            <Text style={inputElementStyles[theme].insideLabel}>
-                                {directions.find(direction => direction.id === travel.direction_id)?.name || 'Select Direction...'}
-                            </Text>
-                        </Pressable>
-                    </View>
+                    <ModalButtonBlock
+                        label='Direction:'
+                        condition={travel.direction_id}
+                        value={directions.find(direction => direction.id === travel.direction_id)?.name || 'Select Direction...'}
+                        onPress={() => openDirectionModal()}
+                    />
 
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>First Stop:</Text>
-                        <Pressable
-                            style={inputStyles[theme].pressableInput}
-                            onPress={() => openStopModal('first_stop_id')}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}</Text>
-                        </Pressable>
-                    </View>
+                    <ModalButtonBlock
+                        label='First Stop:'
+                        condition={travel.first_stop_id}
+                        value={stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}
+                        onPress={() => openStopModal('first_stop_id')}
+                    />
 
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Last Stop:</Text>
-                        <Pressable
-                            style={inputStyles[theme].pressableInput}
-                            onPress={() => openStopModal('last_stop_id')}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}</Text>
-                        </Pressable>
-                    </View>
+                    <ModalButtonBlock
+                        label='Last Stop:'
+                        condition={travel.last_stop_id}
+                        value={stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}
+                        onPress={() => openStopModal('last_stop_id')}
+                    />
                 </View>
 
                 <Divider />
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Notes:</Text>
-                        <TextInput
-                            style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput]}
-                            value={travel.notes || ''}
-                            onChangeText={(text) => handleChangeText('notes', text)}
-                            multiline={true}
-                            numberOfLines={4}
-                            placeholder="Enter notes (optional)"
-                            placeholderTextColor={PLACEHOLDER_TEXT_COLOR}
-                        />
-                    </View>
+                    <TextInputBlock.Multiline
+                        label='Notes:'
+                        value={travel.notes}
+                        placeholder='Notes (optional)'
+                        onChangeText={(text) => handleChangeText('notes', text)}
+                    />
                 </View>
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Laps:</Text>
-                        <Pressable
-                            style={inputStyles[theme].pressableInput}
-                            onPress={() => openLapsModal()}>
-                            <Text style={inputElementStyles[theme].insideLabel}>{`${laps.length} lap${laps.length !== 1 ? 's' : ''} selected`}</Text>
-                        </Pressable>
-                    </View>
+                    <ModalButtonBlock
+                        label='Laps:'
+                        condition={lapsCount > 0}
+                        value={`${lapsCount} lap${lapsCount !== 1 ? 's' : ''} selected`}
+                        onPress={() => openLapsModal()}
+                    />
+                </View>
+
+                <Divider />
+
+                <View style={buttonStyles[theme].buttonRow}>
+                    <Button
+                        title='Add Travel'
+                        color='#0284f5'
+                        onPress={handleOnSubmit}
+                        style={buttonStyles[theme].addButton}
+                        textStyle={buttonStyles[theme].addButtonText}
+                    />
                 </View>
             </View>
 
@@ -377,16 +369,6 @@ export default function AddTravel() {
                 onSelect={handleStopSelect}
                 onClose={closeStopModal}
             />
-
-            <View style={buttonStyles[theme].buttonRow}>
-                <Button
-                    title='Add Travel'
-                    color='#0284f5'
-                    onPress={handleOnSubmit}
-                    style={buttonStyles[theme].addButton}
-                    textStyle={buttonStyles[theme].addButtonText}
-                />
-            </View>
         </CollapsibleHeaderPage>
     )
 }

@@ -1,13 +1,16 @@
 import Button from '@/components/BaseButton'
-import { colors } from '@/const/color'
+import Divider from '@/components/Divider'
 import { useTheme } from '@/context/ThemeContext'
-import useStopModal from '@/hooks/useStopModal'
+import useModalHandler from '@/hooks/useModalHandler'
+import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap } from '@/src/types/AddableTravels'
 import { EditableLap, EditableLapsModalProp } from '@/src/types/EditableTravels'
+import { sortLaps } from '@/src/utils/dataUtils'
 import { formatLapTimeDisplay } from '@/src/utils/utils'
+import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import {
     Modal,
@@ -24,16 +27,16 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
     const { theme } = useTheme()
 
     const {
-        showStopModal: showLapModal,
-        openStopModal: openLapModal,
-        closeStopModal: closeLapModal
-    } = useStopModal()
+        showModal: showLapModal,
+        openModal: openLapModal,
+        closeModal: closeLapModal
+    } = useModalHandler()
 
     const {
-        showStopModal: showEditLapModal,
-        openStopModal: openEditLapModal,
-        closeStopModal: closeEditLapModal
-    } = useStopModal()
+        showModal: showEditLapModal,
+        openModal: openEditLapModal,
+        closeModal: closeEditLapModal
+    } = useModalHandler()
 
     const [laps, setLaps] = useState<EditableLap[]>([])
     const [selectedLap, setSelectedLap] = useState<EditableLap | undefined>(undefined)
@@ -48,7 +51,7 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
     }
 
     const handleLapAdd = (lap: AddableLap) => {
-        if (laps) setLaps([...laps, lap])
+        if (laps) setLaps([lap, ...laps])
 
         closeLapModal()
     }
@@ -66,8 +69,15 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
     }
 
     useEffect(() => {
-        setLaps(currentLaps)
+        const sortedLaps = sortLaps(currentLaps)
+        setLaps(sortedLaps)
     }, [currentLaps])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setLaps(currentLaps)
+        }, [isModalVisible])
+    )
 
     return (
         <Modal
@@ -88,25 +98,28 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                                 contentContainerStyle={modalStyles[theme].scrollView}
                             >
                                 {laps.map((lap: EditableLap, index) => (
-                                    <Pressable key={index} style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
-                                        <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
-                                        {stops.find(stop => stop.id === lap.stop_id) ? (
-                                            <Text style={[inputElementStyles[theme].inputLabel, { color: colors.appBlue }]}>
-                                                {stops.find(stop => stop.id === lap.stop_id)?.name}
-                                            </Text>
-                                        ) : null}
+                                    <React.Fragment key={index}>
+                                        <Pressable style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
+                                            <Text style={inputElementStyles[theme].insideLabel}>{formatLapTimeDisplay(lap.time)}</Text>
+                                            {stops.find(stop => stop.id === lap.stop_id) ? (
+                                                <Text style={[inputElementStyles[theme].inputLabel, { color: colors.primary }]}>
+                                                    {stops.find(stop => stop.id === lap.stop_id)?.name}
+                                                </Text>
+                                            ) : null}
 
-                                        {lap.note && (
-                                            <Text style={inputElementStyles[theme].inputLabelLight}>{lap.note}</Text>
-                                        )}
-                                    </Pressable>
+                                            {lap.note && (
+                                                <Text style={inputElementStyles[theme].inputLabelLight}>{lap.note}</Text>
+                                            )}
+                                        </Pressable>
+                                        {index < laps.length - 1 && <Divider />}
+                                    </React.Fragment>
                                 ))}
                             </ScrollView>
                         )}
                     </View>
 
-                    <View style={{ paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
-                        <Button title='Add lap' color={colors.appBlue} onPress={openLapModal} style={addButtonStyles.buttonContainer} textStyle={addButtonStyles.plusText}></Button>
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button title='Add lap' color={colors.primary} onPress={openLapModal} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>
@@ -145,10 +158,7 @@ const lightStyles = StyleSheet.create({
     detailRow: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        paddingVertical: 10,
-        paddingHorizontal: 10,
         alignItems: 'flex-start',
-        borderWidth: 1,
         borderRadius: 10,
     },
 })
@@ -165,15 +175,3 @@ const styles = {
         },
     })
 }
-
-const addButtonStyles = StyleSheet.create({
-    buttonContainer: {
-        borderWidth: 1,
-        borderColor: 'black',
-        borderRadius: 10,
-    },
-    plusText: {
-        color: 'white',
-        fontWeight: 'bold',
-    },
-})

@@ -1,4 +1,4 @@
-import { colors } from "@/const/color"
+import { colors } from "@/src/const/color"
 import { Dimensions, StyleSheet } from "react-native"
 
 const { height: screenHeight } = Dimensions.get('window')
@@ -14,7 +14,7 @@ export const styles = {
     dark: StyleSheet.create({
         icon: {
             ...lightStyles.icon,
-            color: colors.text.dimmerWhite,
+            color: colors.white_300,
         }
     })
 }
@@ -23,13 +23,15 @@ const lightCollapsibleHeaderStyles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: 5,
-        paddingBottom: 10,
         paddingHorizontal: 15,
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.white_100,
+    },
+    contentContainer: {
+        flexGrow: 1,
+        overflow: 'hidden',
     },
     fillerContainer: {
-        flex: 1,
-        minHeight: screenHeight * 0.45,
+        height: screenHeight * 0.43,
         justifyContent: 'flex-end',
     },
     headerText: {
@@ -39,6 +41,7 @@ const lightCollapsibleHeaderStyles = StyleSheet.create({
     },
     scrollContainer: {
         flexGrow: 1,
+        paddingBottom: 20,
     }
 })
 
@@ -47,14 +50,17 @@ export const collapsibleHeaderStyles = {
     dark: StyleSheet.create({
         container: {
             ...lightCollapsibleHeaderStyles.container,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
+        },
+        contentContainer: {
+            ...lightCollapsibleHeaderStyles.contentContainer,
         },
         fillerContainer: {
             ...lightCollapsibleHeaderStyles.fillerContainer,
         },
         headerText: {
             ...lightCollapsibleHeaderStyles.headerText,
-            color: colors.text.dimWhite,
+            color: colors.white_100,
         },
         scrollContainer: {
             ...lightCollapsibleHeaderStyles.scrollContainer,
@@ -63,11 +69,11 @@ export const collapsibleHeaderStyles = {
 }
 
 export const dividerStyles = {
-    light: colors.background.black,
-    dark: colors.text.dimmerWhite,
+    light: colors.black,
+    dark: colors.white_300,
 }
 
 export const statusBarStyles = {
-    light: colors.text.dimWhite,
-    dark: colors.background.black,
+    light: colors.white_100,
+    dark: colors.black,
 }

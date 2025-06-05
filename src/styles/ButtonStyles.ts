@@ -1,4 +1,4 @@
-import { colors } from "@/const/color"
+import { colors } from "@/src/const/color"
 import { StyleSheet } from "react-native"
 
 const lightButtonStyles = StyleSheet.create({
@@ -8,36 +8,50 @@ const lightButtonStyles = StyleSheet.create({
         gap: 10,
     },
     addButton: {
-        backgroundColor: colors.appBlue,
+        backgroundColor: colors.primary,
         paddingVertical: 12,
-        borderRadius: 8,
+        borderRadius: 10,
         flex: 1,
         alignItems: 'center',
         borderWidth: 1,
     },
     addButtonText: {
-        color: colors.text.white,
+        color: colors.white,
         fontSize: 16,
         fontWeight: '600',
     },
     cancelButton: {
         paddingVertical: 12,
-        borderRadius: 8,
+        borderRadius: 10,
         flex: 1,
         alignItems: 'center',
         borderWidth: 1,
-        backgroundColor: colors.text.dimWhite
+        backgroundColor: colors.white_100
     },
     cancelButtonText: {
-        color: colors.text.black,
+        color: colors.black,
         fontSize: 16,
         fontWeight: '600',
     },
     redButton: {
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 10,
         alignItems: 'center',
-        backgroundColor: colors.background.redCancel,
+        backgroundColor: colors.redCancel,
+    },
+    inactiveButton: {
+        flex: 1,
+        paddingVertical: 12,
+        borderRadius: 10,
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: colors.white_500,
+        backgroundColor: colors.white_100,
+    },
+    inactiveButtonText: {
+        color: colors.white_500,
+        fontSize: 16,
+        fontWeight: '600',
     },
 })
 
@@ -49,26 +63,33 @@ export const buttonStyles = {
         },
         addButton: {
             ...lightButtonStyles.addButton,
-            borderColor: colors.dimmerAppBlue,
-            backgroundColor: colors.background.black,
+            borderColor: colors.primary_100,
+            backgroundColor: colors.black,
         },
         addButtonText: {
             ...lightButtonStyles.addButtonText,
-            color: colors.text.dimWhite,
+            color: colors.white_100,
         },
         cancelButton: {
             ...lightButtonStyles.cancelButton,
-            borderColor: colors.dimmerWhite,
-            backgroundColor: colors.background.black,
+            borderColor: colors.white_300,
+            backgroundColor: colors.black,
         },
         cancelButtonText: {
             ...lightButtonStyles.cancelButtonText,
-            color: colors.dimmerWhite,
+            color: colors.white_100,
         },
         redButton: {
             ...lightButtonStyles.redButton,
-            borderColor: colors.background.dimRedCancel,
-            backgroundColor: colors.background.black,
+            borderColor: colors.redCancel_100,
+            backgroundColor: colors.black,
+        },
+        inactiveButton: {
+            ...lightButtonStyles.inactiveButton,
+            backgroundColor: colors.black,
+        },
+        inactiveButtonText: {
+            ...lightButtonStyles.inactiveButtonText,
         },
     })
 }

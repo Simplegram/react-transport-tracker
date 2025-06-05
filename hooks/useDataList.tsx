@@ -1,4 +1,4 @@
-import { useTravelContext } from "@/context/PageContext"
+import { useDataEditContext } from "@/context/DataEditContext"
 import { Direction, IconType, Route, Stop, VehicleType } from "@/src/types/Travels"
 import { useEffect, useState } from "react"
 
@@ -11,7 +11,7 @@ interface UseDatalistProps {
 }
 
 export default function useDataList({ directions, stops, routes, vehicleTypes, icons }: UseDatalistProps) {
-    const { selectedModification: dataType } = useTravelContext()
+    const { editCategory: dataType } = useDataEditContext()
 
     const [data, setData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]>([])
     const [filteredData, setFilteredData] = useState<Direction[] | Stop[] | Route[] | VehicleType[] | IconType[]>([])

@@ -1,11 +1,10 @@
-import { colors } from "@/const/color"
+import { TextInputBase } from "@/components/input/TextInput"
 import { useTheme } from "@/context/ThemeContext"
-import { inputStyles } from "@/src/styles/InputStyles"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { styles } from "@/src/styles/Styles"
 import { EditableTravelRouteModalProp } from "@/src/types/EditableTravels"
 import { useMemo } from "react"
-import { Modal, Pressable, Text, TextInput, View } from "react-native"
+import { Modal, Pressable, Text, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import FlatlistPicker from "../FlatlistPicker"
 
@@ -27,46 +26,45 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
             animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose}>
-                <View style={modalStyles[theme].modalContainer}>
-                    <View style={modalElementStyles[theme].header}>
-                        <Text style={modalElementStyles[theme].title}>Select a Route</Text>
+            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose} />
+            <View style={modalStyles[theme].modalContainer}>
+                <View style={modalElementStyles[theme].header}>
+                    <Text style={modalElementStyles[theme].title}>Select a Route</Text>
+                    <Pressable onPress={onClose}>
                         <Text style={modalElementStyles[theme].closeLabel}>Close</Text>
-                    </View>
-                    <TextInput
-                        style={inputStyles[theme].textInput}
-                        placeholder="Search stop..."
-                        placeholderTextColor={colors.text.placeholderGray}
-                        value={searchQuery}
-                        onChangeText={setSearchQuery}
-                    />
-                    {filteredItems.length === 0 ? (
-                        <View style={modalStyles[theme].emptyList}>
-                            <Text style={modalElementStyles[theme].label}>No route found</Text>
-                        </View>
-                    ) : (
-                        <FlatlistPicker
-                            items={filteredItems}
-                            onSelect={onSelect}
-                        >
-                            {(item) => (
-                                <>
-                                    {item.vehicle_type_id?.name ? (
-                                        <Icon
-                                            style={[styles[theme].icon, { width: 20 }]}
-                                            name={item.vehicle_type_id.icon_id.name.toLocaleLowerCase()}
-                                            size={16}
-                                        />
-                                    ) : (
-                                        <Icon style={styles[theme].icon} name="train" size={16} />
-                                    )}
-                                    <Text style={modalElementStyles[theme].label}>{`${item.code} | ${item.name}`}</Text>
-                                </>
-                            )}
-                        </FlatlistPicker>
-                    )}
+                    </Pressable>
                 </View>
-            </Pressable>
+                <TextInputBase
+                    value={searchQuery}
+                    placeholder="Search route..."
+                    onChangeText={setSearchQuery}
+                />
+                {filteredItems.length === 0 ? (
+                    <View style={modalStyles[theme].emptyList}>
+                        <Text style={modalElementStyles[theme].label}>No route found</Text>
+                    </View>
+                ) : (
+                    <FlatlistPicker
+                        items={filteredItems}
+                        onSelect={onSelect}
+                    >
+                        {(item) => (
+                            <>
+                                {item.vehicle_type_id?.name ? (
+                                    <Icon
+                                        style={[styles[theme].icon, { width: 20 }]}
+                                        name={item.vehicle_type_id.icon_id.name.toLocaleLowerCase()}
+                                        size={16}
+                                    />
+                                ) : (
+                                    <Icon style={styles[theme].icon} name="train" size={16} />
+                                )}
+                                <Text style={modalElementStyles[theme].label}>{`${item.code} | ${item.name}`}</Text>
+                            </>
+                        )}
+                    </FlatlistPicker>
+                )}
+            </View>
         </Modal>
     )
 }

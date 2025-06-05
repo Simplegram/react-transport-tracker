@@ -80,12 +80,18 @@ const formatDateForDisplay = (isoString: string | undefined | null) => {
     }
 }
 
-export const formatLapTimeDisplay = (isoString: string | undefined | null) => {
+export const formatLapTimeDisplay = (isoString: string | undefined | null, timeOnly: boolean = false) => {
     if (!isoString) return 'Select Date/Time...'
     const cleanTime = isoString.replace("T", " ")
     const formattedDate = moment(cleanTime).format("YYYY-MM-DD")
     const formattedTime = moment(cleanTime).format("HH:mm:ss")
-    return `${formattedDate} ${formattedTime}`
+
+    const timeString = (timeOnly ? '' : `${formattedDate} `) + formattedTime
+    return timeString
+}
+
+export const padNumber = (num: number) => {
+    return String(num).padStart(2, "0")
 }
 
 export {

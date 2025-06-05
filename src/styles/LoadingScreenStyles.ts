@@ -1,4 +1,4 @@
-import { colors } from "@/const/color"
+import { colors } from "@/src/const/color"
 import { Dimensions, StyleSheet } from "react-native"
 
 const { width, height } = Dimensions.get('window')
@@ -35,12 +35,12 @@ export const loadingStyles = {
         modalContent: {
             ...lightLoadingStyles.modalContent,
             borderWidth: 1,
-            borderColor: colors.text.dimmerWhite,
-            backgroundColor: colors.background.black,
+            borderColor: colors.white_300,
+            backgroundColor: colors.black,
         },
         loadingText: {
             ...lightLoadingStyles.loadingText,
-            color: colors.text.dimWhite,
+            color: colors.white_100,
         },
     })
 }

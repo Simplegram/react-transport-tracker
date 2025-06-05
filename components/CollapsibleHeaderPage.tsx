@@ -31,7 +31,9 @@ export default function CollapsibleHeaderPage({
                 <View style={collapsibleHeaderStyles[theme].fillerContainer}>
                     <Text style={collapsibleHeaderStyles[theme].headerText}>{headerText}</Text>
                 </View>
-                {children}
+                <View style={collapsibleHeaderStyles[theme].contentContainer}>
+                    {children}
+                </View>
             </ScrollView>
         </View>
     )

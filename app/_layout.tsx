@@ -1,4 +1,5 @@
 import { AuthProvider, useAuth } from '@/context/AuthContext'
+import { SettingsProvider } from '@/context/SettingsContext'
 import { SupabaseProvider } from '@/context/SupabaseContext'
 import { ThemeProvider } from '@/context/ThemeContext'
 import { Slot, useRouter, useSegments } from 'expo-router'
@@ -15,7 +16,7 @@ const InitialLayout = () => {
         const inAuthGroup = segments[0] === '(tabs)'
 
         if (session && !inAuthGroup) {
-            router.replace('/mainMenu')
+            router.replace('/main')
         } else if (!session) {
             router.replace('/')
         }
@@ -28,9 +29,11 @@ const RootLayout = () => {
     return (
         <SupabaseProvider>
             <AuthProvider>
-                <ThemeProvider>
-                    <InitialLayout />
-                </ThemeProvider>
+                <SettingsProvider>
+                    <ThemeProvider>
+                        <InitialLayout />
+                    </ThemeProvider>
+                </SettingsProvider>
             </AuthProvider>
         </SupabaseProvider>
     )

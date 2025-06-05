@@ -1,4 +1,5 @@
-import { Direction, Route, Stop } from "./Travels"
+import { AddableIconType } from "./AddableTravels"
+import { Direction, IconType, Route, Stop } from "./Travels"
 
 interface EditableStop {
     id: number,
@@ -7,6 +8,7 @@ interface EditableStop {
     lon?: number,
     name_alt?: string,
     vehicle_type: number
+    icon_id: IconType
 }
 
 interface EditableVehicleType {
@@ -41,8 +43,8 @@ interface EditableLap {
     id: number
     travel_id: number
     time: string
-    stop_id: number | null
-    note: string | null
+    stop_id: number | undefined
+    note: string | undefined
 }
 
 interface EditableTravelModalProp {
@@ -86,7 +88,7 @@ interface EditableLapsModalProp {
     stops: Stop[]
     isModalVisible: boolean
     onClose: () => void
-    onSelect: (lap: EditableLap) => void
+    onSelect: (lap: EditableLap[]) => void
 }
 
 interface EditableLapModalProp {

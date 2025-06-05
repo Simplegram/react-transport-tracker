@@ -1,19 +1,13 @@
 import Button from "@/components/BaseButton"
+import MapDisplay from "@/components/MapDisplay"
 import { useTheme } from "@/context/ThemeContext"
 import useLocation from "@/hooks/useLocation"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles } from "@/src/styles/InputStyles"
 import { modalStyles } from "@/src/styles/ModalStyles"
 import { AddableCoordModalProp } from "@/src/types/AddableTravels"
-import { Camera, MapView } from "@maplibre/maplibre-react-native"
 import { LocationObject } from "expo-location"
 import { useEffect, useRef, useState } from "react"
-import { Alert, Modal, Pressable, StyleSheet, View } from "react-native"
-
-const pointSize = {
-    width: 8,
-    height: 8
-}
+import { Alert, Modal, Pressable, View } from "react-native"
 
 export default function AddCoordModal({ currentCoordinates, isModalVisible, onClose, onSelect }: AddableCoordModalProp) {
     const { theme } = useTheme()
@@ -73,22 +67,11 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
         >
             <Pressable style={modalStyles[theme].modalBackdrop}>
                 <View style={[modalStyles[theme].modalContainer, modalStyles[theme].coordModalContainer]} onStartShouldSetResponder={() => true}>
-                    <View style={[inputElementStyles[theme].inputGroup, { flex: 1 }]}>
-                        <MapView
-                            ref={mapRef}
-                            style={{ flex: 1 }}
-                            rotateEnabled={false}
-                            mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
-                        >
-                            <Camera
-                                zoomLevel={zoomLevel}
-                                centerCoordinate={centerCoordinate}
-                            />
-                        </MapView>
-                        <View style={styles.container}>
-                            <View style={styles.point} />
-                        </View>
-                    </View>
+                    <MapDisplay
+                        mapRef={mapRef}
+                        zoomLevel={zoomLevel}
+                        centerCoordinate={centerCoordinate}
+                    />
 
                     <View style={buttonStyles[theme].buttonRow}>
                         <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
@@ -99,23 +82,3 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
         </Modal>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        pointerEvents: 'box-none',
-    },
-    point: {
-        width: pointSize.width,
-        height: pointSize.height,
-        borderRadius: 5,
-        borderWidth: 1,
-        backgroundColor: 'red',
-    },
-})

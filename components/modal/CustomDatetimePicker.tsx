@@ -1,8 +1,6 @@
-import { colors } from '@/const/color'
 import { useTheme } from '@/context/ThemeContext'
 import { useLoading } from '@/hooks/useLoading'
 import { datetimePickerStyles } from '@/src/styles/DatetimePickerStyles'
-import { inputStyles } from '@/src/styles/InputStyles'
 import React, { useEffect, useState } from 'react'
 import {
     Alert,
@@ -10,11 +8,11 @@ import {
     Pressable,
     ScrollView,
     Text,
-    TextInput,
     TouchableOpacity,
     View
 } from 'react-native'
 import Divider from '../Divider'
+import { TextInputBase } from '../input/TextInput'
 
 interface CustomDateTimePickerProps {
     visible: boolean
@@ -134,15 +132,11 @@ export default function CustomDateTimePicker({
     const inputRow = (label: string, value: string, onChangeText: (text: string) => void, placeholder: string, maxLength?: number) => (
         <View style={datetimePickerStyles[theme].inputRow}>
             <Text style={datetimePickerStyles[theme].inputLabel}>{label}</Text>
-            <TextInput
-                style={[inputStyles[theme].textInput, { width: '100%' }]}
+            <TextInputBase.Numeric
                 value={value}
-                onChangeText={onChangeText}
-                keyboardType="numeric"
-                maxLength={maxLength}
                 placeholder={placeholder}
-                placeholderTextColor={colors.text.placeholderGray}
-                textAlign='center'
+                maxLength={maxLength}
+                onChangeText={onChangeText}
             />
         </View>
     )

@@ -1,10 +1,10 @@
-import { colors } from "@/const/color"
+import { colors } from "@/src/const/color"
 import { Platform, StyleSheet } from "react-native"
 
 const lightInputElementStyles = StyleSheet.create({
     inputContainer: {
         gap: 12,
-        paddingBottom: 20,
+        paddingBottom: 15,
     },
     inputGroup: {},
     inputLargeGroup: {
@@ -20,15 +20,10 @@ const lightInputElementStyles = StyleSheet.create({
         alignItems: 'center',
         gap: 10,
     },
-    inputGroupEnd: {
-        paddingBottom: 12,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc'
-    },
     inputLabel: {
         fontSize: 15,
         fontWeight: '500',
-        color: '#333333',
+        color: colors.white_800,
         marginBottom: 4,
     },
     inputLabelLight: {
@@ -40,7 +35,17 @@ const lightInputElementStyles = StyleSheet.create({
     insideLabel: {
         fontSize: 14,
         fontWeight: '500',
-        color: '#333333',
+        color: colors.white_800,
+    },
+    unselectedLabel: {
+        fontSize: 14,
+        fontWeight: '500',
+        color: colors.white_500,
+    },
+    selectedLabel: {
+        fontSize: 14,
+        fontWeight: '900',
+        color: colors.white_700,
     },
 })
 
@@ -49,7 +54,7 @@ const inputElementStyles = {
     dark: StyleSheet.create({
         inputContainer: {
             ...lightInputElementStyles.inputContainer,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
         },
         inputGroup: {
             ...lightInputElementStyles.inputGroup,
@@ -63,49 +68,55 @@ const inputElementStyles = {
         inputGroupIcon: {
             ...lightInputElementStyles.inputGroupIcon,
         },
-        inputGroupEnd: {
-            ...lightInputElementStyles.inputGroupEnd,
-        },
         inputLabel: {
             ...lightInputElementStyles.inputLabel,
-            color: colors.text.dimWhite,
+            color: colors.white_100,
         },
         inputLabelLight: {
             ...lightInputElementStyles.inputLabelLight,
-            color: colors.dimmerWhite2,
+            color: colors.white_400,
         },
         insideLabel: {
             ...lightInputElementStyles.insideLabel,
-            color: colors.text.dimmerWhite,
+            color: colors.white_300,
         },
+        unselectedLabel: {
+            ...lightInputElementStyles.unselectedLabel,
+            color: colors.white_600,
+        },
+        selectedLabel: {
+            ...lightInputElementStyles.selectedLabel,
+            color: colors.white_300,
+        }
     })
 }
 
 const lightInputStyles = StyleSheet.create({
     textInput: {
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.white_100,
         borderRadius: 10,
         paddingHorizontal: 14,
         paddingVertical: 8,
         minHeight: Platform.OS === 'ios' ? 50 : 48,
         fontSize: 14,
-        color: '#333333',
+        fontWeight: '200',
+        color: colors.white_700,
         borderWidth: 1,
-        borderColor: colors.text.dimmerWhite,
+        borderColor: colors.white_500,
     },
     multilineTextInput: {
         minHeight: 100,
         textAlignVertical: 'top',
     },
     pressableInput: {
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.white_100,
         borderRadius: 10,
         paddingHorizontal: 14,
         paddingVertical: Platform.OS === 'ios' ? 14 : 12,
         justifyContent: 'center',
         minHeight: Platform.OS === 'ios' ? 50 : 48,
         borderWidth: 1,
-        borderColor: colors.text.dimmerWhite,
+        borderColor: colors.white_500,
     },
     pressableInputCoord: {
         flex: 1,
@@ -117,17 +128,17 @@ const inputStyles = {
     dark: StyleSheet.create({
         textInput: {
             ...lightInputStyles.textInput,
-            color: colors.text.dimmerWhite,
-            backgroundColor: '#000'
+            color: colors.white_300,
+            backgroundColor: colors.black,
         },
         multilineTextInput: {
             ...lightInputStyles.multilineTextInput,
-            backgroundColor: '#000'
+            backgroundColor: colors.black,
         },
         pressableInput: {
             ...lightInputStyles.pressableInput,
-            backgroundColor: '#000',
-            color: colors.text.dimmerWhite,
+            backgroundColor: colors.black,
+            color: colors.white_300,
         },
         pressableInputCoord: {
             ...lightInputStyles.pressableInputCoord,
@@ -140,7 +151,7 @@ const lightIconPickerStyles = StyleSheet.create({
         width: 55,
         borderWidth: 1,
         borderColor: '#ccc',
-        borderRadius: 8,
+        borderRadius: 10,
         paddingVertical: 5,
         marginRight: 10,
         alignItems: 'center',
@@ -149,8 +160,8 @@ const lightIconPickerStyles = StyleSheet.create({
     iconTextContainer: {
         width: 75,
         borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 8,
+        borderColor: colors.white_500,
+        borderRadius: 10,
         paddingTop: 10,
         flexDirection: 'column',
         marginRight: 10,
@@ -158,11 +169,15 @@ const lightIconPickerStyles = StyleSheet.create({
         justifyContent: 'center',
     },
     selectedIconContainer: {
-        borderColor: colors.appBlue,
-        backgroundColor: colors.background.lightBlue,
+        borderColor: colors.primary,
+        backgroundColor: colors.primary,
     },
     selectedIcon: {
-        color: colors.black
+        color: colors.white_100,
+    },
+    selectedText: {
+        color: colors.white_100,
+        fontWeight: 'bold',
     }
 })
 
@@ -180,7 +195,11 @@ const iconPickerStyles = {
             backgroundColor: colors.black,
         },
         selectedIcon: {
-            color: colors.dimmerAppBlue
+            color: colors.primary_100
+        },
+        selectedText: {
+            ...lightIconPickerStyles.selectedText,
+            color: colors.primary_100
         }
     })
 }

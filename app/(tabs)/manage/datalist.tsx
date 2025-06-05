@@ -1,21 +1,23 @@
 import Button from '@/components/BaseButton'
+import Divider from '@/components/Divider'
+import { TextInputBase } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import ModalTemplate from '@/components/ModalTemplate'
-import { colors } from '@/const/color'
-import { useModalContext } from '@/context/ModalContext'
+import { EmptyHeaderComponent } from '@/components/travel/TravelFlatlist'
+import { useDataEditContext } from '@/context/DataEditContext'
 import { useTheme } from '@/context/ThemeContext'
 import useDataList from '@/hooks/useDataList'
 import useDatalistModal from '@/hooks/useDatalistModal'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import { useLoading } from '@/hooks/useLoading'
-import useStopModal from '@/hooks/useStopModal'
+import useModalHandler from '@/hooks/useModalHandler'
+import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { DatalistStyles, ItemStyles } from '@/src/styles/DatalistStyles'
-import { inputStyles } from '@/src/styles/InputStyles'
 import { styles } from '@/src/styles/Styles'
 import { useFocusEffect } from 'expo-router'
-import React from 'react'
-import { Alert, FlatList, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Alert, FlatList, Keyboard, Text, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 interface ItemTemplate {
@@ -27,7 +29,7 @@ interface ItemTemplate {
 export default function DataListScreen() {
     const { theme } = useTheme()
 
-    const { setModalData } = useModalContext()
+    const { setModalData } = useDataEditContext()
 
     const {
         directions,
@@ -45,9 +47,9 @@ export default function DataListScreen() {
     } = useDataList({ directions, stops, routes, vehicleTypes, icons })
 
     const {
-        showStopModal,
-        openModal, closeStopModal
-    } = useStopModal()
+        showModal,
+        openModal, closeModal
+    } = useModalHandler()
 
     const {
         activeModalConfig,
@@ -57,6 +59,22 @@ export default function DataListScreen() {
     const {
         loading
     } = useLoading()
+
+    const [keyboardShown, setKeyboardShown] = useState<boolean>(false)
+
+    useEffect(() => {
+        const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
+            setKeyboardShown(true)
+        })
+        const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardShown(false)
+        })
+
+        return () => {
+            showSubscription.remove()
+            hideSubscription.remove()
+        }
+    }, [])
 
     useFocusEffect(
         React.useCallback(() => {
@@ -82,11 +100,18 @@ export default function DataListScreen() {
             console.error("No data handler defined for this modal config.")
             Alert.alert("Error", "Configuration error: Could not process data.")
         }
-        closeStopModal()
+        closeModal()
     }
 
     const renderItem = ({ item }: { item: ItemTemplate }) => (
-        <View style={ItemStyles[theme].itemContainer}>
+        <TouchableOpacity
+            style={[
+                ItemStyles[theme].itemContainer,
+                { flex: 1, justifyContent: 'space-between' }
+            ]}
+            activeOpacity={0.8}
+            onPress={() => handleModify(item)}
+        >
             <View style={ItemStyles[theme].textContainer}>
                 {dataType === "Stops" ? (
                     <>
@@ -102,17 +127,7 @@ export default function DataListScreen() {
                 ) : null}
                 <Text style={ItemStyles[theme].itemTitle}>{item.name}</Text>
             </View>
-            <View style={ItemStyles[theme].buttonContainer}>
-                <View style={ItemStyles[theme].fillerContainer}></View>
-                <TouchableOpacity
-                    style={ItemStyles[theme].modifyButton}
-                    onPress={() => handleModify(item)}
-                    activeOpacity={0.8}
-                >
-                    <Text style={ItemStyles[theme].modifyButtonText}>Modify</Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+        </TouchableOpacity>
     )
 
     const ModalContentComponent = activeModalConfig?.content
@@ -135,17 +150,21 @@ export default function DataListScreen() {
                             renderItem={renderItem}
                             keyExtractor={item => item.id.toString()}
                             contentContainerStyle={DatalistStyles[theme].listContent}
+                            columnWrapperStyle={{ gap: 8 }}
                             keyboardShouldPersistTaps={'always'}
+                            ListHeaderComponent={EmptyHeaderComponent}
+                            ListHeaderComponentStyle={{ flex: 1 }}
+                            numColumns={2}
                         />
                     )}
 
-                    <TextInput
-                        style={inputStyles[theme].textInput}
-                        placeholder={`Search ${dataType}...`}
-                        placeholderTextColor={colors.text.placeholderGray}
+                    <Divider />
+
+                    <TextInputBase
                         value={searchQuery}
+                        placeholder={`Search ${dataType}...`}
                         onChangeText={setSearchQuery}
-                        autoFocus={true}
+                        style={theme === 'light' ? { borderColor: colors.black } : { borderColor: colors.white_100 }}
                     />
 
                     <View style={DatalistStyles[theme].addButtonContainer}>
@@ -158,8 +177,8 @@ export default function DataListScreen() {
                     </View>
 
                     <ModalTemplate
-                        isModalVisible={showStopModal}
-                        handleCloseModal={closeStopModal}
+                        isModalVisible={showModal}
+                        handleCloseModal={closeModal}
                         title={activeModalConfig?.title}
                     >
                         {ModalContentComponent ? (
@@ -167,7 +186,7 @@ export default function DataListScreen() {
                                 stops={stops}
                                 icons={icons}
                                 onSubmit={handleSubmitFromModal}
-                                onCancel={closeStopModal}
+                                onCancel={closeModal}
                             />
                         ) : (
                             <Text>Loading...</Text>

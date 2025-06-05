@@ -1,4 +1,4 @@
-import { colors } from "@/const/color"
+import { colors } from "@/src/const/color"
 import { StyleSheet } from "react-native"
 
 const lightDatalistStyles = StyleSheet.create({
@@ -6,12 +6,13 @@ const lightDatalistStyles = StyleSheet.create({
         gap: 10,
         flex: 1,
         paddingTop: 5,
-        paddingBottom: 10,
+        paddingBottom: 20,
         paddingHorizontal: 15,
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.white_100,
     },
     listContent: {
-        gap: 10,
+        gap: 8,
+        flexGrow: 1,
     },
     addButtonContainer: {
 
@@ -28,11 +29,11 @@ const lightDatalistStyles = StyleSheet.create({
     },
     modalSearchInput: {
         borderWidth: 1,
-        borderColor: colors.background.black,
-        borderRadius: 5,
+        borderColor: colors.black,
+        borderRadius: 10,
         padding: 10,
         fontSize: 16,
-        backgroundColor: colors.background.white,
+        backgroundColor: colors.white,
     }
 })
 
@@ -43,10 +44,10 @@ const lightItemStyles = StyleSheet.create({
     itemContainer: {
         padding: 10,
         flexDirection: 'column',
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.white_100,
         borderWidth: 1,
-        borderRadius: 8,
-        borderColor: colors.background.black,
+        borderRadius: 10,
+        borderColor: colors.black,
         gap: 10,
     },
     textContainer: {
@@ -62,16 +63,16 @@ const lightItemStyles = StyleSheet.create({
         flex: 1,
         fontSize: 16,
         fontWeight: 'bold',
-        color: colors.appBlue,
+        color: colors.primary,
     },
     modifyButton: {
         backgroundColor: '#007bff',
         paddingVertical: 12,
         paddingHorizontal: 12,
-        borderRadius: 8,
+        borderRadius: 10,
     },
     modifyButtonText: {
-        color: colors.background.white,
+        color: colors.white,
         fontSize: 14,
         fontWeight: 'bold',
     },
@@ -85,7 +86,7 @@ export const DatalistStyles = {
     dark: StyleSheet.create({
         container: {
             ...lightDatalistStyles.container,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
         },
         listContent: {
             ...lightDatalistStyles.listContent,
@@ -101,8 +102,8 @@ export const DatalistStyles = {
         },
         modalSearchInput: {
             ...lightDatalistStyles.modalSearchInput,
-            borderColor: colors.text.dimWhite,
-            backgroundColor: colors.background.black,
+            borderColor: colors.white_100,
+            backgroundColor: colors.black,
         }
     })
 }
@@ -115,29 +116,29 @@ export const ItemStyles = {
         },
         itemContainer: {
             ...lightItemStyles.itemContainer,
-            borderColor: colors.text.dimWhite,
-            backgroundColor: colors.background.black,
+            borderColor: colors.white_100,
+            backgroundColor: colors.black,
         },
         textContainer: {
             ...lightItemStyles.textContainer,
         },
         itemTitle: {
             ...lightItemStyles.itemTitle,
-            color: colors.text.dimWhite,
+            color: colors.white_100,
         },
         itemSubtitle: {
             ...lightItemStyles.itemSubtitle,
-            color: colors.dimmerAppBlue,
+            color: colors.primary_100,
         },
         modifyButton: {
             ...lightItemStyles.modifyButton,
             borderWidth: 1,
-            borderColor: colors.dimmerAppBlue,
-            backgroundColor: colors.background.black,
+            borderColor: colors.primary_100,
+            backgroundColor: colors.black,
         },
         modifyButtonText: {
             ...lightItemStyles.modifyButtonText,
-            color: colors.text.dimWhite,
+            color: colors.white_100,
         },
         fillerContainer: {
             ...lightItemStyles.fillerContainer,

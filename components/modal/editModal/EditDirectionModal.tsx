@@ -1,19 +1,19 @@
 import Button from "@/components/BaseButton"
-import { colors } from "@/const/color"
-import { useModalContext } from "@/context/ModalContext"
+import { TextInputBlock } from "@/components/input/TextInput"
+import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { Direction } from "@/src/types/Travels"
 import { useState } from "react"
-import { Alert, Text, TextInput, View } from "react-native"
+import { Alert, Text, View } from "react-native"
 
 export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()
 
-    const { modalData: data } = useModalContext()
+    const { modalData: data } = useDataEditContext()
 
     const { loading } = useLoading()
 
@@ -35,16 +35,12 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
-                            <TextInput
-                                style={inputStyles[theme].textInput}
-                                placeholder="Direction name..."
-                                placeholderTextColor={colors.text.placeholderGray}
-                                value={direction.name}
-                                onChangeText={text => (setDirection({ ...direction, "name": text }))}
-                            />
-                        </View>
+                        <TextInputBlock
+                            value={direction.name}
+                            label="Name:"
+                            placeholder="Direction name..."
+                            onChangeText={(text) => setDirection({ ...direction, "name": text })}
+                        />
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>

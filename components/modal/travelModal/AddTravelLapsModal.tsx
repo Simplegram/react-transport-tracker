@@ -1,12 +1,14 @@
 import Button from '@/components/BaseButton'
-import { colors } from '@/const/color'
+import Divider from '@/components/Divider'
 import { useTheme } from '@/context/ThemeContext'
-import useStopModal from '@/hooks/useStopModal'
+import useModalHandler from '@/hooks/useModalHandler'
+import { colors } from '@/src/const/color'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapsModalProp } from '@/src/types/AddableTravels'
 import { formatLapTimeDisplay } from '@/src/utils/utils'
+import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import {
     Modal,
@@ -16,6 +18,7 @@ import {
     Text,
     View,
 } from 'react-native'
+import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated'
 import AddLapModal from '../addModal/AddLapModal'
 import EditLapModal from '../editModal/EditLapModal'
 
@@ -23,16 +26,16 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
     const { theme } = useTheme()
 
     const {
-        showStopModal: showLapModal,
-        openStopModal: openLapModal,
-        closeStopModal: closeLapModal
-    } = useStopModal()
+        showModal: showLapModal,
+        openModal: openLapModal,
+        closeModal: closeLapModal
+    } = useModalHandler()
 
     const {
-        showStopModal: showEditLapModal,
-        openStopModal: openEditLapModal,
-        closeStopModal: closeEditLapModal
-    } = useStopModal()
+        showModal: showEditLapModal,
+        openModal: openEditLapModal,
+        closeModal: closeEditLapModal
+    } = useModalHandler()
 
     const [laps, setLaps] = useState<AddableLap[]>([])
     const [selectedLap, setSelectedLap] = useState<AddableLap | undefined>(undefined)
@@ -47,7 +50,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
     }
 
     const handleLapAdd = (lap: AddableLap) => {
-        if (laps) setLaps([...laps, lap])
+        if (laps) setLaps([lap, ...laps])
 
         closeLapModal()
     }
@@ -64,9 +67,21 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
         closeEditLapModal()
     }
 
+    const handleLapRemove = (id: number | string) => {
+        setLaps((laps) => {
+            return laps.filter((lap) => lap.id !== id)
+        })
+    }
+
     useEffect(() => {
         setLaps(currentLaps)
     }, [currentLaps])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setLaps(currentLaps)
+        }, [isModalVisible])
+    )
 
     return (
         <Modal
@@ -87,25 +102,43 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                                 contentContainerStyle={modalStyles[theme].scrollView}
                             >
                                 {laps.map((lap: AddableLap, index) => (
-                                    <Pressable key={index} style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
-                                        <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
-                                        {stops.find(stop => stop.id === lap.stop_id) ? (
-                                            <Text style={[inputElementStyles[theme].inputLabel, { color: colors.appBlue }]}>
-                                                {stops.find(stop => stop.id === lap.stop_id)?.name}
-                                            </Text>
-                                        ) : null}
+                                    <Animated.View
+                                        key={lap.id}
+                                        entering={FadeIn.duration(250)}
+                                        exiting={FadeOut.duration(125)}
+                                        layout={LinearTransition}
+                                    >
+                                        <Pressable style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
+                                            <View style={{
+                                                flex: 1,
+                                                width: '100%',
+                                                justifyContent: 'space-between',
+                                                flexDirection: 'row',
+                                            }}>
+                                                <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
+                                                <Pressable onPress={() => handleLapRemove(lap.id)}>
+                                                    <Text style={[inputElementStyles[theme].insideLabel, { color: 'red' }]}>Remove</Text>
+                                                </Pressable>
+                                            </View>
+                                            {stops.find(stop => stop.id === lap.stop_id) ? (
+                                                <Text style={[inputElementStyles[theme].inputLabel, { color: colors.primary }]}>
+                                                    {stops.find(stop => stop.id === lap.stop_id)?.name}
+                                                </Text>
+                                            ) : null}
 
-                                        {lap.note && (
-                                            <Text style={inputElementStyles[theme].inputLabelLight}>{lap.note}</Text>
-                                        )}
-                                    </Pressable>
+                                            {lap.note && (
+                                                <Text style={inputElementStyles[theme].inputLabelLight}>{lap.note}</Text>
+                                            )}
+                                        </Pressable>
+                                        {index < laps.length - 1 && <Divider />}
+                                    </Animated.View>
                                 ))}
                             </ScrollView>
                         )}
                     </View>
 
-                    <View style={{ paddingBottom: 10, borderBottomWidth: 1, borderBottomColor: '#ccc' }}>
-                        <Button title='Add lap' color={colors.appBlue} onPress={openLapModal} style={addButtonStyles.buttonContainer} textStyle={addButtonStyles.plusText}></Button>
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button title='Add lap' color={colors.primary} onPress={openLapModal} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>
@@ -143,10 +176,7 @@ const lightStyles = StyleSheet.create({
     detailRow: {
         flexDirection: 'column',
         justifyContent: 'space-between',
-        paddingVertical: 10,
-        paddingHorizontal: 10,
         alignItems: 'flex-start',
-        borderWidth: 1,
         borderRadius: 10,
     },
 })
@@ -163,15 +193,3 @@ const styles = {
         },
     })
 }
-
-const addButtonStyles = StyleSheet.create({
-    buttonContainer: {
-        borderWidth: 1,
-        borderColor: 'black',
-        borderRadius: 10,
-    },
-    plusText: {
-        color: 'white',
-        fontWeight: 'bold',
-    },
-})

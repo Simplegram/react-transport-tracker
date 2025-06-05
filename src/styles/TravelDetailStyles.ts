@@ -1,9 +1,9 @@
-import { colors } from "@/const/color"
+import { colors } from "@/src/const/color"
 import { StyleSheet } from "react-native"
 
 const lightTravelDetailStyles = StyleSheet.create({
     container: {
-        gap: 15,
+        gap: 20,
     },
     centered: {
         flex: 1,
@@ -18,8 +18,8 @@ const lightTravelDetailStyles = StyleSheet.create({
         color: '#333',
     },
     card: {
-        backgroundColor: colors.dimWhite,
-        borderRadius: 8,
+        backgroundColor: colors.white_100,
+        borderRadius: 10,
         padding: 15,
         borderWidth: 1,
         gap: 15,
@@ -27,16 +27,15 @@ const lightTravelDetailStyles = StyleSheet.create({
     cardTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-        paddingBottom: 8,
+        borderBottomWidth: 0.5,
+        borderBottomColor: colors.black,
+        paddingBottom: 5,
         color: '#555',
     },
     detailRow: {
         flexDirection: 'column',
         justifyContent: 'space-between',
         padding: 10,
-        alignItems: 'flex-start',
         borderWidth: 1,
         borderRadius: 10,
     },
@@ -57,7 +56,7 @@ const lightTravelDetailStyles = StyleSheet.create({
     specialValue: {
         fontSize: 16,
         fontWeight: 'bold',
-        color: colors.appBlue,
+        color: colors.primary,
     },
 })
 
@@ -76,31 +75,32 @@ export const travelDetailStyles = {
         card: {
             ...lightTravelDetailStyles.card,
             borderWidth: 1,
-            borderColor: colors.dimWhite,
+            borderColor: colors.white_100,
             backgroundColor: colors.black,
         },
         cardTitle: {
             ...lightTravelDetailStyles.cardTitle,
-            color: colors.dimWhite,
+            color: colors.white_100,
+            borderBottomColor: colors.white_100,
         },
         detailRow: {
             ...lightTravelDetailStyles.detailRow,
-            borderColor: colors.dimmerWhite,
+            borderColor: colors.white_300,
         },
         label: {
             ...lightTravelDetailStyles.label,
-            color: colors.dimmerWhite2,
+            color: colors.white_400,
         },
         value: {
             ...lightTravelDetailStyles.value,
         },
         valueText: {
             ...lightTravelDetailStyles.valueText,
-            color: colors.dimmerWhite,
+            color: colors.white_300,
         },
         specialValue: {
             ...lightTravelDetailStyles.specialValue,
-            color: colors.dimmerAppBlue,
+            color: colors.primary_100,
         },
     })
 }

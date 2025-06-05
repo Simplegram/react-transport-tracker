@@ -1,4 +1,5 @@
 import { useTheme } from "@/context/ThemeContext"
+import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { calendarStyles, calendarTheme } from "@/src/styles/CalendarStyles"
 import { StandaloneModalProp } from "@/src/types/AddableTravels"
 import { getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils"
@@ -20,8 +21,8 @@ interface CalendarModalProps {
 export default function CalendarModal({ dates, markedDates, currentSelectedDate, modalElements }: CalendarModalProps) {
     const { theme } = useTheme()
 
-    const pastScrollRange = getMonthsSinceEarliestDate(dates)
-    const futureScrollRange = getFutureMonthFromLatestDate(dates, 1)
+    const pastScrollRange = getMonthsSinceEarliestDate(dates, currentSelectedDate)
+    const futureScrollRange = getFutureMonthFromLatestDate(currentSelectedDate)
     const [currentDate] = useState(new Date().toISOString().split('T')[0])
 
     return (
@@ -40,13 +41,34 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
                         markedDates={markedDates}
                         onDayPress={modalElements.onSelect}
                         theme={calendarTheme[theme]}
+                        contentContainerStyle={{ paddingBottom: 30 }}
                     />
-                    <TouchableOpacity
-                        style={calendarStyles[theme].todayButton}
-                        onPress={() => modalElements.onSelect({ dateString: currentDate })}
-                    >
-                        <Text style={calendarStyles[theme].todayButtonText}>Set Today</Text>
-                    </TouchableOpacity>
+                    <View style={{
+                        position: 'absolute',
+                        bottom: 20,
+                        left: 0,
+                        right: 0,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        zIndex: 1,
+                        flexDirection: 'row',
+                        gap: 5
+                    }}>
+                        <TouchableOpacity
+                            activeOpacity={0.8}
+                            style={calendarStyles[theme].todayButton}
+                            onPress={() => modalElements.onSelect({ dateString: currentDate })}
+                        >
+                            <Text style={calendarStyles[theme].todayButtonText}>Set Today</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            activeOpacity={theme === 'light' ? 0.5 : 0.8}
+                            style={calendarStyles[theme].cancelButton}
+                            onPress={modalElements.onClose}
+                        >
+                            <Text style={buttonStyles[theme].cancelButtonText}>Close</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </Modal>

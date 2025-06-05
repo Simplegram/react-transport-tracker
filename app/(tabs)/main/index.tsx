@@ -1,18 +1,18 @@
 import Button from "@/components/BaseButton"
-import GroupedDataDisplay from "@/components/GroupedTravelsDisplay"
 import LoadingScreen from "@/components/LoadingScreen"
 import CalendarModal from "@/components/modal/CalendarModal"
+import GroupedDataDisplay from "@/components/travel/GroupedTravelsDisplay"
 import { useSupabase } from "@/context/SupabaseContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useToggleLoading } from "@/hooks/useLoading"
-import useStopModal from "@/hooks/useStopModal"
+import useModalHandler from "@/hooks/useModalHandler"
 import useTravelCalendar from "@/hooks/useTravelCalendar"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
 import { DataItemWithNewKey, getGroupedData } from "@/src/utils/dataUtils"
-import { getTodayString } from "@/src/utils/dateUtils"
-import { useFocusEffect } from "@react-navigation/native"
+import { getDateString } from "@/src/utils/dateUtils"
+import { router, useFocusEffect } from "expo-router"
 import React, { useEffect, useMemo, useState } from "react"
 import { View } from "react-native"
 
@@ -34,17 +34,17 @@ export default function HomePage() {
         dates, selectedDate, setSelectedDate,
     } = useTravelCalendar()
 
-    const { loading, toggleLoading } = useToggleLoading()
+    const { loading, toggleLoading } = useToggleLoading(150)
 
     const { laps, getAllLaps } = useGetTravelData()
 
     const [groupedData, setGroupedData] = useState<Record<string, DataItemWithNewKey[]>>()
 
     const {
-        showStopModal: showCalendarModal,
-        openStopModal: openCalendarModal,
-        closeStopModal: closeCalendarModal
-    } = useStopModal()
+        showModal: showCalendarModal,
+        openModalWithSearch: openCalendarModal,
+        closeModal: closeCalendarModal
+    } = useModalHandler()
 
     const markedDates = useMemo(() => {
         const marked: any = {}
@@ -68,13 +68,19 @@ export default function HomePage() {
     }, [selectedDate, dates])
 
     const onDayPress = (day: DateObject) => {
-        toggleLoading()
+        if (day.dateString !== selectedDate) toggleLoading()
         setSelectedDate(day.dateString)
         closeCalendarModal()
     }
 
+    const refetchTravels = async () => {
+        await getDates()
+        await getAllLaps()
+        await getTravelAtDate()
+    }
+
     useEffect(() => {
-        setSelectedDate(getTodayString())
+        setSelectedDate(getDateString())
     }, [])
 
     useFocusEffect(
@@ -105,19 +111,32 @@ export default function HomePage() {
     return (
         <View style={mainMenuStyles[theme].container}>
             <View style={mainMenuStyles[theme].listContainer}>
-                {loading == true || !supabase || !groupedData ? (
+                {loading || !supabase || !groupedData ? (
                     <LoadingScreen></LoadingScreen>
                 ) : (
-                    <GroupedDataDisplay data={groupedData} currentDate={selectedDate}></GroupedDataDisplay>
+                    <GroupedDataDisplay data={groupedData} currentDate={selectedDate} refetch={refetchTravels}></GroupedDataDisplay>
                 )}
             </View>
-            <Button
-                style={[buttonStyles[theme].addButton, { flex: 0 }]}
-                textStyle={buttonStyles[theme].addButtonText}
-                onPress={() => openCalendarModal()}
-            >
-                View Calendar
-            </Button>
+            <View style={{
+                gap: 8,
+                width: '100%',
+                flexDirection: 'row',
+            }}>
+                <Button
+                    style={buttonStyles[theme].addButton}
+                    textStyle={buttonStyles[theme].addButtonText}
+                    onPress={() => router.push("main/estimate")}
+                >
+                    Time Estimation
+                </Button>
+                <Button
+                    style={buttonStyles[theme].addButton}
+                    textStyle={buttonStyles[theme].addButtonText}
+                    onPress={() => openCalendarModal()}
+                >
+                    View Calendar
+                </Button>
+            </View>
             <CalendarModal
                 dates={dates}
                 markedDates={markedDates}

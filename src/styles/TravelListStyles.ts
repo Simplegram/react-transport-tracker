@@ -1,17 +1,19 @@
-import { colors } from "@/const/color"
+import { colors } from "@/src/const/color"
 import { StyleSheet } from "react-native"
 
 const lightTravelCardStyles = StyleSheet.create({
     cardHolder: {
         gap: 12,
+        flexGrow: 1,
     },
     card: {
         gap: 8,
         padding: 12,
-        backgroundColor: colors.text.dimWhite,
-        borderRadius: 8,
-        borderWidth: 1,
+        backgroundColor: colors.white_100,
+        borderRadius: 10,
         borderColor: '#000',
+        height: 300,
+        justifyContent: 'space-between',
     },
     routeInfoSection: {},
     routeText: {
@@ -85,19 +87,19 @@ export const travelCardStyles = {
         },
         card: {
             ...lightTravelCardStyles.card,
-            backgroundColor: colors.background.black,
-            borderColor: colors.text.dimmerWhite,
+            backgroundColor: colors.black,
+            borderColor: colors.white_300,
         },
         routeInfoSection: {
             ...lightTravelCardStyles.routeInfoSection,
         },
         routeText: {
             ...lightTravelCardStyles.routeText,
-            color: colors.dimmerAppBlue,
+            color: colors.primary_100,
         },
         vehicleText: {
             ...lightTravelCardStyles.vehicleText,
-            color: colors.text.dimmerWhite,
+            color: colors.white_300,
         },
         stopsTimeSection: {
             ...lightTravelCardStyles.stopsTimeSection,
@@ -107,36 +109,36 @@ export const travelCardStyles = {
         },
         stopText: {
             ...lightTravelCardStyles.stopText,
-            color: colors.dimmerAppBlue,
+            color: colors.primary_100,
         },
         timeText: {
             ...lightTravelCardStyles.timeText,
-            color: colors.text.dimmerWhite,
+            color: colors.white_300,
         },
         stopArrowBlock: {
             ...lightTravelCardStyles.stopArrowBlock,
         },
         stopArrowText: {
             ...lightTravelCardStyles.stopArrowText,
-            color: colors.text.dimmerWhite,
+            color: colors.white_300,
         },
         lapsSection: {
             ...lightTravelCardStyles.lapsSection,
         },
         lapText: {
             ...lightTravelCardStyles.lapText,
-            color: colors.text.dimmerWhite,
+            color: colors.white_300,
         },
         notesSection: {
             ...lightTravelCardStyles.notesSection,
         },
         notesLabel: {
             ...lightTravelCardStyles.notesLabel,
-            color: colors.text.dimmerWhite,
+            color: colors.white_300,
         },
         notesText: {
             ...lightTravelCardStyles.notesText,
-            color: colors.text.dimmerWhite,
+            color: colors.white_300,
         },
     })
 }
@@ -168,7 +170,7 @@ export const travelEmptyContainer = {
         },
         noDataText: {
             ...lightTravelEmptyContainer.noDataText,
-            color: colors.text.dimWhite,
+            color: colors.white_100,
         },
     })
 }

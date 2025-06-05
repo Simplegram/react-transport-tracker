@@ -1,4 +1,4 @@
-import { colors } from "@/const/color"
+import { colors } from "@/src/const/color"
 import { StyleSheet } from "react-native"
 
 const lightFlatlistStyles = StyleSheet.create({
@@ -10,8 +10,8 @@ const lightFlatlistStyles = StyleSheet.create({
         paddingVertical: 15,
         paddingHorizontal: 10,
         borderBottomWidth: 1,
-        borderBottomColor: colors.text.dimmerWhite2,
-        backgroundColor: colors.text.dimWhite,
+        borderBottomColor: colors.white_400,
+        backgroundColor: colors.white_100,
     },
 })
 
@@ -20,7 +20,7 @@ const flatlistStyles = {
     dark: StyleSheet.create({
         item: {
             ...lightFlatlistStyles.item,
-            backgroundColor: colors.background.black,
+            backgroundColor: colors.black,
         },
     })
 }
@@ -52,18 +52,18 @@ const modalElementStyles = {
     dark: StyleSheet.create({
         label: {
             ...lightModalElementStyles.label,
-            color: colors.text.dimmerWhite,
+            color: colors.white_300,
         },
         header: {
             ...lightModalElementStyles.header,
         },
         title: {
             ...lightModalElementStyles.title,
-            color: colors.text.dimWhite,
+            color: colors.white_100,
         },
         closeLabel: {
             ...lightModalElementStyles.closeLabel,
-            color: colors.text.dimWhite,
+            color: colors.white_100,
         },
     })
 }
@@ -75,30 +75,29 @@ const lightModalStyles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
     modalContainer: {
-        marginTop: 'auto',
         padding: 20,
         borderTopLeftRadius: 16,
         borderTopRightRadius: 16,
-        backgroundColor: colors.text.dimWhite,
+        backgroundColor: colors.white_100,
         justifyContent: 'space-between',
         gap: 10,
     },
     lapModalContainer: {
-        height: 425
+        maxHeight: 600
     },
     coordModalContainer: {
         height: 475
     },
     inputContainer: {
         gap: 10,
-        minHeight: 100,
+        minHeight: 125,
         maxHeight: 325,
         flexDirection: 'column',
     },
     modalSearchInput: {
         borderWidth: 1,
         borderColor: '#ccc',
-        borderRadius: 5,
+        borderRadius: 10,
         padding: 10,
         fontSize: 16,
         backgroundColor: '#fff',
@@ -124,8 +123,8 @@ const modalStyles = {
             ...lightModalStyles.modalContainer,
             borderRadius: 16,
             borderWidth: 1,
-            borderTopColor: colors.text.dimmerWhite,
-            backgroundColor: colors.background.black,
+            borderTopColor: colors.white_300,
+            backgroundColor: colors.black,
         },
         lapModalContainer: {
             ...lightModalStyles.lapModalContainer,
