@@ -52,7 +52,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
             </View>
 
             <View style={buttonStyles[theme].buttonRow}>
-                <Button label='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                <Button.Dismiss label='Cancel' onPress={onCancel} />
                 <Button.Add label='Add Icon' onPress={handleOnSubmit} />
             </View>
         </View>

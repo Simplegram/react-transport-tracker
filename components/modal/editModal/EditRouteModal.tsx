@@ -158,7 +158,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                     />
 
                     <View style={buttonStyles[theme].buttonRow}>
-                        <Button label='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button.Dismiss label='Cancel' onPress={onCancel} />
                         <Button.Add label='Edit Route' onPress={handleOnSubmit} />
                     </View>
                 </>

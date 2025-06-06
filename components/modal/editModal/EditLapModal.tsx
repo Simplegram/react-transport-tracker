@@ -123,7 +123,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                         <Divider />
 
                         <View style={buttonStyles[theme].buttonRow}>
-                            <Button label='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                            <Button.Dismiss label='Cancel' onPress={onClose} />
                             <Button.Add label='Edit Lap' onPress={handleOnSubmit} />
                         </View>
                     </View>

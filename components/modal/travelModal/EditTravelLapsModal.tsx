@@ -123,7 +123,7 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>
-                        <Button label='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button.Dismiss label='Cancel' onPress={onClose} />
                         <Button.Add label='Save Laps' onPress={handleOnSubmit} />
                     </View>
                 </View>

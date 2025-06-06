@@ -91,8 +91,8 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>
-                        <Button label='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button label='Edit Type' onPress={handleOnSubmit} />
+                        <Button.Dismiss label='Cancel' onPress={onCancel} />
+                        <Button.Add label='Edit Type' onPress={handleOnSubmit} />
                     </View>
                 </>
             )}

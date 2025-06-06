@@ -151,7 +151,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                             <Divider />
 
                             <View style={buttonStyles[theme].buttonRow}>
-                                <Button label='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                                <Button.Dismiss label='Cancel' onPress={onClose} />
                                 <Button.Add label='Add Lap' onPress={handleOnSubmit} />
                             </View>
                         </View>

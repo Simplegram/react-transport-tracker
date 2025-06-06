@@ -74,8 +74,8 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
                     />
 
                     <View style={buttonStyles[theme].buttonRow}>
-                        <Button label='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button.Add label='Pick Coordinate' onPress={handleOnSubmit}/>
+                        <Button.Dismiss label='Cancel' onPress={onClose} />
+                        <Button.Add label='Pick Coordinate' onPress={handleOnSubmit} />
                     </View>
                 </View>
             </Pressable>
