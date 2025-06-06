@@ -20,19 +20,6 @@ const lightButtonStyles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
     },
-    cancelButton: {
-        paddingVertical: 12,
-        borderRadius: 10,
-        flex: 1,
-        alignItems: 'center',
-        borderWidth: 1,
-        backgroundColor: colors.white_100
-    },
-    cancelButtonText: {
-        color: colors.black,
-        fontSize: 16,
-        fontWeight: '600',
-    },
     redButton: {
         borderWidth: 1,
         borderRadius: 10,
@@ -68,15 +55,6 @@ export const buttonStyles = {
         },
         addButtonText: {
             ...lightButtonStyles.addButtonText,
-            color: colors.white_100,
-        },
-        cancelButton: {
-            ...lightButtonStyles.cancelButton,
-            borderColor: colors.white_300,
-            backgroundColor: colors.black,
-        },
-        cancelButtonText: {
-            ...lightButtonStyles.cancelButtonText,
             color: colors.white_100,
         },
         redButton: {
