@@ -56,8 +56,8 @@ export default function EditCoordModal({ currentCoordinates, isModalVisible, onC
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                        <Button label='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button label='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </View>
             </Pressable>

@@ -6,7 +6,6 @@ import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import useModalHandler from "@/hooks/useModalHandler"
-import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles } from "@/src/styles/InputStyles"
 import { styles } from "@/src/styles/Styles"
@@ -15,7 +14,7 @@ import { EditableStop } from "@/src/types/EditableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { sortByIdToFront } from "@/src/utils/utils"
 import { useRef, useState } from "react"
-import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native"
+import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import AddCoordModal from "../addModal/AddCoordModal"
 
@@ -152,8 +151,8 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                     />
 
                     <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button title='Edit Stop' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                        <Button label='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button label='Edit Stop' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </>
             )}

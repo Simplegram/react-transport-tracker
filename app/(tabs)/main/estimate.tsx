@@ -199,7 +199,7 @@ export default function EstimationPage() {
 
             <View style={buttonStyles[theme].buttonRow}>
                 <Button
-                    title='Get Estimate'
+                    label='Get Estimate'
                     color='#0284f5'
                     onPress={handleOnSubmit}
                     style={buttonStyles[theme].addButton}

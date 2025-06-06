@@ -3,8 +3,9 @@ import { colors } from '@/src/const/color'
 import { darkenColor, getBackgroundColorFromStyle, getColorFromStyle } from '@/src/utils/colorUtils'
 import { Pressable, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native'
 
-type Props = {
-    title?: string
+export interface Props {
+    disabled?: boolean
+    label?: string
     onPress?: () => void
     style?: StyleProp<ViewStyle>
     textStyle?: StyleProp<TextStyle>
@@ -14,7 +15,8 @@ type Props = {
 }
 
 export default function Button({
-    title,
+    disabled,
+    label,
     onPress,
     style,
     textStyle,
@@ -34,7 +36,7 @@ export default function Button({
     }
 
     return (
-        <Pressable style={buttonContainerStyle} onPress={onPress}>
+        <Pressable disabled={disabled} style={buttonContainerStyle} onPress={onPress}>
             {({ pressed }) => {
                 const styleTextColor = getColorFromStyle(textStyle)
                 const baseTextColor = styleTextColor || styles.buttonText.color || (theme === 'light' ? colors.white : colors.white_100)
@@ -43,7 +45,7 @@ export default function Button({
 
                 return (
                     <Text style={[styles.buttonText, textStyle, { color: effectiveTextColor }]}>
-                        {title ? title : children}
+                        {label ? label : children}
                     </Text>
                 )
             }}

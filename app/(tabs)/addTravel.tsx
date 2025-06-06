@@ -326,7 +326,7 @@ export default function AddTravel() {
 
                 <View style={buttonStyles[theme].buttonRow}>
                     <Button
-                        title='Add Travel'
+                        label='Add Travel'
                         color='#0284f5'
                         onPress={handleOnSubmit}
                         style={buttonStyles[theme].addButton}

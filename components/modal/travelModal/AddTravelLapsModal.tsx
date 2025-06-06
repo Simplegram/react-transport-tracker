@@ -138,12 +138,12 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Add lap' color={colors.primary} onPress={openLapModal} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                        <Button label='Add lap' color={colors.primary} onPress={openLapModal} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button title='Save Laps' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                        <Button label='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                        <Button label='Save Laps' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                     </View>
                 </View>
 

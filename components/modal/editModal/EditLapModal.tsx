@@ -123,8 +123,8 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                         <Divider />
 
                         <View style={buttonStyles[theme].buttonRow}>
-                            <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                            <Button title='Edit Lap' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                            <Button label='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
+                            <Button label='Edit Lap' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                         </View>
                     </View>
 

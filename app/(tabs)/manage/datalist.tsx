@@ -169,7 +169,7 @@ export default function DataListScreen() {
 
                     <View style={DatalistStyles[theme].addButtonContainer}>
                         <Button
-                            title={`Add New ${dataType.slice(0, -1)}`}
+                            label={`Add New ${dataType.slice(0, -1)}`}
                             onPress={handleAddNew}
                             style={[buttonStyles[theme].addButton, { flex: 0 }]}
                             textStyle={buttonStyles[theme].addButtonText}

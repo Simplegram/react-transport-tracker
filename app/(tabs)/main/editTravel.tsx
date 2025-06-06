@@ -361,7 +361,7 @@ export default function EditTravelItem() {
                         <Divider />
 
                         <View style={buttonStyles[theme].buttonRow}>
-                            <Button title='Save Travel Edit(s)' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                            <Button label='Save Travel Edit(s)' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
                         </View>
                     </View>
 
