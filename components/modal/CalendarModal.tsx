@@ -1,10 +1,9 @@
 import { useTheme } from "@/context/ThemeContext"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { calendarStyles, calendarTheme } from "@/src/styles/CalendarStyles"
 import { StandaloneModalProp } from "@/src/types/AddableTravels"
 import { getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils"
 import { useState } from "react"
-import { Modal, Text, TouchableOpacity, View } from "react-native"
+import { Modal, View } from "react-native"
 import { CalendarList } from "react-native-calendars"
 import Button from "../BaseButton"
 
@@ -55,20 +54,8 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
                         flexDirection: 'row',
                         gap: 5
                     }}>
-                        <TouchableOpacity
-                            activeOpacity={0.8}
-                            style={calendarStyles[theme].todayButton}
-                            onPress={() => modalElements.onSelect({ dateString: currentDate })}
-                        >
-                            <Text style={calendarStyles[theme].todayButtonText}>Set Today</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            activeOpacity={theme === 'light' ? 0.5 : 0.8}
-                            style={calendarStyles[theme].cancelButton}
-                            onPress={modalElements.onClose}
-                        >
-                            <Text style={buttonStyles[theme].cancelButtonText}>Close</Text>
-                        </TouchableOpacity>
+                        <Button.Add label="Set Today" onPress={() => modalElements.onSelect({ dateString: currentDate })} style={{ flex: 0 }} />
+                        <Button.Dismiss label="Close" onPress={modalElements.onClose} style={{ flex: 0 }} />
                     </View>
                 </View>
             </View>
