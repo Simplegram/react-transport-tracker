@@ -53,6 +53,43 @@ export default function Button({
     )
 }
 
+function AddButton(props: Props) {
+    const { style, textStyle, ...restProps } = props
+
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    return (
+        <Button
+            style={[
+                {
+                    flex: 1,
+                    alignItems: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    paddingVertical: 12,
+
+                    borderColor: theme.palette.borderColor,
+                    backgroundColor: theme.palette.backgroundPrimary
+                },
+                props.style,
+            ]}
+            textStyle={[
+                {
+                    fontSize: 16,
+                    fontWeight: '600',
+
+                    color: theme.palette.textWhite,
+                },
+                props.textStyle,
+            ]}
+            {...restProps}
+        />
+    )
+}
+
+Button.Add = AddButton
+
 const styles = StyleSheet.create({
     buttonContainer: {
         maxHeight: 55,
