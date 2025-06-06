@@ -8,6 +8,7 @@ interface Palette {
     textBlack: string
 
     borderColor: string
+    borderColorPrimary: string
 }
 
 export interface Theme {
@@ -23,6 +24,7 @@ const lightPallete = {
     textBlack: colors.black,
 
     borderColor: colors.black,
+    borderColorPrimary: colors.black,
 }
 
 const darkPallete = {
@@ -32,7 +34,8 @@ const darkPallete = {
     textWhite: colors.white_200,
     textBlack: colors.white_200,
 
-    borderColor: colors.primary_100,
+    borderColor: colors.white_200,
+    borderColorPrimary: colors.primary_100,
 }
 
 export const lightTheme = {

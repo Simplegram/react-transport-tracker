@@ -69,7 +69,7 @@ function AddButton(props: Props) {
                     borderRadius: 10,
                     paddingVertical: 12,
 
-                    borderColor: theme.palette.borderColor,
+                    borderColor: theme.palette.borderColorPrimary,
                     backgroundColor: theme.palette.backgroundPrimary
                 },
                 props.style,
@@ -88,7 +88,43 @@ function AddButton(props: Props) {
     )
 }
 
+function DismissButton(props: Props) {
+    const { style, textStyle, ...restProps } = props
+
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    return (
+        <Button
+            style={[
+                {
+                    flex: 1,
+                    alignItems: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    paddingVertical: 12,
+
+                    borderColor: theme.palette.borderColor,
+                    backgroundColor: theme.palette.background
+                },
+                props.style,
+            ]}
+            textStyle={[
+                {
+                    fontSize: 16,
+                    fontWeight: '600',
+
+                    color: theme.palette.textBlack,
+                },
+                props.textStyle,
+            ]}
+            {...restProps}
+        />
+    )
+}
+
 Button.Add = AddButton
+Button.Dismiss = DismissButton
 
 const styles = StyleSheet.create({
     buttonContainer: {
