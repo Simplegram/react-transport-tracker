@@ -119,12 +119,12 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>
-                        <Button label='Add lap' color={colors.primary} onPress={openLapModal} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                        <Button.Add label='Add lap' onPress={openLapModal} />
                     </View>
 
                     <View style={buttonStyles[theme].buttonRow}>
                         <Button label='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button label='Save Laps' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                        <Button.Add label='Save Laps' onPress={handleOnSubmit} />
                     </View>
                 </View>
 

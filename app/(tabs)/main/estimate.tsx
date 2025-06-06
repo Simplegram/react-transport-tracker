@@ -198,13 +198,7 @@ export default function EstimationPage() {
             </View>
 
             <View style={buttonStyles[theme].buttonRow}>
-                <Button
-                    label='Get Estimate'
-                    color='#0284f5'
-                    onPress={handleOnSubmit}
-                    style={buttonStyles[theme].addButton}
-                    textStyle={buttonStyles[theme].addButtonText}
-                />
+                <Button.Add label='Get Estimate' onPress={handleOnSubmit} />
             </View>
 
             <EditTravelDirectionModal

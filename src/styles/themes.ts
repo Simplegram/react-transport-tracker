@@ -32,7 +32,7 @@ const darkPallete = {
     textWhite: colors.white_200,
     textBlack: colors.white_200,
 
-    borderColor: colors.white_200,
+    borderColor: colors.primary_100,
 }
 
 export const lightTheme = {

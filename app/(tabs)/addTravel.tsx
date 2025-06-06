@@ -325,13 +325,7 @@ export default function AddTravel() {
                 <Divider />
 
                 <View style={buttonStyles[theme].buttonRow}>
-                    <Button
-                        label='Add Travel'
-                        color='#0284f5'
-                        onPress={handleOnSubmit}
-                        style={buttonStyles[theme].addButton}
-                        textStyle={buttonStyles[theme].addButtonText}
-                    />
+                    <Button.Add label='Add Travel' onPress={handleOnSubmit} />
                 </View>
             </View>
 

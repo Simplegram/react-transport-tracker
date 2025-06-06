@@ -47,7 +47,7 @@ export default function Settings() {
                 <Divider />
                 <Button
                     style={buttonStyles[theme].redButton}
-                    textStyle={buttonStyles[theme].addButtonText}
+                    textStyle={buttonStyles[theme].cancelButtonText}
                     onPress={handleLogout}
                 >Logout</Button>
             </View>

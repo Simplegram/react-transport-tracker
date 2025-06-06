@@ -45,7 +45,7 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
 
                     <View style={buttonStyles[theme].buttonRow}>
                         <Button label='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button label='Edit Route' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                        <Button.Add label='Edit Route' onPress={handleOnSubmit} />
                     </View>
                 </>
             )}

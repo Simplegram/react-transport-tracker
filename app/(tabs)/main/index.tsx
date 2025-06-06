@@ -8,7 +8,6 @@ import useGetTravelData from "@/hooks/useGetTravelData"
 import { useToggleLoading } from "@/hooks/useLoading"
 import useModalHandler from "@/hooks/useModalHandler"
 import useTravelCalendar from "@/hooks/useTravelCalendar"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
 import { DataItemWithNewKey, getGroupedData } from "@/src/utils/dataUtils"
 import { getDateString } from "@/src/utils/dateUtils"
@@ -122,20 +121,8 @@ export default function HomePage() {
                 width: '100%',
                 flexDirection: 'row',
             }}>
-                <Button
-                    style={buttonStyles[theme].addButton}
-                    textStyle={buttonStyles[theme].addButtonText}
-                    onPress={() => router.push("main/estimate")}
-                >
-                    Time Estimation
-                </Button>
-                <Button
-                    style={buttonStyles[theme].addButton}
-                    textStyle={buttonStyles[theme].addButtonText}
-                    onPress={() => openCalendarModal()}
-                >
-                    View Calendar
-                </Button>
+                <Button.Add label="Time Estimation" onPress={() => router.push("main/estimate")} />
+                <Button.Add label="View Calendar" onPress={() => openCalendarModal()} />
             </View>
             <CalendarModal
                 dates={dates}

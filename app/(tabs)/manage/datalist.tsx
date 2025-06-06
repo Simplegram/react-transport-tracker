@@ -167,13 +167,8 @@ export default function DataListScreen() {
                         style={theme === 'light' ? { borderColor: colors.black } : { borderColor: colors.white_100 }}
                     />
 
-                    <View style={DatalistStyles[theme].addButtonContainer}>
-                        <Button
-                            label={`Add New ${dataType.slice(0, -1)}`}
-                            onPress={handleAddNew}
-                            style={[buttonStyles[theme].addButton, { flex: 0 }]}
-                            textStyle={buttonStyles[theme].addButtonText}
-                        />
+                    <View style={buttonStyles[theme].buttonRow}>
+                        <Button.Add label={`Add New ${dataType.slice(0, -1)}`} onPress={handleAddNew} />
                     </View>
 
                     <ModalTemplate

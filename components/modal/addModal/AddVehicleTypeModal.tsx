@@ -79,7 +79,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
 
                     <View style={buttonStyles[theme].buttonRow}>
                         <Button label='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button label='Add Type' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                        <Button.Add label='Add Type' onPress={handleOnSubmit} />
                     </View>
                 </>
             )}

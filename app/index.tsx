@@ -5,7 +5,6 @@ import { useSupabase } from '@/context/SupabaseContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useToggleLoading } from '@/hooks/useLoading'
 import { colors } from '@/src/const/color'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { statusBarStyles } from '@/src/styles/Styles'
 import { SupabaseClient } from '@supabase/supabase-js'
@@ -114,7 +113,7 @@ const Login = () => {
                                     secureTextEntry
                                 />
                             </View>
-                            <Button onPress={onSignInPress} style={buttonStyles[theme].addButton} textStyle={{ color: '#fff' }}>Sign in</Button>
+                            <Button.Add label='Sign in' onPress={onSignInPress} />
                         </>
                     )}
             </View>

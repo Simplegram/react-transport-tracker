@@ -152,7 +152,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
 
                     <View style={buttonStyles[theme].buttonRow}>
                         <Button label='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button label='Add Route' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
+                        <Button.Add label='Add Route' onPress={handleOnSubmit} />
                     </View>
                 </>
             )}
