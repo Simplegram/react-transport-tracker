@@ -1,12 +1,10 @@
 import { useTheme } from '@/context/ThemeContext'
 import { colors } from '@/src/const/color'
 import { darkenColor, getBackgroundColorFromStyle, getColorFromStyle } from '@/src/utils/colorUtils'
-import { Pressable, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native'
+import { Pressable, PressableProps, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native'
 
-export interface Props {
-    disabled?: boolean
+export interface Props extends Omit<PressableProps, 'style'> {
     label?: string
-    onPress?: () => void
     style?: StyleProp<ViewStyle>
     textStyle?: StyleProp<TextStyle>
     color?: string
@@ -14,41 +12,26 @@ export interface Props {
     children?: string | React.ReactNode
 }
 
-export default function Button({
-    disabled,
-    label,
-    onPress,
-    style,
-    textStyle,
-    color = '#f3f3f3',
-    darkenAmount = 0.3,
-    children,
-}: Props) {
+export default function Button(props: Props) {
     const { theme } = useTheme()
 
+    const { style, ...restProps } = props
+
     const buttonContainerStyle = ({ pressed }: { pressed: boolean }) => {
-        const styleBackgroundColor = getBackgroundColorFromStyle(style)
-        const baseBackgroundColor = styleBackgroundColor || color
+        const styleBackgroundColor = getBackgroundColorFromStyle(props.style)
+        const baseBackgroundColor = styleBackgroundColor || props.color || '#f3f3f3'
 
-        const backgroundColor = pressed ? darkenColor(baseBackgroundColor, darkenAmount) : baseBackgroundColor
+        const backgroundColor = pressed ? darkenColor(baseBackgroundColor, props.darkenAmount || 0.3) : baseBackgroundColor
+        const opacity = theme === 'dark' ? (pressed ? (props.darkenAmount || 0.7) : 1) : 1
 
-        return [styles.buttonContainer, style, { backgroundColor }] as StyleProp<ViewStyle>
+        return [styles.buttonContainer, props.style, { backgroundColor, opacity: opacity }] as StyleProp<ViewStyle>
     }
 
     return (
-        <Pressable disabled={disabled} style={buttonContainerStyle} onPress={onPress}>
-            {({ pressed }) => {
-                const styleTextColor = getColorFromStyle(textStyle)
-                const baseTextColor = styleTextColor || styles.buttonText.color || (theme === 'light' ? colors.white : colors.white_100)
-
-                const effectiveTextColor = (pressed && theme === 'dark') ? darkenColor(baseTextColor, darkenAmount) : baseTextColor
-
-                return (
-                    <Text style={[styles.buttonText, textStyle, { color: effectiveTextColor }]}>
-                        {label ? label : children}
-                    </Text>
-                )
-            }}
+        <Pressable style={buttonContainerStyle} {...restProps}>
+            <Text style={[styles.buttonText, props.textStyle]}>
+                {props.label ? props.label : props.children}
+            </Text>
         </Pressable>
     )
 }
