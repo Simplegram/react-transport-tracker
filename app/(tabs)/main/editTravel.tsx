@@ -1,5 +1,5 @@
 import Button from '@/components/BaseButton'
-import ModalButtonBlock from '@/components/button/ModalButton'
+import { ModalButton } from '@/components/button/ModalButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
 import { TextInputBlock } from '@/components/input/TextInput'
@@ -248,21 +248,21 @@ export default function EditTravelItem() {
                 <>
                     <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
                         <View style={inputElementStyles[theme].inputLargeGroup}>
-                            <ModalButtonBlock
+                            <ModalButton.Block
                                 label='Bus Initial Arrival:'
                                 condition={travel.bus_initial_arrival}
                                 value={formatDateForDisplay(travel.bus_initial_arrival)}
                                 onPress={() => openDatetimeModal('bus_initial_arrival')}
                             />
 
-                            <ModalButtonBlock
+                            <ModalButton.Block
                                 label='Bus Initial Departure:'
                                 condition={travel.bus_initial_departure}
                                 value={formatDateForDisplay(travel.bus_initial_departure)}
                                 onPress={() => openDatetimeModal('bus_initial_departure')}
                             />
 
-                            <ModalButtonBlock
+                            <ModalButton.Block
                                 label='Bus Final Arrival:'
                                 condition={travel.bus_final_arrival}
                                 value={formatDateForDisplay(travel.bus_final_arrival)}
@@ -291,7 +291,7 @@ export default function EditTravelItem() {
                         }
 
                         <View style={inputElementStyles[theme].inputLargeGroup}>
-                            <ModalButtonBlock
+                            <ModalButton.Block
                                 label='Route:'
                                 condition={travel.route_id}
                                 value={travel.route_id ? `${routes.find(route => route.id === travel.route_id)?.code || ''} | ${routes.find(route => route.id === travel.route_id)?.name || ''}` : 'Select Route...'}
@@ -316,21 +316,21 @@ export default function EditTravelItem() {
                         <Divider />
 
                         <View style={inputElementStyles[theme].inputLargeGroup}>
-                            <ModalButtonBlock
+                            <ModalButton.Block
                                 label='Direction:'
                                 condition={travel.direction_id}
                                 value={directions.find(direction => direction.id === travel.direction_id)?.name || 'Select Direction...'}
                                 onPress={() => openDirectionModal()}
                             />
 
-                            <ModalButtonBlock
+                            <ModalButton.Block
                                 label='First Stop:'
                                 condition={travel.first_stop_id}
                                 value={stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}
                                 onPress={() => openStopModal('first_stop_id')}
                             />
 
-                            <ModalButtonBlock
+                            <ModalButton.Block
                                 label='Last Stop:'
                                 condition={travel.last_stop_id}
                                 value={stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}
@@ -350,7 +350,7 @@ export default function EditTravelItem() {
                         </View>
 
                         <View style={inputElementStyles[theme].inputLargeGroup}>
-                            <ModalButtonBlock
+                            <ModalButton.Block
                                 label='Laps:'
                                 condition={lapsCount > 0}
                                 value={`${lapsCount} lap${lapsCount !== 1 ? 's' : ''} selected`}

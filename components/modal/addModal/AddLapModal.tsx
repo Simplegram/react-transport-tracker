@@ -1,5 +1,4 @@
 import Button from '@/components/BaseButton'
-import ModalButtonBlock from '@/components/button/ModalButton'
 import Divider from '@/components/Divider'
 import { TextInputBlock } from '@/components/input/TextInput'
 import MapDisplay from '@/components/MapDisplay'
@@ -24,6 +23,7 @@ import {
     View
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
+import { ModalButton } from '@/components/button/ModalButton'
 
 export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { theme } = useTheme()
@@ -117,14 +117,14 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                 ) : (
                     <>
                         <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
-                            <ModalButtonBlock
+                            <ModalButton.Block
                                 label='Time:'
                                 condition={lap.time}
                                 value={formatDateForDisplay(lap.time)}
                                 onPress={() => setShowDatetimePicker(true)}
                             />
 
-                            <ModalButtonBlock
+                            <ModalButton.Block
                                 label='Stop:'
                                 condition={lap.stop_id}
                                 value={stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}

@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import ModalButtonBlock from "@/components/button/ModalButton"
+import { ModalButton } from "@/components/button/ModalButton"
 import TypeButton from "@/components/button/TypeButton"
 import Container from "@/components/Container"
 import Divider from "@/components/Divider"
@@ -146,28 +146,28 @@ export default function EstimationPage() {
             </View>
             <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Route:'
                         condition={input.route_id}
                         value={input.route_id ? `${routes.find(route => route.id === input.route_id)?.code || ''} | ${routes.find(route => route.id === input.route_id)?.name || ''}` : 'Select Route...'}
                         onPress={() => openRouteModal()}
                     />
 
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Direction:'
                         condition={input.direction_id}
                         value={directions.find(direction => direction.id === input.direction_id)?.name || 'Select Direction...'}
                         onPress={() => openDirectionModal()}
                     />
 
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='First Stop:'
                         condition={input.first_stop_id}
                         value={stops.find(stop => stop.id === input.first_stop_id)?.name || 'Select First Stop...'}
                         onPress={() => openStopModal('first_stop_id')}
                     />
 
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Last Stop:'
                         condition={input.last_stop_id}
                         value={stops.find(stop => stop.id === input.last_stop_id)?.name || 'Select Last Stop...'}

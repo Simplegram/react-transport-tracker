@@ -1,5 +1,5 @@
 import Button from '@/components/BaseButton'
-import ModalButtonBlock from '@/components/button/ModalButton'
+import { ModalButton } from '@/components/button/ModalButton'
 import Divider from '@/components/Divider'
 import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
@@ -99,14 +99,14 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
             ) : (
                 <Pressable style={modalStyles[theme].modalBackdrop}>
                     <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
-                        <ModalButtonBlock
+                        <ModalButton.Block
                             label='Time:'
                             condition={lap.time}
                             value={formatDateForDisplay(lap.time)}
                             onPress={() => setShowDatetimePicker(true)}
                         />
 
-                        <ModalButtonBlock
+                        <ModalButton.Block
                             label='Stop:'
                             condition={lap.stop_id}
                             value={stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}

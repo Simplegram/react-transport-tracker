@@ -40,7 +40,7 @@ export function ModalButton({ condition, value, style, onPress }: ModalButtonPro
     )
 }
 
-export default function ModalButtonBlock({ label, condition, value, style, onPress }: ModalButtonProps) {
+function ModalButtonBlock({ label, condition, value, style, onPress }: ModalButtonProps) {
     const { theme } = useTheme()
 
     return (
