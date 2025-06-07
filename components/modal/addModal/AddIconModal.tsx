@@ -40,7 +40,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
     return (
         <View>
             <Input.Label>Icon name (FontAwesome6):</Input.Label>
-            <View style={inputElementStyles[theme].inputContainer}>
+            <Input.Container>
                 <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupIcon]}>
                     <Icon style={styles[theme].icon} name={icon.name ? icon.name : 'xmark'} size={32} />
                     <TextInputBase
@@ -50,7 +50,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
                         style={{ flex: 1 }}
                     />
                 </View>
-            </View>
+            </Input.Container>
 
             <View style={buttonStyles[theme].buttonRow}>
                 <Button.Dismiss label='Cancel' onPress={onCancel} />

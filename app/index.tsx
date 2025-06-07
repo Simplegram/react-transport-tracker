@@ -1,11 +1,11 @@
 import Button from '@/components/BaseButton'
+import Input from '@/components/input/Input'
 import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import { useSupabase } from '@/context/SupabaseContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useToggleLoading } from '@/hooks/useLoading'
 import { colors } from '@/src/const/color'
-import { inputElementStyles } from '@/src/styles/InputStyles'
 import { statusBarStyles } from '@/src/styles/Styles'
 import { SupabaseClient } from '@supabase/supabase-js'
 import React, { useEffect, useState } from 'react'
@@ -80,7 +80,7 @@ const Login = () => {
                     (
                         <>
                             <Text style={styles[theme].header}>Transport Tracker</Text>
-                            <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
+                            <Input.Container style={{ paddingBottom: 0 }}>
                                 <TextInputBlock
                                     label='Supabase URL'
                                     autoCapitalize="none"
@@ -112,7 +112,7 @@ const Login = () => {
                                     onChangeText={setPassword}
                                     secureTextEntry
                                 />
-                            </View>
+                            </Input.Container>
                             <Button.Add label='Sign in' onPress={onSignInPress} />
                         </>
                     )}

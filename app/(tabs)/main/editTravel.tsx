@@ -2,6 +2,7 @@ import Button from '@/components/BaseButton'
 import { ModalButton } from '@/components/button/ModalButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
+import Input from '@/components/input/Input'
 import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
@@ -246,7 +247,7 @@ export default function EditTravelItem() {
                 <LoadingScreen />
             ) : (
                 <>
-                    <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
+                    <Input.Container style={{ paddingBottom: 0 }}>
                         <View style={inputElementStyles[theme].inputLargeGroup}>
                             <ModalButton.Block
                                 label='Bus Initial Arrival:'
@@ -363,7 +364,7 @@ export default function EditTravelItem() {
                         <View style={buttonStyles[theme].buttonRow}>
                             <Button.Add label='Save Travel Edit(s)' onPress={handleOnSubmit} />
                         </View>
-                    </View>
+                    </Input.Container>
 
                     <EditTravelLapsModal
                         travel_id={travel.id}

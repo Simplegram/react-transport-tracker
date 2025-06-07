@@ -145,7 +145,7 @@ export default function EstimationPage() {
                     </View>
                 </View>
             </View>
-            <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
+            <Input.Container style={{ paddingBottom: 0 }}>
                 <View style={inputElementStyles[theme].inputLargeGroup}>
                     <ModalButton.Block
                         label='Route:'
@@ -196,7 +196,7 @@ export default function EstimationPage() {
                         </View>
                     </Input>
                 </View>
-            </View>
+            </Input.Container>
 
             <View style={buttonStyles[theme].buttonRow}>
                 <Button.Add label='Get Estimate' onPress={handleOnSubmit} />

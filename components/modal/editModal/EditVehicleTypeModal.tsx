@@ -47,7 +47,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                 <Input.LoadingLabel />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
+                    <Input.Container>
                         <TextInputBlock
                             label="Name:"
                             value={vehicleType.name}
@@ -89,7 +89,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                                 </ScrollView>
                             </View>
                         </View>
-                    </View>
+                    </Input.Container>
 
                     <View style={buttonStyles[theme].buttonRow}>
                         <Button.Dismiss label='Cancel' onPress={onCancel} />

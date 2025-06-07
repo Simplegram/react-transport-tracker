@@ -34,7 +34,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
                 <Input.LoadingLabel />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
+                    <Input.Container>
                         <TextInputBlock
                             label="Name:"
                             value={vehicleType.name}
@@ -76,7 +76,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
                                 </ScrollView>
                             </View>
                         </View>
-                    </View>
+                    </Input.Container>
 
                     <View style={buttonStyles[theme].buttonRow}>
                         <Button.Dismiss label='Cancel' onPress={onCancel} />

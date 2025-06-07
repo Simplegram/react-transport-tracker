@@ -80,7 +80,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                 <Input.LoadingLabel />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
+                    <Input.Container>
                         <TextInputBlock
                             label="Code:"
                             value={route.code}
@@ -146,7 +146,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                                 </ScrollView>
                             </View>
                         </View>
-                    </View>
+                    </Input.Container>
 
                     <EditTravelStopModal
                         stops={stops}

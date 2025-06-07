@@ -7,6 +7,22 @@ export default function Input(props: ViewProps) {
     )
 }
 
+function Container(props: ViewProps) {
+    const { style, ...restProps } = props
+
+    return (
+        <Input
+            style={[
+                {
+                    gap: 12,
+                    paddingBottom: 15,
+                }, style
+            ]}
+            {...restProps}
+        />
+    )
+}
+
 function Label(props: TextProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
@@ -34,5 +50,6 @@ function LoadingLabel(props: TextProps) {
     )
 }
 
+Input.Container = Container
 Input.Label = Label
 Input.LoadingLabel = LoadingLabel

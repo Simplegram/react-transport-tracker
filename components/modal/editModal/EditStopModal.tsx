@@ -62,7 +62,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                 <Input.LoadingLabel />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
+                    <Input.Container>
                         <TextInputBlock
                             label="Name:"
                             value={stop.name}
@@ -138,7 +138,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                                 </ScrollView>
                             </View>
                         </View>
-                    </View>
+                    </Input.Container>
 
                     <AddCoordModal
                         currentCoordinates={{

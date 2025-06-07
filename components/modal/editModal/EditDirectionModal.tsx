@@ -5,7 +5,6 @@ import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles } from "@/src/styles/InputStyles"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { Direction } from "@/src/types/Travels"
 import { useState } from "react"
@@ -35,14 +34,14 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
                 <Input.LoadingLabel />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
+                    <Input.Container>
                         <TextInputBlock
                             value={direction.name}
                             label="Name:"
                             placeholder="Direction name..."
                             onChangeText={(text) => setDirection({ ...direction, "name": text })}
                         />
-                    </View>
+                    </Input.Container>
 
                     <View style={buttonStyles[theme].buttonRow}>
                         <Button.Dismiss label='Cancel' onPress={onCancel} />

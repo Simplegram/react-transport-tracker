@@ -73,7 +73,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                 <Input.LoadingLabel />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
+                    <Input.Container>
                         <TextInputBlock
                             label="Code:"
                             value={route.code}
@@ -139,7 +139,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                                 </ScrollView>
                             </View>
                         </View>
-                    </View>
+                    </Input.Container>
 
                     <EditTravelStopModal
                         stops={stops}
