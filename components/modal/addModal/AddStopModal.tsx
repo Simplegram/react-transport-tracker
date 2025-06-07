@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import { ModalButtonBase } from "@/components/button/ModalButton"
+import { ModalButton } from "@/components/button/ModalButton"
 import { TextInputBase, TextInputBlock } from "@/components/input/TextInput"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
@@ -85,7 +85,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                                     style={{ flex: 1 }}
                                 />
                             </View>
-                            <ModalButtonBase
+                            <ModalButton
                                 condition={false}
                                 value="Pick Latitude and Longitude..."
                                 onPress={() => openCoordModal()}

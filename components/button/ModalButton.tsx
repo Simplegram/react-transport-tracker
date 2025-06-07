@@ -11,7 +11,7 @@ interface ModalButtonProps {
     onPress: () => void
 }
 
-export function ModalButtonBase({ condition, value, style, onPress }: ModalButtonProps) {
+export function ModalButton({ condition, value, style, onPress }: ModalButtonProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -26,7 +26,7 @@ export function ModalButtonBase({ condition, value, style, onPress }: ModalButto
                     justifyContent: 'center',
                     paddingVertical: 12,
                     paddingHorizontal: 14,
-                    
+
                     borderColor: theme.palette.borderColorSoft,
                     backgroundColor: theme.palette.background,
                 },
@@ -46,7 +46,7 @@ export default function ModalButtonBlock({ label, condition, value, style, onPre
     return (
         <View style={inputElementStyles[theme].inputGroup}>
             <Text style={inputElementStyles[theme].inputLabel}>{label}</Text>
-            <ModalButtonBase
+            <ModalButton
                 condition={condition}
                 value={value}
                 onPress={onPress}
@@ -55,3 +55,5 @@ export default function ModalButtonBlock({ label, condition, value, style, onPre
         </View>
     )
 }
+
+ModalButton.Block = ModalButtonBlock

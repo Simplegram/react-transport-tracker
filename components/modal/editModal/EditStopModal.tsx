@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import { ModalButtonBase } from "@/components/button/ModalButton"
+import { ModalButton } from "@/components/button/ModalButton"
 import { TextInputBase, TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
@@ -85,7 +85,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                                     style={{ flex: 1 }}
                                 />
                             </View>
-                            <ModalButtonBase
+                            <ModalButton
                                 condition={false}
                                 value="Pick Latitude and Longitude..."
                                 onPress={() => openCoordModal()}
