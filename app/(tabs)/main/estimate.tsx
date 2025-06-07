@@ -1,6 +1,7 @@
 import Button from "@/components/BaseButton"
 import ModalButtonBlock from "@/components/button/ModalButton"
 import TypeButton from "@/components/button/TypeButton"
+import Container from "@/components/Container"
 import Divider from "@/components/Divider"
 import EditTravelDirectionModal from "@/components/modal/travelModal/EditTravelDirectionModal"
 import EditTravelRouteModal from "@/components/modal/travelModal/EditTravelRouteModal"
@@ -12,7 +13,6 @@ import useModalHandler from "@/hooks/useModalHandler"
 import useTravelDetail from "@/hooks/useTravelDetail"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { inputElementStyles } from "@/src/styles/InputStyles"
-import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
 import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
 import { addTime, getTimeString, timeToMinutes } from "@/src/utils/dateUtils"
 import { useFocusEffect } from "expo-router"
@@ -124,7 +124,7 @@ export default function EstimationPage() {
     const stopString = `${first_stop ? first_stop.name : 'Start'} to ${last_stop ? last_stop.name : 'End'}`
 
     return (
-        <View style={mainMenuStyles[theme].container}>
+        <Container>
             <View style={{ flex: 1, gap: 10 }}>
                 <View style={travelDetailStyles[theme].detailRow}>
                     <JustifiedLabelValue label="Current Time:" value={currentTime} />
@@ -227,6 +227,6 @@ export default function EstimationPage() {
                 onSelect={handleStopSelect}
                 onClose={closeStopModal}
             />
-        </View>
+        </Container>
     )
 }

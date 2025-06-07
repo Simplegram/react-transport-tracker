@@ -2,18 +2,6 @@ import { colors } from "@/src/const/color"
 import { StyleSheet } from "react-native"
 
 const lightMainmenuStyles = StyleSheet.create({
-    container: {
-        gap: 10,
-        flexGrow: 1,
-        justifyContent: 'center',
-        paddingTop: 5,
-        paddingBottom: 20,
-        paddingHorizontal: 15,
-        backgroundColor: colors.white_100,
-    },
-    listContainer: {
-        flex: 1,
-    },
     listTitle: {
         fontSize: 18,
         fontWeight: 'bold',
@@ -44,13 +32,6 @@ const lightMainmenuStyles = StyleSheet.create({
 export const mainMenuStyles = {
     light: lightMainmenuStyles,
     dark: StyleSheet.create({
-        container: {
-            ...lightMainmenuStyles.container,
-            backgroundColor: colors.black,
-        },
-        listContainer: {
-            ...lightMainmenuStyles.listContainer,
-        },
         listTitle: {
             ...lightMainmenuStyles.listTitle,
         },

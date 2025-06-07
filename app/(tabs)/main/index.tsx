@@ -1,4 +1,5 @@
 import Button from "@/components/BaseButton"
+import Container from "@/components/Container"
 import LoadingScreen from "@/components/LoadingScreen"
 import CalendarModal from "@/components/modal/CalendarModal"
 import GroupedDataDisplay from "@/components/travel/GroupedTravelsDisplay"
@@ -8,7 +9,6 @@ import useGetTravelData from "@/hooks/useGetTravelData"
 import { useToggleLoading } from "@/hooks/useLoading"
 import useModalHandler from "@/hooks/useModalHandler"
 import useTravelCalendar from "@/hooks/useTravelCalendar"
-import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
 import { DataItemWithNewKey, getGroupedData } from "@/src/utils/dataUtils"
 import { getDateString } from "@/src/utils/dateUtils"
 import { router, useFocusEffect } from "expo-router"
@@ -33,7 +33,7 @@ export default function HomePage() {
         dates, selectedDate, setSelectedDate,
     } = useTravelCalendar()
 
-    const { loading, setLoading, toggleLoading } = useToggleLoading(150)
+    const { loading, setLoading, toggleLoading } = useToggleLoading(200)
 
     const { laps, getAllLaps } = useGetTravelData()
 
@@ -110,8 +110,8 @@ export default function HomePage() {
     )
 
     return (
-        <View style={mainMenuStyles[theme].container}>
-            <View style={mainMenuStyles[theme].listContainer}>
+        <Container>
+            <View style={{ flex: 1 }}>
                 {loading || !supabase || !groupedData ? (
                     <LoadingScreen></LoadingScreen>
                 ) : (
@@ -136,6 +136,6 @@ export default function HomePage() {
                     onSelect: onDayPress
                 }}
             />
-        </View>
+        </Container>
     )
 }
