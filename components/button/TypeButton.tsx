@@ -2,7 +2,7 @@ import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
 import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
 import { TouchableOpacity } from "react-native"
-import InputGroup from "../input/InputGroup"
+import InputGroup from "../input/Input"
 
 interface TypeButtonProps {
     onPress: () => void

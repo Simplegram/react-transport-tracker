@@ -1,7 +1,7 @@
 import Button from '@/components/BaseButton'
 import { ModalButton } from '@/components/button/ModalButton'
 import Divider from '@/components/Divider'
-import InputGroup from '@/components/input/InputGroup'
+import InputGroup from '@/components/input/Input'
 import { TextInputBlock } from '@/components/input/TextInput'
 import MapDisplay from '@/components/MapDisplay'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'

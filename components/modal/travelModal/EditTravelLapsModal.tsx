@@ -1,6 +1,6 @@
 import Button from '@/components/BaseButton'
 import Divider from '@/components/Divider'
-import InputGroup from '@/components/input/InputGroup'
+import InputGroup from '@/components/input/Input'
 import { useTheme } from '@/context/ThemeContext'
 import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'

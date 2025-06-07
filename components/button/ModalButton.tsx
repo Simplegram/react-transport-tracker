@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/ThemeContext"
 import { Pressable, StyleProp, ViewStyle } from "react-native"
 import HighlightedText from "../HighlightedText"
-import InputGroup from "../input/InputGroup"
+import InputGroup from "../input/Input"
 
 interface ModalButtonProps {
     label?: string

@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/ThemeContext"
 import { inputElementStyles } from "@/src/styles/InputStyles"
 import { TextInput, TextInputProps, View } from "react-native"
-import InputGroup from "./InputGroup"
+import InputGroup from "./Input"
 
 export function TextInputBase(props: TextInputProps) {
     const { getTheme } = useTheme()

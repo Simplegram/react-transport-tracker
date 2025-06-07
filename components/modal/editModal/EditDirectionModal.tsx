@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import InputGroup from "@/components/input/InputGroup"
+import InputGroup from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"

@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton"
 import { ModalButton } from "@/components/button/ModalButton"
-import InputGroup from "@/components/input/InputGroup"
+import InputGroup from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useModalContext } from "@/context/ModalContext"

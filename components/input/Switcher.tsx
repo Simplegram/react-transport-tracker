@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/ThemeContext"
 import { StyleSheet, View } from "react-native"
 import CustomSwitch from "./CustomSwitch"
-import InputGroup from "./InputGroup"
+import InputGroup from "./Input"
 
 interface SwitcherProps {
     title?: string

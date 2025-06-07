@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import InputGroup from "@/components/input/InputGroup"
+import InputGroup from "@/components/input/Input"
 import { TextInputBase } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
@@ -9,7 +9,7 @@ import { styles } from "@/src/styles/Styles"
 import { AddableIconType } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, Text, View } from "react-native"
+import { Alert, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentProps) {

@@ -1,6 +1,6 @@
 import Button from '@/components/BaseButton'
 import Divider from '@/components/Divider'
-import InputGroup from '@/components/input/InputGroup'
+import InputGroup from '@/components/input/Input'
 import { TextInputBase } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import ModalTemplate from '@/components/ModalTemplate'
