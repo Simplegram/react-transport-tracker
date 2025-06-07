@@ -33,7 +33,7 @@ export default function HomePage() {
         dates, selectedDate, setSelectedDate,
     } = useTravelCalendar()
 
-    const { loading, toggleLoading } = useToggleLoading(150)
+    const { loading, setLoading, toggleLoading } = useToggleLoading(150)
 
     const { laps, getAllLaps } = useGetTravelData()
 
@@ -90,6 +90,7 @@ export default function HomePage() {
 
     useFocusEffect(
         React.useCallback(() => {
+            setLoading(true)
             getAllLaps()
         }, [dates])
     )
@@ -98,6 +99,7 @@ export default function HomePage() {
         React.useCallback(() => {
             const data = getGroupedData(travelAtDate, laps)
             setGroupedData(data)
+            setLoading(false)
         }, [travelAtDate, laps])
     )
 
