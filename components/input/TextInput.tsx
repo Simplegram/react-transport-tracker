@@ -4,15 +4,32 @@ import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
 import { Text, TextInput, TextInputProps, View } from "react-native"
 
 export function TextInputBase(props: TextInputProps) {
-    const { theme } = useTheme()
+    const { getTheme } = useTheme()
+    const theme = getTheme()
 
     const { placeholderTextColor, value, style, ...restOfProps } = props
 
     return (
         <TextInput
             value={props.value || ''}
-            style={[inputStyles[theme].textInput, props.value && { fontWeight: '900' }, props.style]}
-            placeholderTextColor={theme === 'light' ? colors.white_500 : colors.white_600}
+            style={[
+                {
+                    borderRadius: 10,
+                    paddingHorizontal: 14,
+                    paddingVertical: 8,
+                    minHeight: 48,
+                    fontSize: 14,
+                    fontWeight: '200',
+                    borderWidth: 1,
+
+                    color: theme.palette.textDark,
+                    borderColor: theme.palette.borderColorSoft,
+                    backgroundColor: theme.palette.background,
+                },
+                props.value && { fontWeight: '900' },
+                props.style
+            ]}
+            placeholderTextColor={theme.palette.textPlaceholder}
             {...restOfProps}
         />
     )

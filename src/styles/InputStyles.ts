@@ -92,18 +92,6 @@ const inputElementStyles = {
 }
 
 const lightInputStyles = StyleSheet.create({
-    textInput: {
-        backgroundColor: colors.white_100,
-        borderRadius: 10,
-        paddingHorizontal: 14,
-        paddingVertical: 8,
-        minHeight: Platform.OS === 'ios' ? 50 : 48,
-        fontSize: 14,
-        fontWeight: '200',
-        color: colors.white_700,
-        borderWidth: 1,
-        borderColor: colors.white_500,
-    },
     multilineTextInput: {
         minHeight: 100,
         textAlignVertical: 'top',
@@ -116,11 +104,6 @@ const lightInputStyles = StyleSheet.create({
 const inputStyles = {
     light: lightInputStyles,
     dark: StyleSheet.create({
-        textInput: {
-            ...lightInputStyles.textInput,
-            color: colors.white_300,
-            backgroundColor: colors.black,
-        },
         multilineTextInput: {
             ...lightInputStyles.multilineTextInput,
             backgroundColor: colors.black,
