@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import InputGroup from "@/components/input/Input"
+import Input from "@/components/input/Input"
 import { TextInputBase } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
@@ -42,7 +42,7 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
 
     return (
         <View>
-            <InputGroup.Label>Icon name (FontAwesome6):</InputGroup.Label>
+            <Input.Label>Icon name (FontAwesome6):</Input.Label>
             <View style={inputElementStyles[theme].inputContainer}>
                 <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupIcon]}>
                     <Icon style={styles[theme].icon} name={icon.name ? icon.name : 'xmark'} size={32} />

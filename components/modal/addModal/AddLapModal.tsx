@@ -1,7 +1,7 @@
 import Button from '@/components/BaseButton'
 import { ModalButton } from '@/components/button/ModalButton'
 import Divider from '@/components/Divider'
-import InputGroup from '@/components/input/Input'
+import Input from '@/components/input/Input'
 import { TextInputBlock } from '@/components/input/TextInput'
 import MapDisplay from '@/components/MapDisplay'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
@@ -113,7 +113,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
         >
             <Pressable style={modalStyles[theme].modalBackdrop}>
                 {!stops ? (
-                    <InputGroup.LoadingLabel />
+                    <Input.LoadingLabel />
                 ) : (
                     <>
                         <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>

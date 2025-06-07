@@ -3,7 +3,7 @@ import { ModalButton } from "@/components/button/ModalButton"
 import TypeButton from "@/components/button/TypeButton"
 import Container from "@/components/Container"
 import Divider from "@/components/Divider"
-import InputGroup from "@/components/input/Input"
+import Input from "@/components/input/Input"
 import EditTravelDirectionModal from "@/components/modal/travelModal/EditTravelDirectionModal"
 import EditTravelRouteModal from "@/components/modal/travelModal/EditTravelRouteModal"
 import EditTravelStopModal from "@/components/modal/travelModal/EditTravelStopModal"
@@ -175,8 +175,8 @@ export default function EstimationPage() {
                         onPress={() => openStopModal('last_stop_id')}
                     />
 
-                    <InputGroup>
-                        <InputGroup.Label>Estimate Type:</InputGroup.Label>
+                    <Input>
+                        <Input.Label>Estimate Type:</Input.Label>
                         <View style={{ gap: 10, flexDirection: 'row' }}>
                             <TypeButton
                                 label='Best'
@@ -194,7 +194,7 @@ export default function EstimationPage() {
                                 typeSelected={input.estimate_type === 'worst'}
                             />
                         </View>
-                    </InputGroup>
+                    </Input>
                 </View>
             </View>
 

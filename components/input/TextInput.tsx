@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/ThemeContext"
 import { inputElementStyles } from "@/src/styles/InputStyles"
 import { TextInput, TextInputProps, View } from "react-native"
-import InputGroup from "./Input"
+import Input from "./Input"
 
 export function TextInputBase(props: TextInputProps) {
     const { getTheme } = useTheme()
@@ -59,7 +59,7 @@ export function TextInputBlock(props: TextInputBlockProps) {
 
     return (
         <View style={inputElementStyles[theme].inputGroup}>
-            {props.label && <InputGroup.Label>{props.label}</InputGroup.Label>}
+            {props.label && <Input.Label>{props.label}</Input.Label>}
             <TextInputBase {...restOfProps} />
         </View>
     )

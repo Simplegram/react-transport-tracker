@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import InputGroup from "@/components/input/Input"
+import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
@@ -31,7 +31,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
     return (
         <View>
             {(loading || !icons || icons.length === 0) ? (
-                <InputGroup.LoadingLabel />
+                <Input.LoadingLabel />
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
@@ -46,7 +46,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <InputGroup.Label>Icon:</InputGroup.Label>
+                                <Input.Label>Icon:</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}

@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import InputGroup from "@/components/input/Input"
+import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
@@ -32,7 +32,7 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
     return (
         <View>
             {loading ? (
-                <InputGroup.LoadingLabel />
+                <Input.LoadingLabel />
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>

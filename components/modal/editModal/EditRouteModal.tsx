@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton"
 import { ModalButton } from "@/components/button/ModalButton"
-import InputGroup from "@/components/input/Input"
+import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useModalContext } from "@/context/ModalContext"
@@ -77,7 +77,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
     return (
         <View>
             {loading || !stops ? (
-                <InputGroup.LoadingLabel />
+                <Input.LoadingLabel />
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
@@ -113,7 +113,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <InputGroup.Label>Type:</InputGroup.Label>
+                                <Input.Label>Type:</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
@@ -138,9 +138,9 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                                                 name={type.icon_id.name}
                                                 size={20}
                                             />
-                                            <InputGroup.Label
+                                            <Input.Label
                                                 style={route.vehicle_type_id === type.id && iconPickerStyles[theme].selectedText}
-                                            >{type.name.slice(0, 5)}</InputGroup.Label>
+                                            >{type.name.slice(0, 5)}</Input.Label>
                                         </TouchableOpacity>
                                     ))}
                                 </ScrollView>

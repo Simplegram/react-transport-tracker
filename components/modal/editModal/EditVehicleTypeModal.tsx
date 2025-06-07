@@ -1,5 +1,5 @@
 import Button from "@/components/BaseButton"
-import InputGroup from "@/components/input/Input"
+import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
@@ -44,7 +44,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
     return (
         <View>
             {loading ? (
-                <InputGroup.LoadingLabel />
+                <Input.LoadingLabel />
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
@@ -59,7 +59,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <InputGroup.Label>Icon:</InputGroup.Label>
+                                <Input.Label>Icon:</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}

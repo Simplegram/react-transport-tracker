@@ -1,6 +1,6 @@
 import Button from "@/components/BaseButton"
 import { ModalButton } from "@/components/button/ModalButton"
-import InputGroup from "@/components/input/Input"
+import Input from "@/components/input/Input"
 import { TextInputBase, TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
@@ -59,7 +59,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
     return (
         <View>
             {loading ? (
-                <InputGroup.LoadingLabel />
+                <Input.LoadingLabel />
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
@@ -71,7 +71,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                         />
 
                         <View style={inputElementStyles[theme].inputGroup}>
-                            <InputGroup.Label>Latitude and Longitude:</InputGroup.Label>
+                            <Input.Label>Latitude and Longitude:</Input.Label>
                             <View style={inputElementStyles[theme].inputGroupCoord}>
                                 <TextInputBase
                                     value={stop.lat?.toString()}
@@ -105,7 +105,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <InputGroup.Label>Icon:</InputGroup.Label>
+                                <Input.Label>Icon:</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
@@ -130,9 +130,9 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                                                 name={type.icon_id.name}
                                                 size={20}
                                             />
-                                            <InputGroup.Label
+                                            <Input.Label
                                                 style={stop.vehicle_type === type.id && iconPickerStyles[theme].selectedText}
-                                            >{type.name.slice(0, 5)}</InputGroup.Label>
+                                            >{type.name.slice(0, 5)}</Input.Label>
                                         </TouchableOpacity>
                                     ))}
                                 </ScrollView>

@@ -1,6 +1,6 @@
 import Button from '@/components/BaseButton'
 import Divider from '@/components/Divider'
-import InputGroup from '@/components/input/Input'
+import Input from '@/components/input/Input'
 import { useTheme } from '@/context/ThemeContext'
 import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'
@@ -92,7 +92,7 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                     <View style={modalStyles[theme].inputContainer}>
                         {laps.length === 0 ? (
                             <View style={styles[theme].emptyList}>
-                                <InputGroup.Label>No lap found</InputGroup.Label>
+                                <Input.Label>No lap found</Input.Label>
                             </View>
                         ) : (
                             <ScrollView
@@ -103,13 +103,13 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                                         <Pressable style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
                                             <Text style={inputElementStyles[theme].insideLabel}>{formatLapTimeDisplay(lap.time)}</Text>
                                             {stops.find(stop => stop.id === lap.stop_id) ? (
-                                                <InputGroup.Label style={{ color: colors.primary }}>
+                                                <Input.Label style={{ color: colors.primary }}>
                                                     {stops.find(stop => stop.id === lap.stop_id)?.name}
-                                                </InputGroup.Label>
+                                                </Input.Label>
                                             ) : null}
 
                                             {lap.note && (
-                                                <InputGroup.Label>{lap.note}</InputGroup.Label>
+                                                <Input.Label>{lap.note}</Input.Label>
                                             )}
                                         </Pressable>
                                         {index < laps.length - 1 && <Divider />}

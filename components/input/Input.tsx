@@ -1,13 +1,13 @@
 import { useTheme } from "@/context/ThemeContext"
 import { Text, TextProps, View, ViewProps } from "react-native"
 
-export default function InputGroup(props: ViewProps) {
+export default function Input(props: ViewProps) {
     return (
         <View {...props} />
     )
 }
 
-function InputLabel(props: TextProps) {
+function Label(props: TextProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -30,9 +30,9 @@ function InputLabel(props: TextProps) {
 
 function LoadingLabel(props: TextProps) {
     return (
-        <InputLabel {...props}>Loading...</InputLabel>
+        <Label {...props}>Loading...</Label>
     )
 }
 
-InputGroup.Label = InputLabel
-InputGroup.LoadingLabel = LoadingLabel
+Input.Label = Label
+Input.LoadingLabel = LoadingLabel

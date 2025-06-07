@@ -2,7 +2,7 @@ import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
 import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
 import { TouchableOpacity } from "react-native"
-import InputGroup from "../input/Input"
+import Input from "../input/Input"
 
 interface TypeButtonProps {
     onPress: () => void
@@ -28,9 +28,9 @@ export default function TypeButton({ label, onPress, typeSelected }: TypeButtonP
             ]}
             onPress={onPress}
         >
-            <InputGroup.Label
+            <Input.Label
                 style={[{ color: colors.white_500 }, typeSelected && { color: oldTheme === 'light' ? colors.black : colors.white_200 }]}
-            >{label}</InputGroup.Label>
+            >{label}</Input.Label>
         </TouchableOpacity>
     )
 }
