@@ -1,4 +1,5 @@
 import Button from "@/components/BaseButton"
+import InputGroup from "@/components/input/InputGroup"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
@@ -8,7 +9,7 @@ import { styles } from "@/src/styles/Styles"
 import { AddableVehicleType } from "@/src/types/AddableTravels"
 import { VehicleTypeModalProp } from "@/src/types/TravelModal"
 import { useState } from "react"
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Alert, ScrollView, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: VehicleTypeModalProp) {
@@ -30,7 +31,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
     return (
         <View>
             {(loading || !icons || icons.length === 0) ? (
-                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
+                <InputGroup.LoadingLabel />
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
@@ -45,7 +46,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Icon:</Text>
+                                <InputGroup.Label>Icon:</InputGroup.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}

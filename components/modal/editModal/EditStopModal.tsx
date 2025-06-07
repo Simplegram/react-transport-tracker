@@ -1,5 +1,6 @@
 import Button from "@/components/BaseButton"
 import { ModalButton } from "@/components/button/ModalButton"
+import InputGroup from "@/components/input/InputGroup"
 import { TextInputBase, TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
@@ -14,7 +15,7 @@ import { EditableStop } from "@/src/types/EditableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { sortByIdToFront } from "@/src/utils/utils"
 import { useRef, useState } from "react"
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Alert, ScrollView, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import AddCoordModal from "../addModal/AddCoordModal"
 
@@ -58,7 +59,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
     return (
         <View>
             {loading ? (
-                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
+                <InputGroup.LoadingLabel />
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
@@ -70,7 +71,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                         />
 
                         <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Latitude and Longitude:</Text>
+                            <InputGroup.Label>Latitude and Longitude:</InputGroup.Label>
                             <View style={inputElementStyles[theme].inputGroupCoord}>
                                 <TextInputBase
                                     value={stop.lat?.toString()}
@@ -104,7 +105,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Icon:</Text>
+                                <InputGroup.Label>Icon:</InputGroup.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
@@ -129,10 +130,9 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
                                                 name={type.icon_id.name}
                                                 size={20}
                                             />
-                                            <Text style={[
-                                                inputElementStyles[theme].inputLabel,
-                                                stop.vehicle_type === type.id && iconPickerStyles[theme].selectedText,
-                                            ]}>{type.name.slice(0, 5)}</Text>
+                                            <InputGroup.Label
+                                                style={stop.vehicle_type === type.id && iconPickerStyles[theme].selectedText}
+                                            >{type.name.slice(0, 5)}</InputGroup.Label>
                                         </TouchableOpacity>
                                     ))}
                                 </ScrollView>

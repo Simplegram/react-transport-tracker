@@ -1,5 +1,6 @@
 import Button from '@/components/BaseButton'
 import Divider from '@/components/Divider'
+import InputGroup from '@/components/input/InputGroup'
 import { TextInputBase } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import ModalTemplate from '@/components/ModalTemplate'
@@ -184,7 +185,7 @@ export default function DataListScreen() {
                                 onCancel={closeModal}
                             />
                         ) : (
-                            <Text>Loading...</Text>
+                            <InputGroup.LoadingLabel />
                         )}
                     </ModalTemplate>
                 </>

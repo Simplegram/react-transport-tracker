@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/ThemeContext"
-import { inputElementStyles } from "@/src/styles/InputStyles"
-import { Pressable, StyleProp, Text, View, ViewStyle } from "react-native"
+import { Pressable, StyleProp, ViewStyle } from "react-native"
 import HighlightedText from "../HighlightedText"
+import InputGroup from "../input/InputGroup"
 
 interface ModalButtonProps {
     label?: string
@@ -44,15 +44,15 @@ function ModalButtonBlock({ label, condition, value, style, onPress }: ModalButt
     const { theme } = useTheme()
 
     return (
-        <View style={inputElementStyles[theme].inputGroup}>
-            <Text style={inputElementStyles[theme].inputLabel}>{label}</Text>
+        <InputGroup>
+            <InputGroup.Label>{label}</InputGroup.Label>
             <ModalButton
                 condition={condition}
                 value={value}
                 onPress={onPress}
                 style={style}
             />
-        </View>
+        </InputGroup>
     )
 }
 

@@ -1,5 +1,6 @@
 import Button from '@/components/BaseButton'
 import Divider from '@/components/Divider'
+import InputGroup from '@/components/input/InputGroup'
 import { useTheme } from '@/context/ThemeContext'
 import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'
@@ -95,7 +96,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                     <View style={modalStyles[theme].inputContainer}>
                         {laps.length === 0 ? (
                             <View style={styles[theme].emptyList}>
-                                <Text style={inputElementStyles[theme].inputLabel}>No lap found</Text>
+                                <InputGroup.Label>No lap found</InputGroup.Label>
                             </View>
                         ) : (
                             <ScrollView
@@ -115,20 +116,19 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                                                 justifyContent: 'space-between',
                                                 flexDirection: 'row',
                                             }}>
-                                                <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
+                                                <InputGroup.Label>{formatLapTimeDisplay(lap.time)}</InputGroup.Label>
                                                 <Pressable onPress={() => handleLapRemove(lap.id)}>
                                                     <Text style={[inputElementStyles[theme].insideLabel, { color: 'red' }]}>Remove</Text>
                                                 </Pressable>
                                             </View>
                                             {stops.find(stop => stop.id === lap.stop_id) ? (
-                                                <Text style={[inputElementStyles[theme].inputLabel, { color: colors.primary }]}>
+                                                <InputGroup.Label style={{ color: colors.primary }}>
                                                     {stops.find(stop => stop.id === lap.stop_id)?.name}
-                                                </Text>
+                                                </InputGroup.Label>
                                             ) : null}
 
                                             {lap.note && (
-                                                <Text style={inputElementStyles[theme].inputLabelLight}>{lap.note}</Text>
-                                            )}
+                                                <InputGroup.Label>{lap.note}</InputGroup.Label>)}
                                         </Pressable>
                                         {index < laps.length - 1 && <Divider />}
                                     </Animated.View>
@@ -162,7 +162,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                     onClose={closeLapModal}
                 />
             </View>
-        </Modal>
+        </Modal >
     )
 };
 

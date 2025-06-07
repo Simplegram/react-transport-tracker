@@ -1,5 +1,6 @@
 import Button from "@/components/BaseButton"
 import { ModalButton } from "@/components/button/ModalButton"
+import InputGroup from "@/components/input/InputGroup"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
@@ -13,7 +14,7 @@ import { AddableRoute } from "@/src/types/AddableTravels"
 import { ModalProp } from "@/src/types/TravelModal"
 import { useFocusEffect } from "expo-router"
 import { useCallback, useState } from "react"
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native"
+import { Alert, ScrollView, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import EditTravelStopModal from "../travelModal/EditTravelStopModal"
 
@@ -69,7 +70,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
     return (
         <View>
             {loading || !stops ? (
-                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
+                <InputGroup.LoadingLabel />
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>
@@ -105,7 +106,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Type:</Text>
+                                <InputGroup.Label>Type:</InputGroup.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
@@ -130,10 +131,9 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                                                 name={type.icon_id.name}
                                                 size={20}
                                             />
-                                            <Text style={[
-                                                inputElementStyles[theme].inputLabel,
-                                                route.vehicle_type_id === type.id && iconPickerStyles[theme].selectedText,
-                                            ]}>{type.name.slice(0, 5)}</Text>
+                                            <InputGroup.Label
+                                                style={route.vehicle_type_id === type.id && iconPickerStyles[theme].selectedText}
+                                            >{type.name.slice(0, 5)}</InputGroup.Label>
                                         </TouchableOpacity>
                                     ))}
                                 </ScrollView>

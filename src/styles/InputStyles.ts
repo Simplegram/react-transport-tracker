@@ -1,5 +1,5 @@
 import { colors } from "@/src/const/color"
-import { Platform, StyleSheet } from "react-native"
+import { StyleSheet } from "react-native"
 
 const lightInputElementStyles = StyleSheet.create({
     inputContainer: {
@@ -20,18 +20,6 @@ const lightInputElementStyles = StyleSheet.create({
         alignItems: 'center',
         gap: 10,
     },
-    inputLabel: {
-        fontSize: 15,
-        fontWeight: '500',
-        color: colors.white_800,
-        marginBottom: 4,
-    },
-    inputLabelLight: {
-        fontSize: 14,
-        fontWeight: '300',
-        color: '#4A4A4A',
-        marginBottom: 5,
-    },
     insideLabel: {
         fontSize: 14,
         fontWeight: '500',
@@ -49,7 +37,7 @@ const lightInputElementStyles = StyleSheet.create({
     },
 })
 
-const inputElementStyles = {
+export const inputElementStyles = {
     light: lightInputElementStyles,
     dark: StyleSheet.create({
         inputContainer: {
@@ -68,14 +56,6 @@ const inputElementStyles = {
         inputGroupIcon: {
             ...lightInputElementStyles.inputGroupIcon,
         },
-        inputLabel: {
-            ...lightInputElementStyles.inputLabel,
-            color: colors.white_100,
-        },
-        inputLabelLight: {
-            ...lightInputElementStyles.inputLabelLight,
-            color: colors.white_400,
-        },
         insideLabel: {
             ...lightInputElementStyles.insideLabel,
             color: colors.white_300,
@@ -87,29 +67,6 @@ const inputElementStyles = {
         selectedLabel: {
             ...lightInputElementStyles.selectedLabel,
             color: colors.white_300,
-        }
-    })
-}
-
-const lightInputStyles = StyleSheet.create({
-    multilineTextInput: {
-        minHeight: 100,
-        textAlignVertical: 'top',
-    },
-    pressableInputCoord: {
-        flex: 1,
-    }
-})
-
-const inputStyles = {
-    light: lightInputStyles,
-    dark: StyleSheet.create({
-        multilineTextInput: {
-            ...lightInputStyles.multilineTextInput,
-            backgroundColor: colors.black,
-        },
-        pressableInputCoord: {
-            ...lightInputStyles.pressableInputCoord,
         }
     })
 }
@@ -149,7 +106,7 @@ const lightIconPickerStyles = StyleSheet.create({
     }
 })
 
-const iconPickerStyles = {
+export const iconPickerStyles = {
     light: lightIconPickerStyles,
     dark: StyleSheet.create({
         iconContainer: {
@@ -170,9 +127,5 @@ const iconPickerStyles = {
             color: colors.primary_100
         }
     })
-}
-
-export {
-    iconPickerStyles, inputElementStyles, inputStyles
 }
 

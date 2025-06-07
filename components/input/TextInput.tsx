@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/ThemeContext"
-import { colors } from "@/src/const/color"
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
-import { Text, TextInput, TextInputProps, View } from "react-native"
+import { inputElementStyles } from "@/src/styles/InputStyles"
+import { TextInput, TextInputProps, View } from "react-native"
+import InputGroup from "./InputGroup"
 
 export function TextInputBase(props: TextInputProps) {
     const { getTheme } = useTheme()
@@ -59,20 +59,21 @@ export function TextInputBlock(props: TextInputBlockProps) {
 
     return (
         <View style={inputElementStyles[theme].inputGroup}>
-            {props.label && <Text style={inputElementStyles[theme].inputLabel}>{props.label}</Text>}
+            {props.label && <InputGroup.Label>{props.label}</InputGroup.Label>}
             <TextInputBase {...restOfProps} />
         </View>
     )
 }
 
 function TextInputMultiline(props: TextInputBlockProps) {
-    const { theme } = useTheme()
-
     const { multiline, ...restOfProps } = props
 
     return (
         <TextInputBlock
-            style={inputStyles[theme].multilineTextInput}
+            style={{
+                minHeight: 100,
+                textAlignVertical: 'top',
+            }}
             multiline={true}
             numberOfLines={4}
             {...restOfProps}

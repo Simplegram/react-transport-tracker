@@ -1,4 +1,5 @@
 import Button from "@/components/BaseButton"
+import InputGroup from "@/components/input/InputGroup"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
@@ -8,7 +9,7 @@ import { inputElementStyles } from "@/src/styles/InputStyles"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { Direction } from "@/src/types/Travels"
 import { useState } from "react"
-import { Alert, Text, View } from "react-native"
+import { Alert, View } from "react-native"
 
 export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()
@@ -31,7 +32,7 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
     return (
         <View>
             {loading ? (
-                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
+                <InputGroup.LoadingLabel />
             ) : (
                 <>
                     <View style={inputElementStyles[theme].inputContainer}>

@@ -1,8 +1,8 @@
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
-import { inputElementStyles } from "@/src/styles/InputStyles"
 import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
-import { Text, TouchableOpacity } from "react-native"
+import { TouchableOpacity } from "react-native"
+import InputGroup from "../input/InputGroup"
 
 interface TypeButtonProps {
     onPress: () => void
@@ -11,27 +11,26 @@ interface TypeButtonProps {
 }
 
 export default function TypeButton({ label, onPress, typeSelected }: TypeButtonProps) {
-    const { theme } = useTheme()
+    const { theme: oldTheme, getTheme } = useTheme()
+    const theme = getTheme()
 
     return (
         <TouchableOpacity
             activeOpacity={0.7}
             style={[
-                travelDetailStyles[theme].detailRow,
+                travelDetailStyles[oldTheme].detailRow,
                 {
                     flex: 1,
                     alignItems: 'center',
                     borderColor: colors.white_500
                 },
-                typeSelected && { borderColor: colors.white_200 }
+                typeSelected && { borderColor: oldTheme === 'light' ? colors.black : colors.white_200 }
             ]}
             onPress={onPress}
         >
-            <Text style={[
-                inputElementStyles[theme].inputLabel,
-                { color: colors.white_500 },
-                typeSelected && { color: theme === 'light' ? colors.white : colors.white_200 }
-            ]}>{label}</Text>
+            <InputGroup.Label
+                style={[{ color: colors.white_500 }, typeSelected && { color: oldTheme === 'light' ? colors.black : colors.white_200 }]}
+            >{label}</InputGroup.Label>
         </TouchableOpacity>
     )
 }

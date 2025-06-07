@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/ThemeContext"
-import { inputElementStyles } from "@/src/styles/InputStyles"
-import { StyleSheet, Text, View } from "react-native"
+import { StyleSheet, View } from "react-native"
 import CustomSwitch from "./CustomSwitch"
+import InputGroup from "./InputGroup"
 
 interface SwitcherProps {
     title?: string
@@ -15,7 +15,7 @@ export default function Switcher({ title, onPress, overrideIsEnabled, children }
 
     return (
         <View style={styles.container}>
-            <Text style={inputElementStyles[theme].inputLabel}>{title ? title : children}</Text>
+            <InputGroup.Label>{title ? title : children}</InputGroup.Label>
             <CustomSwitch onPress={onPress} overrideIsEnabled={overrideIsEnabled} />
         </View>
     )

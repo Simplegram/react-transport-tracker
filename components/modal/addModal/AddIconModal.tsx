@@ -1,4 +1,5 @@
 import Button from "@/components/BaseButton"
+import InputGroup from "@/components/input/InputGroup"
 import { TextInputBase } from "@/components/input/TextInput"
 import { useTheme } from "@/context/ThemeContext"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
@@ -7,7 +8,7 @@ import { styles } from "@/src/styles/Styles"
 import { AddableIconType } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, Text, View } from "react-native"
+import { Alert, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentProps) {
@@ -38,7 +39,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
 
     return (
         <View>
-            <Text style={inputElementStyles[theme].inputLabel}>Icon name (FontAwesome6):</Text>
+            <InputGroup.Label>Icon name (FontAwesome6):</InputGroup.Label>
             <View style={inputElementStyles[theme].inputContainer}>
                 <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupIcon]}>
                     <Icon style={styles[theme].icon} name={icon.name ? icon.name : 'xmark'} size={32} />

@@ -1,5 +1,7 @@
 import Button from '@/components/BaseButton'
+import { ModalButton } from '@/components/button/ModalButton'
 import Divider from '@/components/Divider'
+import InputGroup from '@/components/input/InputGroup'
 import { TextInputBlock } from '@/components/input/TextInput'
 import MapDisplay from '@/components/MapDisplay'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
@@ -19,11 +21,9 @@ import {
     Alert,
     Modal,
     Pressable,
-    Text,
     View
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
-import { ModalButton } from '@/components/button/ModalButton'
 
 export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { theme } = useTheme()
@@ -113,7 +113,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
         >
             <Pressable style={modalStyles[theme].modalBackdrop}>
                 {!stops ? (
-                    <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
+                    <InputGroup.LoadingLabel />
                 ) : (
                     <>
                         <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
