@@ -17,7 +17,8 @@ export default function Container(props: ViewProps) {
                     paddingBottom: 20,
                     paddingHorizontal: 15,
                     justifyContent: 'center',
-                    backgroundColor: theme.palette.background
+
+                    backgroundColor: theme.palette.background,
                 }, style
             ]}
             {...restProps}

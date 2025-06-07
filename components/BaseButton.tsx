@@ -1,6 +1,5 @@
 import { useTheme } from '@/context/ThemeContext'
-import { colors } from '@/src/const/color'
-import { darkenColor, getBackgroundColorFromStyle, getColorFromStyle } from '@/src/utils/colorUtils'
+import { darkenColor, getBackgroundColorFromStyle } from '@/src/utils/colorUtils'
 import { Pressable, PressableProps, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native'
 
 export interface Props extends Omit<PressableProps, 'style'> {

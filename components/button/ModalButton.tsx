@@ -1,5 +1,5 @@
 import { useTheme } from "@/context/ThemeContext"
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { Pressable, StyleProp, Text, View, ViewStyle } from "react-native"
 import HighlightedText from "../HighlightedText"
 
@@ -12,12 +12,26 @@ interface ModalButtonProps {
 }
 
 export function ModalButtonBase({ condition, value, style, onPress }: ModalButtonProps) {
-    const { theme } = useTheme()
+    const { getTheme } = useTheme()
+    const theme = getTheme()
 
     return (
         <Pressable
             onPress={onPress}
-            style={[inputStyles[theme].pressableInput, style]}
+            style={[
+                {
+                    minHeight: 48,
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    justifyContent: 'center',
+                    paddingVertical: 12,
+                    paddingHorizontal: 14,
+                    
+                    borderColor: theme.palette.borderColorSoft,
+                    backgroundColor: theme.palette.background,
+                },
+                style
+            ]}
         >
             <HighlightedText condition={condition}>
                 {value}
