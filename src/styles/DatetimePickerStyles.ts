@@ -44,18 +44,6 @@ const lightDatetimePickerStyles = StyleSheet.create({
         alignItems: 'center',
         gap: 10,
     },
-    inputRow: {
-        flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    inputLabel: {
-        flex: 1,
-        fontSize: 16,
-        minWidth: 70,
-        textAlign: 'center',
-        paddingBottom: 5,
-    },
     textInput: {
         flex: 1,
         width: '100%',
@@ -143,13 +131,6 @@ export const datetimePickerStyles = {
         },
         timePicker: {
             ...lightDatetimePickerStyles.timePicker,
-        },
-        inputRow: {
-            ...lightDatetimePickerStyles.inputRow,
-        },
-        inputLabel: {
-            ...lightDatetimePickerStyles.inputLabel,
-            color: colors.white_100,
         },
         textInput: {
             ...lightDatetimePickerStyles.textInput,

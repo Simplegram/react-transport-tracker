@@ -11,6 +11,7 @@ import {
     TouchableOpacity,
     View
 } from 'react-native'
+import Button from '../BaseButton'
 import Divider from '../Divider'
 import { TextInputBase } from '../input/TextInput'
 
@@ -129,18 +130,6 @@ export default function CustomDateTimePicker({
         handlePartChange('seconds', now.getSeconds().toString().padStart(2, '0'))
     }
 
-    const inputRow = (label: string, value: string, onChangeText: (text: string) => void, placeholder: string, maxLength?: number) => (
-        <View style={datetimePickerStyles[theme].inputRow}>
-            <Text style={datetimePickerStyles[theme].inputLabel}>{label}</Text>
-            <TextInputBase.Numeric
-                value={value}
-                placeholder={placeholder}
-                maxLength={maxLength}
-                onChangeText={onChangeText}
-            />
-        </View>
-    )
-
     return (
         <Modal
             transparent={true}
@@ -158,17 +147,17 @@ export default function CustomDateTimePicker({
 
                             <View style={datetimePickerStyles[theme].dateTimeSection}>
                                 <View style={datetimePickerStyles[theme].timePicker}>
-                                    {inputRow('Year', year, (text) => handlePartChange('year', text), 'YYYY', 4)}
-                                    {inputRow('Month', month, (text) => handlePartChange('month', text), 'MM', 2)}
-                                    {inputRow('Day', day, (text) => handlePartChange('day', text), 'DD', 2)}
+                                    <NumberInput label='Year' value={year} placeholder='YYYY' onChangeText={(text) => handlePartChange('year', text)} maxLength={4} />
+                                    <NumberInput label='Month' value={month} placeholder='MM' onChangeText={(text) => handlePartChange('month', text)} />
+                                    <NumberInput label='Day' value={day} placeholder='DD' onChangeText={(text) => handlePartChange('day', text)} />
                                 </View>
                             </View>
 
                             <View style={datetimePickerStyles[theme].dateTimeSection}>
                                 <View style={datetimePickerStyles[theme].timePicker}>
-                                    {inputRow('Hours', hours, (text) => handlePartChange('hours', text), 'HH', 2)}
-                                    {inputRow('Minutes', minutes, (text) => handlePartChange('minutes', text), 'mm', 2)}
-                                    {inputRow('Seconds', seconds, (text) => handlePartChange('seconds', text), 'ss', 2)}
+                                    <NumberInput label='Hours' value={hours} placeholder='HH' onChangeText={(text) => handlePartChange('hours', text)} />
+                                    <NumberInput label='Minutes' value={minutes} placeholder='MM' onChangeText={(text) => handlePartChange('minutes', text)} />
+                                    <NumberInput label='Seconds' value={seconds} placeholder='ss' onChangeText={(text) => handlePartChange('seconds', text)} />
                                 </View>
                             </View>
 
@@ -182,9 +171,7 @@ export default function CustomDateTimePicker({
                             <Divider />
 
                             <View style={datetimePickerStyles[theme].actionButtons}>
-                                <TouchableOpacity style={[datetimePickerStyles[theme].button, datetimePickerStyles[theme].cancelButton]} onPress={onClose}>
-                                    <Text style={datetimePickerStyles[theme].buttonText}>Cancel</Text>
-                                </TouchableOpacity>
+                                <Button.Cancel onPress={onClose}>Cancel</Button.Cancel>
                                 <TouchableOpacity style={[datetimePickerStyles[theme].button, datetimePickerStyles[theme].confirmButton]} onPress={handleConfirm}>
                                     <Text style={datetimePickerStyles[theme].buttonText}>Confirm</Text>
                                 </TouchableOpacity>
@@ -194,5 +181,42 @@ export default function CustomDateTimePicker({
                 </Pressable>
             )}
         </Modal>
+    )
+}
+
+interface NumberInputProps {
+    label: string
+    value: string
+    onChangeText: (text: string) => void
+    placeholder: string
+    maxLength?: number
+}
+
+function NumberInput({ label, value, placeholder, onChangeText, maxLength = 2 }: NumberInputProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    return (
+        <View style={{
+            flex: 1,
+            alignItems: 'center',
+            flexDirection: 'column',
+        }}>
+            <Text style={{
+                flex: 1,
+                fontSize: 16,
+                minWidth: 70,
+                textAlign: 'center',
+                paddingBottom: 5,
+
+                color: theme.palette.textBlack,
+            }}>{label}</Text>
+            <TextInputBase.Numeric
+                value={value}
+                placeholder={placeholder}
+                maxLength={maxLength}
+                onChangeText={onChangeText}
+            />
+        </View>
     )
 }
