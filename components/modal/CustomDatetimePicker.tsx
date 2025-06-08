@@ -1,15 +1,15 @@
 import { useTheme } from '@/context/ThemeContext'
 import { useLoading } from '@/hooks/useLoading'
-import { datetimePickerStyles } from '@/src/styles/DatetimePickerStyles'
 import React, { useEffect, useState } from 'react'
 import {
     Alert,
+    Dimensions,
     Modal,
     Pressable,
     ScrollView,
     Text,
-    TouchableOpacity,
-    View
+    View,
+    ViewProps
 } from 'react-native'
 import Button from '../BaseButton'
 import Divider from '../Divider'
@@ -29,7 +29,8 @@ export default function CustomDateTimePicker({
     onClose,
     onConfirm,
 }: CustomDateTimePickerProps) {
-    const { theme } = useTheme()
+    const { theme, getTheme } = useTheme()
+    const newTheme = getTheme()
 
     const { loading } = useLoading(25)
 
@@ -130,6 +131,9 @@ export default function CustomDateTimePicker({
         handlePartChange('seconds', now.getSeconds().toString().padStart(2, '0'))
     }
 
+    const { width: screenWidth, height: screenHeight } = Dimensions.get('screen')
+    const modalWidth = screenWidth < screenHeight ? screenWidth * 0.85 : screenHeight * 0.85
+
     return (
         <Modal
             transparent={true}
@@ -140,47 +144,88 @@ export default function CustomDateTimePicker({
             {loading ? (
                 <></>
             ) : (
-                <Pressable style={datetimePickerStyles[theme].modalBackdrop} onPress={onClose}>
-                    <Pressable onPress={(e) => e.stopPropagation()} style={datetimePickerStyles[theme].modalContainer}>
-                        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={datetimePickerStyles[theme].scrollContainer}>
-                            <Text style={datetimePickerStyles[theme].modalTitle}>Set Date and Time</Text>
+                <Pressable
+                    style={{
+                        flex: 1,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                    }}
+                    onPress={onClose}
+                >
+                    <Pressable
+                        style={{
+                            width: modalWidth,
+                            padding: 20,
+                            borderWidth: 1,
+                            borderRadius: 10,
 
-                            <View style={datetimePickerStyles[theme].dateTimeSection}>
-                                <View style={datetimePickerStyles[theme].timePicker}>
-                                    <NumberInput label='Year' value={year} placeholder='YYYY' onChangeText={(text) => handlePartChange('year', text)} maxLength={4} />
-                                    <NumberInput label='Month' value={month} placeholder='MM' onChangeText={(text) => handlePartChange('month', text)} />
-                                    <NumberInput label='Day' value={day} placeholder='DD' onChangeText={(text) => handlePartChange('day', text)} />
-                                </View>
-                            </View>
+                            borderColor: newTheme.palette.textBlack,
+                            backgroundColor: newTheme.palette.background,
+                        }}
+                        onPress={(e) => e.stopPropagation()}
+                    >
+                        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ gap: 10 }}>
+                            <Text style={[
+                                {
+                                    fontSize: 20,
+                                    textAlign: 'center',
+                                    fontWeight: 'bold',
+                                    paddingBottom: 5,
 
-                            <View style={datetimePickerStyles[theme].dateTimeSection}>
-                                <View style={datetimePickerStyles[theme].timePicker}>
-                                    <NumberInput label='Hours' value={hours} placeholder='HH' onChangeText={(text) => handlePartChange('hours', text)} />
-                                    <NumberInput label='Minutes' value={minutes} placeholder='MM' onChangeText={(text) => handlePartChange('minutes', text)} />
-                                    <NumberInput label='Seconds' value={seconds} placeholder='ss' onChangeText={(text) => handlePartChange('seconds', text)} />
-                                </View>
-                            </View>
+                                    color: newTheme.palette.textBlack
+                                }
+                            ]}>Set Date and Time</Text>
 
-                            <TouchableOpacity
-                                style={[datetimePickerStyles[theme].nowButton]}
-                                onPress={handleTimeNow}
-                            >
-                                <Text style={datetimePickerStyles[theme].buttonText}>Now</Text>
-                            </TouchableOpacity>
+                            <TimeSection>
+                                <NumberInput label='Year' value={year} placeholder='YYYY' onChangeText={(text) => handlePartChange('year', text)} maxLength={4} />
+                                <NumberInput label='Month' value={month} placeholder='MM' onChangeText={(text) => handlePartChange('month', text)} />
+                                <NumberInput label='Day' value={day} placeholder='DD' onChangeText={(text) => handlePartChange('day', text)} />
+                            </TimeSection>
+
+                            <TimeSection>
+                                <NumberInput label='Hours' value={hours} placeholder='HH' onChangeText={(text) => handlePartChange('hours', text)} />
+                                <NumberInput label='Minutes' value={minutes} placeholder='MM' onChangeText={(text) => handlePartChange('minutes', text)} />
+                                <NumberInput label='Seconds' value={seconds} placeholder='ss' onChangeText={(text) => handlePartChange('seconds', text)} />
+                            </TimeSection>
+
+                            <Button.Dismiss onPress={handleTimeNow}>Now</Button.Dismiss>
 
                             <Divider />
 
-                            <View style={datetimePickerStyles[theme].actionButtons}>
+                            <View style={{
+                                gap: 10,
+                                flexDirection: 'row',
+                                justifyContent: 'center',
+                            }}>
                                 <Button.Cancel onPress={onClose}>Cancel</Button.Cancel>
-                                <TouchableOpacity style={[datetimePickerStyles[theme].button, datetimePickerStyles[theme].confirmButton]} onPress={handleConfirm}>
-                                    <Text style={datetimePickerStyles[theme].buttonText}>Confirm</Text>
-                                </TouchableOpacity>
+                                <Button.Add onPress={handleConfirm}>Confirm</Button.Add>
                             </View>
                         </ScrollView>
                     </Pressable>
                 </Pressable>
             )}
         </Modal>
+    )
+}
+
+function TimeSection(props: ViewProps) {
+    const { style, ...restProps } = props
+
+    return (
+        <View
+            style={[
+                {
+                    gap: 10,
+                    flex: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                }, style
+            ]}
+            {...restProps}
+        >{props.children}</View>
     )
 }
 
