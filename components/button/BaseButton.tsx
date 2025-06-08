@@ -1,6 +1,7 @@
 import { useTheme } from '@/context/ThemeContext'
+import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { darkenColor, getBackgroundColorFromStyle } from '@/src/utils/colorUtils'
-import { Pressable, PressableProps, StyleProp, Text, TextStyle, View, ViewProps, ViewStyle } from 'react-native'
+import { Pressable, PressableProps, StyleProp, StyleSheet, Text, TextStyle, View, ViewProps, ViewStyle } from 'react-native'
 
 export interface Props extends Omit<PressableProps, 'style'> {
     label?: string
@@ -174,7 +175,49 @@ function CancelButton(props: Props) {
     )
 }
 
+interface SwitchButtonProps extends Props {
+    switch: boolean
+}
+
+function SwitchButton(props: SwitchButtonProps) {
+    const { style, textStyle, ...restProps } = props
+
+    const { theme, getTheme } = useTheme()
+    const newTheme = getTheme()
+
+    const styles = StyleSheet.create({
+        inactiveButton: {
+            flex: 1,
+            alignItems: 'center',
+            borderWidth: 1,
+            borderRadius: 10,
+            paddingVertical: 12,
+
+            borderColor: newTheme.palette.borderColorSoft,
+            backgroundColor: newTheme.palette.background,
+        },
+        inactiveButtonText: {
+            fontSize: 16,
+            fontWeight: '600',
+
+            color: newTheme.palette.textDark,
+        },
+    })
+
+    return (
+        <Button
+            style={props.switch ? buttonStyles[theme].addButton : styles.inactiveButton}
+            textStyle={props.switch ? buttonStyles[theme].addButtonText : styles.inactiveButtonText}
+            {...restProps}
+        >
+            {props.children}
+        </Button>
+    )
+}
+
 Button.Row = ButtonRow
+
+Button.Switch = SwitchButton
 
 Button.Add = AddButton
 Button.Cancel = CancelButton

@@ -15,20 +15,6 @@ const lightButtonStyles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
     },
-    inactiveButton: {
-        flex: 1,
-        paddingVertical: 12,
-        borderRadius: 10,
-        alignItems: 'center',
-        borderWidth: 1,
-        borderColor: colors.white_500,
-        backgroundColor: colors.white_100,
-    },
-    inactiveButtonText: {
-        color: colors.white_500,
-        fontSize: 16,
-        fontWeight: '600',
-    },
 })
 
 export const buttonStyles = {
@@ -42,13 +28,6 @@ export const buttonStyles = {
         addButtonText: {
             ...lightButtonStyles.addButtonText,
             color: colors.white_100,
-        },
-        inactiveButton: {
-            ...lightButtonStyles.inactiveButton,
-            backgroundColor: colors.black,
-        },
-        inactiveButtonText: {
-            ...lightButtonStyles.inactiveButtonText,
         },
     })
 }

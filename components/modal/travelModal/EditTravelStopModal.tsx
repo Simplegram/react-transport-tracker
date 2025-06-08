@@ -2,7 +2,6 @@ import Button from "@/components/button/BaseButton"
 import { TextInputBase } from "@/components/input/TextInput"
 import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { styles } from "@/src/styles/Styles"
 import { EditableTravelStopModalProp } from "@/src/types/EditableTravels"
@@ -52,11 +51,7 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                         onChangeText={setSearchQuery}
                         style={{ flex: 5 }}
                     />
-                    <Button
-                        style={enableFilter ? buttonStyles[theme].addButton : buttonStyles[theme].inactiveButton}
-                        textStyle={enableFilter ? buttonStyles[theme].addButtonText : buttonStyles[theme].inactiveButtonText}
-                        onPress={() => setEnableFilter(!enableFilter)}
-                    >Filter</Button>
+                    <Button.Switch switch={enableFilter} onPress={() => setEnableFilter(!enableFilter)}>Filter</Button.Switch>
                 </View>
                 {filteredStops.length === 0 ? (
                     <View style={modalStyles[theme].emptyList}>
