@@ -5,7 +5,6 @@ import Switcher from "@/components/input/Switcher"
 import { useAuth } from "@/context/AuthContext"
 import { useSettings } from "@/context/SettingsContext"
 import { useTheme } from "@/context/ThemeContext"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
 import { router } from "expo-router"
 import { StyleSheet, View } from "react-native"
@@ -45,11 +44,7 @@ export default function Settings() {
                     <Switcher onPress={handleThemeChange} overrideIsEnabled={theme === 'light' ? false : true}>Dark mode</Switcher>
                 </View>
                 <Divider />
-                <Button
-                    style={buttonStyles[theme].redButton}
-                    textStyle={buttonStyles[theme].addButtonText}
-                    onPress={handleLogout}
-                >Logout</Button>
+                <Button.Cancel onPress={handleLogout}>Logout</Button.Cancel>
             </View>
         </CollapsibleHeaderPage>
     )

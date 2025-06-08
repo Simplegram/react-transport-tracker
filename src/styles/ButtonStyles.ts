@@ -15,12 +15,6 @@ const lightButtonStyles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '600',
     },
-    redButton: {
-        borderWidth: 1,
-        borderRadius: 10,
-        alignItems: 'center',
-        backgroundColor: colors.redCancel,
-    },
     inactiveButton: {
         flex: 1,
         paddingVertical: 12,
@@ -48,11 +42,6 @@ export const buttonStyles = {
         addButtonText: {
             ...lightButtonStyles.addButtonText,
             color: colors.white_100,
-        },
-        redButton: {
-            ...lightButtonStyles.redButton,
-            borderColor: colors.redCancel_100,
-            backgroundColor: colors.black,
         },
         inactiveButton: {
             ...lightButtonStyles.inactiveButton,

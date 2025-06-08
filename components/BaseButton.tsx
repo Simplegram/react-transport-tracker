@@ -25,10 +25,13 @@ export default function Button(props: Props) {
 
         return [
             {
-                maxHeight: 55,
+                height: 50,
+                maxHeight: 50,
+                borderWidth: 1,
                 borderRadius: 10,
                 paddingVertical: 12,
                 paddingHorizontal: 20,
+
                 alignItems: 'center',
                 justifyContent: 'center',
 
@@ -86,9 +89,6 @@ function AddButton(props: Props) {
             style={[
                 {
                     flex: 1,
-                    alignItems: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
                     paddingVertical: 12,
 
                     borderColor: theme.palette.borderColorPrimary,
@@ -121,9 +121,6 @@ function DismissButton(props: Props) {
             style={[
                 {
                     flex: 1,
-                    alignItems: 'center',
-                    borderWidth: 1,
-                    borderRadius: 10,
                     paddingVertical: 12,
 
                     borderColor: theme.palette.borderColor,
@@ -145,7 +142,40 @@ function DismissButton(props: Props) {
     )
 }
 
+function CancelButton(props: Props) {
+    const { style, textStyle, ...restProps } = props
+
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    return (
+        <Button
+            style={[
+                {
+                    flex: 1,
+                    paddingVertical: 12,
+
+                    borderColor: theme.palette.borderColorRed,
+                    backgroundColor: theme.palette.backgroundRed,
+                },
+                props.style,
+            ]}
+            textStyle={[
+                {
+                    fontSize: 16,
+                    fontWeight: '600',
+
+                    color: theme.palette.textWhite,
+                },
+                props.textStyle,
+            ]}
+            {...restProps}
+        />
+    )
+}
+
 Button.Row = ButtonRow
 
 Button.Add = AddButton
+Button.Cancel = CancelButton
 Button.Dismiss = DismissButton
