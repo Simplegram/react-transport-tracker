@@ -187,9 +187,9 @@ export default function CustomDateTimePicker({
 interface NumberInputProps {
     label: string
     value: string
-    onChangeText: (text: string) => void
-    placeholder: string
     maxLength?: number
+    placeholder: string
+    onChangeText: (text: string) => void
 }
 
 function NumberInput({ label, value, placeholder, onChangeText, maxLength = 2 }: NumberInputProps) {
