@@ -2,11 +2,6 @@ import { colors } from "@/src/const/color"
 import { StyleSheet } from "react-native"
 
 const lightButtonStyles = StyleSheet.create({
-    buttonRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        gap: 10,
-    },
     addButton: {
         backgroundColor: colors.primary,
         paddingVertical: 12,
@@ -45,9 +40,6 @@ const lightButtonStyles = StyleSheet.create({
 export const buttonStyles = {
     light: lightButtonStyles,
     dark: StyleSheet.create({
-        buttonRow: {
-            ...lightButtonStyles.buttonRow,
-        },
         addButton: {
             ...lightButtonStyles.addButton,
             borderColor: colors.primary_100,

@@ -12,7 +12,6 @@ import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import useModalHandler from "@/hooks/useModalHandler"
 import useTravelDetail from "@/hooks/useTravelDetail"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { inputElementStyles } from "@/src/styles/InputStyles"
 import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
 import { addTime, getTimeString, timeToMinutes } from "@/src/utils/dateUtils"
@@ -198,9 +197,9 @@ export default function EstimationPage() {
                 </View>
             </Input.Container>
 
-            <View style={buttonStyles[theme].buttonRow}>
+            <Button.Row>
                 <Button.Add label='Get Estimate' onPress={handleOnSubmit} />
-            </View>
+            </Button.Row>
 
             <EditTravelDirectionModal
                 directions={directions}

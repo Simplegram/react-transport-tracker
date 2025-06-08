@@ -6,7 +6,6 @@ import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import { useTheme } from '@/context/ThemeContext'
 import useModalHandler from '@/hooks/useModalHandler'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels'
 import { formatDateForDisplay } from '@/src/utils/utils'
@@ -122,10 +121,10 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
 
                         <Divider />
 
-                        <View style={buttonStyles[theme].buttonRow}>
+                        <Button.Row>
                             <Button.Dismiss label='Cancel' onPress={onClose} />
                             <Button.Add label='Edit Lap' onPress={handleOnSubmit} />
-                        </View>
+                        </Button.Row>
                     </View>
 
                     <EditTravelStopModal

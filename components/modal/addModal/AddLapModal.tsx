@@ -8,7 +8,6 @@ import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import { useTheme } from '@/context/ThemeContext'
 import useLocation from '@/hooks/useLocation'
 import useModalHandler from '@/hooks/useModalHandler'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
@@ -150,10 +149,10 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
                             <Divider />
 
-                            <View style={buttonStyles[theme].buttonRow}>
+                            <Button.Row>
                                 <Button.Dismiss label='Cancel' onPress={onClose} />
                                 <Button.Add label='Add Lap' onPress={handleOnSubmit} />
-                            </View>
+                            </Button.Row>
                         </View>
 
                         <EditTravelStopModal

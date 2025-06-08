@@ -5,7 +5,6 @@ import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles } from "@/src/styles/InputStyles"
 import { styles } from "@/src/styles/Styles"
 import { EditableVehicleType } from "@/src/types/EditableTravels"
@@ -91,10 +90,10 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                         </View>
                     </Input.Container>
 
-                    <View style={buttonStyles[theme].buttonRow}>
+                    <Button.Row>
                         <Button.Dismiss label='Cancel' onPress={onCancel} />
                         <Button.Add label='Edit Type' onPress={handleOnSubmit} />
-                    </View>
+                    </Button.Row>
                 </>
             )}
         </View>

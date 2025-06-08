@@ -2,7 +2,6 @@ import Button from "@/components/BaseButton"
 import Input from "@/components/input/Input"
 import { TextInputBase } from "@/components/input/TextInput"
 import { useTheme } from "@/context/ThemeContext"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { inputElementStyles } from "@/src/styles/InputStyles"
 import { styles } from "@/src/styles/Styles"
 import { AddableIconType } from "@/src/types/AddableTravels"
@@ -52,10 +51,10 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
                 </View>
             </Input.Container>
 
-            <View style={buttonStyles[theme].buttonRow}>
+            <Button.Row>
                 <Button.Dismiss label='Cancel' onPress={onCancel} />
                 <Button.Add label='Add Icon' onPress={handleOnSubmit} />
-            </View>
+            </Button.Row>
         </View>
     )
 }

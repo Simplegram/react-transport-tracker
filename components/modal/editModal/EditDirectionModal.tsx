@@ -4,7 +4,6 @@ import { TextInputBlock } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { Direction } from "@/src/types/Travels"
 import { useState } from "react"
@@ -43,10 +42,10 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
                         />
                     </Input.Container>
 
-                    <View style={buttonStyles[theme].buttonRow}>
+                    <Button.Row>
                         <Button.Dismiss label='Cancel' onPress={onCancel} />
                         <Button.Add label='Edit Route' onPress={handleOnSubmit} />
-                    </View>
+                    </Button.Row>
                 </>
             )}
         </View>

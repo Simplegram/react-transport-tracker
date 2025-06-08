@@ -4,7 +4,6 @@ import Input from '@/components/input/Input'
 import { useTheme } from '@/context/ThemeContext'
 import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapsModalProp } from '@/src/types/AddableTravels'
@@ -137,14 +136,14 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                         )}
                     </View>
 
-                    <View style={buttonStyles[theme].buttonRow}>
+                    <Button.Row>
                         <Button.Add label='Add lap' onPress={openLapModal} />
-                    </View>
+                    </Button.Row>
 
-                    <View style={buttonStyles[theme].buttonRow}>
+                    <Button.Row>
                         <Button.Dismiss label='Cancel' onPress={onClose} />
                         <Button.Add label='Save Laps' onPress={handleOnSubmit} />
-                    </View>
+                    </Button.Row>
                 </View>
 
                 <EditLapModal

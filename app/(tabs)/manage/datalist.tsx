@@ -13,7 +13,6 @@ import useGetTravelData from '@/hooks/useGetTravelData'
 import { useLoading } from '@/hooks/useLoading'
 import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { DatalistStyles, ItemStyles } from '@/src/styles/DatalistStyles'
 import { styles } from '@/src/styles/Styles'
 import { useFocusEffect } from 'expo-router'
@@ -168,9 +167,9 @@ export default function DataListScreen() {
                         style={theme === 'light' ? { borderColor: colors.black } : { borderColor: colors.white_100 }}
                     />
 
-                    <View style={buttonStyles[theme].buttonRow}>
+                    <Button.Row>
                         <Button.Add label={`Add New ${dataType.slice(0, -1)}`} onPress={handleAddNew} />
-                    </View>
+                    </Button.Row>
 
                     <ModalTemplate
                         isModalVisible={showModal}

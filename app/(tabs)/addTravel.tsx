@@ -15,7 +15,6 @@ import useGetTravelData from '@/hooks/useGetTravelData'
 import { useToggleLoading } from '@/hooks/useLoading'
 import useModalHandler from '@/hooks/useModalHandler'
 import useModifyTravelData from '@/hooks/useModifyTravelData'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap, AddableTravel } from '@/src/types/AddableTravels'
 import { formatDateForDisplay } from '@/src/utils/utils'
@@ -325,9 +324,9 @@ export default function AddTravel() {
 
                 <Divider />
 
-                <View style={buttonStyles[theme].buttonRow}>
+                <Button.Row>
                     <Button.Add label='Add Travel' onPress={handleOnSubmit} />
-                </View>
+                </Button.Row>
             </Input.Container>
 
             <AddTravelLapsModal

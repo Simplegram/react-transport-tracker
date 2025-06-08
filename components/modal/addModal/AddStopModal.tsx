@@ -6,7 +6,6 @@ import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import useModalHandler from "@/hooks/useModalHandler"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles } from "@/src/styles/InputStyles"
 import { styles } from "@/src/styles/Styles"
 import { AddableCoordinates, AddableStop } from "@/src/types/AddableTravels"
@@ -150,10 +149,10 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         onSelect={handleCoordSelect}
                     />
 
-                    <View style={buttonStyles[theme].buttonRow}>
+                    <Button.Row>
                         <Button.Dismiss label='Cancel' onPress={onCancel} />
                         <Button.Add label='Add Stop' onPress={handleOnSubmit} />
-                    </View>
+                    </Button.Row>
                 </>
             )}
         </View>

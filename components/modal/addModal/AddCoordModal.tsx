@@ -2,7 +2,6 @@ import Button from "@/components/BaseButton"
 import MapDisplay from "@/components/MapDisplay"
 import { useTheme } from "@/context/ThemeContext"
 import useLocation from "@/hooks/useLocation"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { modalStyles } from "@/src/styles/ModalStyles"
 import { AddableCoordModalProp } from "@/src/types/AddableTravels"
 import { LocationObject } from "expo-location"
@@ -73,10 +72,10 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
                         centerCoordinate={centerCoordinate}
                     />
 
-                    <View style={buttonStyles[theme].buttonRow}>
+                    <Button.Row>
                         <Button.Dismiss label='Cancel' onPress={onClose} />
                         <Button.Add label='Pick Coordinate' onPress={handleOnSubmit} />
-                    </View>
+                    </Button.Row>
                 </View>
             </Pressable>
         </Modal>

@@ -17,7 +17,6 @@ import useGetTravelData from '@/hooks/useGetTravelData'
 import { useToggleLoading } from '@/hooks/useLoading'
 import useModalHandler from '@/hooks/useModalHandler'
 import useModifyTravelData from '@/hooks/useModifyTravelData'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap } from '@/src/types/AddableTravels'
 import { EditableTravel } from '@/src/types/EditableTravels'
@@ -361,9 +360,9 @@ export default function EditTravelItem() {
 
                         <Divider />
 
-                        <View style={buttonStyles[theme].buttonRow}>
+                        <Button.Row>
                             <Button.Add label='Save Travel Edit(s)' onPress={handleOnSubmit} />
-                        </View>
+                        </Button.Row>
                     </Input.Container>
 
                     <EditTravelLapsModal

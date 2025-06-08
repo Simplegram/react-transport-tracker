@@ -1,6 +1,6 @@
 import { useTheme } from '@/context/ThemeContext'
 import { darkenColor, getBackgroundColorFromStyle } from '@/src/utils/colorUtils'
-import { Pressable, PressableProps, StyleProp, StyleSheet, Text, TextStyle, ViewStyle } from 'react-native'
+import { Pressable, PressableProps, StyleProp, Text, TextStyle, View, ViewProps, ViewStyle } from 'react-native'
 
 export interface Props extends Omit<PressableProps, 'style'> {
     label?: string
@@ -23,15 +23,55 @@ export default function Button(props: Props) {
         const backgroundColor = pressed ? darkenColor(baseBackgroundColor, props.darkenAmount || 0.3) : baseBackgroundColor
         const opacity = theme === 'dark' ? (pressed ? (props.darkenAmount || 0.7) : 1) : 1
 
-        return [styles.buttonContainer, props.style, { backgroundColor, opacity: opacity }] as StyleProp<ViewStyle>
+        return [
+            {
+                maxHeight: 55,
+                borderRadius: 10,
+                paddingVertical: 12,
+                paddingHorizontal: 20,
+                alignItems: 'center',
+                justifyContent: 'center',
+
+                backgroundColor,
+                opacity: opacity,
+            },
+            props.style,
+        ] as StyleProp<ViewStyle>
     }
 
     return (
         <Pressable style={buttonContainerStyle} {...restProps}>
-            <Text style={[styles.buttonText, props.textStyle]}>
+            <Text style={[
+                {
+                    color: '#fff',
+                    fontSize: 16,
+                    fontWeight: 'bold',
+                    textAlign: 'center',
+                },
+                props.textStyle
+            ]}>
                 {props.label ? props.label : props.children}
             </Text>
         </Pressable>
+    )
+}
+
+function ButtonRow(props: ViewProps) {
+    const { style, ...restProps } = props
+
+    return (
+        <View
+            style={[
+                {
+                    gap: 10,
+                    flexDirection: 'row',
+                    justifyContent: 'space-around',
+                }, style
+            ]}
+            {...restProps}
+        >
+            {props.children}
+        </View>
     )
 }
 
@@ -105,22 +145,7 @@ function DismissButton(props: Props) {
     )
 }
 
+Button.Row = ButtonRow
+
 Button.Add = AddButton
 Button.Dismiss = DismissButton
-
-const styles = StyleSheet.create({
-    buttonContainer: {
-        maxHeight: 55,
-        borderRadius: 10,
-        paddingVertical: 12,
-        paddingHorizontal: 20,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    buttonText: {
-        color: '#fff',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-})

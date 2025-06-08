@@ -8,7 +8,6 @@ import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import useModalHandler from "@/hooks/useModalHandler"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles } from "@/src/styles/InputStyles"
 import { styles } from "@/src/styles/Styles"
 import { EditableRoute } from "@/src/types/EditableTravels"
@@ -157,10 +156,10 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                         onClose={closeModal}
                     />
 
-                    <View style={buttonStyles[theme].buttonRow}>
+                    <Button.Row>
                         <Button.Dismiss label='Cancel' onPress={onCancel} />
                         <Button.Add label='Edit Route' onPress={handleOnSubmit} />
-                    </View>
+                    </Button.Row>
                 </>
             )}
         </View>

@@ -1,6 +1,5 @@
 import Button from "@/components/BaseButton"
 import { useTheme } from "@/context/ThemeContext"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { inputElementStyles } from "@/src/styles/InputStyles"
 import { modalStyles } from "@/src/styles/ModalStyles"
 import { AddableCoordModalProp } from "@/src/types/AddableTravels"
@@ -55,10 +54,10 @@ export default function EditCoordModal({ currentCoordinates, isModalVisible, onC
                         </View>
                     </View>
 
-                    <View style={buttonStyles[theme].buttonRow}>
+                    <Button.Row>
                         <Button.Dismiss label='Cancel' onPress={onClose} />
                         <Button.Add label='Add Direction' onPress={handleOnSubmit} />
-                    </View>
+                    </Button.Row>
                 </View>
             </Pressable>
         </Modal>

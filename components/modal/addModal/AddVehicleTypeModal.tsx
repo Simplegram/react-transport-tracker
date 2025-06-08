@@ -3,7 +3,6 @@ import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { iconPickerStyles, inputElementStyles } from "@/src/styles/InputStyles"
 import { styles } from "@/src/styles/Styles"
 import { AddableVehicleType } from "@/src/types/AddableTravels"
@@ -78,10 +77,10 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
                         </View>
                     </Input.Container>
 
-                    <View style={buttonStyles[theme].buttonRow}>
+                    <Button.Row>
                         <Button.Dismiss label='Cancel' onPress={onCancel} />
                         <Button.Add label='Add Type' onPress={handleOnSubmit} />
-                    </View>
+                    </Button.Row>
                 </>
             )}
         </View>

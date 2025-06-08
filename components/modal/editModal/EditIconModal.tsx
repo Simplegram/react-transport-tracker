@@ -3,7 +3,6 @@ import Input from "@/components/input/Input"
 import { TextInputBase } from "@/components/input/TextInput"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { inputElementStyles } from "@/src/styles/InputStyles"
 import { styles } from "@/src/styles/Styles"
 import { AddableIconType } from "@/src/types/AddableTravels"
@@ -55,10 +54,10 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
                 </View>
             </Input.Container>
 
-            <View style={buttonStyles[theme].buttonRow}>
+            <Button.Row>
                 <Button.Dismiss label='Cancel' onPress={onCancel} />
                 <Button.Add label='Edit Icon' onPress={handleOnSubmit} />
-            </View>
+            </Button.Row>
         </View>
     )
 }
