@@ -136,9 +136,9 @@ export default function CustomDateTimePicker({
 
     return (
         <Modal
+            visible={visible}
             transparent={true}
             animationType="fade"
-            visible={visible}
             onRequestClose={onClose}
         >
             {loading ? (
@@ -155,11 +155,11 @@ export default function CustomDateTimePicker({
                 >
                     <Pressable
                         style={{
-                            width: modalWidth,
                             padding: 20,
                             borderWidth: 1,
                             borderRadius: 10,
 
+                            width: modalWidth,
                             borderColor: newTheme.palette.textBlack,
                             backgroundColor: newTheme.palette.background,
                         }}
