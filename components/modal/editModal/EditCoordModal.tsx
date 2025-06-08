@@ -1,4 +1,4 @@
-import Button from "@/components/BaseButton"
+import Button from "@/components/button/BaseButton"
 import { useTheme } from "@/context/ThemeContext"
 import { inputElementStyles } from "@/src/styles/InputStyles"
 import { modalStyles } from "@/src/styles/ModalStyles"

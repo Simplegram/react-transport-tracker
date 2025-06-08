@@ -1,4 +1,4 @@
-import Button from "@/components/BaseButton"
+import Button from "@/components/button/BaseButton"
 import Container from "@/components/Container"
 import LoadingScreen from "@/components/LoadingScreen"
 import CalendarModal from "@/components/modal/CalendarModal"

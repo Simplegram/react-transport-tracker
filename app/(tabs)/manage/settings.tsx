@@ -1,4 +1,4 @@
-import Button from "@/components/BaseButton"
+import Button from "@/components/button/BaseButton"
 import CollapsibleHeaderPage from "@/components/CollapsibleHeaderPage"
 import Divider from "@/components/Divider"
 import Switcher from "@/components/input/Switcher"

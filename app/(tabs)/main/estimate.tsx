@@ -1,4 +1,4 @@
-import Button from "@/components/BaseButton"
+import Button from "@/components/button/BaseButton"
 import { ModalButton } from "@/components/button/ModalButton"
 import TypeButton from "@/components/button/TypeButton"
 import Container from "@/components/Container"

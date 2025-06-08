@@ -1,4 +1,4 @@
-import Button from "@/components/BaseButton"
+import Button from "@/components/button/BaseButton"
 import { ModalButton } from "@/components/button/ModalButton"
 import Input from "@/components/input/Input"
 import { TextInputBase, TextInputBlock } from "@/components/input/TextInput"

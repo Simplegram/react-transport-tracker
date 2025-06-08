@@ -1,4 +1,4 @@
-import Button from '@/components/BaseButton'
+import Button from '@/components/button/BaseButton'
 import Input from '@/components/input/Input'
 import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'

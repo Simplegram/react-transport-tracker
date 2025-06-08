@@ -11,7 +11,7 @@ import {
     View,
     ViewProps
 } from 'react-native'
-import Button from '../BaseButton'
+import Button from '../button/BaseButton'
 import Divider from '../Divider'
 import { TextInputBase } from '../input/TextInput'
 

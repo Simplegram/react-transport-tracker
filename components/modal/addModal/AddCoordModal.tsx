@@ -1,4 +1,4 @@
-import Button from "@/components/BaseButton"
+import Button from "@/components/button/BaseButton"
 import MapDisplay from "@/components/MapDisplay"
 import { useTheme } from "@/context/ThemeContext"
 import useLocation from "@/hooks/useLocation"

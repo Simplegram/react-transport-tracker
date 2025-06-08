@@ -5,7 +5,7 @@ import { getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/
 import { useState } from "react"
 import { Modal, View } from "react-native"
 import { CalendarList } from "react-native-calendars"
-import Button from "../BaseButton"
+import Button from "../button/BaseButton"
 
 interface CalendarModalProps {
     dates: any

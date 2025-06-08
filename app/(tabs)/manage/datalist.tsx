@@ -1,4 +1,4 @@
-import Button from '@/components/BaseButton'
+import Button from '@/components/button/BaseButton'
 import Divider from '@/components/Divider'
 import Input from '@/components/input/Input'
 import { TextInputBase } from '@/components/input/TextInput'
