@@ -76,6 +76,30 @@ function ModalContainer(props: ViewProps) {
     )
 }
 
+function CalendarContainer(props: ViewProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    const { children, style, ...restProps } = props
+
+    return (
+        <View
+            style={[
+                {
+                    flex: 1,
+                    height: 500,
+                    position: 'relative',
+
+                    backgroundColor: theme.palette.background,
+                }, style
+            ]}
+            {...restProps}
+        >
+            {children}
+        </View>
+    )
+}
+
 function ModalBottomContainer(props: ViewProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
@@ -145,6 +169,7 @@ ModalTemplate.Backdrop = ModalBackdrop
 
 ModalTemplate.Container = ModalContainer
 ModalTemplate.BottomContainer = ModalBottomContainer
+ModalTemplate.CalendarContainer = CalendarContainer
 
 ModalTemplate.Bottom = ModalBottom
 ModalTemplate.BottomInput = ModalBottomInput
