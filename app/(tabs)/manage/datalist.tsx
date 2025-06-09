@@ -171,7 +171,7 @@ export default function DataListScreen() {
                         <Button.Add label={`Add New ${dataType.slice(0, -1)}`} onPress={handleAddNew} />
                     </Button.Row>
 
-                    <ModalTemplate.Bottom
+                    <ModalTemplate.BottomInput
                         visible={showModal}
                         onRequestClose={closeModal}
                         title={activeModalConfig ? activeModalConfig.title : 'Modal'}
@@ -186,7 +186,7 @@ export default function DataListScreen() {
                         ) : (
                             <Input.LoadingLabel />
                         )}
-                    </ModalTemplate.Bottom>
+                    </ModalTemplate.BottomInput>
                 </>
             )}
         </View>

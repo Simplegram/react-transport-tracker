@@ -85,15 +85,8 @@ function ModalContainer(props: PressableProps) {
     )
 }
 
-interface Props extends ModalProps {
-    title: string
-}
-
-function ModalBottom({ title, visible, onRequestClose, ...props }: Props) {
-    const { getTheme } = useTheme()
-    const theme = getTheme()
-
-    const { animationType, transparent, statusBarTranslucent, ...restProps } = props
+function ModalBottom({ visible, onRequestClose, ...props }: ModalProps) {
+    const { animationType, ...restProps } = props
 
     return (
         <ModalTemplate
@@ -103,19 +96,37 @@ function ModalBottom({ title, visible, onRequestClose, ...props }: Props) {
             onRequestClose={onRequestClose}
         >
             <ModalTemplate.Backdrop style={{ justifyContent: 'flex-end' }} onPress={onRequestClose}>
-                <ModalTemplate.Container>
-                    <Text style={{
-                        fontSize: 20,
-                        fontWeight: 'bold',
-
-                        color: theme.palette.textBlack,
-                    }}>{title}</Text>
-                    <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
-                        {restProps.children}
-                    </KeyboardAwareScrollView>
-                </ModalTemplate.Container>
+                {restProps.children}
             </ModalTemplate.Backdrop>
         </ModalTemplate>
+    )
+}
+
+interface ModalBottomInputProps extends ModalProps {
+    title: string
+}
+
+function ModalBottomInput({ title, visible, onRequestClose, ...props }: ModalBottomInputProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    return (
+        <ModalBottom
+            visible={visible}
+            onRequestClose={onRequestClose}
+        >
+            <ModalTemplate.Container>
+                <Text style={{
+                    fontSize: 20,
+                    fontWeight: 'bold',
+
+                    color: theme.palette.textBlack,
+                }}>{title}</Text>
+                <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
+                    {props.children}
+                </KeyboardAwareScrollView>
+            </ModalTemplate.Container>
+        </ModalBottom>
     )
 }
 
@@ -123,3 +134,4 @@ ModalTemplate.Backdrop = ModalBackdrop
 ModalTemplate.Container = ModalContainer
 
 ModalTemplate.Bottom = ModalBottom
+ModalTemplate.BottomInput = ModalBottomInput
