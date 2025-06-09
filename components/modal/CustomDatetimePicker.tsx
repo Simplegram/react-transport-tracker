@@ -3,7 +3,6 @@ import { useLoading } from '@/hooks/useLoading'
 import React, { useEffect, useState } from 'react'
 import {
     Alert,
-    Dimensions,
     ScrollView,
     Text,
     View,
@@ -129,9 +128,6 @@ export default function CustomDateTimePicker({
         handlePartChange('minutes', now.getMinutes().toString().padStart(2, '0'))
         handlePartChange('seconds', now.getSeconds().toString().padStart(2, '0'))
     }
-
-    const { width: screenWidth, height: screenHeight } = Dimensions.get('screen')
-    const modalWidth = screenWidth < screenHeight ? screenWidth * 0.85 : screenHeight * 0.85
 
     return (
         <ModalTemplate.Bottom
