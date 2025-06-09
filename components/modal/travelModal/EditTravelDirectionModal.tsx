@@ -5,7 +5,7 @@ import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { EditableTravelDirectionModalProp } from "@/src/types/EditableTravels"
 import { useMemo } from "react"
 import { Pressable, Text, View } from "react-native"
-import FlatlistPicker from "../FlatlistPicker"
+import FlatlistBase from "../FlatlistPicker"
 
 export default function EditTravelDirectionModal({ directions, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelDirectionModalProp) {
     const { theme } = useTheme()
@@ -40,14 +40,14 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
                         <Text style={modalElementStyles[theme].label}>No route found</Text>
                     </View>
                 ) : (
-                    <FlatlistPicker
+                    <FlatlistBase.Picker
                         items={filteredItems}
                         onSelect={onSelect}
                     >
                         {(item) => (
                             <Text style={modalElementStyles[theme].label}>{item.name}</Text>
                         )}
-                    </FlatlistPicker>
+                    </FlatlistBase.Picker>
                 )}
             </ModalTemplate.Container>
         </ModalTemplate.Bottom>

@@ -1,16 +1,24 @@
 import { useTheme } from "@/context/ThemeContext"
+import { colors } from "@/src/const/color"
 import { flatlistStyles } from "@/src/styles/ModalStyles"
+import { EditableLap } from "@/src/types/EditableTravels"
+import { Stop } from "@/src/types/Travels"
+import { formatLapTimeDisplay } from "@/src/utils/utils"
 import React from "react"
-import { FlatList, TouchableOpacity } from "react-native"
+import { FlatList, Pressable, TouchableOpacity } from "react-native"
+import Divider from "../Divider"
+import Input from "../input/Input"
 
-interface FlatlistPickerProps {
+export default function FlatlistBase() { }
+
+interface PickerProps {
     items: any[]
     maxHeight?: number
     onSelect: (id: any) => void
     children?: (item: any) => React.ReactNode
 }
 
-export default function FlatlistPicker({ items, maxHeight = 300, onSelect, children }: FlatlistPickerProps) {
+function PickerFlatlist({ items, maxHeight = 300, onSelect, children }: PickerProps) {
     const { theme } = useTheme()
 
     return (
@@ -32,3 +40,6 @@ export default function FlatlistPicker({ items, maxHeight = 300, onSelect, child
         />
     )
 }
+
+FlatlistBase.Picker = PickerFlatlist
+FlatlistBase.Lap = LapFlatlist

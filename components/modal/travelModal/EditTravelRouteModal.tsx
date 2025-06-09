@@ -7,7 +7,7 @@ import { EditableTravelRouteModalProp } from "@/src/types/EditableTravels"
 import { useMemo } from "react"
 import { Pressable, Text, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
-import FlatlistPicker from "../FlatlistPicker"
+import FlatlistBase from "../FlatlistPicker"
 
 export default function EditTravelRouteModal({ routes, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelRouteModalProp) {
     const { theme } = useTheme()
@@ -42,7 +42,7 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
                         <Text style={modalElementStyles[theme].label}>No route found</Text>
                     </View>
                 ) : (
-                    <FlatlistPicker
+                    <FlatlistBase.Picker
                         items={filteredItems}
                         onSelect={onSelect}
                     >
@@ -60,7 +60,7 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
                                 <Text style={modalElementStyles[theme].label}>{`${item.code} | ${item.name}`}</Text>
                             </>
                         )}
-                    </FlatlistPicker>
+                    </FlatlistBase.Picker>
                 )}
             </ModalTemplate.Container>
         </ModalTemplate.Bottom>

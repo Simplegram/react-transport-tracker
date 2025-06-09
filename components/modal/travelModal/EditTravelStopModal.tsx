@@ -9,7 +9,7 @@ import { EditableTravelStopModalProp } from "@/src/types/EditableTravels"
 import { useMemo, useState } from "react"
 import { Pressable, Text, View } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome6"
-import FlatlistPicker from "../FlatlistPicker"
+import FlatlistBase from "../FlatlistPicker"
 
 export default function EditTravelStopModal({ stops, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelStopModalProp) {
     const { theme } = useTheme()
@@ -56,7 +56,7 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                         <Text style={modalElementStyles[theme].label}>No stop found</Text>
                     </View>
                 ) : (
-                    <FlatlistPicker
+                    <FlatlistBase.Picker
                         items={filteredStops}
                         onSelect={onSelect}
                     >
@@ -74,7 +74,7 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                                 <Text style={modalElementStyles[theme].label}>{item.name}</Text>
                             </>
                         )}
-                    </FlatlistPicker>
+                    </FlatlistBase.Picker>
                 )}
             </ModalTemplate.Container>
         </ModalTemplate.Bottom>
