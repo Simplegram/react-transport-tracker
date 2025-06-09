@@ -2,12 +2,11 @@ import { useTheme } from '@/context/ThemeContext'
 import {
     Modal,
     ModalProps,
-    Pressable,
-    PressableProps,
-    PressableStateCallbackType,
-    StyleProp,
     Text,
-    ViewStyle
+    TouchableOpacity,
+    TouchableOpacityProps,
+    View,
+    ViewProps
 } from 'react-native'
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -28,60 +27,53 @@ export default function ModalTemplate({ visible, onRequestClose, ...props }: Mod
     )
 }
 
-function ModalBackdrop(props: PressableProps) {
+function ModalBackdrop(props: TouchableOpacityProps) {
     const { children, style, onPress, ...restProps } = props
 
-    const baseStyle: StyleProp<ViewStyle> = {
-        flex: 1,
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    }
-
-    const pressableStyle = typeof style === 'function'
-        ? (state: PressableStateCallbackType) => [baseStyle, style(state)]
-        : [baseStyle, style]
-
     return (
-        <Pressable
-            style={pressableStyle}
+        <TouchableOpacity
+            disabled={onPress ? false : true}
+            activeOpacity={1}
+            style={[
+                {
+                    flex: 1,
+                    justifyContent: 'center',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                }, style
+            ]}
             onPress={onPress}
             {...restProps}
         >
             {children}
-        </Pressable>
+        </TouchableOpacity>
     )
 }
 
-function ModalContainer(props: PressableProps) {
+function ModalContainer(props: ViewProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
-    const { children, style, onPress, ...restProps } = props
-
-    const baseStyle: StyleProp<ViewStyle> = {
-        gap: 10,
-        padding: 20,
-        borderWidth: 1,
-        justifyContent: 'space-between',
-        borderTopLeftRadius: 16,
-        borderTopRightRadius: 16,
-
-        borderTopColor: theme.palette.borderColor,
-        backgroundColor: theme.palette.background,
-    }
-
-    const pressableStyle = typeof style === 'function'
-        ? (state: PressableStateCallbackType) => [baseStyle, style(state)]
-        : [baseStyle, style]
+    const { children, style, ...restProps } = props
 
     return (
-        <Pressable
-            style={pressableStyle}
-            onPress={onPress}
+        <View
+            style={[
+                {
+                    gap: 10,
+                    padding: 20,
+                    borderWidth: 1,
+                    justifyContent: 'space-between',
+                    borderTopLeftRadius: 16,
+                    borderTopRightRadius: 16,
+
+                    borderTopColor: theme.palette.borderColor,
+                    backgroundColor: theme.palette.background,
+                }, style
+            ]}
             {...restProps}
         >
             {children}
-        </Pressable>
+        </View>
     )
 }
 
