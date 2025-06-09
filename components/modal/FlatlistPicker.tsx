@@ -1,6 +1,5 @@
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
-import { flatlistStyles } from "@/src/styles/ModalStyles"
 import { AddableLap } from "@/src/types/AddableTravels"
 import { EditableLap } from "@/src/types/EditableTravels"
 import { Stop } from "@/src/types/Travels"
@@ -21,7 +20,8 @@ interface PickerProps {
 }
 
 function PickerFlatlist({ items, maxHeight = 300, onSelect, children }: PickerProps) {
-    const { theme } = useTheme()
+    const { getTheme } = useTheme()
+    const theme = getTheme()
 
     return (
         <FlatList
@@ -29,7 +29,18 @@ function PickerFlatlist({ items, maxHeight = 300, onSelect, children }: PickerPr
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
                 <TouchableOpacity
-                    style={flatlistStyles[theme].item}
+                    style={{
+                        gap: 10,
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingVertical: 15,
+                        paddingHorizontal: 10,
+                        borderBottomWidth: 1,
+
+                        backgroundColor: theme.palette.background,
+                        borderBottomColor: theme.palette.borderColorSoft,
+                    }}
                     onPress={() => onSelect(item.id)}
                 >
                     {children && children(item)}

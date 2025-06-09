@@ -1,30 +1,6 @@
 import { colors } from "@/src/const/color"
 import { StyleSheet } from "react-native"
 
-const lightFlatlistStyles = StyleSheet.create({
-    item: {
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
-        paddingVertical: 15,
-        paddingHorizontal: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: colors.white_400,
-        backgroundColor: colors.white_100,
-    },
-})
-
-const flatlistStyles = {
-    light: lightFlatlistStyles,
-    dark: StyleSheet.create({
-        item: {
-            ...lightFlatlistStyles.item,
-            backgroundColor: colors.black,
-        },
-    })
-}
-
 const lightModalElementStyles = StyleSheet.create({
     label: {
         fontSize: 16,
@@ -125,7 +101,6 @@ const modalStyles = {
 }
 
 export {
-    flatlistStyles,
     modalElementStyles,
     modalStyles
 }
