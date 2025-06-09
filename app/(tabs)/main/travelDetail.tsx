@@ -1,6 +1,7 @@
 import AnnotationContent from '@/components/AnnotationContent'
 import TypeButton from '@/components/button/TypeButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
+import Container from '@/components/Container'
 import LoadingScreen from '@/components/LoadingScreen'
 import IndividualTravelDetailCard from '@/components/travel/IndividualTravelDetailCard'
 import { useTheme } from '@/context/ThemeContext'
@@ -234,12 +235,12 @@ export default function TravelDetail() {
                 }}>
                     <Text style={travelDetailStyles[theme].cardTitle}>Duration Overview</Text>
 
-                    <View style={travelDetailStyles[theme].detailRow}>
+                    <Container.DetailRow>
                         <Text style={travelDetailStyles[theme].label}>Estimated On-Road Duration:</Text>
                         <Text style={travelDetailStyles[theme].valueText}>{formatMsToMinutes(averageRouteDurationMilliseconds)}</Text>
-                    </View>
+                    </Container.DetailRow>
 
-                    <View style={travelDetailStyles[theme].detailRow}>
+                    <Container.DetailRow>
                         <Text style={travelDetailStyles[theme].label}>Real On-Road Duration:</Text>
                         <View style={{
                             gap: 5,
@@ -248,14 +249,14 @@ export default function TravelDetail() {
                             <Text style={travelDetailStyles[theme].valueText}>{formatMsToMinutes(totalOnRoadMilliseconds)}</Text>
                             <Text style={[travelDetailStyles[theme].valueText, { color: diffColor }]}>{`(${timeDiff})`}</Text>
                         </View>
-                    </View>
+                    </Container.DetailRow>
 
-                    <View style={travelDetailStyles[theme].detailRow}>
+                    <Container.DetailRow>
                         <Text style={travelDetailStyles[theme].label}>Travel Score:</Text>
                         <Text style={[travelDetailStyles[theme].valueText, travelDetailStyles[theme].specialValue]}>
                             {efficiencyPercentage.toFixed(1)}%
                         </Text>
-                    </View>
+                    </Container.DetailRow>
 
                     <View style={inputElementStyles[theme].inputGroup}>
                         <View style={{ gap: 10, flexDirection: 'row' }}>
@@ -328,7 +329,7 @@ export default function TravelDetail() {
                     </MapView>
                 </View>
             </View>
-        </CollapsibleHeaderPage>
+        </CollapsibleHeaderPage >
     )
 }
 

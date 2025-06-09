@@ -6,6 +6,7 @@ import { getDiffString } from "@/src/utils/dateUtils"
 import { formatLapTimeDisplay } from "@/src/utils/utils"
 import moment from "moment"
 import { Text, View } from "react-native"
+import Container from "../Container"
 import Divider from "../Divider"
 
 interface TravelDetailCardProp {
@@ -38,7 +39,7 @@ export default function IndividualTravelDetailCard({ travel, travelTime }: Trave
         const diffString = getDiffString(realEstimateDiff, true)
 
         return (
-            <View key={travel.id} style={travelDetailStyles[theme].detailRow}>
+            <Container.DetailRow key={travel.id}>
                 <Text style={travelDetailStyles[theme].specialValue}>{tripIdentifier}</Text>
                 <Text style={travelDetailStyles[theme].valueText}>{stopString}</Text>
                 <Text style={travelDetailStyles[theme].valueText}>{timeString}</Text>
@@ -64,15 +65,15 @@ export default function IndividualTravelDetailCard({ travel, travelTime }: Trave
                     <Text style={travelDetailStyles[theme].valueText}>Diff</Text>
                     <Text style={[travelDetailStyles[theme].valueText, { color: diffColor }]}>{diffString}</Text>
                 </View>
-            </View>
+            </Container.DetailRow>
         )
     } catch (error) {
         console.error(`Error calculating duration for trip ID ${travel.id || 'unknown'}:`, error)
         return (
-            <View key={travel.id} style={travelDetailStyles[theme].detailRow}>
+            <Container.DetailRow key={travel.id}>
                 <Text style={travelDetailStyles[theme].label}>Trip ID {travel.id || 'N/A'} Duration:</Text>
                 <Text style={travelDetailStyles[theme].valueText}>Calculation Error</Text>
-            </View>
+            </Container.DetailRow>
         )
     }
 }

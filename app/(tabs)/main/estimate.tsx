@@ -126,10 +126,10 @@ export default function EstimationPage() {
     return (
         <Container>
             <View style={{ flex: 1, gap: 10 }}>
-                <View style={travelDetailStyles[theme].detailRow}>
+                <Container.DetailRow>
                     <JustifiedLabelValue label="Current Time:" value={currentTime} />
-                </View>
-                <View style={travelDetailStyles[theme].detailRow}>
+                </Container.DetailRow>
+                <Container.DetailRow>
                     <Text style={travelDetailStyles[theme].specialValue}>{tripIdentifier}</Text>
                     <Text style={travelDetailStyles[theme].valueText}>{stopString}</Text>
                     <Divider />
@@ -142,7 +142,7 @@ export default function EstimationPage() {
                         <JustifiedLabelValue label="Start at:" value={travelTimes ? `${selectedTime}` : '-'} />
                         <JustifiedLabelValue label="Arrive at:" value={travelTimes ? `${addTime(travelTimes, selectedTime)}` : '-'} />
                     </View>
-                </View>
+                </Container.DetailRow>
             </View>
             <Input.Container style={{ paddingBottom: 0 }}>
                 <View style={inputElementStyles[theme].inputLargeGroup}>
