@@ -14,6 +14,7 @@ import { TextInputBase } from '../input/TextInput'
 import ModalTemplate from '../ModalTemplate'
 
 interface CustomDateTimePickerProps {
+    label?: string
     visible: boolean
     initialDateTime: Date
     onClose: () => void
@@ -22,6 +23,7 @@ interface CustomDateTimePickerProps {
 }
 
 export default function CustomDateTimePicker({
+    label,
     visible,
     initialDateTime,
     onClose,
@@ -148,7 +150,7 @@ export default function CustomDateTimePicker({
 
                                 color: theme.palette.textBlack
                             }
-                        ]}>Set Date and Time</Text>
+                        ]}>{label ? label : 'Set Date and Time'}</Text>
 
                         <TimeSection>
                             <NumberInput label='Year' value={year} placeholder='YYYY' onChangeText={(text) => handlePartChange('year', text)} maxLength={4} />

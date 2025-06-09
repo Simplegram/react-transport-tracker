@@ -21,7 +21,7 @@ import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap } from '@/src/types/AddableTravels'
 import { EditableTravel } from '@/src/types/EditableTravels'
 import { Lap } from '@/src/types/Travels'
-import { formatDateForDisplay } from '@/src/utils/utils'
+import { datetimeFieldToCapitals, formatDateForDisplay } from '@/src/utils/utils'
 import { router, useFocusEffect } from 'expo-router'
 import moment from 'moment-timezone'
 import React, { useState } from 'react'
@@ -278,6 +278,7 @@ export default function EditTravelItem() {
                             datetimeField === 'bus_final_arrival'
                         ) && (
                                 <CustomDateTimePicker
+                                    label={datetimeFieldToCapitals(datetimeField)}
                                     visible={showDatetimeModal}
                                     initialDateTime={
                                         travel && travel[datetimeField]
