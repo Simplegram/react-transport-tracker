@@ -3,7 +3,7 @@ import { inputElementStyles } from "@/src/styles/InputStyles"
 import { Camera, MapView } from "@maplibre/maplibre-react-native"
 import { StyleSheet, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
-import Button from "./BaseButton"
+import Button from "./button/BaseButton"
 
 const pointSize = {
     width: 8,

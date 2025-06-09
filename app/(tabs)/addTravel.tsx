@@ -1,7 +1,8 @@
-import Button from '@/components/BaseButton'
-import ModalButtonBlock from '@/components/button/ModalButton'
+import Button from '@/components/button/BaseButton'
+import { ModalButton } from '@/components/button/ModalButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
+import Input from '@/components/input/Input'
 import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
@@ -14,10 +15,9 @@ import useGetTravelData from '@/hooks/useGetTravelData'
 import { useToggleLoading } from '@/hooks/useLoading'
 import useModalHandler from '@/hooks/useModalHandler'
 import useModifyTravelData from '@/hooks/useModifyTravelData'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap, AddableTravel } from '@/src/types/AddableTravels'
-import { formatDateForDisplay } from '@/src/utils/utils'
+import { datetimeFieldToCapitals, formatDateForDisplay } from '@/src/utils/utils'
 import { router, useFocusEffect } from 'expo-router'
 import moment from 'moment-timezone'
 import React, { useEffect, useState } from 'react'
@@ -210,23 +210,23 @@ export default function AddTravel() {
             {loading && (
                 <LoadingScreen></LoadingScreen>
             )}
-            <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
+            <Input.Container style={{ paddingBottom: 0 }}>
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Bus Initial Arrival:'
                         condition={travel.bus_initial_arrival}
                         value={formatDateForDisplay(travel.bus_initial_arrival)}
                         onPress={() => openDatetimeModal('bus_initial_arrival')}
                     />
 
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Bus Initial Departure:'
                         condition={travel.bus_initial_departure}
                         value={formatDateForDisplay(travel.bus_initial_departure)}
                         onPress={() => openDatetimeModal('bus_initial_departure')}
                     />
 
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Bus Final Arrival:'
                         condition={travel.bus_final_arrival}
                         value={formatDateForDisplay(travel.bus_final_arrival)}
@@ -242,6 +242,7 @@ export default function AddTravel() {
                     datetimeField === 'bus_final_arrival'
                 ) && (
                         <CustomDateTimePicker
+                            label={datetimeFieldToCapitals(datetimeField)}
                             visible={showDatetimeModal}
                             initialDateTime={
                                 travel && travel[datetimeField]
@@ -255,7 +256,7 @@ export default function AddTravel() {
                 }
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Route:'
                         condition={travel.route_id}
                         value={travel.route_id ? `${routes.find(route => route.id === travel.route_id)?.code || ''} | ${routes.find(route => route.id === travel.route_id)?.name || ''}` : 'Select Route...'}
@@ -280,21 +281,21 @@ export default function AddTravel() {
                 <Divider />
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Direction:'
                         condition={travel.direction_id}
                         value={directions.find(direction => direction.id === travel.direction_id)?.name || 'Select Direction...'}
                         onPress={() => openDirectionModal()}
                     />
 
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='First Stop:'
                         condition={travel.first_stop_id}
                         value={stops.find(stop => stop.id === travel.first_stop_id)?.name || 'Select First Stop...'}
                         onPress={() => openStopModal('first_stop_id')}
                     />
 
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Last Stop:'
                         condition={travel.last_stop_id}
                         value={stops.find(stop => stop.id === travel.last_stop_id)?.name || 'Select Last Stop...'}
@@ -314,7 +315,7 @@ export default function AddTravel() {
                 </View>
 
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Laps:'
                         condition={lapsCount > 0}
                         value={`${lapsCount} lap${lapsCount !== 1 ? 's' : ''} selected`}
@@ -324,16 +325,10 @@ export default function AddTravel() {
 
                 <Divider />
 
-                <View style={buttonStyles[theme].buttonRow}>
-                    <Button
-                        title='Add Travel'
-                        color='#0284f5'
-                        onPress={handleOnSubmit}
-                        style={buttonStyles[theme].addButton}
-                        textStyle={buttonStyles[theme].addButtonText}
-                    />
-                </View>
-            </View>
+                <Button.Row>
+                    <Button.Add label='Add Travel' onPress={handleOnSubmit} />
+                </Button.Row>
+            </Input.Container>
 
             <AddTravelLapsModal
                 stops={stops}

@@ -1,7 +1,9 @@
-import Button from "@/components/BaseButton"
-import ModalButtonBlock from "@/components/button/ModalButton"
+import Button from "@/components/button/BaseButton"
+import { ModalButton } from "@/components/button/ModalButton"
 import TypeButton from "@/components/button/TypeButton"
+import Container from "@/components/Container"
 import Divider from "@/components/Divider"
+import Input from "@/components/input/Input"
 import EditTravelDirectionModal from "@/components/modal/travelModal/EditTravelDirectionModal"
 import EditTravelRouteModal from "@/components/modal/travelModal/EditTravelRouteModal"
 import EditTravelStopModal from "@/components/modal/travelModal/EditTravelStopModal"
@@ -10,9 +12,7 @@ import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import useModalHandler from "@/hooks/useModalHandler"
 import useTravelDetail from "@/hooks/useTravelDetail"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { inputElementStyles } from "@/src/styles/InputStyles"
-import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
 import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
 import { addTime, getTimeString, timeToMinutes } from "@/src/utils/dateUtils"
 import { useFocusEffect } from "expo-router"
@@ -116,6 +116,10 @@ export default function EstimationPage() {
         }
     }
 
+    const setTimeCase = (time: any) => {
+        setInput({ ...input, estimate_type: time })
+    }
+
     const route = routes.find(item => item.id === input.route_id)
     const tripIdentifier = route ? `${route && route.code} | ${route && route.name}` : 'East to West'
 
@@ -124,14 +128,14 @@ export default function EstimationPage() {
     const stopString = `${first_stop ? first_stop.name : 'Start'} to ${last_stop ? last_stop.name : 'End'}`
 
     return (
-        <View style={mainMenuStyles[theme].container}>
+        <Container>
             <View style={{ flex: 1, gap: 10 }}>
-                <View style={travelDetailStyles[theme].detailRow}>
+                <Container.DetailRow>
                     <JustifiedLabelValue label="Current Time:" value={currentTime} />
-                </View>
-                <View style={travelDetailStyles[theme].detailRow}>
+                </Container.DetailRow>
+                <Container.DetailRow>
                     <Text style={travelDetailStyles[theme].specialValue}>{tripIdentifier}</Text>
-                    <Text style={travelDetailStyles[theme].valueText}>{stopString}</Text>
+                    <Input.ValueText>{stopString}</Input.ValueText>
                     <Divider />
                     <JustifiedLabelValue label="Route Average:" value={((travelTimes === 'Invalid date') || typeof travelTimes === 'undefined') ? '-' : travelTimes} />
                     <Divider />
@@ -142,70 +146,51 @@ export default function EstimationPage() {
                         <JustifiedLabelValue label="Start at:" value={travelTimes ? `${selectedTime}` : '-'} />
                         <JustifiedLabelValue label="Arrive at:" value={travelTimes ? `${addTime(travelTimes, selectedTime)}` : '-'} />
                     </View>
-                </View>
+                </Container.DetailRow>
             </View>
-            <View style={[inputElementStyles[theme].inputContainer, { paddingBottom: 0 }]}>
+            <Input.Container style={{ paddingBottom: 0 }}>
                 <View style={inputElementStyles[theme].inputLargeGroup}>
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Route:'
                         condition={input.route_id}
                         value={input.route_id ? `${routes.find(route => route.id === input.route_id)?.code || ''} | ${routes.find(route => route.id === input.route_id)?.name || ''}` : 'Select Route...'}
                         onPress={() => openRouteModal()}
                     />
 
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Direction:'
                         condition={input.direction_id}
                         value={directions.find(direction => direction.id === input.direction_id)?.name || 'Select Direction...'}
                         onPress={() => openDirectionModal()}
                     />
 
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='First Stop:'
                         condition={input.first_stop_id}
                         value={stops.find(stop => stop.id === input.first_stop_id)?.name || 'Select First Stop...'}
                         onPress={() => openStopModal('first_stop_id')}
                     />
 
-                    <ModalButtonBlock
+                    <ModalButton.Block
                         label='Last Stop:'
                         condition={input.last_stop_id}
                         value={stops.find(stop => stop.id === input.last_stop_id)?.name || 'Select Last Stop...'}
                         onPress={() => openStopModal('last_stop_id')}
                     />
 
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <Text style={inputElementStyles[theme].inputLabel}>Estimate Type:</Text>
-                        <View style={{ gap: 10, flexDirection: 'row' }}>
-                            <TypeButton
-                                label='Best'
-                                onPress={() => setInput({ ...input, estimate_type: 'best' })}
-                                typeSelected={input.estimate_type === 'best'}
-                            />
-                            <TypeButton
-                                label='Average'
-                                onPress={() => setInput({ ...input, estimate_type: 'average' })}
-                                typeSelected={input.estimate_type === 'average'}
-                            />
-                            <TypeButton
-                                label='Worst'
-                                onPress={() => setInput({ ...input, estimate_type: 'worst' })}
-                                typeSelected={input.estimate_type === 'worst'}
-                            />
-                        </View>
-                    </View>
+                    <Input>
+                        <Input.Label>Estimate Type:</Input.Label>
+                        <TypeButton.Block
+                            type={input.estimate_type}
+                            onPress={setTimeCase}
+                        />
+                    </Input>
                 </View>
-            </View>
+            </Input.Container>
 
-            <View style={buttonStyles[theme].buttonRow}>
-                <Button
-                    title='Get Estimate'
-                    color='#0284f5'
-                    onPress={handleOnSubmit}
-                    style={buttonStyles[theme].addButton}
-                    textStyle={buttonStyles[theme].addButtonText}
-                />
-            </View>
+            <Button.Row>
+                <Button.Add label='Get Estimate' onPress={handleOnSubmit} />
+            </Button.Row>
 
             <EditTravelDirectionModal
                 directions={directions}
@@ -233,6 +218,6 @@ export default function EstimationPage() {
                 onSelect={handleStopSelect}
                 onClose={closeStopModal}
             />
-        </View>
+        </Container>
     )
 }

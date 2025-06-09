@@ -1,13 +1,12 @@
-import Button from "@/components/BaseButton"
+import Button from "@/components/button/BaseButton"
+import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles } from "@/src/styles/InputStyles"
 import { AddableDirection } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, Text, View } from "react-native"
+import { Alert, View } from "react-native"
 
 export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalContentProps) {
     const { theme } = useTheme()
@@ -28,22 +27,22 @@ export default function AddDirectionModal({ onCancel, onSubmit }: BaseModalConte
     return (
         <View>
             {loading ? (
-                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
+                <Input.LoadingLabel />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
+                    <Input.Container>
                         <TextInputBlock
                             value={direction.name}
                             label="Name:"
                             placeholder="Direction name..."
                             onChangeText={(text) => setDirection({ ...direction, "name": text })}
                         />
-                    </View>
+                    </Input.Container>
 
-                    <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button title='Add Direction' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                    </View>
+                    <Button.Row>
+                        <Button.Dismiss label='Cancel' onPress={onCancel} />
+                        <Button.Add label='Add Direction' onPress={handleOnSubmit} />
+                    </Button.Row>
                 </>
             )}
         </View>

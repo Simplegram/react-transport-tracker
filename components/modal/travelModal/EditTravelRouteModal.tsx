@@ -1,12 +1,13 @@
+import CustomIcon from "@/components/CustomIcon"
+import Input from "@/components/input/Input"
 import { TextInputBase } from "@/components/input/TextInput"
+import ModalTemplate from "@/components/ModalTemplate"
 import { useTheme } from "@/context/ThemeContext"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
-import { styles } from "@/src/styles/Styles"
 import { EditableTravelRouteModalProp } from "@/src/types/EditableTravels"
 import { useMemo } from "react"
-import { Modal, Pressable, Text, View } from "react-native"
-import Icon from 'react-native-vector-icons/FontAwesome6'
-import FlatlistPicker from "../FlatlistPicker"
+import { Pressable, View } from "react-native"
+import FlatlistBase from "../FlatlistPicker"
 
 export default function EditTravelRouteModal({ routes, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelRouteModalProp) {
     const { theme } = useTheme()
@@ -20,18 +21,15 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
     }, [routes, searchQuery])
 
     return (
-        <Modal
+        <ModalTemplate.Bottom
             visible={isModalVisible}
-            transparent={true}
-            animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose} />
-            <View style={modalStyles[theme].modalContainer}>
+            <ModalTemplate.BottomContainer>
                 <View style={modalElementStyles[theme].header}>
-                    <Text style={modalElementStyles[theme].title}>Select a Route</Text>
+                    <Input.Header>Select a route</Input.Header>
                     <Pressable onPress={onClose}>
-                        <Text style={modalElementStyles[theme].closeLabel}>Close</Text>
+                        <Input.Subtitle>Close</Input.Subtitle>
                     </Pressable>
                 </View>
                 <TextInputBase
@@ -41,30 +39,26 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
                 />
                 {filteredItems.length === 0 ? (
                     <View style={modalStyles[theme].emptyList}>
-                        <Text style={modalElementStyles[theme].label}>No route found</Text>
+                        <Input.Label>No route found</Input.Label>
                     </View>
                 ) : (
-                    <FlatlistPicker
+                    <FlatlistBase.Picker
                         items={filteredItems}
                         onSelect={onSelect}
                     >
                         {(item) => (
                             <>
                                 {item.vehicle_type_id?.name ? (
-                                    <Icon
-                                        style={[styles[theme].icon, { width: 20 }]}
-                                        name={item.vehicle_type_id.icon_id.name.toLocaleLowerCase()}
-                                        size={16}
-                                    />
+                                    <CustomIcon style={{ width: 20 }} name={item.vehicle_type_id.icon_id.name.toLocaleLowerCase()} size={16} />
                                 ) : (
-                                    <Icon style={styles[theme].icon} name="train" size={16} />
+                                    <CustomIcon name="train" size={16} />
                                 )}
-                                <Text style={modalElementStyles[theme].label}>{`${item.code} | ${item.name}`}</Text>
+                                <Input.Label>{`${item.code} | ${item.name}`}</Input.Label>
                             </>
                         )}
-                    </FlatlistPicker>
+                    </FlatlistBase.Picker>
                 )}
-            </View>
-        </Modal>
+            </ModalTemplate.BottomContainer>
+        </ModalTemplate.Bottom>
     )
 }

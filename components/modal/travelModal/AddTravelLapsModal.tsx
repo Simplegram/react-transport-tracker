@@ -1,26 +1,19 @@
-import Button from '@/components/BaseButton'
-import Divider from '@/components/Divider'
+import Button from '@/components/button/BaseButton'
+import Input from '@/components/input/Input'
+import ModalTemplate from '@/components/ModalTemplate'
 import { useTheme } from '@/context/ThemeContext'
 import useModalHandler from '@/hooks/useModalHandler'
-import { colors } from '@/src/const/color'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
-import { inputElementStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapsModalProp } from '@/src/types/AddableTravels'
-import { formatLapTimeDisplay } from '@/src/utils/utils'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import {
-    Modal,
-    Pressable,
-    ScrollView,
     StyleSheet,
-    Text,
-    View,
+    View
 } from 'react-native'
-import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated'
 import AddLapModal from '../addModal/AddLapModal'
 import EditLapModal from '../editModal/EditLapModal'
+import FlatlistBase from '../FlatlistPicker'
 
 export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
     const { theme } = useTheme()
@@ -68,6 +61,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
     }
 
     const handleLapRemove = (id: number | string) => {
+        console.log(id)
         setLaps((laps) => {
             return laps.filter((lap) => lap.id !== id)
         })
@@ -84,85 +78,48 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
     )
 
     return (
-        <Modal
-            visible={isModalVisible}
-            transparent={true}
-            animationType="slide"
-            onRequestClose={onClose}
-        >
-            <View style={modalStyles[theme].modalBackdrop}>
-                <View style={modalStyles[theme].modalContainer}>
-                    <View style={modalStyles[theme].inputContainer}>
-                        {laps.length === 0 ? (
-                            <View style={styles[theme].emptyList}>
-                                <Text style={inputElementStyles[theme].inputLabel}>No lap found</Text>
-                            </View>
-                        ) : (
-                            <ScrollView
-                                contentContainerStyle={modalStyles[theme].scrollView}
-                            >
-                                {laps.map((lap: AddableLap, index) => (
-                                    <Animated.View
-                                        key={lap.id}
-                                        entering={FadeIn.duration(250)}
-                                        exiting={FadeOut.duration(125)}
-                                        layout={LinearTransition}
-                                    >
-                                        <Pressable style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
-                                            <View style={{
-                                                flex: 1,
-                                                width: '100%',
-                                                justifyContent: 'space-between',
-                                                flexDirection: 'row',
-                                            }}>
-                                                <Text style={inputElementStyles[theme].inputLabel}>{formatLapTimeDisplay(lap.time)}</Text>
-                                                <Pressable onPress={() => handleLapRemove(lap.id)}>
-                                                    <Text style={[inputElementStyles[theme].insideLabel, { color: 'red' }]}>Remove</Text>
-                                                </Pressable>
-                                            </View>
-                                            {stops.find(stop => stop.id === lap.stop_id) ? (
-                                                <Text style={[inputElementStyles[theme].inputLabel, { color: colors.primary }]}>
-                                                    {stops.find(stop => stop.id === lap.stop_id)?.name}
-                                                </Text>
-                                            ) : null}
-
-                                            {lap.note && (
-                                                <Text style={inputElementStyles[theme].inputLabelLight}>{lap.note}</Text>
-                                            )}
-                                        </Pressable>
-                                        {index < laps.length - 1 && <Divider />}
-                                    </Animated.View>
-                                ))}
-                            </ScrollView>
-                        )}
-                    </View>
-
-                    <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Add lap' color={colors.primary} onPress={openLapModal} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                    </View>
-
-                    <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button title='Save Laps' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                    </View>
+        <ModalTemplate.Bottom visible={isModalVisible}>
+            <ModalTemplate.BottomContainer>
+                <View style={modalStyles[theme].inputContainer}>
+                    {laps.length === 0 ? (
+                        <View style={styles[theme].emptyList}>
+                            <Input.Label>No lap found</Input.Label>
+                        </View>
+                    ) : (
+                        <FlatlistBase.LapAdd
+                            laps={laps}
+                            stops={stops}
+                            onPress={handleLapSelect}
+                            onRemove={handleLapRemove}
+                        />
+                    )}
                 </View>
 
-                <EditLapModal
-                    stops={stops}
-                    selectedLap={selectedLap}
-                    isModalVisible={showEditLapModal}
-                    onSelect={handleLapEdit}
-                    onClose={closeEditLapModal}
-                />
+                <Button.Row>
+                    <Button.Add label='Add lap' onPress={openLapModal} />
+                </Button.Row>
 
-                <AddLapModal
-                    stops={stops}
-                    isModalVisible={showLapModal}
-                    onSelect={handleLapAdd}
-                    onClose={closeLapModal}
-                />
-            </View>
-        </Modal>
+                <Button.Row>
+                    <Button.Dismiss label='Cancel' onPress={onClose} />
+                    <Button.Add label='Save Laps' onPress={handleOnSubmit} />
+                </Button.Row>
+            </ModalTemplate.BottomContainer>
+
+            <EditLapModal
+                stops={stops}
+                selectedLap={selectedLap}
+                isModalVisible={showEditLapModal}
+                onSelect={handleLapEdit}
+                onClose={closeEditLapModal}
+            />
+
+            <AddLapModal
+                stops={stops}
+                isModalVisible={showLapModal}
+                onSelect={handleLapAdd}
+                onClose={closeLapModal}
+            />
+        </ModalTemplate.Bottom>
     )
 };
 

@@ -1,4 +1,5 @@
-import Button from "@/components/BaseButton"
+import Button from "@/components/button/BaseButton"
+import Container from "@/components/Container"
 import LoadingScreen from "@/components/LoadingScreen"
 import CalendarModal from "@/components/modal/CalendarModal"
 import GroupedDataDisplay from "@/components/travel/GroupedTravelsDisplay"
@@ -8,8 +9,6 @@ import useGetTravelData from "@/hooks/useGetTravelData"
 import { useToggleLoading } from "@/hooks/useLoading"
 import useModalHandler from "@/hooks/useModalHandler"
 import useTravelCalendar from "@/hooks/useTravelCalendar"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { mainMenuStyles } from "@/src/styles/MainMenuStyles"
 import { DataItemWithNewKey, getGroupedData } from "@/src/utils/dataUtils"
 import { getDateString } from "@/src/utils/dateUtils"
 import { router, useFocusEffect } from "expo-router"
@@ -34,7 +33,7 @@ export default function HomePage() {
         dates, selectedDate, setSelectedDate,
     } = useTravelCalendar()
 
-    const { loading, toggleLoading } = useToggleLoading(150)
+    const { loading, setLoading, toggleLoading } = useToggleLoading(200)
 
     const { laps, getAllLaps } = useGetTravelData()
 
@@ -91,6 +90,7 @@ export default function HomePage() {
 
     useFocusEffect(
         React.useCallback(() => {
+            setLoading(true)
             getAllLaps()
         }, [dates])
     )
@@ -99,6 +99,7 @@ export default function HomePage() {
         React.useCallback(() => {
             const data = getGroupedData(travelAtDate, laps)
             setGroupedData(data)
+            setLoading(false)
         }, [travelAtDate, laps])
     )
 
@@ -109,8 +110,8 @@ export default function HomePage() {
     )
 
     return (
-        <View style={mainMenuStyles[theme].container}>
-            <View style={mainMenuStyles[theme].listContainer}>
+        <Container>
+            <View style={{ flex: 1 }}>
                 {loading || !supabase || !groupedData ? (
                     <LoadingScreen></LoadingScreen>
                 ) : (
@@ -122,20 +123,8 @@ export default function HomePage() {
                 width: '100%',
                 flexDirection: 'row',
             }}>
-                <Button
-                    style={buttonStyles[theme].addButton}
-                    textStyle={buttonStyles[theme].addButtonText}
-                    onPress={() => router.push("main/estimate")}
-                >
-                    Time Estimation
-                </Button>
-                <Button
-                    style={buttonStyles[theme].addButton}
-                    textStyle={buttonStyles[theme].addButtonText}
-                    onPress={() => openCalendarModal()}
-                >
-                    View Calendar
-                </Button>
+                <Button.Add label="Time Estimation" onPress={() => router.push("main/estimate")} />
+                <Button.Add label="View Calendar" onPress={() => openCalendarModal()} />
             </View>
             <CalendarModal
                 dates={dates}
@@ -147,6 +136,6 @@ export default function HomePage() {
                     onSelect: onDayPress
                 }}
             />
-        </View>
+        </Container>
     )
 }

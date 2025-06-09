@@ -1,20 +1,19 @@
-import Button from "@/components/BaseButton"
-import ModalButtonBlock from "@/components/button/ModalButton"
+import Button from "@/components/button/BaseButton"
+import { ModalButton } from "@/components/button/ModalButton"
+import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
+import VehicleSelector from "@/components/input/VehicleSelector"
 import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import useModalHandler from "@/hooks/useModalHandler"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { iconPickerStyles, inputElementStyles } from "@/src/styles/InputStyles"
-import { styles } from "@/src/styles/Styles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { AddableRoute } from "@/src/types/AddableTravels"
 import { ModalProp } from "@/src/types/TravelModal"
 import { useFocusEffect } from "expo-router"
 import { useCallback, useState } from "react"
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { Alert, ScrollView, View } from "react-native"
 import EditTravelStopModal from "../travelModal/EditTravelStopModal"
 
 export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: ModalProp) {
@@ -69,10 +68,10 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
     return (
         <View>
             {loading || !stops ? (
-                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
+                <Input.LoadingLabel />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
+                    <Input.Container>
                         <TextInputBlock
                             label="Code:"
                             value={route.code}
@@ -87,14 +86,14 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             onChangeText={(text) => setRoute({ ...route, "name": text })}
                         />
 
-                        <ModalButtonBlock
+                        <ModalButton.Block
                             label="First Stop:"
                             condition={route.first_stop_id}
                             value={stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}
                             onPress={() => openModalWithSearch('first_stop_id')}
                         />
 
-                        <ModalButtonBlock
+                        <ModalButton.Block
                             label="Last Stop:"
                             condition={route.last_stop_id}
                             value={stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}
@@ -105,41 +104,24 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Type:</Text>
+                                <Input.Label>Type:</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
                                     keyboardShouldPersistTaps={"always"}
                                 >
                                     {fullVehicleTypes.map((type) => (
-                                        <TouchableOpacity
+                                        <VehicleSelector
                                             key={type.id}
-                                            style={[
-                                                iconPickerStyles[theme].iconTextContainer,
-                                                route.vehicle_type_id === type.id && iconPickerStyles[theme].selectedIconContainer,
-                                            ]}
+                                            type={type}
+                                            condition={route.vehicle_type_id === type.id}
                                             onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}
-                                        >
-                                            <Icon
-                                                style={
-                                                    route.vehicle_type_id === type.id ?
-                                                        iconPickerStyles[theme].selectedIcon
-                                                        :
-                                                        styles[theme].icon
-                                                }
-                                                name={type.icon_id.name}
-                                                size={20}
-                                            />
-                                            <Text style={[
-                                                inputElementStyles[theme].inputLabel,
-                                                route.vehicle_type_id === type.id && iconPickerStyles[theme].selectedText,
-                                            ]}>{type.name.slice(0, 5)}</Text>
-                                        </TouchableOpacity>
+                                        />
                                     ))}
                                 </ScrollView>
                             </View>
                         </View>
-                    </View>
+                    </Input.Container>
 
                     <EditTravelStopModal
                         stops={stops}
@@ -150,10 +132,10 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                         onClose={closeModal}
                     />
 
-                    <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button title='Add Route' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                    </View>
+                    <Button.Row>
+                        <Button.Dismiss label='Cancel' onPress={onCancel} />
+                        <Button.Add label='Add Route' onPress={handleOnSubmit} />
+                    </Button.Row>
                 </>
             )}
         </View>

@@ -1,15 +1,15 @@
-import Button from "@/components/BaseButton"
+import Button from "@/components/button/BaseButton"
+import CustomIcon from "@/components/CustomIcon"
+import Input from "@/components/input/Input"
 import { TextInputBase } from "@/components/input/TextInput"
+import ModalTemplate from "@/components/ModalTemplate"
 import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
-import { styles } from "@/src/styles/Styles"
 import { EditableTravelStopModalProp } from "@/src/types/EditableTravels"
 import { useMemo, useState } from "react"
-import { Modal, Pressable, Text, View } from "react-native"
-import Icon from "react-native-vector-icons/FontAwesome6"
-import FlatlistPicker from "../FlatlistPicker"
+import { Pressable, View } from "react-native"
+import FlatlistBase from "../FlatlistPicker"
 
 export default function EditTravelStopModal({ stops, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelStopModalProp) {
     const { theme } = useTheme()
@@ -28,18 +28,15 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
     }, [stops, searchQuery, enableFilter, vehicleTypeId])
 
     return (
-        <Modal
+        <ModalTemplate.Bottom
             visible={isModalVisible}
-            transparent={true}
-            animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose} />
-            <View style={modalStyles[theme].modalContainer}>
+            <ModalTemplate.BottomContainer>
                 <View style={modalElementStyles[theme].header}>
-                    <Text style={modalElementStyles[theme].title}>Select a Stop</Text>
+                    <Input.Header>Select a stop</Input.Header>
                     <Pressable onPress={onClose}>
-                        <Text style={modalElementStyles[theme].closeLabel}>Close</Text>
+                        <Input.Subtitle>Close</Input.Subtitle>
                     </Pressable>
                 </View>
                 <View style={{
@@ -52,38 +49,30 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                         onChangeText={setSearchQuery}
                         style={{ flex: 5 }}
                     />
-                    <Button
-                        style={enableFilter ? buttonStyles[theme].addButton : buttonStyles[theme].inactiveButton}
-                        textStyle={enableFilter ? buttonStyles[theme].addButtonText : buttonStyles[theme].inactiveButtonText}
-                        onPress={() => setEnableFilter(!enableFilter)}
-                    >Filter</Button>
+                    <Button.Switch switch={enableFilter} onPress={() => setEnableFilter(!enableFilter)}>Filter</Button.Switch>
                 </View>
                 {filteredStops.length === 0 ? (
                     <View style={modalStyles[theme].emptyList}>
-                        <Text style={modalElementStyles[theme].label}>No stop found</Text>
+                        <Input.Label>No stop found</Input.Label>
                     </View>
                 ) : (
-                    <FlatlistPicker
+                    <FlatlistBase.Picker
                         items={filteredStops}
                         onSelect={onSelect}
                     >
                         {(item) => (
                             <>
                                 {item.vehicle_type?.name ? (
-                                    <Icon
-                                        style={[styles[theme].icon, { width: 20 }]}
-                                        name={item.vehicle_type.icon_id.name.toLocaleLowerCase()}
-                                        size={16}
-                                    />
+                                    <CustomIcon style={{ width: 20 }} name={item.vehicle_type.icon_id.name.toLocaleLowerCase()} size={16} />
                                 ) : (
-                                    <Icon style={styles[theme].icon} name="train" size={16}></Icon>
+                                    <CustomIcon name="train" size={16} />
                                 )}
-                                <Text style={modalElementStyles[theme].label}>{item.name}</Text>
+                                <Input.Label>{item.name}</Input.Label>
                             </>
                         )}
-                    </FlatlistPicker>
+                    </FlatlistBase.Picker>
                 )}
-            </View>
-        </Modal>
+            </ModalTemplate.BottomContainer>
+        </ModalTemplate.Bottom>
     )
 }

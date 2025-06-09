@@ -1,5 +1,8 @@
-import Button from '@/components/BaseButton'
+import Button from '@/components/button/BaseButton'
+import DataButtonBase, { ItemTemplate } from '@/components/button/DatalistButton'
+import Container from '@/components/Container'
 import Divider from '@/components/Divider'
+import Input from '@/components/input/Input'
 import { TextInputBase } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import ModalTemplate from '@/components/ModalTemplate'
@@ -12,19 +15,9 @@ import useGetTravelData from '@/hooks/useGetTravelData'
 import { useLoading } from '@/hooks/useLoading'
 import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
-import { DatalistStyles, ItemStyles } from '@/src/styles/DatalistStyles'
-import { styles } from '@/src/styles/Styles'
 import { useFocusEffect } from 'expo-router'
-import React, { useEffect, useState } from 'react'
-import { Alert, FlatList, Keyboard, Text, TouchableOpacity, View } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome6'
-
-interface ItemTemplate {
-    id: string | number
-    name: string
-    [key: string]: any
-}
+import React from 'react'
+import { Alert, FlatList, View } from 'react-native'
 
 export default function DataListScreen() {
     const { theme } = useTheme()
@@ -60,22 +53,6 @@ export default function DataListScreen() {
         loading
     } = useLoading()
 
-    const [keyboardShown, setKeyboardShown] = useState<boolean>(false)
-
-    useEffect(() => {
-        const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-            setKeyboardShown(true)
-        })
-        const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-            setKeyboardShown(false)
-        })
-
-        return () => {
-            showSubscription.remove()
-            hideSubscription.remove()
-        }
-    }, [])
-
     useFocusEffect(
         React.useCallback(() => {
             refetchTravelData()
@@ -103,53 +80,47 @@ export default function DataListScreen() {
         closeModal()
     }
 
-    const renderItem = ({ item }: { item: ItemTemplate }) => (
-        <TouchableOpacity
-            style={[
-                ItemStyles[theme].itemContainer,
-                { flex: 1, justifyContent: 'space-between' }
-            ]}
-            activeOpacity={0.8}
+    const renderItem = (item: ItemTemplate) => (
+        <DataButtonBase
+            name={item.name}
             onPress={() => handleModify(item)}
         >
-            <View style={ItemStyles[theme].textContainer}>
-                {dataType === "Stops" ? (
-                    <>
-                        <Icon style={styles[theme].icon} name={item.vehicle_type?.icon_id.name} size={20}></Icon>
-                        <Text style={ItemStyles[theme].itemSubtitle}>{item.vehicle_type?.name}</Text>
-                    </>
-                ) : null}
-                {dataType === "Routes" ? (
-                    <>
-                        <Icon style={styles[theme].icon} name={item.vehicle_type_id?.icon_id.name} size={20}></Icon>
-                        <Text style={ItemStyles[theme].itemSubtitle}>{item.code}</Text>
-                    </>
-                ) : null}
-                <Text style={ItemStyles[theme].itemTitle}>{item.name}</Text>
-            </View>
-        </TouchableOpacity>
+            {dataType === "Stops" ? (
+                <DataButtonBase.Stops {...item} />
+            ) : null}
+            {dataType === "Routes" ? (
+                <DataButtonBase.Routes {...item} />
+            ) : null}
+        </DataButtonBase>
     )
 
     const ModalContentComponent = activeModalConfig?.content
 
     return (
-        <View style={DatalistStyles[theme].container}>
+        <Container style={{ flex: 1 }}>
             {loading || !dataType ? (
                 <LoadingScreen />
             ) : (
                 <>
                     {data.length === 0 ? (
-                        <View style={DatalistStyles[theme].emptyContainer}>
-                            <Text style={DatalistStyles[theme].emptyText}>No {dataType} found.</Text>
+                        <View style={{
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
+                            <Input.Title>No {dataType} found.</Input.Title>
                         </View>
                     ) : (
                         <FlatList
                             refreshing={loading}
                             onRefresh={refetchTravelData}
                             data={data}
-                            renderItem={renderItem}
+                            renderItem={({ item }) => renderItem(item)}
                             keyExtractor={item => item.id.toString()}
-                            contentContainerStyle={DatalistStyles[theme].listContent}
+                            contentContainerStyle={{
+                                gap: 8,
+                                flexGrow: 1,
+                            }}
                             columnWrapperStyle={{ gap: 8 }}
                             keyboardShouldPersistTaps={'always'}
                             ListHeaderComponent={EmptyHeaderComponent}
@@ -167,19 +138,14 @@ export default function DataListScreen() {
                         style={theme === 'light' ? { borderColor: colors.black } : { borderColor: colors.white_100 }}
                     />
 
-                    <View style={DatalistStyles[theme].addButtonContainer}>
-                        <Button
-                            title={`Add New ${dataType.slice(0, -1)}`}
-                            onPress={handleAddNew}
-                            style={[buttonStyles[theme].addButton, { flex: 0 }]}
-                            textStyle={buttonStyles[theme].addButtonText}
-                        />
-                    </View>
+                    <Button.Row>
+                        <Button.Add label={`Add New ${dataType.slice(0, -1)}`} onPress={handleAddNew} />
+                    </Button.Row>
 
-                    <ModalTemplate
-                        isModalVisible={showModal}
-                        handleCloseModal={closeModal}
-                        title={activeModalConfig?.title}
+                    <ModalTemplate.BottomInput
+                        visible={showModal}
+                        onRequestClose={closeModal}
+                        title={activeModalConfig ? activeModalConfig.title : 'Modal'}
                     >
                         {ModalContentComponent ? (
                             <ModalContentComponent
@@ -189,11 +155,11 @@ export default function DataListScreen() {
                                 onCancel={closeModal}
                             />
                         ) : (
-                            <Text>Loading...</Text>
+                            <Input.LoadingLabel />
                         )}
-                    </ModalTemplate>
+                    </ModalTemplate.BottomInput>
                 </>
             )}
-        </View>
+        </Container>
     )
 }

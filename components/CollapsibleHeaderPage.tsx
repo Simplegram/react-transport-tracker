@@ -1,6 +1,6 @@
 import { useTheme } from '@/context/ThemeContext'
-import { collapsibleHeaderStyles } from '@/src/styles/Styles'
 import {
+    Dimensions,
     ScrollView,
     Text,
     View,
@@ -19,19 +19,46 @@ export default function CollapsibleHeaderPage({
     children,
     containerStyle
 }: CollapsibleHeaderPageProps) {
-    const { theme } = useTheme()
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    const { height: screenHeight } = Dimensions.get('window')
 
     return (
-        <View style={[collapsibleHeaderStyles[theme].container, containerStyle]}>
+        <View style={[
+            {
+                flex: 1,
+                paddingTop: 5,
+                paddingHorizontal: 15,
+
+                backgroundColor: theme.palette.background,
+            },
+            containerStyle
+        ]}>
             <ScrollView
-                contentContainerStyle={collapsibleHeaderStyles[theme].scrollContainer}
+                contentContainerStyle={{
+                    flexGrow: 1,
+                    paddingBottom: 20,
+                }}
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps={'always'}
             >
-                <View style={collapsibleHeaderStyles[theme].fillerContainer}>
-                    <Text style={collapsibleHeaderStyles[theme].headerText}>{headerText}</Text>
+                <View style={{
+                    height: screenHeight * 0.43,
+                    justifyContent: 'flex-end',
+                }}>
+                    <Text style={{
+                        fontSize: 32,
+                        fontWeight: 'bold',
+                        paddingBottom: 15,
+
+                        color: theme.palette.textBlack,
+                    }}>{headerText}</Text>
                 </View>
-                <View style={collapsibleHeaderStyles[theme].contentContainer}>
+                <View style={{
+                    flexGrow: 1,
+                    overflow: 'hidden',
+                }}>
                     {children}
                 </View>
             </ScrollView>

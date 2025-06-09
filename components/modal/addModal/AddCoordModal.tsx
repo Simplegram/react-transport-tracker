@@ -1,13 +1,12 @@
-import Button from "@/components/BaseButton"
+import Button from "@/components/button/BaseButton"
 import MapDisplay from "@/components/MapDisplay"
+import ModalTemplate from "@/components/ModalTemplate"
 import { useTheme } from "@/context/ThemeContext"
 import useLocation from "@/hooks/useLocation"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { modalStyles } from "@/src/styles/ModalStyles"
 import { AddableCoordModalProp } from "@/src/types/AddableTravels"
 import { LocationObject } from "expo-location"
 import { useEffect, useRef, useState } from "react"
-import { Alert, Modal, Pressable, View } from "react-native"
+import { Alert } from "react-native"
 
 export default function AddCoordModal({ currentCoordinates, isModalVisible, onClose, onSelect }: AddableCoordModalProp) {
     const { theme } = useTheme()
@@ -60,25 +59,19 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
     }
 
     return (
-        <Modal
-            visible={isModalVisible}
-            transparent={true}
-            animationType="slide"
-        >
-            <Pressable style={modalStyles[theme].modalBackdrop}>
-                <View style={[modalStyles[theme].modalContainer, modalStyles[theme].coordModalContainer]} onStartShouldSetResponder={() => true}>
-                    <MapDisplay
-                        mapRef={mapRef}
-                        zoomLevel={zoomLevel}
-                        centerCoordinate={centerCoordinate}
-                    />
+        <ModalTemplate.Bottom visible={isModalVisible}>
+            <ModalTemplate.BottomContainer style={{ height: 475 }}>
+                <MapDisplay
+                    mapRef={mapRef}
+                    zoomLevel={zoomLevel}
+                    centerCoordinate={centerCoordinate}
+                />
 
-                    <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button title='Pick Coordinate' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                    </View>
-                </View>
-            </Pressable>
-        </Modal>
+                <Button.Row>
+                    <Button.Dismiss label='Cancel' onPress={onClose} />
+                    <Button.Add label='Pick Coordinate' onPress={handleOnSubmit} />
+                </Button.Row>
+            </ModalTemplate.BottomContainer>
+        </ModalTemplate.Bottom>
     )
 }

@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/ThemeContext"
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
-import { Pressable, StyleProp, Text, View, ViewStyle } from "react-native"
+import { Pressable, StyleProp, ViewStyle } from "react-native"
 import HighlightedText from "../HighlightedText"
+import Input from "../input/Input"
 
 interface ModalButtonProps {
     label?: string
@@ -11,13 +11,27 @@ interface ModalButtonProps {
     onPress: () => void
 }
 
-export function ModalButtonBase({ condition, value, style, onPress }: ModalButtonProps) {
-    const { theme } = useTheme()
+export function ModalButton({ condition, value, style, onPress }: ModalButtonProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
 
     return (
         <Pressable
             onPress={onPress}
-            style={[inputStyles[theme].pressableInput, style]}
+            style={[
+                {
+                    minHeight: 48,
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    justifyContent: 'center',
+                    paddingVertical: 12,
+                    paddingHorizontal: 14,
+
+                    borderColor: theme.palette.borderColorSoft,
+                    backgroundColor: theme.palette.background,
+                },
+                style
+            ]}
         >
             <HighlightedText condition={condition}>
                 {value}
@@ -26,18 +40,20 @@ export function ModalButtonBase({ condition, value, style, onPress }: ModalButto
     )
 }
 
-export default function ModalButtonBlock({ label, condition, value, style, onPress }: ModalButtonProps) {
+function ModalButtonBlock({ label, condition, value, style, onPress }: ModalButtonProps) {
     const { theme } = useTheme()
 
     return (
-        <View style={inputElementStyles[theme].inputGroup}>
-            <Text style={inputElementStyles[theme].inputLabel}>{label}</Text>
-            <ModalButtonBase
+        <Input>
+            <Input.Label>{label}</Input.Label>
+            <ModalButton
                 condition={condition}
                 value={value}
                 onPress={onPress}
                 style={style}
             />
-        </View>
+        </Input>
     )
 }
+
+ModalButton.Block = ModalButtonBlock

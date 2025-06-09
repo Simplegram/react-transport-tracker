@@ -94,6 +94,12 @@ export const padNumber = (num: number) => {
     return String(num).padStart(2, "0")
 }
 
+export const datetimeFieldToCapitals = (label: string) => {
+    return label.replaceAll('_', ' ').split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+}
+
 export {
     calculateDuration,
     formatDateForDisplay, sortByIdToFront

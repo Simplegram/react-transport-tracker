@@ -1,18 +1,17 @@
-import Button from "@/components/BaseButton"
-import { ModalButtonBase } from "@/components/button/ModalButton"
+import Button from "@/components/button/BaseButton"
+import { ModalButton } from "@/components/button/ModalButton"
+import Input from "@/components/input/Input"
 import { TextInputBase, TextInputBlock } from "@/components/input/TextInput"
+import VehicleSelector from "@/components/input/VehicleSelector"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import useModalHandler from "@/hooks/useModalHandler"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { iconPickerStyles, inputElementStyles } from "@/src/styles/InputStyles"
-import { styles } from "@/src/styles/Styles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { AddableCoordinates, AddableStop } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, ScrollView, Text, TouchableOpacity, View } from "react-native"
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { Alert, ScrollView, View } from "react-native"
 import AddCoordModal from "./AddCoordModal"
 
 export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
@@ -58,10 +57,10 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
     return (
         <View>
             {loading ? (
-                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
+                <Input.LoadingLabel />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
+                    <Input.Container>
                         <TextInputBlock
                             label="Name:"
                             value={stop.name}
@@ -70,7 +69,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         />
 
                         <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Latitude and Longitude:</Text>
+                            <Input.Label>Latitude and Longitude:</Input.Label>
                             <View style={inputElementStyles[theme].inputGroupCoord}>
                                 <TextInputBase
                                     value={stop.lat?.toString()}
@@ -85,7 +84,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                                     style={{ flex: 1 }}
                                 />
                             </View>
-                            <ModalButtonBase
+                            <ModalButton
                                 condition={false}
                                 value="Pick Latitude and Longitude..."
                                 onPress={() => openCoordModal()}
@@ -104,41 +103,24 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Icon:</Text>
+                                <Input.Label>Icon:</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
                                     keyboardShouldPersistTaps={"always"}
                                 >
                                     {fullVehicleTypes.map((type) => (
-                                        <TouchableOpacity
+                                        <VehicleSelector
                                             key={type.id}
-                                            style={[
-                                                iconPickerStyles[theme].iconTextContainer,
-                                                stop.vehicle_type === type.id && iconPickerStyles[theme].selectedIconContainer,
-                                            ]}
+                                            type={type}
+                                            condition={stop.vehicle_type === type.id}
                                             onPress={() => setStop({ ...stop, vehicle_type: type.id })}
-                                        >
-                                            <Icon
-                                                style={
-                                                    stop.vehicle_type === type.id ?
-                                                        iconPickerStyles[theme].selectedIcon
-                                                        :
-                                                        styles[theme].icon
-                                                }
-                                                name={type.icon_id.name}
-                                                size={20}
-                                            />
-                                            <Text style={[
-                                                inputElementStyles[theme].inputLabel,
-                                                stop.vehicle_type === type.id && iconPickerStyles[theme].selectedText,
-                                            ]}>{type.name.slice(0, 5)}</Text>
-                                        </TouchableOpacity>
+                                        />
                                     ))}
                                 </ScrollView>
                             </View>
                         </View>
-                    </View>
+                    </Input.Container>
 
                     <AddCoordModal
                         currentCoordinates={{
@@ -150,10 +132,10 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         onSelect={handleCoordSelect}
                     />
 
-                    <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button title='Add Stop' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                    </View>
+                    <Button.Row>
+                        <Button.Dismiss label='Cancel' onPress={onCancel} />
+                        <Button.Add label='Add Stop' onPress={handleOnSubmit} />
+                    </Button.Row>
                 </>
             )}
         </View>

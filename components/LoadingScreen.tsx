@@ -1,28 +1,32 @@
 import { useTheme } from '@/context/ThemeContext'
-import { loadingStyles } from '@/src/styles/LoadingScreenStyles'
 import React from 'react'
-import {
-    ActivityIndicator,
-    Modal,
-    Text,
-    View
-} from 'react-native'
+import { ActivityIndicator, Dimensions } from 'react-native'
+import ModalTemplate from './ModalTemplate'
+import Input from './input/Input'
 
 type Props = {
     text?: String
 }
 
 export default function LoadingScreen({ text = "Loading..." }: Props) {
-    const { theme } = useTheme()
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    const { width: screenWidth, height: screenHeight } = Dimensions.get('screen')
 
     return (
-        <Modal transparent animationType="fade" visible={true}>
-            <View style={loadingStyles[theme].modalOverlay}>
-                <View style={loadingStyles[theme].modalContent}>
+        <ModalTemplate style={{ width: screenWidth, height: screenHeight }} animationType="fade" visible={true}>
+            <ModalTemplate.Backdrop style={{ alignItems: 'center', width: screenWidth, height: screenHeight }}>
+                <ModalTemplate.Container style={
+                    {
+                        borderColor: theme.palette.borderColor,
+                        borderRadius: 10,
+                    }
+                }>
                     <ActivityIndicator size="large" color="#007AFF" />
-                    <Text style={loadingStyles[theme].loadingText}>{text}</Text>
-                </View>
-            </View>
-        </Modal>
+                    <Input.Title>{text}</Input.Title>
+                </ModalTemplate.Container>
+            </ModalTemplate.Backdrop>
+        </ModalTemplate>
     )
 }

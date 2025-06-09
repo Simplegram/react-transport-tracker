@@ -1,6 +1,8 @@
 import AnnotationContent from '@/components/AnnotationContent'
 import TypeButton from '@/components/button/TypeButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
+import Container from '@/components/Container'
+import Input from '@/components/input/Input'
 import LoadingScreen from '@/components/LoadingScreen'
 import IndividualTravelDetailCard from '@/components/travel/IndividualTravelDetailCard'
 import { useTheme } from '@/context/ThemeContext'
@@ -8,7 +10,6 @@ import { useTravelContext } from '@/context/TravelContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import useTravelDetail from '@/hooks/useTravelDetail'
 import { colors } from '@/src/const/color'
-import { inputElementStyles } from '@/src/styles/InputStyles'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
 import { DataItem, Stop } from '@/src/types/Travels'
 import { formatMsToMinutes, sumTimesToMs } from '@/src/utils/dateUtils'
@@ -16,7 +17,7 @@ import { getSimpleCentroid } from '@/src/utils/mapUtils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Text, View } from 'react-native'
 
 const { width: screenWidth } = Dimensions.get("screen")
 
@@ -232,57 +233,44 @@ export default function TravelDetail() {
                 <View style={{
                     gap: 15,
                 }}>
-                    <Text style={travelDetailStyles[theme].cardTitle}>Duration Overview</Text>
+                    <Input.TitleDivide>Duration Overview</Input.TitleDivide>
 
-                    <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Estimated On-Road Duration:</Text>
-                        <Text style={travelDetailStyles[theme].valueText}>{formatMsToMinutes(averageRouteDurationMilliseconds)}</Text>
-                    </View>
+                    <Container.DetailRow>
+                        <Input.Label>Estimated On-Road Duration:</Input.Label>
+                        <Input.ValueText>{formatMsToMinutes(averageRouteDurationMilliseconds)}</Input.ValueText>
+                    </Container.DetailRow>
 
-                    <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Real On-Road Duration:</Text>
+                    <Container.DetailRow>
+                        <Input.Label>Real On-Road Duration:</Input.Label>
                         <View style={{
                             gap: 5,
                             flexDirection: 'row',
                         }}>
-                            <Text style={travelDetailStyles[theme].valueText}>{formatMsToMinutes(totalOnRoadMilliseconds)}</Text>
-                            <Text style={[travelDetailStyles[theme].valueText, { color: diffColor }]}>{`(${timeDiff})`}</Text>
+                            <Input.ValueText>{formatMsToMinutes(totalOnRoadMilliseconds)}</Input.ValueText>
+                            <Input.ValueText style={{ color: diffColor }}>{`(${timeDiff})`}</Input.ValueText>
                         </View>
-                    </View>
+                    </Container.DetailRow>
 
-                    <View style={travelDetailStyles[theme].detailRow}>
-                        <Text style={travelDetailStyles[theme].label}>Travel Score:</Text>
-                        <Text style={[travelDetailStyles[theme].valueText, travelDetailStyles[theme].specialValue]}>
+                    <Container.DetailRow>
+                        <Input.Label>Travel Score:</Input.Label>
+                        <Input.ValueText style={travelDetailStyles[theme].specialValue}>
                             {efficiencyPercentage.toFixed(1)}%
-                        </Text>
-                    </View>
+                        </Input.ValueText>
+                    </Container.DetailRow>
 
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <View style={{ gap: 10, flexDirection: 'row' }}>
-                            <TypeButton
-                                label='Best'
-                                onPress={() => setType('best')}
-                                typeSelected={type === 'best'}
-                            />
-                            <TypeButton
-                                label='Average'
-                                onPress={() => setType('average')}
-                                typeSelected={type === 'average'}
-                            />
-                            <TypeButton
-                                label='Worst'
-                                onPress={() => setType('worst')}
-                                typeSelected={type === 'worst'}
-                            />
-                        </View>
-                    </View>
+                    <Input>
+                        <TypeButton.Block
+                            type={type}
+                            onPress={setType}
+                        />
+                    </Input>
                 </View>
 
                 {sortedData.length > 0 && (
                     <View style={{
                         gap: 15,
                     }}>
-                        <Text style={travelDetailStyles[theme].cardTitle}>Individual Travel Detail</Text>
+                        <Input.TitleDivide>Individual Travel Detail</Input.TitleDivide>
                         {sortedData.sort(data => data.id).map((travel, index) => (
                             <IndividualTravelDetailCard
                                 key={index}
@@ -328,66 +316,6 @@ export default function TravelDetail() {
                     </MapView>
                 </View>
             </View>
-        </CollapsibleHeaderPage>
+        </CollapsibleHeaderPage >
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        gap: 15,
-    },
-    centered: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-        color: '#333',
-    },
-    card: {
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        padding: 15,
-        borderWidth: 1,
-        gap: 15,
-    },
-    cardTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-        paddingBottom: 8,
-        color: '#555',
-    },
-    detailRow: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        padding: 10,
-        alignItems: 'flex-start',
-        borderWidth: 1,
-        borderRadius: 10,
-    },
-    label: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: '#333',
-        flex: 1,
-        marginRight: 10,
-    },
-    value: {},
-    valueText: {
-        fontSize: 14,
-        color: '#555',
-        flexShrink: 1,
-        fontWeight: 'bold',
-    },
-    specialValue: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#007bff',
-    },
-})

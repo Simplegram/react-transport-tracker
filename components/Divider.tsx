@@ -1,5 +1,4 @@
 import { useTheme } from "@/context/ThemeContext"
-import { dividerStyles } from "@/src/styles/Styles"
 import { View } from "react-native"
 
 interface DividerProp {
@@ -7,15 +6,17 @@ interface DividerProp {
     width?: number
 }
 
-export default function Divider({ paddingSize = 5, width = 0.5 }: DividerProp) {
-    const { theme } = useTheme()
+export default function Divider({ paddingSize = 5, width = 0.75 }: DividerProp) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
 
     return (
         <View style={{
             paddingTop: paddingSize,
             marginBottom: paddingSize,
             borderBottomWidth: width,
-            borderColor: dividerStyles[theme]
+
+            borderColor: theme.palette.borderColorSoft,
         }} />
     )
 }

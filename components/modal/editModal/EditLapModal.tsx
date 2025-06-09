@@ -1,22 +1,18 @@
-import Button from '@/components/BaseButton'
-import ModalButtonBlock from '@/components/button/ModalButton'
+import Button from '@/components/button/BaseButton'
+import { ModalButton } from '@/components/button/ModalButton'
 import Divider from '@/components/Divider'
 import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
+import ModalTemplate from '@/components/ModalTemplate'
 import { useTheme } from '@/context/ThemeContext'
 import useModalHandler from '@/hooks/useModalHandler'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
-import { modalStyles } from '@/src/styles/ModalStyles'
 import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels'
 import { formatDateForDisplay } from '@/src/utils/utils'
 import moment from 'moment-timezone'
 import React, { useEffect, useState } from 'react'
 import {
-    Alert,
-    Modal,
-    Pressable,
-    View
+    Alert
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
 
@@ -88,25 +84,23 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
     }
 
     return (
-        <Modal
+        <ModalTemplate.Bottom
             visible={isModalVisible}
-            transparent={true}
-            animationType="slide"
             onRequestClose={onClose}
         >
             {!lap ? (
                 <LoadingScreen></LoadingScreen>
             ) : (
-                <Pressable style={modalStyles[theme].modalBackdrop}>
-                    <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
-                        <ModalButtonBlock
+                <>
+                    <ModalTemplate.BottomContainer style={{ maxHeight: 600 }}>
+                        <ModalButton.Block
                             label='Time:'
                             condition={lap.time}
                             value={formatDateForDisplay(lap.time)}
                             onPress={() => setShowDatetimePicker(true)}
                         />
 
-                        <ModalButtonBlock
+                        <ModalButton.Block
                             label='Stop:'
                             condition={lap.stop_id}
                             value={stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
@@ -122,11 +116,11 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
 
                         <Divider />
 
-                        <View style={buttonStyles[theme].buttonRow}>
-                            <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                            <Button title='Edit Lap' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                        </View>
-                    </View>
+                        <Button.Row>
+                            <Button.Dismiss label='Cancel' onPress={onClose} />
+                            <Button.Add label='Edit Lap' onPress={handleOnSubmit} />
+                        </Button.Row>
+                    </ModalTemplate.BottomContainer>
 
                     <EditTravelStopModal
                         stops={stops}
@@ -145,8 +139,8 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             onConfirm={handleCustomDateConfirm}
                         />
                     )}
-                </Pressable>
+                </>
             )}
-        </Modal>
+        </ModalTemplate.Bottom>
     )
 }

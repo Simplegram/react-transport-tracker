@@ -1,17 +1,27 @@
 import { useTheme } from "@/context/ThemeContext"
-import { flatlistStyles } from "@/src/styles/ModalStyles"
+import { colors } from "@/src/const/color"
+import { AddableLap } from "@/src/types/AddableTravels"
+import { EditableLap } from "@/src/types/EditableTravels"
+import { Stop } from "@/src/types/Travels"
+import { formatLapTimeDisplay } from "@/src/utils/utils"
 import React from "react"
-import { FlatList, TouchableOpacity } from "react-native"
+import { FlatList, Pressable, TouchableOpacity, View } from "react-native"
+import Animated, { FadeIn, FadeOut, LinearTransition } from "react-native-reanimated"
+import Divider from "../Divider"
+import Input from "../input/Input"
 
-interface FlatlistPickerProps {
+export default function FlatlistBase() { }
+
+interface PickerProps {
     items: any[]
     maxHeight?: number
     onSelect: (id: any) => void
     children?: (item: any) => React.ReactNode
 }
 
-export default function FlatlistPicker({ items, maxHeight = 300, onSelect, children }: FlatlistPickerProps) {
-    const { theme } = useTheme()
+function PickerFlatlist({ items, maxHeight = 300, onSelect, children }: PickerProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
 
     return (
         <FlatList
@@ -19,7 +29,18 @@ export default function FlatlistPicker({ items, maxHeight = 300, onSelect, child
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
                 <TouchableOpacity
-                    style={flatlistStyles[theme].item}
+                    style={{
+                        gap: 10,
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        paddingVertical: 15,
+                        paddingHorizontal: 10,
+                        borderBottomWidth: 1,
+
+                        backgroundColor: theme.palette.background,
+                        borderBottomColor: theme.palette.borderColorSoft,
+                    }}
                     onPress={() => onSelect(item.id)}
                 >
                     {children && children(item)}
@@ -32,3 +53,110 @@ export default function FlatlistPicker({ items, maxHeight = 300, onSelect, child
         />
     )
 }
+
+interface LapProps {
+    laps: EditableLap[]
+    stops: Stop[]
+    onPress: (key: any) => void
+}
+
+export function LapFlatlist({ laps, stops, onPress }: LapProps) {
+    return (
+        <FlatList
+            data={laps}
+            keyExtractor={(lap) => lap.id.toString()}
+            renderItem={({ item, index }) => (
+                <>
+                    <Pressable
+                        style={{
+                            alignItems: 'flex-start',
+                            borderRadius: 10,
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                        }}
+                        onPress={() => onPress(item)}
+                    >
+                        <Input.LabelLight>{formatLapTimeDisplay(item.time)}</Input.LabelLight>
+                        {stops.find(stop => stop.id === item.stop_id) ? (
+                            <Input.Label style={{ color: colors.primary, marginBottom: 0 }}>
+                                {stops.find(stop => stop.id === item.stop_id)?.name}
+                            </Input.Label>
+                        ) : null}
+
+                        {item.note && (
+                            <Input.Label>{item.note}</Input.Label>
+                        )}
+
+                    </Pressable>
+                    {index < (laps.length - 1) && (
+                        <Divider />
+                    )}
+                </>
+            )}
+            contentContainerStyle={{ gap: 5 }}
+        />
+    )
+}
+
+interface LapAddProps extends Omit<LapProps, 'laps'> {
+    laps: AddableLap[]
+    onRemove: (key: any) => void
+}
+
+function LapFlatlistAdd({ laps, stops, onPress, onRemove }: LapAddProps) {
+    return (
+        <Animated.FlatList
+            data={laps}
+            keyExtractor={(lap) => lap.id.toString()}
+            renderItem={({ item, index }) => (
+                <Animated.View
+                    key={item.id}
+                    entering={FadeIn.duration(250)}
+                    exiting={FadeOut.duration(125)}
+                >
+                    <Pressable
+                        style={{
+                            alignItems: 'flex-start',
+                            borderRadius: 10,
+                            flexDirection: 'column',
+                            justifyContent: 'space-between',
+                        }}
+                        onPress={() => onPress(item)}
+                    >
+                        <View style={{
+                            flex: 1,
+                            width: '100%',
+                            justifyContent: 'space-between',
+                            flexDirection: 'row',
+                        }}>
+                            <Input.LabelLight style={{ marginBottom: 5 }}>{formatLapTimeDisplay(item.time)}</Input.LabelLight>
+                            <Pressable onPress={() => onRemove(item.id)}>
+                                <Input.LabelLight style={{ color: 'red' }}>Remove</Input.LabelLight>
+                            </Pressable>
+                        </View>
+                        {stops.find(stop => stop.id === item.stop_id) ? (
+                            <Input.Label style={{ color: colors.primary, marginBottom: 0 }}>
+                                {stops.find(stop => stop.id === item.stop_id)?.name}
+                            </Input.Label>
+                        ) : null}
+
+                        {item.note && (
+                            <Input.Label>{item.note}</Input.Label>
+                        )}
+
+                    </Pressable>
+                    {index < (laps.length - 1) && (
+                        <Divider />
+                    )}
+                </Animated.View>
+            )}
+            itemLayoutAnimation={LinearTransition}
+            removeClippedSubviews={false}
+            contentContainerStyle={{ gap: 5 }}
+        />
+    )
+}
+
+FlatlistBase.Picker = PickerFlatlist
+FlatlistBase.Lap = LapFlatlist
+FlatlistBase.LapAdd = LapFlatlistAdd

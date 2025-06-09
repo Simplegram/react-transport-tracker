@@ -1,11 +1,10 @@
-import Button from "@/components/BaseButton"
+import Button from "@/components/button/BaseButton"
 import CollapsibleHeaderPage from "@/components/CollapsibleHeaderPage"
 import Divider from "@/components/Divider"
 import Switcher from "@/components/input/Switcher"
 import { useAuth } from "@/context/AuthContext"
 import { useSettings } from "@/context/SettingsContext"
 import { useTheme } from "@/context/ThemeContext"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
 import { router } from "expo-router"
 import { StyleSheet, View } from "react-native"
@@ -16,7 +15,6 @@ export default function Settings() {
     } = useTheme()
 
     const {
-        enableSwipeZone, setEnableSwipeZone,
         enableVibration, setEnableVibration,
     } = useSettings()
 
@@ -38,18 +36,12 @@ export default function Settings() {
         >
             <View style={styles.container}>
                 <View style={[travelDetailStyles[theme].card, { gap: 10 }]}>
-                    <Switcher onPress={() => setEnableSwipeZone(!enableSwipeZone)} overrideIsEnabled={enableSwipeZone}>Enable "Safe Swipe Zone"</Switcher>
-                    <Divider />
                     <Switcher onPress={() => setEnableVibration(!enableVibration)} overrideIsEnabled={enableVibration}>Enable vibration</Switcher>
                     <Divider />
                     <Switcher onPress={handleThemeChange} overrideIsEnabled={theme === 'light' ? false : true}>Dark mode</Switcher>
                 </View>
                 <Divider />
-                <Button
-                    style={buttonStyles[theme].redButton}
-                    textStyle={buttonStyles[theme].addButtonText}
-                    onPress={handleLogout}
-                >Logout</Button>
+                <Button.Cancel onPress={handleLogout}>Logout</Button.Cancel>
             </View>
         </CollapsibleHeaderPage>
     )
