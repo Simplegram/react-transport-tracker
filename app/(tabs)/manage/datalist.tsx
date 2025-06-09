@@ -1,4 +1,5 @@
 import Button from '@/components/button/BaseButton'
+import DataButtonBase, { ItemTemplate } from '@/components/button/DatalistButton'
 import Container from '@/components/Container'
 import Divider from '@/components/Divider'
 import Input from '@/components/input/Input'
@@ -14,18 +15,9 @@ import useGetTravelData from '@/hooks/useGetTravelData'
 import { useLoading } from '@/hooks/useLoading'
 import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'
-import { ItemStyles } from '@/src/styles/DatalistStyles'
-import { styles } from '@/src/styles/Styles'
 import { useFocusEffect } from 'expo-router'
-import React, { useEffect, useState } from 'react'
-import { Alert, FlatList, Keyboard, TouchableOpacity, View } from 'react-native'
-import Icon from 'react-native-vector-icons/FontAwesome6'
-
-interface ItemTemplate {
-    id: string | number
-    name: string
-    [key: string]: any
-}
+import React from 'react'
+import { Alert, FlatList, View } from 'react-native'
 
 export default function DataListScreen() {
     const { theme } = useTheme()
@@ -88,31 +80,18 @@ export default function DataListScreen() {
         closeModal()
     }
 
-    const renderItem = ({ item }: { item: ItemTemplate }) => (
-        <TouchableOpacity
-            style={[
-                ItemStyles[theme].itemContainer,
-                { flex: 1, justifyContent: 'space-between' }
-            ]}
-            activeOpacity={0.8}
-            onPress={() => handleModify(item)}
+    const renderItem = (item: ItemTemplate) => (
+        <DataButtonBase
+            name={item.name}
+            onPress={handleModify}
         >
-            <View style={{ flexDirection: 'column' }}>
-                {dataType === "Stops" ? (
-                    <>
-                        <Icon style={styles[theme].icon} name={item.vehicle_type?.icon_id.name} size={20}></Icon>
-                        <Input.Subtitle>{item.vehicle_type?.name}</Input.Subtitle>
-                    </>
-                ) : null}
-                {dataType === "Routes" ? (
-                    <>
-                        <Icon style={styles[theme].icon} name={item.vehicle_type_id?.icon_id.name} size={20}></Icon>
-                        <Input.Subtitle>{item.code}</Input.Subtitle>
-                    </>
-                ) : null}
-                <Input.Title>{item.name}</Input.Title>
-            </View>
-        </TouchableOpacity>
+            {dataType === "Stops" ? (
+                <DataButtonBase.Stops {...item} />
+            ) : null}
+            {dataType === "Routes" ? (
+                <DataButtonBase.Routes {...item} />
+            ) : null}
+        </DataButtonBase>
     )
 
     const ModalContentComponent = activeModalConfig?.content
@@ -136,7 +115,7 @@ export default function DataListScreen() {
                             refreshing={loading}
                             onRefresh={refetchTravelData}
                             data={data}
-                            renderItem={renderItem}
+                            renderItem={({ item }) => renderItem(item)}
                             keyExtractor={item => item.id.toString()}
                             contentContainerStyle={{
                                 gap: 8,
