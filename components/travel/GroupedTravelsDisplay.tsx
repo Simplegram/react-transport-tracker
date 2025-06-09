@@ -1,15 +1,12 @@
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import PagerView from 'react-native-pager-view'
-import Divider from '../Divider'
 
-import { useSettings } from '@/context/SettingsContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useTravelContext } from '@/context/TravelContext'
-import { colors } from '@/src/const/color'
 import { DataItemWithNewKey, getKeysSortedByCreatedAt } from '@/src/utils/dataUtils'
 import { router } from 'expo-router'
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, View } from 'react-native'
 
 import { getDateString, getTimeString } from '@/src/utils/dateUtils'
 import Input from '../input/Input'
@@ -22,8 +19,8 @@ interface GroupedDataDisplayProps {
 }
 
 export default function GroupedDataDisplay({ data: finalGroupedData, currentDate, refetch }: GroupedDataDisplayProps) {
-    const { theme } = useTheme()
-    const { enableSwipeZone } = useSettings()
+    const { getTheme } = useTheme()
+    const theme = getTheme()
 
     const { setSelectedItem, setSelectedTravelItems } = useTravelContext()
 
@@ -50,19 +47,16 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
         router.push("main/travelDetail")
     }
 
-    const borderColor = theme === 'light' ? colors.black : colors.white_300
-    const dateLabelColor = theme === 'light' ? '#2c3e50' : colors.white_100
-    const selectedDateColor = theme === 'light' ? '#2c3e50' : colors.white_300
-
     const styles = StyleSheet.create({
         content: {
             flex: 1.55,
-            borderWidth: 1,
-            borderColor: borderColor,
-            borderRadius: 10,
             overflow: 'hidden',
-            paddingHorizontal: 10,
+            borderWidth: 1,
+            borderRadius: 10,
             paddingBottom: 5,
+            paddingHorizontal: 10,
+
+            borderColor: theme.palette.borderColor,
         },
         pagerView: {
             flex: 1,
@@ -73,7 +67,8 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
             flex: 1,
             overflow: 'hidden',
             justifyContent: 'flex-end',
-            borderColor: borderColor,
+
+            borderColor: theme.palette.borderColor,
         },
         cardCanvas: {
             height: 315,
