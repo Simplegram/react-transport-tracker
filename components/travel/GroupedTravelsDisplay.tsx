@@ -49,7 +49,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
 
     const styles = StyleSheet.create({
         content: {
-            flex: 1.55,
+            flex: 1.65,
             overflow: 'hidden',
             borderWidth: 1,
             borderRadius: 10,
@@ -71,7 +71,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
             borderColor: theme.palette.borderColor,
         },
         cardCanvas: {
-            height: 315,
+            height: 316,
         },
     })
 
@@ -109,7 +109,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                     style={{
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        paddingBottom: 16,
+                                        paddingBottom: 20,
                                     }}
                                     onPress={() => handleViewTravelDetails(directionNameKey)}
                                 >
