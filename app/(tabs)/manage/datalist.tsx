@@ -61,22 +61,6 @@ export default function DataListScreen() {
         loading
     } = useLoading()
 
-    const [keyboardShown, setKeyboardShown] = useState<boolean>(false)
-
-    useEffect(() => {
-        const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
-            setKeyboardShown(true)
-        })
-        const hideSubscription = Keyboard.addListener('keyboardDidHide', () => {
-            setKeyboardShown(false)
-        })
-
-        return () => {
-            showSubscription.remove()
-            hideSubscription.remove()
-        }
-    }, [])
-
     useFocusEffect(
         React.useCallback(() => {
             refetchTravelData()
