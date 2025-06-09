@@ -23,6 +23,46 @@ function Container(props: ViewProps) {
     )
 }
 
+function Header(props: TextProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    const { style, children, ...restProps } = props
+
+    return (
+        <Text
+            style={[
+                {
+                    fontSize: 20,
+                    fontWeight: '600',
+                    color: theme.palette.textBlack,
+                }, style
+            ]}
+            {...restProps}
+        >{children}</Text>
+    )
+}
+
+function Title(props: TextProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    const { style, children, ...restProps } = props
+
+    return (
+        <Text
+            style={[
+                {
+                    fontSize: 16,
+                    fontWeight: '600',
+                    color: theme.palette.textBlack,
+                }, style
+            ]}
+            {...restProps}
+        >{children}</Text>
+    )
+}
+
 function Label(props: TextProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
@@ -66,11 +106,14 @@ function LabelLight(props: TextProps) {
 
 function LoadingLabel(props: TextProps) {
     return (
-        <Label {...props}>Loading...</Label>
+        <Title {...props}>Loading...</Title>
     )
 }
 
 Input.Container = Container
+
+Input.Header = Header
+Input.Title = Title
 
 Input.Label = Label
 Input.LabelLight = LabelLight
