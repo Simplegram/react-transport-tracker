@@ -1,5 +1,6 @@
 import Button from '@/components/button/BaseButton'
 import { ModalButton } from '@/components/button/ModalButton'
+import NetButton from '@/components/button/ValidNetButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
 import Input from '@/components/input/Input'
@@ -362,7 +363,7 @@ export default function EditTravelItem() {
                         <Divider />
 
                         <Button.Row>
-                            <Button.Add label='Save Travel Edit(s)' onPress={handleOnSubmit} />
+                            <NetButton label='Save Travel Edit(s)' onPress={handleOnSubmit} />
                         </Button.Row>
                     </Input.Container>
 

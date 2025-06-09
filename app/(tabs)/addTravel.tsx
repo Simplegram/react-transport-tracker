@@ -1,5 +1,6 @@
 import Button from '@/components/button/BaseButton'
 import { ModalButton } from '@/components/button/ModalButton'
+import NetButton from '@/components/button/ValidNetButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
 import Input from '@/components/input/Input'
@@ -326,7 +327,7 @@ export default function AddTravel() {
                 <Divider />
 
                 <Button.Row>
-                    <Button.Add label='Add Travel' onPress={handleOnSubmit} />
+                    <NetButton label='Add Travel' onPress={handleOnSubmit} />
                 </Button.Row>
             </Input.Container>
 
