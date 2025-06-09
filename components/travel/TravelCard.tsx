@@ -9,6 +9,7 @@ import { Text, View } from "react-native"
 import { Gesture, GestureDetector } from "react-native-gesture-handler"
 import Animated, { interpolate, interpolateColor, runOnJS, SharedValue, useAnimatedStyle, useSharedValue, withDelay, withSequence, withTiming } from "react-native-reanimated"
 import Divider from "../Divider"
+import Input from "../input/Input"
 
 interface TravelCardProps {
     item: DataItemWithNewKey
@@ -89,49 +90,49 @@ export default function TravelCard({ item, index, directionNameKey, activeIndex,
                     style={travelCardStyles[theme].card}
                 >
                     <View style={travelCardStyles[theme].routeInfoSection}>
-                        <Text style={travelCardStyles[theme].routeText}>
+                        <Input.Subtitle style={{ textAlign: 'center' }}>
                             {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
-                        </Text>
-                        <Text style={travelCardStyles[theme].vehicleText}>
+                        </Input.Subtitle>
+                        <Input.SubtitlePrimary style={{ textAlign: 'center' }}>
                             {item.vehicle_code || 'N/A'}
-                        </Text>
+                        </Input.SubtitlePrimary>
                     </View>
 
                     <Divider />
 
                     <View style={travelCardStyles[theme].stopsTimeSection}>
                         <View style={travelCardStyles[theme].stopTimeBlock}>
-                            <Text style={travelCardStyles[theme].stopText}>{item.first_stop_id?.name || 'N/A'}</Text>
-                            <Text style={travelCardStyles[theme].timeText}>
+                            <Input.ValuePrimary>{item.first_stop_id?.name || 'N/A'}</Input.ValuePrimary>
+                            <Input.Text>
                                 {item.bus_initial_departure ? formatDate(item.bus_initial_departure) : 'N/A'}
-                            </Text>
+                            </Input.Text>
                         </View>
 
                         <View style={travelCardStyles[theme].stopArrowBlock}>
                             <Text style={travelCardStyles[theme].stopArrowText}>➜</Text>
-                            <Text style={travelCardStyles[theme].notesLabel}>{calculateDuration(item)}</Text>
+                            <Input.Text>{calculateDuration(item)}</Input.Text>
                         </View>
 
                         <View style={travelCardStyles[theme].stopTimeBlock}>
-                            <Text style={travelCardStyles[theme].stopText}>{item.last_stop_id?.name || 'N/A'}</Text>
-                            <Text style={travelCardStyles[theme].timeText}>
+                            <Input.ValuePrimary>{item.last_stop_id?.name || 'N/A'}</Input.ValuePrimary>
+                            <Input.Text>
                                 {item.bus_final_arrival ? formatDate(item.bus_final_arrival) : 'N/A'}
-                            </Text>
+                            </Input.Text>
                         </View>
                     </View>
 
                     <Divider />
 
                     <View style={travelCardStyles[theme].lapsSection}>
-                        <Text style={travelCardStyles[theme].lapText}>{item.lapCount} lap(s)</Text>
+                        <Input.ValueText>{item.lapCount} lap(s)</Input.ValueText>
                     </View>
 
                     <Divider />
                     <View style={travelCardStyles[theme].notesSection}>
-                        <Text style={travelCardStyles[theme].notesLabel}>Notes:</Text>
-                        <Text style={travelCardStyles[theme].notesText}>
+                        <Input.Text>Notes:</Input.Text>
+                        <Input.ValueText style={{ fontWeight: '300', fontStyle: 'italic' }}>
                             {item.notes || 'No notes'}
-                        </Text>
+                        </Input.ValueText>
                     </View>
                 </Animated.View>
             </GestureDetector>

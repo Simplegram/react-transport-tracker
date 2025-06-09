@@ -31,7 +31,9 @@ function TextBase({ style, children, ...props }: TextProps) {
         <Text
             style={[
                 {
+                    fontSize: 12,
                     fontWeight: '600',
+
                     color: theme.palette.textBlack,
                 }, style
             ]}
@@ -126,6 +128,19 @@ function ValueText({ style, ...props }: TextProps) {
     )
 }
 
+function ValuePrimary({ style, ...props }: TextProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    return (
+        <ValueText style={[
+            {
+                color: theme.palette.textPrimary,
+            }, style
+        ]} {...props} />
+    )
+}
+
 function LoadingLabel(props: TextProps) {
     return (
         <SubtitlePrimary {...props}>Loading...</SubtitlePrimary>
@@ -133,6 +148,8 @@ function LoadingLabel(props: TextProps) {
 }
 
 Input.Container = Container
+
+Input.Text = TextBase
 
 Input.Header = Header
 
@@ -143,6 +160,8 @@ Input.SubtitlePrimary = SubtitlePrimary
 
 Input.Label = Label
 Input.LabelLight = LabelLight
+
 Input.ValueText = ValueText
+Input.ValuePrimary = ValuePrimary
 
 Input.LoadingLabel = LoadingLabel
