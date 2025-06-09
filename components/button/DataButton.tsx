@@ -12,7 +12,8 @@ interface DataButtonProps {
 }
 
 export default function DataButton({ label, iconName, onPress }: DataButtonProps) {
-    const { theme } = useTheme()
+    const { theme, getTheme } = useTheme()
+    const newTheme = getTheme()
 
     const itemScale = useRef(new Animated.Value(1)).current
     const itemScaleAnimation = (toValue: number, easing: EasingFunction) => {
@@ -57,7 +58,7 @@ export default function DataButton({ label, iconName, onPress }: DataButtonProps
                 alignItems: 'center',
                 transform: [{ scale: itemScale }],
             }}>
-                <Icon name={iconName} color={colors.white} size={24}></Icon>
+                <Icon name={iconName} color={newTheme.palette.textWhite} size={24}></Icon>
                 <Text style={buttonStyles[theme].addButtonText}>{label}</Text>
             </Animated.View>
             <Animated.View
