@@ -17,7 +17,7 @@ import { getSimpleCentroid } from '@/src/utils/mapUtils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { Dimensions, StyleSheet, Text, View } from 'react-native'
+import { Dimensions, Text, View } from 'react-native'
 
 const { width: screenWidth } = Dimensions.get("screen")
 
@@ -236,26 +236,26 @@ export default function TravelDetail() {
                     <Text style={travelDetailStyles[theme].cardTitle}>Duration Overview</Text>
 
                     <Container.DetailRow>
-                        <Text style={travelDetailStyles[theme].label}>Estimated On-Road Duration:</Text>
-                        <Text style={travelDetailStyles[theme].valueText}>{formatMsToMinutes(averageRouteDurationMilliseconds)}</Text>
+                        <Input.Label>Estimated On-Road Duration:</Input.Label>
+                        <Input.ValueText>{formatMsToMinutes(averageRouteDurationMilliseconds)}</Input.ValueText>
                     </Container.DetailRow>
 
                     <Container.DetailRow>
-                        <Text style={travelDetailStyles[theme].label}>Real On-Road Duration:</Text>
+                        <Input.Label>Real On-Road Duration:</Input.Label>
                         <View style={{
                             gap: 5,
                             flexDirection: 'row',
                         }}>
-                            <Text style={travelDetailStyles[theme].valueText}>{formatMsToMinutes(totalOnRoadMilliseconds)}</Text>
-                            <Text style={[travelDetailStyles[theme].valueText, { color: diffColor }]}>{`(${timeDiff})`}</Text>
+                            <Input.ValueText>{formatMsToMinutes(totalOnRoadMilliseconds)}</Input.ValueText>
+                            <Input.ValueText style={{ color: diffColor }}>{`(${timeDiff})`}</Input.ValueText>
                         </View>
                     </Container.DetailRow>
 
                     <Container.DetailRow>
-                        <Text style={travelDetailStyles[theme].label}>Travel Score:</Text>
-                        <Text style={[travelDetailStyles[theme].valueText, travelDetailStyles[theme].specialValue]}>
+                        <Input.Label>Travel Score:</Input.Label>
+                        <Input.ValueText style={travelDetailStyles[theme].specialValue}>
                             {efficiencyPercentage.toFixed(1)}%
-                        </Text>
+                        </Input.ValueText>
                     </Container.DetailRow>
 
                     <Input>
@@ -319,63 +319,3 @@ export default function TravelDetail() {
         </CollapsibleHeaderPage >
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        gap: 15,
-    },
-    centered: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        marginBottom: 20,
-        textAlign: 'center',
-        color: '#333',
-    },
-    card: {
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        padding: 15,
-        borderWidth: 1,
-        gap: 15,
-    },
-    cardTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        borderBottomWidth: 1,
-        borderBottomColor: '#eee',
-        paddingBottom: 8,
-        color: '#555',
-    },
-    detailRow: {
-        flexDirection: 'column',
-        justifyContent: 'space-between',
-        padding: 10,
-        alignItems: 'flex-start',
-        borderWidth: 1,
-        borderRadius: 10,
-    },
-    label: {
-        fontSize: 14,
-        fontWeight: 'bold',
-        color: '#333',
-        flex: 1,
-        marginRight: 10,
-    },
-    value: {},
-    valueText: {
-        fontSize: 14,
-        color: '#555',
-        flexShrink: 1,
-        fontWeight: 'bold',
-    },
-    specialValue: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#007bff',
-    },
-})

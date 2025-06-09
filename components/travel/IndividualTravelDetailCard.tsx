@@ -8,6 +8,7 @@ import moment from "moment"
 import { Text, View } from "react-native"
 import Container from "../Container"
 import Divider from "../Divider"
+import Input from "../input/Input"
 
 interface TravelDetailCardProp {
     travel: DataItem
@@ -41,29 +42,29 @@ export default function IndividualTravelDetailCard({ travel, travelTime }: Trave
         return (
             <Container.DetailRow key={travel.id}>
                 <Text style={travelDetailStyles[theme].specialValue}>{tripIdentifier}</Text>
-                <Text style={travelDetailStyles[theme].valueText}>{stopString}</Text>
-                <Text style={travelDetailStyles[theme].valueText}>{timeString}</Text>
+                <Input.ValueText>{stopString}</Input.ValueText>
+                <Input.ValueText>{timeString}</Input.ValueText>
                 <Divider />
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between'
                 }}>
-                    <Text style={travelDetailStyles[theme].valueText}>Estimate</Text>
-                    <Text style={[travelDetailStyles[theme].valueText, { alignSelf: 'flex-end' }]}>{estimateDurationString}</Text>
+                    <Input.ValueText>Estimate</Input.ValueText>
+                    <Input.ValueText style={{ alignSelf: 'flex-end' }}>{estimateDurationString}</Input.ValueText>
                 </View>
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between'
                 }}>
-                    <Text style={travelDetailStyles[theme].valueText}>Real</Text>
-                    <Text style={travelDetailStyles[theme].valueText}>{durationString}</Text>
+                    <Input.ValueText>Real</Input.ValueText>
+                    <Input.ValueText>{durationString}</Input.ValueText>
                 </View>
                 <View style={{
                     flexDirection: 'row',
                     justifyContent: 'space-between'
                 }}>
-                    <Text style={travelDetailStyles[theme].valueText}>Diff</Text>
-                    <Text style={[travelDetailStyles[theme].valueText, { color: diffColor }]}>{diffString}</Text>
+                    <Input.ValueText>Diff</Input.ValueText>
+                    <Input.ValueText style={{ color: diffColor }}>{diffString}</Input.ValueText>
                 </View>
             </Container.DetailRow>
         )
@@ -72,7 +73,7 @@ export default function IndividualTravelDetailCard({ travel, travelTime }: Trave
         return (
             <Container.DetailRow key={travel.id}>
                 <Text style={travelDetailStyles[theme].label}>Trip ID {travel.id || 'N/A'} Duration:</Text>
-                <Text style={travelDetailStyles[theme].valueText}>Calculation Error</Text>
+                <Input.ValueText>Calculation Error</Input.ValueText>
             </Container.DetailRow>
         )
     }
@@ -88,8 +89,8 @@ export function JustifiedLabelValue({ label, value }: LabelValueProps) {
 
     return (
         <View style={{ width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={travelDetailStyles[theme].valueText}>{label}</Text>
-            <Text style={travelDetailStyles[theme].valueText}>{value}</Text>
+            <Input.ValueText>{label}</Input.ValueText>
+            <Input.ValueText>{value}</Input.ValueText>
         </View>
     )
 }

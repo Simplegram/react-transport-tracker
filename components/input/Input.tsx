@@ -124,6 +124,28 @@ function LabelLight(props: TextProps) {
     )
 }
 
+function ValueText(props: TextProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    const { style, children, ...restProps } = props
+
+    return (
+        <Text
+            style={[
+                {
+                    fontSize: 14,
+                    flexShrink: 1,
+                    fontWeight: 'bold',
+
+                    color: theme.palette.textDark,
+                }, style
+            ]}
+            {...restProps}
+        >{children}</Text>
+    )
+}
+
 function LoadingLabel(props: TextProps) {
     return (
         <Title {...props}>Loading...</Title>
@@ -139,4 +161,6 @@ Input.Subtitle = Subtitle
 
 Input.Label = Label
 Input.LabelLight = LabelLight
+Input.ValueText = ValueText
+
 Input.LoadingLabel = LoadingLabel

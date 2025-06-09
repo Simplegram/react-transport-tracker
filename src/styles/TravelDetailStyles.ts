@@ -47,12 +47,6 @@ const lightTravelDetailStyles = StyleSheet.create({
         marginRight: 10,
     },
     value: {},
-    valueText: {
-        fontSize: 14,
-        color: '#555',
-        flexShrink: 1,
-        fontWeight: 'bold',
-    },
     specialValue: {
         fontSize: 16,
         fontWeight: 'bold',
@@ -93,10 +87,6 @@ export const travelDetailStyles = {
         },
         value: {
             ...lightTravelDetailStyles.value,
-        },
-        valueText: {
-            ...lightTravelDetailStyles.valueText,
-            color: colors.white_300,
         },
         specialValue: {
             ...lightTravelDetailStyles.specialValue,

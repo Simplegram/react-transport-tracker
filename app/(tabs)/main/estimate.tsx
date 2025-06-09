@@ -135,7 +135,7 @@ export default function EstimationPage() {
                 </Container.DetailRow>
                 <Container.DetailRow>
                     <Text style={travelDetailStyles[theme].specialValue}>{tripIdentifier}</Text>
-                    <Text style={travelDetailStyles[theme].valueText}>{stopString}</Text>
+                    <Input.ValueText>{stopString}</Input.ValueText>
                     <Divider />
                     <JustifiedLabelValue label="Route Average:" value={((travelTimes === 'Invalid date') || typeof travelTimes === 'undefined') ? '-' : travelTimes} />
                     <Divider />
