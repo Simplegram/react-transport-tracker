@@ -1,10 +1,11 @@
+import Input from "@/components/input/Input"
 import { TextInputBase } from "@/components/input/TextInput"
 import ModalTemplate from "@/components/ModalTemplate"
 import { useTheme } from "@/context/ThemeContext"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { EditableTravelDirectionModalProp } from "@/src/types/EditableTravels"
 import { useMemo } from "react"
-import { Pressable, Text, View } from "react-native"
+import { Pressable, View } from "react-native"
 import FlatlistBase from "../FlatlistPicker"
 
 export default function EditTravelDirectionModal({ directions, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelDirectionModalProp) {
@@ -25,9 +26,9 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
         >
             <ModalTemplate.BottomContainer>
                 <View style={modalElementStyles[theme].header}>
-                    <Text style={modalElementStyles[theme].title}>Select a Direction</Text>
+                    <Input.Header>Select a direction</Input.Header>
                     <Pressable onPress={onClose}>
-                        <Text style={modalElementStyles[theme].closeLabel}>Close</Text>
+                        <Input.Subtitle>Close</Input.Subtitle>
                     </Pressable>
                 </View>
                 <TextInputBase
@@ -37,7 +38,7 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
                 />
                 {filteredItems.length === 0 ? (
                     <View style={modalStyles[theme].emptyList}>
-                        <Text style={modalElementStyles[theme].label}>No route found</Text>
+                        <Input.Label>No route found</Input.Label>
                     </View>
                 ) : (
                     <FlatlistBase.Picker
@@ -45,7 +46,7 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
                         onSelect={onSelect}
                     >
                         {(item) => (
-                            <Text style={modalElementStyles[theme].label}>{item.name}</Text>
+                            <Input.Label>{item.name}</Input.Label>
                         )}
                     </FlatlistBase.Picker>
                 )}

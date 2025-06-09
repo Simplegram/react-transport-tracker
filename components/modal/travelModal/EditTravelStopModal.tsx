@@ -1,4 +1,5 @@
 import Button from "@/components/button/BaseButton"
+import Input from "@/components/input/Input"
 import { TextInputBase } from "@/components/input/TextInput"
 import ModalTemplate from "@/components/ModalTemplate"
 import { useModalContext } from "@/context/ModalContext"
@@ -7,7 +8,7 @@ import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { styles } from "@/src/styles/Styles"
 import { EditableTravelStopModalProp } from "@/src/types/EditableTravels"
 import { useMemo, useState } from "react"
-import { Pressable, Text, View } from "react-native"
+import { Pressable, View } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome6"
 import FlatlistBase from "../FlatlistPicker"
 
@@ -34,9 +35,9 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
         >
             <ModalTemplate.BottomContainer>
                 <View style={modalElementStyles[theme].header}>
-                    <Text style={modalElementStyles[theme].title}>Select a Stop</Text>
+                    <Input.Header>Select a stop</Input.Header>
                     <Pressable onPress={onClose}>
-                        <Text style={modalElementStyles[theme].closeLabel}>Close</Text>
+                        <Input.Subtitle>Close</Input.Subtitle>
                     </Pressable>
                 </View>
                 <View style={{
@@ -53,7 +54,7 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                 </View>
                 {filteredStops.length === 0 ? (
                     <View style={modalStyles[theme].emptyList}>
-                        <Text style={modalElementStyles[theme].label}>No stop found</Text>
+                        <Input.Label>No stop found</Input.Label>
                     </View>
                 ) : (
                     <FlatlistBase.Picker
@@ -71,7 +72,7 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                                 ) : (
                                     <Icon style={styles[theme].icon} name="train" size={16}></Icon>
                                 )}
-                                <Text style={modalElementStyles[theme].label}>{item.name}</Text>
+                                <Input.Label>{item.name}</Input.Label>
                             </>
                         )}
                     </FlatlistBase.Picker>
