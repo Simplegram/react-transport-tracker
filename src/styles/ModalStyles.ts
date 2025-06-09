@@ -69,19 +69,6 @@ const modalElementStyles = {
 }
 
 const lightModalStyles = StyleSheet.create({
-    modalBackdrop: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        justifyContent: 'flex-end',
-    },
-    modalContainer: {
-        padding: 20,
-        borderTopLeftRadius: 16,
-        borderTopRightRadius: 16,
-        backgroundColor: colors.white_100,
-        justifyContent: 'space-between',
-        gap: 10,
-    },
     lapModalContainer: {
         maxHeight: 600
     },
@@ -116,16 +103,6 @@ const lightModalStyles = StyleSheet.create({
 const modalStyles = {
     light: lightModalStyles,
     dark: StyleSheet.create({
-        modalBackdrop: {
-            ...lightModalStyles.modalBackdrop,
-        },
-        modalContainer: {
-            ...lightModalStyles.modalContainer,
-            borderRadius: 16,
-            borderWidth: 1,
-            borderTopColor: colors.white_300,
-            backgroundColor: colors.black,
-        },
         lapModalContainer: {
             ...lightModalStyles.lapModalContainer,
         },

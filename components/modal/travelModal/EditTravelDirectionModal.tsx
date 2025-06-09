@@ -1,11 +1,10 @@
 import { TextInputBase } from "@/components/input/TextInput"
+import ModalTemplate from "@/components/ModalTemplate"
 import { useTheme } from "@/context/ThemeContext"
-import { colors } from "@/src/const/color"
-import { inputStyles } from "@/src/styles/InputStyles"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { EditableTravelDirectionModalProp } from "@/src/types/EditableTravels"
 import { useMemo } from "react"
-import { Modal, Pressable, Text, TextInput, View } from "react-native"
+import { Pressable, Text, View } from "react-native"
 import FlatlistPicker from "../FlatlistPicker"
 
 export default function EditTravelDirectionModal({ directions, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelDirectionModalProp) {
@@ -20,14 +19,11 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
     }, [directions, searchQuery])
 
     return (
-        <Modal
+        <ModalTemplate.Bottom
             visible={isModalVisible}
-            transparent={true}
-            animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose} />
-            <View style={modalStyles[theme].modalContainer}>
+            <ModalTemplate.Container>
                 <View style={modalElementStyles[theme].header}>
                     <Text style={modalElementStyles[theme].title}>Select a Direction</Text>
                     <Pressable onPress={onClose}>
@@ -53,7 +49,7 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
                         )}
                     </FlatlistPicker>
                 )}
-            </View>
-        </Modal>
+            </ModalTemplate.Container>
+        </ModalTemplate.Bottom>
     )
 }

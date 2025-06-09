@@ -5,11 +5,11 @@ import Input from '@/components/input/Input'
 import { TextInputBlock } from '@/components/input/TextInput'
 import MapDisplay from '@/components/MapDisplay'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
+import ModalTemplate from '@/components/ModalTemplate'
 import { useTheme } from '@/context/ThemeContext'
 import useLocation from '@/hooks/useLocation'
 import useModalHandler from '@/hooks/useModalHandler'
 import { inputElementStyles } from '@/src/styles/InputStyles'
-import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
 import { formatDateForDisplay, formatLapTimeDisplay } from '@/src/utils/utils'
 import * as Crypto from 'expo-crypto'
@@ -18,8 +18,6 @@ import moment from 'moment-timezone'
 import React, { useRef, useState } from 'react'
 import {
     Alert,
-    Modal,
-    Pressable,
     View
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
@@ -104,77 +102,73 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
     }
 
     return (
-        <Modal
+        <ModalTemplate.Bottom
             visible={isModalVisible}
-            transparent={true}
-            animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles[theme].modalBackdrop}>
-                {!stops ? (
-                    <Input.LoadingLabel />
-                ) : (
-                    <>
-                        <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
-                            <ModalButton.Block
-                                label='Time:'
-                                condition={lap.time}
-                                value={formatDateForDisplay(lap.time)}
-                                onPress={() => setShowDatetimePicker(true)}
-                            />
-
-                            <ModalButton.Block
-                                label='Stop:'
-                                condition={lap.stop_id}
-                                value={stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
-                                onPress={() => openModal()}
-                            />
-
-                            <View style={[inputElementStyles[theme].inputGroup, { height: 160 }]}>
-                                <MapDisplay
-                                    mapRef={mapRef}
-                                    zoomLevel={15}
-                                    centerCoordinate={centerCoordinate}
-                                    draggable={false}
-                                    getCurrentCoordinate={refetchLocation}
-                                />
-                            </View>
-
-                            <TextInputBlock.Multiline
-                                label='Note:'
-                                value={lap.note}
-                                placeholder='Notes (optional)'
-                                onChangeText={(text) => setLap({ ...lap, note: text })}
-                            />
-
-                            <Divider />
-
-                            <Button.Row>
-                                <Button.Dismiss label='Cancel' onPress={onClose} />
-                                <Button.Add label='Add Lap' onPress={handleOnSubmit} />
-                            </Button.Row>
-                        </View>
-
-                        <EditTravelStopModal
-                            stops={stops}
-                            isModalVisible={showModal}
-                            searchQuery={searchQuery}
-                            setSearchQuery={setSearchQuery}
-                            onSelect={handleStopSelect}
-                            onClose={closeModal}
+            {!stops ? (
+                <Input.LoadingLabel />
+            ) : (
+                <>
+                    <ModalTemplate.Container style={{ maxHeight: 600 }}>
+                        <ModalButton.Block
+                            label='Time:'
+                            condition={lap.time}
+                            value={formatDateForDisplay(lap.time)}
+                            onPress={() => setShowDatetimePicker(true)}
                         />
 
-                        {showDatetimePicker && (
-                            <CustomDateTimePicker
-                                visible={showDatetimePicker}
-                                initialDateTime={new Date()}
-                                onClose={() => setShowDatetimePicker(false)}
-                                onConfirm={handleCustomDateConfirm}
+                        <ModalButton.Block
+                            label='Stop:'
+                            condition={lap.stop_id}
+                            value={stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
+                            onPress={() => openModal()}
+                        />
+
+                        <View style={[inputElementStyles[theme].inputGroup, { height: 160 }]}>
+                            <MapDisplay
+                                mapRef={mapRef}
+                                zoomLevel={15}
+                                centerCoordinate={centerCoordinate}
+                                draggable={false}
+                                getCurrentCoordinate={refetchLocation}
                             />
-                        )}
-                    </>
-                )}
-            </Pressable>
-        </Modal>
+                        </View>
+
+                        <TextInputBlock.Multiline
+                            label='Note:'
+                            value={lap.note}
+                            placeholder='Notes (optional)'
+                            onChangeText={(text) => setLap({ ...lap, note: text })}
+                        />
+
+                        <Divider />
+
+                        <Button.Row>
+                            <Button.Dismiss label='Cancel' onPress={onClose} />
+                            <Button.Add label='Add Lap' onPress={handleOnSubmit} />
+                        </Button.Row>
+                    </ModalTemplate.Container>
+
+                    <EditTravelStopModal
+                        stops={stops}
+                        isModalVisible={showModal}
+                        searchQuery={searchQuery}
+                        setSearchQuery={setSearchQuery}
+                        onSelect={handleStopSelect}
+                        onClose={closeModal}
+                    />
+
+                    {showDatetimePicker && (
+                        <CustomDateTimePicker
+                            visible={showDatetimePicker}
+                            initialDateTime={new Date()}
+                            onClose={() => setShowDatetimePicker(false)}
+                            onConfirm={handleCustomDateConfirm}
+                        />
+                    )}
+                </>
+            )}
+        </ModalTemplate.Bottom>
     )
 }

@@ -4,18 +4,15 @@ import Divider from '@/components/Divider'
 import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
+import ModalTemplate from '@/components/ModalTemplate'
 import { useTheme } from '@/context/ThemeContext'
 import useModalHandler from '@/hooks/useModalHandler'
-import { modalStyles } from '@/src/styles/ModalStyles'
 import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels'
 import { formatDateForDisplay } from '@/src/utils/utils'
 import moment from 'moment-timezone'
 import React, { useEffect, useState } from 'react'
 import {
-    Alert,
-    Modal,
-    Pressable,
-    View
+    Alert
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
 
@@ -87,17 +84,15 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
     }
 
     return (
-        <Modal
+        <ModalTemplate.Bottom
             visible={isModalVisible}
-            transparent={true}
-            animationType="slide"
             onRequestClose={onClose}
         >
             {!lap ? (
                 <LoadingScreen></LoadingScreen>
             ) : (
-                <Pressable style={modalStyles[theme].modalBackdrop}>
-                    <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
+                <>
+                    <ModalTemplate.Container style={{ maxHeight: 600 }}>
                         <ModalButton.Block
                             label='Time:'
                             condition={lap.time}
@@ -125,7 +120,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             <Button.Dismiss label='Cancel' onPress={onClose} />
                             <Button.Add label='Edit Lap' onPress={handleOnSubmit} />
                         </Button.Row>
-                    </View>
+                    </ModalTemplate.Container>
 
                     <EditTravelStopModal
                         stops={stops}
@@ -144,8 +139,8 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             onConfirm={handleCustomDateConfirm}
                         />
                     )}
-                </Pressable>
+                </>
             )}
-        </Modal>
+        </ModalTemplate.Bottom>
     )
 }

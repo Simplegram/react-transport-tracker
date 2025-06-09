@@ -1,12 +1,13 @@
 import Button from "@/components/button/BaseButton"
 import { TextInputBase } from "@/components/input/TextInput"
+import ModalTemplate from "@/components/ModalTemplate"
 import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { styles } from "@/src/styles/Styles"
 import { EditableTravelStopModalProp } from "@/src/types/EditableTravels"
 import { useMemo, useState } from "react"
-import { Modal, Pressable, Text, View } from "react-native"
+import { Pressable, Text, View } from "react-native"
 import Icon from "react-native-vector-icons/FontAwesome6"
 import FlatlistPicker from "../FlatlistPicker"
 
@@ -27,14 +28,11 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
     }, [stops, searchQuery, enableFilter, vehicleTypeId])
 
     return (
-        <Modal
+        <ModalTemplate.Bottom
             visible={isModalVisible}
-            transparent={true}
-            animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose} />
-            <View style={modalStyles[theme].modalContainer}>
+            <ModalTemplate.Container>
                 <View style={modalElementStyles[theme].header}>
                     <Text style={modalElementStyles[theme].title}>Select a Stop</Text>
                     <Pressable onPress={onClose}>
@@ -78,7 +76,7 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                         )}
                     </FlatlistPicker>
                 )}
-            </View>
-        </Modal>
+            </ModalTemplate.Container>
+        </ModalTemplate.Bottom>
     )
 }
