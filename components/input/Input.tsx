@@ -63,6 +63,26 @@ function Title(props: TextProps) {
     )
 }
 
+function Subtitle(props: TextProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    const { style, children, ...restProps } = props
+
+    return (
+        <Text
+            style={[
+                {
+                    fontSize: 15,
+                    fontWeight: '600',
+                    color: theme.palette.textPrimary,
+                }, style
+            ]}
+            {...restProps}
+        >{children}</Text>
+    )
+}
+
 function Label(props: TextProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
@@ -113,7 +133,9 @@ function LoadingLabel(props: TextProps) {
 Input.Container = Container
 
 Input.Header = Header
+
 Input.Title = Title
+Input.Subtitle = Subtitle
 
 Input.Label = Label
 Input.LabelLight = LabelLight

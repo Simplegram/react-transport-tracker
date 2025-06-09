@@ -1,4 +1,5 @@
 import Button from '@/components/button/BaseButton'
+import Container from '@/components/Container'
 import Divider from '@/components/Divider'
 import Input from '@/components/input/Input'
 import { TextInputBase } from '@/components/input/TextInput'
@@ -13,11 +14,11 @@ import useGetTravelData from '@/hooks/useGetTravelData'
 import { useLoading } from '@/hooks/useLoading'
 import useModalHandler from '@/hooks/useModalHandler'
 import { colors } from '@/src/const/color'
-import { DatalistStyles, ItemStyles } from '@/src/styles/DatalistStyles'
+import { ItemStyles } from '@/src/styles/DatalistStyles'
 import { styles } from '@/src/styles/Styles'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { Alert, FlatList, Keyboard, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, FlatList, Keyboard, TouchableOpacity, View } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 interface ItemTemplate {
@@ -112,20 +113,20 @@ export default function DataListScreen() {
             activeOpacity={0.8}
             onPress={() => handleModify(item)}
         >
-            <View style={ItemStyles[theme].textContainer}>
+            <View style={{ flexDirection: 'column' }}>
                 {dataType === "Stops" ? (
                     <>
                         <Icon style={styles[theme].icon} name={item.vehicle_type?.icon_id.name} size={20}></Icon>
-                        <Text style={ItemStyles[theme].itemSubtitle}>{item.vehicle_type?.name}</Text>
+                        <Input.Subtitle>{item.vehicle_type?.name}</Input.Subtitle>
                     </>
                 ) : null}
                 {dataType === "Routes" ? (
                     <>
                         <Icon style={styles[theme].icon} name={item.vehicle_type_id?.icon_id.name} size={20}></Icon>
-                        <Text style={ItemStyles[theme].itemSubtitle}>{item.code}</Text>
+                        <Input.Subtitle>{item.code}</Input.Subtitle>
                     </>
                 ) : null}
-                <Text style={ItemStyles[theme].itemTitle}>{item.name}</Text>
+                <Input.Title>{item.name}</Input.Title>
             </View>
         </TouchableOpacity>
     )
@@ -133,14 +134,18 @@ export default function DataListScreen() {
     const ModalContentComponent = activeModalConfig?.content
 
     return (
-        <View style={DatalistStyles[theme].container}>
+        <Container style={{ flex: 1 }}>
             {loading || !dataType ? (
                 <LoadingScreen />
             ) : (
                 <>
                     {data.length === 0 ? (
-                        <View style={DatalistStyles[theme].emptyContainer}>
-                            <Text style={DatalistStyles[theme].emptyText}>No {dataType} found.</Text>
+                        <View style={{
+                            flex: 1,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
+                            <Input.Title>No {dataType} found.</Input.Title>
                         </View>
                     ) : (
                         <FlatList
@@ -149,7 +154,10 @@ export default function DataListScreen() {
                             data={data}
                             renderItem={renderItem}
                             keyExtractor={item => item.id.toString()}
-                            contentContainerStyle={DatalistStyles[theme].listContent}
+                            contentContainerStyle={{
+                                gap: 8,
+                                flexGrow: 1,
+                            }}
                             columnWrapperStyle={{ gap: 8 }}
                             keyboardShouldPersistTaps={'always'}
                             ListHeaderComponent={EmptyHeaderComponent}
@@ -189,6 +197,6 @@ export default function DataListScreen() {
                     </ModalTemplate.BottomInput>
                 </>
             )}
-        </View>
+        </Container>
     )
 }
