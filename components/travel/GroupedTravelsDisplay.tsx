@@ -7,14 +7,13 @@ import { useSettings } from '@/context/SettingsContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useTravelContext } from '@/context/TravelContext'
 import { colors } from '@/src/const/color'
-import { travelEmptyContainer } from '@/src/styles/TravelListStyles'
 import { DataItemWithNewKey, getKeysSortedByCreatedAt } from '@/src/utils/dataUtils'
 import { router } from 'expo-router'
 import { Pressable, StyleSheet, Text, View } from 'react-native'
 
 import { getDateString, getTimeString } from '@/src/utils/dateUtils'
+import Input from '../input/Input'
 import TravelCards from './TravelCards'
-import { Header } from './TravelFlatlist'
 
 interface GroupedDataDisplayProps {
     data: Record<string, DataItemWithNewKey[]>
@@ -56,21 +55,8 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
     const selectedDateColor = theme === 'light' ? '#2c3e50' : colors.white_300
 
     const styles = StyleSheet.create({
-        mainContainer: {
-            flex: 1,
-        },
-        dashboard: {
-            flex: 1,
-            marginVertical: 10,
-            justifyContent: 'flex-end',
-        },
-        groupTitle: {
-            fontSize: 20,
-            fontWeight: 'bold',
-            color: dateLabelColor,
-        },
         content: {
-            flex: 1.7,
+            flex: 1.55,
             borderWidth: 1,
             borderColor: borderColor,
             borderRadius: 10,
@@ -105,8 +91,12 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
     })
 
     return (
-        <View style={styles.mainContainer}>
-            <View style={styles.dashboard}>
+        <View style={{ flex: 1 }}>
+            <View style={{
+                flex: 1,
+                marginVertical: 10,
+                justifyContent: 'flex-end',
+            }}>
                 <View style={{
                     flexDirection: 'row',
                     alignItems: 'flex-end',
@@ -114,16 +104,10 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                     paddingHorizontal: 5,
                 }}>
                     <View>
-                        <Text style={styles.groupTitle}>
-                            {moment(getDateString()).format('dddd')}
-                        </Text>
-                        <Text style={styles.groupTitle}>
-                            {moment(getDateString()).format('LL')}
-                        </Text>
+                        <Input.Header>{moment(getDateString()).format('dddd')}</Input.Header>
+                        <Input.Header>{moment(getDateString()).format('LL')}</Input.Header>
                     </View>
-                    <Text style={styles.groupTitle}>
-                        {currentTime}
-                    </Text>
+                    <Input.Header>{currentTime}</Input.Header>
                 </View>
             </View>
             <View style={styles.content}>
@@ -140,18 +124,12 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                     style={{
                                         justifyContent: 'center',
                                         alignItems: 'center',
-                                        paddingBottom: 18,
+                                        paddingBottom: 16,
                                     }}
                                     onPress={() => handleViewTravelDetails(directionNameKey)}
                                 >
-                                    <Text style={[styles.groupTitle, { color: selectedDateColor }]}>
-                                        {moment(currentDate).format('LL')}
-                                    </Text>
-                                    <Header
-                                        index={index}
-                                        directionNameKey={directionNameKey}
-                                        directionNamesLength={directionNames.length}
-                                    />
+                                    <Input.Title>{moment(currentDate).format('LL')}</Input.Title>
+                                    <Input.Title>{`Direction (${index + 1}/${directionNames.length}): ${directionNameKey}`}</Input.Title>
                                 </Pressable>
                                 <View key={directionNameKey} style={styles.cardCanvas}>
                                     <TravelCards
@@ -176,7 +154,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}>
-                            <Text style={travelEmptyContainer[theme].noDataText}>No data available to display</Text>
+                            <Input.Label>No data available to display</Input.Label>
                         </View>
                     )}
                 </PagerView>
