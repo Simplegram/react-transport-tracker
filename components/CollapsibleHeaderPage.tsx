@@ -19,8 +19,8 @@ export default function CollapsibleHeaderPage({
     children,
     containerStyle
 }: CollapsibleHeaderPageProps) {
-    const { theme, getTheme } = useTheme()
-    const newTheme = getTheme()
+    const { getTheme } = useTheme()
+    const theme = getTheme()
 
     const { height: screenHeight } = Dimensions.get('window')
 
@@ -31,7 +31,7 @@ export default function CollapsibleHeaderPage({
                 paddingTop: 5,
                 paddingHorizontal: 15,
 
-                backgroundColor: newTheme.palette.background,
+                backgroundColor: theme.palette.background,
             },
             containerStyle
         ]}>
@@ -52,7 +52,7 @@ export default function CollapsibleHeaderPage({
                         fontWeight: 'bold',
                         paddingBottom: 15,
 
-                        color: newTheme.palette.textBlack,
+                        color: theme.palette.textBlack,
                     }}>{headerText}</Text>
                 </View>
                 <View style={{

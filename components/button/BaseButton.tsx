@@ -1,5 +1,4 @@
 import { useTheme } from '@/context/ThemeContext'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { darkenColor, getBackgroundColorFromStyle } from '@/src/utils/colorUtils'
 import { Pressable, PressableProps, StyleProp, StyleSheet, TextStyle, View, ViewProps, ViewStyle } from 'react-native'
 import Input from '../input/Input'
@@ -144,8 +143,8 @@ interface SwitchButtonProps extends Props {
 }
 
 function SwitchButton({ style, textStyle, ...props }: SwitchButtonProps) {
-    const { theme, getTheme } = useTheme()
-    const newTheme = getTheme()
+    const { getTheme } = useTheme()
+    const theme = getTheme()
 
     const styles = StyleSheet.create({
         addButton: {
@@ -155,13 +154,13 @@ function SwitchButton({ style, textStyle, ...props }: SwitchButtonProps) {
             borderRadius: 10,
             paddingVertical: 12,
 
-            backgroundColor: newTheme.palette.backgroundPrimary,
+            backgroundColor: theme.palette.backgroundPrimary,
         },
         addButtonText: {
             fontSize: 16,
             fontWeight: '600',
 
-            color: newTheme.palette.textWhite,
+            color: theme.palette.textWhite,
         },
         inactiveButton: {
             flex: 1,
@@ -170,21 +169,21 @@ function SwitchButton({ style, textStyle, ...props }: SwitchButtonProps) {
             borderRadius: 10,
             paddingVertical: 12,
 
-            borderColor: newTheme.palette.borderColorSoft,
-            backgroundColor: newTheme.palette.background,
+            borderColor: theme.palette.borderColorSoft,
+            backgroundColor: theme.palette.background,
         },
         inactiveButtonText: {
             fontSize: 16,
             fontWeight: '600',
 
-            color: newTheme.palette.textDark,
+            color: theme.palette.textDark,
         },
     })
 
     return (
         <Button
-            style={props.switch ? buttonStyles[theme].addButton : styles.inactiveButton}
-            textStyle={props.switch ? buttonStyles[theme].addButtonText : styles.inactiveButtonText}
+            style={props.switch ? styles.addButton : styles.inactiveButton}
+            textStyle={props.switch ? styles.addButtonText : styles.inactiveButtonText}
             {...props}
         >
             {props.children}
