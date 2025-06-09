@@ -1,7 +1,5 @@
 import { colors } from "@/src/const/color"
-import { Dimensions, StyleSheet } from "react-native"
-
-const { height: screenHeight } = Dimensions.get('window')
+import { StyleSheet } from "react-native"
 
 const lightStyles = StyleSheet.create({
     icon: {
@@ -17,55 +15,6 @@ export const styles = {
             color: colors.white_300,
         }
     })
-}
-
-const lightCollapsibleHeaderStyles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingTop: 5,
-        paddingHorizontal: 15,
-        backgroundColor: colors.white_100,
-    },
-    contentContainer: {
-        flexGrow: 1,
-        overflow: 'hidden',
-    },
-    fillerContainer: {
-        height: screenHeight * 0.43,
-        justifyContent: 'flex-end',
-    },
-    headerText: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        paddingBottom: 15
-    },
-    scrollContainer: {
-        flexGrow: 1,
-        paddingBottom: 20,
-    }
-})
-
-export const collapsibleHeaderStyles = {
-    light: lightCollapsibleHeaderStyles,
-    dark: StyleSheet.create({
-        container: {
-            ...lightCollapsibleHeaderStyles.container,
-            backgroundColor: colors.black,
-        },
-        contentContainer: {
-            ...lightCollapsibleHeaderStyles.contentContainer,
-        },
-        fillerContainer: {
-            ...lightCollapsibleHeaderStyles.fillerContainer,
-        },
-        headerText: {
-            ...lightCollapsibleHeaderStyles.headerText,
-            color: colors.white_100,
-        },
-        scrollContainer: {
-            ...lightCollapsibleHeaderStyles.scrollContainer,
-        }
-    }),
 }
 
 export const dividerStyles = {
