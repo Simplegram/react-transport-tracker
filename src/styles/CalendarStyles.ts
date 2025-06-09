@@ -1,20 +1,5 @@
 import { colors } from "@/src/const/color"
-import { StyleSheet } from "react-native"
 import { Theme } from "react-native-calendars/src/types"
-
-const lightCalendarStyles = StyleSheet.create({
-    modalBackdrop: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-        justifyContent: 'flex-end',
-    },
-    calendarContainer: {
-        flex: 1,
-        height: 500,
-        backgroundColor: colors.white,
-        position: 'relative',
-    },
-})
 
 const lightCalendarTheme: Theme = {
     calendarBackground: colors.white_100,
@@ -39,17 +24,4 @@ export const calendarTheme = {
         dayTextColor: colors.white_200,
         monthTextColor: colors.white_100,
     },
-}
-
-export const calendarStyles = {
-    light: lightCalendarStyles,
-    dark: StyleSheet.create({
-        modalBackdrop: {
-            ...lightCalendarStyles.modalBackdrop,
-        },
-        calendarContainer: {
-            ...lightCalendarStyles.calendarContainer,
-            color: colors.black,
-        },
-    }),
 }

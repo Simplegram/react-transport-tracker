@@ -1,11 +1,12 @@
 import { useTheme } from "@/context/ThemeContext"
-import { calendarStyles, calendarTheme } from "@/src/styles/CalendarStyles"
+import { calendarTheme } from "@/src/styles/CalendarStyles"
 import { StandaloneModalProp } from "@/src/types/AddableTravels"
 import { getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils"
 import { useState } from "react"
-import { Modal, View } from "react-native"
+import { View } from "react-native"
 import { CalendarList } from "react-native-calendars"
 import Button from "../button/BaseButton"
+import ModalTemplate from "../ModalTemplate"
 
 interface CalendarModalProps {
     dates: any
@@ -26,14 +27,13 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
     const [currentDate] = useState(new Date().toISOString().split('T')[0])
 
     return (
-        <Modal
+        <ModalTemplate
             visible={modalElements.isModalVisible}
-            transparent={true}
             animationType="slide"
             onRequestClose={modalElements.onClose}
         >
-            <View style={calendarStyles[theme].modalBackdrop}>
-                <View style={calendarStyles[theme].calendarContainer}>
+            <ModalTemplate.Backdrop>
+                <ModalTemplate.CalendarContainer>
                     <CalendarList
                         current={currentSelectedDate}
                         pastScrollRange={pastScrollRange}
@@ -52,13 +52,13 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
                         alignItems: 'center',
                         zIndex: 1,
                         flexDirection: 'row',
-                        gap: 5
+                        gap: 5,
                     }}>
                         <Button.Add label="Set Today" onPress={() => modalElements.onSelect({ dateString: currentDate })} style={{ flex: 0 }} />
                         <Button.Dismiss label="Close" onPress={modalElements.onClose} style={{ flex: 0 }} />
                     </View>
-                </View>
-            </View>
-        </Modal>
+                </ModalTemplate.CalendarContainer>
+            </ModalTemplate.Backdrop>
+        </ModalTemplate>
     )
 }
