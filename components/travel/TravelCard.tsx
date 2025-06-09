@@ -102,20 +102,20 @@ export default function TravelCard({ item, index, directionNameKey, activeIndex,
 
                     <View style={travelCardStyles[theme].stopsTimeSection}>
                         <View style={travelCardStyles[theme].stopTimeBlock}>
-                            <Input.ValuePrimary>{item.first_stop_id?.name || 'N/A'}</Input.ValuePrimary>
-                            <Input.Text>
+                            <Input.ValuePrimary style={{ textAlign: 'center' }}>{item.first_stop_id?.name || 'N/A'}</Input.ValuePrimary>
+                            <Input.Text style={{ textAlign: 'center' }}>
                                 {item.bus_initial_departure ? formatDate(item.bus_initial_departure) : 'N/A'}
                             </Input.Text>
                         </View>
 
                         <View style={travelCardStyles[theme].stopArrowBlock}>
                             <Input.Title>➜</Input.Title>
-                            <Input.Text>{calculateDuration(item)}</Input.Text>
+                            <Input.Text style={{ textAlign: 'center' }}>{calculateDuration(item)}</Input.Text>
                         </View>
 
                         <View style={travelCardStyles[theme].stopTimeBlock}>
-                            <Input.ValuePrimary>{item.last_stop_id?.name || 'N/A'}</Input.ValuePrimary>
-                            <Input.Text>
+                            <Input.ValuePrimary style={{ textAlign: 'center' }}>{item.last_stop_id?.name || 'N/A'}</Input.ValuePrimary>
+                            <Input.Text style={{ textAlign: 'center' }}>
                                 {item.bus_final_arrival ? formatDate(item.bus_final_arrival) : 'N/A'}
                             </Input.Text>
                         </View>
@@ -124,7 +124,7 @@ export default function TravelCard({ item, index, directionNameKey, activeIndex,
                     <Divider />
 
                     <View style={travelCardStyles[theme].lapsSection}>
-                        <Input.ValueText>{item.lapCount} lap(s)</Input.ValueText>
+                        <Input.ValueText style={{ textAlign: 'center' }}>{item.lapCount} lap(s)</Input.ValueText>
                     </View>
 
                     <Divider />
