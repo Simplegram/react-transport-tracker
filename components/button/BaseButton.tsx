@@ -1,7 +1,8 @@
 import { useTheme } from '@/context/ThemeContext'
 import { buttonStyles } from '@/src/styles/ButtonStyles'
 import { darkenColor, getBackgroundColorFromStyle } from '@/src/utils/colorUtils'
-import { Pressable, PressableProps, StyleProp, StyleSheet, Text, TextStyle, View, ViewProps, ViewStyle } from 'react-native'
+import { Pressable, PressableProps, StyleProp, StyleSheet, TextStyle, View, ViewProps, ViewStyle } from 'react-native'
+import Input from '../input/Input'
 
 export interface Props extends Omit<PressableProps, 'style'> {
     label?: string
@@ -45,17 +46,7 @@ export default function Button(props: Props) {
 
     return (
         <Pressable style={buttonContainerStyle} {...restProps}>
-            <Text style={[
-                {
-                    color: '#fff',
-                    fontSize: 16,
-                    fontWeight: 'bold',
-                    textAlign: 'center',
-                },
-                props.textStyle
-            ]}>
-                {props.label ? props.label : props.children}
-            </Text>
+            <Input.Subtitle style={props.textStyle}>{props.label ? props.label : props.children}</Input.Subtitle>
         </Pressable>
     )
 }
@@ -79,9 +70,7 @@ function ButtonRow(props: ViewProps) {
     )
 }
 
-function AddButton(props: Props) {
-    const { style, textStyle, ...restProps } = props
-
+function AddButton({ style, textStyle, ...props }: Props) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -95,7 +84,7 @@ function AddButton(props: Props) {
                     borderColor: theme.palette.borderColorPrimary,
                     backgroundColor: theme.palette.backgroundPrimary
                 },
-                props.style,
+                style,
             ]}
             textStyle={[
                 {
@@ -104,16 +93,14 @@ function AddButton(props: Props) {
 
                     color: theme.palette.textWhite,
                 },
-                props.textStyle,
+                textStyle,
             ]}
-            {...restProps}
+            {...props}
         />
     )
 }
 
-function DismissButton(props: Props) {
-    const { style, textStyle, ...restProps } = props
-
+function DismissButton({ style, textStyle, ...props }: Props) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -127,7 +114,7 @@ function DismissButton(props: Props) {
                     borderColor: theme.palette.borderColor,
                     backgroundColor: theme.palette.background
                 },
-                props.style,
+                style,
             ]}
             textStyle={[
                 {
@@ -136,16 +123,14 @@ function DismissButton(props: Props) {
 
                     color: theme.palette.textBlack,
                 },
-                props.textStyle,
+                textStyle,
             ]}
-            {...restProps}
+            {...props}
         />
     )
 }
 
-function CancelButton(props: Props) {
-    const { style, textStyle, ...restProps } = props
-
+function CancelButton({ style, textStyle, ...props }: Props) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -159,7 +144,7 @@ function CancelButton(props: Props) {
                     borderColor: theme.palette.borderColorRed,
                     backgroundColor: theme.palette.backgroundRed,
                 },
-                props.style,
+                style,
             ]}
             textStyle={[
                 {
@@ -168,9 +153,9 @@ function CancelButton(props: Props) {
 
                     color: theme.palette.textWhite,
                 },
-                props.textStyle,
+                textStyle,
             ]}
-            {...restProps}
+            {...props}
         />
     )
 }
@@ -179,9 +164,7 @@ interface SwitchButtonProps extends Props {
     switch: boolean
 }
 
-function SwitchButton(props: SwitchButtonProps) {
-    const { style, textStyle, ...restProps } = props
-
+function SwitchButton({ style, textStyle, ...props }: SwitchButtonProps) {
     const { theme, getTheme } = useTheme()
     const newTheme = getTheme()
 
@@ -208,7 +191,7 @@ function SwitchButton(props: SwitchButtonProps) {
         <Button
             style={props.switch ? buttonStyles[theme].addButton : styles.inactiveButton}
             textStyle={props.switch ? buttonStyles[theme].addButtonText : styles.inactiveButtonText}
-            {...restProps}
+            {...props}
         >
             {props.children}
         </Button>
