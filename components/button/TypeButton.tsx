@@ -20,19 +20,24 @@ export default function TypeButton({ label, onPress, typeSelected }: TypeButtonP
         <TouchableOpacity
             activeOpacity={0.7}
             style={[
-                travelDetailStyles[oldTheme].detailRow,
                 {
                     flex: 1,
+                    padding: 10,
                     alignItems: 'center',
+                    borderWidth: 1,
+                    borderRadius: 10,
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
+
                     borderColor: colors.white_500
                 },
                 typeSelected && { borderColor: oldTheme === 'light' ? colors.black : colors.white_200 }
             ]}
             onPress={onPress}
         >
-            <Input.Label
+            <Input.ValueText
                 style={[{ color: colors.white_500 }, typeSelected && { color: oldTheme === 'light' ? colors.black : colors.white_200 }]}
-            >{label}</Input.Label>
+            >{label}</Input.ValueText>
         </TouchableOpacity>
     )
 }

@@ -72,7 +72,7 @@ export default function IndividualTravelDetailCard({ travel, travelTime }: Trave
         console.error(`Error calculating duration for trip ID ${travel.id || 'unknown'}:`, error)
         return (
             <Container.DetailRow key={travel.id}>
-                <Text style={travelDetailStyles[theme].label}>Trip ID {travel.id || 'N/A'} Duration:</Text>
+                <Input.Subtitle>Trip ID {travel.id || 'N/A'}</Input.Subtitle>
                 <Input.ValueText>Calculation Error</Input.ValueText>
             </Container.DetailRow>
         )
