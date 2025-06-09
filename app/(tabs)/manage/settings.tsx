@@ -15,7 +15,6 @@ export default function Settings() {
     } = useTheme()
 
     const {
-        enableSwipeZone, setEnableSwipeZone,
         enableVibration, setEnableVibration,
     } = useSettings()
 
@@ -37,8 +36,6 @@ export default function Settings() {
         >
             <View style={styles.container}>
                 <View style={[travelDetailStyles[theme].card, { gap: 10 }]}>
-                    <Switcher onPress={() => setEnableSwipeZone(!enableSwipeZone)} overrideIsEnabled={enableSwipeZone}>Enable "Safe Swipe Zone"</Switcher>
-                    <Divider />
                     <Switcher onPress={() => setEnableVibration(!enableVibration)} overrideIsEnabled={enableVibration}>Enable vibration</Switcher>
                     <Divider />
                     <Switcher onPress={handleThemeChange} overrideIsEnabled={theme === 'light' ? false : true}>Dark mode</Switcher>

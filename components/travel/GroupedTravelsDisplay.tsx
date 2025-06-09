@@ -73,16 +73,6 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
         cardCanvas: {
             height: 315,
         },
-        swipeZone: {
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-        },
-        swipeZoneText: {
-            fontSize: 16,
-            fontWeight: 'bold',
-            color: dateLabelColor,
-        },
     })
 
     return (
@@ -133,14 +123,6 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                         onPress={handleItemPress}
                                     />
                                 </View>
-                                {(directionNames.length > 1) && enableSwipeZone && (
-                                    <>
-                                        <Divider />
-                                        <View style={styles.swipeZone}>
-                                            <Text style={styles.swipeZoneText}>{`<<< Safe Swipe Zone >>>`}</Text>
-                                        </View>
-                                    </>
-                                )}
                             </View>
                         ))
                     ) : (
