@@ -90,12 +90,12 @@ export default function TravelCard({ item, index, directionNameKey, activeIndex,
                     style={travelCardStyles[theme].card}
                 >
                     <View style={travelCardStyles[theme].routeInfoSection}>
-                        <Input.Subtitle style={{ textAlign: 'center' }}>
-                            {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
-                        </Input.Subtitle>
                         <Input.SubtitlePrimary style={{ textAlign: 'center' }}>
-                            {item.vehicle_code || 'N/A'}
+                            {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
                         </Input.SubtitlePrimary>
+                        <Input.Subtitle style={{ textAlign: 'center' }}>
+                            {item.vehicle_code || 'N/A'}
+                        </Input.Subtitle>
                     </View>
 
                     <Divider />
