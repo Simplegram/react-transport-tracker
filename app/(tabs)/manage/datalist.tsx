@@ -83,7 +83,7 @@ export default function DataListScreen() {
     const renderItem = (item: ItemTemplate) => (
         <DataButtonBase
             name={item.name}
-            onPress={handleModify}
+            onPress={() => handleModify(item)}
         >
             {dataType === "Stops" ? (
                 <DataButtonBase.Stops {...item} />
