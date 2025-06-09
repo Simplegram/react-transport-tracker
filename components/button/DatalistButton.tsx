@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/ThemeContext"
 import { TouchableOpacity, View } from "react-native"
 import { TouchableOpacityProps } from "react-native-gesture-handler"
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import CustomIcon from "../CustomIcon"
 import Input from "../input/Input"
 
 export interface ItemTemplate {
@@ -45,38 +45,18 @@ export default function DataButtonBase({ name, onPress, ...props }: Props) {
 }
 
 function StopsButton(item: ItemTemplate) {
-    const { getTheme } = useTheme()
-    const theme = getTheme()
-
     return (
         <>
-            <Icon
-                style={{
-                    alignItems: 'center',
-                    color: theme.palette.textWhite,
-                }}
-                name={item.vehicle_type?.icon_id.name}
-                size={20}
-            />
+            <CustomIcon name={item.vehicle_type?.icon_id.name} />
             <Input.Subtitle>{item.vehicle_type?.name}</Input.Subtitle>
         </>
     )
 }
 
 function RoutesButton(item: ItemTemplate) {
-    const { getTheme } = useTheme()
-    const theme = getTheme()
-
     return (
         <>
-            <Icon
-                style={{
-                    alignItems: 'center',
-                    color: theme.palette.textWhite,
-                }}
-                name={item.vehicle_type_id?.icon_id.name}
-                size={20}
-            />
+            <CustomIcon name={item.vehicle_type_id?.icon_id.name} />
             <Input.Subtitle>{item.code}</Input.Subtitle>
         </>
     )

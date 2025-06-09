@@ -1,15 +1,14 @@
 import Button from "@/components/button/BaseButton"
+import CustomIcon from "@/components/CustomIcon"
 import Input from "@/components/input/Input"
 import { TextInputBase } from "@/components/input/TextInput"
 import ModalTemplate from "@/components/ModalTemplate"
 import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
-import { styles } from "@/src/styles/Styles"
 import { EditableTravelStopModalProp } from "@/src/types/EditableTravels"
 import { useMemo, useState } from "react"
 import { Pressable, View } from "react-native"
-import Icon from "react-native-vector-icons/FontAwesome6"
 import FlatlistBase from "../FlatlistPicker"
 
 export default function EditTravelStopModal({ stops, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelStopModalProp) {
@@ -64,13 +63,9 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                         {(item) => (
                             <>
                                 {item.vehicle_type?.name ? (
-                                    <Icon
-                                        style={[styles[theme].icon, { width: 20 }]}
-                                        name={item.vehicle_type.icon_id.name.toLocaleLowerCase()}
-                                        size={16}
-                                    />
+                                    <CustomIcon style={{ width: 20 }} name={item.vehicle_type.icon_id.name.toLocaleLowerCase()} size={16} />
                                 ) : (
-                                    <Icon style={styles[theme].icon} name="train" size={16}></Icon>
+                                    <CustomIcon name="train" size={16} />
                                 )}
                                 <Input.Label>{item.name}</Input.Label>
                             </>

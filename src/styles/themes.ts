@@ -9,7 +9,9 @@ interface Palette {
     textBlack: string
     textDark: string
     textPrimary: string
+
     textPlaceholder: string
+    textHybridWhite: string
 
     borderColor: string
     borderColorRed: string
@@ -31,6 +33,8 @@ const lightPallete: Palette = {
     textBlack: colors.black,
     textDark: colors.white_700,
     textPrimary: colors.primary,
+
+    textHybridWhite: colors.white_100,
     textPlaceholder: colors.white_500,
 
     borderColor: colors.black,
@@ -48,6 +52,8 @@ const darkPallete: Palette = {
     textBlack: colors.white_200,
     textDark: colors.white_300,
     textPrimary: colors.primary_100,
+
+    textHybridWhite: colors.primary_100,
     textPlaceholder: colors.white_600,
 
     borderColor: colors.white_200,

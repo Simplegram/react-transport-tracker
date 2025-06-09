@@ -1,15 +1,14 @@
 import Button from "@/components/button/BaseButton"
 import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
+import { IconSelector } from "@/components/input/VehicleSelector"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
-import { iconPickerStyles, inputElementStyles } from "@/src/styles/InputStyles"
-import { styles } from "@/src/styles/Styles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { AddableVehicleType } from "@/src/types/AddableTravels"
 import { VehicleTypeModalProp } from "@/src/types/TravelModal"
 import { useState } from "react"
-import { Alert, ScrollView, TouchableOpacity, View } from "react-native"
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { Alert, ScrollView, View } from "react-native"
 
 export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: VehicleTypeModalProp) {
     const { theme } = useTheme()
@@ -52,25 +51,12 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
                                     keyboardShouldPersistTaps={"always"}
                                 >
                                     {icons.map((icon) => (
-                                        <TouchableOpacity
+                                        <IconSelector
                                             key={icon.id}
-                                            style={[
-                                                iconPickerStyles[theme].iconContainer,
-                                                vehicleType.icon_id === icon.id && iconPickerStyles[theme].selectedIconContainer,
-                                            ]}
+                                            icon={icon}
+                                            condition={vehicleType.icon_id === icon.id}
                                             onPress={() => setVehicleType({ ...vehicleType, "icon_id": icon.id })}
-                                        >
-                                            <Icon
-                                                style={
-                                                    vehicleType.icon_id === icon.id ?
-                                                        iconPickerStyles[theme].selectedIcon
-                                                        :
-                                                        styles[theme].icon
-                                                }
-                                                name={icon.name}
-                                                size={20}
-                                            />
-                                        </TouchableOpacity>
+                                        />
                                     ))}
                                 </ScrollView>
                             </View>

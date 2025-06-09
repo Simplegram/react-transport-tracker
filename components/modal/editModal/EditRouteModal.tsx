@@ -2,22 +2,21 @@ import Button from "@/components/button/BaseButton"
 import { ModalButton } from "@/components/button/ModalButton"
 import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
+import VehicleSelector from "@/components/input/VehicleSelector"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
 import useModalHandler from "@/hooks/useModalHandler"
-import { iconPickerStyles, inputElementStyles } from "@/src/styles/InputStyles"
-import { styles } from "@/src/styles/Styles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { EditableRoute } from "@/src/types/EditableTravels"
 import { ModalProp } from "@/src/types/TravelModal"
 import { VehicleType } from "@/src/types/Travels"
 import { sortByIdToFront } from "@/src/utils/utils"
 import { useFocusEffect } from "expo-router"
 import { useCallback, useRef, useState } from "react"
-import { Alert, ScrollView, TouchableOpacity, View } from "react-native"
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { Alert, ScrollView, View } from "react-native"
 import EditTravelStopModal from "../travelModal/EditTravelStopModal"
 
 
@@ -119,28 +118,12 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                                     keyboardShouldPersistTaps={"always"}
                                 >
                                     {sortByIdToFront(fullVehicleTypes, savedVehicleTypeId.current).map((type: VehicleType) => (
-                                        <TouchableOpacity
+                                        <VehicleSelector
                                             key={type.id}
-                                            style={[
-                                                iconPickerStyles[theme].iconTextContainer,
-                                                route.vehicle_type_id === type.id && iconPickerStyles[theme].selectedIconContainer,
-                                            ]}
+                                            type={type}
+                                            condition={route.vehicle_type_id === type.id}
                                             onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}
-                                        >
-                                            <Icon
-                                                style={
-                                                    route.vehicle_type_id === type.id ?
-                                                        iconPickerStyles[theme].selectedIcon
-                                                        :
-                                                        styles[theme].icon
-                                                }
-                                                name={type.icon_id.name}
-                                                size={20}
-                                            />
-                                            <Input.Label
-                                                style={route.vehicle_type_id === type.id && iconPickerStyles[theme].selectedText}
-                                            >{type.name.slice(0, 5)}</Input.Label>
-                                        </TouchableOpacity>
+                                        />
                                     ))}
                                 </ScrollView>
                             </View>

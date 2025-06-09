@@ -1,19 +1,18 @@
 import Button from "@/components/button/BaseButton"
 import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
+import { IconSelector } from "@/components/input/VehicleSelector"
 import { useDataEditContext } from "@/context/DataEditContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
-import { iconPickerStyles, inputElementStyles } from "@/src/styles/InputStyles"
-import { styles } from "@/src/styles/Styles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { EditableVehicleType } from "@/src/types/EditableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { IconType } from "@/src/types/Travels"
 import { sortByIdToFront } from "@/src/utils/utils"
 import { useEffect, useRef, useState } from "react"
-import { Alert, ScrollView, TouchableOpacity, View } from "react-native"
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { Alert, ScrollView, View } from "react-native"
 
 export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalContentProps) {
     const { theme } = useTheme()
@@ -65,25 +64,12 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                                     keyboardShouldPersistTaps={"always"}
                                 >
                                     {sortByIdToFront(icons, savedVehicleTypeId.current).map((icon: IconType) => (
-                                        <TouchableOpacity
+                                        <IconSelector
                                             key={icon.id}
-                                            style={[
-                                                iconPickerStyles[theme].iconContainer,
-                                                vehicleType.icon_id === icon.id && iconPickerStyles[theme].selectedIconContainer,
-                                            ]}
-                                            onPress={() => setVehicleType({ ...vehicleType, icon_id: icon.id })}
-                                        >
-                                            <Icon
-                                                style={
-                                                    vehicleType.icon_id === icon.id ?
-                                                        iconPickerStyles[theme].selectedIcon
-                                                        :
-                                                        styles[theme].icon
-                                                }
-                                                name={icon.name}
-                                                size={20}
-                                            />
-                                        </TouchableOpacity>
+                                            icon={icon}
+                                            condition={vehicleType.icon_id === icon.id}
+                                            onPress={() => setVehicleType({ ...vehicleType, "icon_id": icon.id })}
+                                        />
                                     ))}
                                 </ScrollView>
                             </View>
