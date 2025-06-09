@@ -1,8 +1,6 @@
 import { useTheme } from '@/context/ThemeContext'
 import React from 'react'
-import {
-    ActivityIndicator
-} from 'react-native'
+import { ActivityIndicator, Dimensions } from 'react-native'
 import ModalTemplate from './ModalTemplate'
 import Input from './input/Input'
 
@@ -14,9 +12,11 @@ export default function LoadingScreen({ text = "Loading..." }: Props) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
+    const { width: screenWidth, height: screenHeight } = Dimensions.get('screen')
+
     return (
-        <ModalTemplate animationType="fade" visible={true}>
-            <ModalTemplate.Backdrop style={{ alignItems: 'center' }}>
+        <ModalTemplate style={{ width: screenWidth, height: screenHeight }} animationType="fade" visible={true}>
+            <ModalTemplate.Backdrop style={{ alignItems: 'center', width: screenWidth, height: screenHeight }}>
                 <ModalTemplate.Container style={
                     {
                         borderColor: theme.palette.borderColor,
