@@ -2,10 +2,6 @@ import { colors } from "@/src/const/color"
 import { StyleSheet } from "react-native"
 
 const lightInputElementStyles = StyleSheet.create({
-    inputContainer: {
-        gap: 12,
-        paddingBottom: 15,
-    },
     inputGroup: {},
     inputLargeGroup: {
         gap: 16,
@@ -19,11 +15,6 @@ const lightInputElementStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         gap: 10,
-    },
-    insideLabel: {
-        fontSize: 14,
-        fontWeight: '500',
-        color: colors.white_800,
     },
     unselectedLabel: {
         fontSize: 14,
@@ -40,10 +31,6 @@ const lightInputElementStyles = StyleSheet.create({
 export const inputElementStyles = {
     light: lightInputElementStyles,
     dark: StyleSheet.create({
-        inputContainer: {
-            ...lightInputElementStyles.inputContainer,
-            backgroundColor: colors.black,
-        },
         inputGroup: {
             ...lightInputElementStyles.inputGroup,
         },
@@ -55,10 +42,6 @@ export const inputElementStyles = {
         },
         inputGroupIcon: {
             ...lightInputElementStyles.inputGroupIcon,
-        },
-        insideLabel: {
-            ...lightInputElementStyles.insideLabel,
-            color: colors.white_300,
         },
         unselectedLabel: {
             ...lightInputElementStyles.unselectedLabel,

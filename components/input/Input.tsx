@@ -44,6 +44,26 @@ function Label(props: TextProps) {
     )
 }
 
+function LabelLight(props: TextProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    const { style, children, ...restProps } = props
+
+    return (
+        <Text
+            style={[
+                {
+                    fontSize: 14,
+                    fontWeight: '500',
+                    color: theme.palette.textDark,
+                }, style
+            ]}
+            {...restProps}
+        >{children}</Text>
+    )
+}
+
 function LoadingLabel(props: TextProps) {
     return (
         <Label {...props}>Loading...</Label>
@@ -51,5 +71,7 @@ function LoadingLabel(props: TextProps) {
 }
 
 Input.Container = Container
+
 Input.Label = Label
+Input.LabelLight = LabelLight
 Input.LoadingLabel = LoadingLabel

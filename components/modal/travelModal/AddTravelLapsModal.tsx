@@ -1,26 +1,19 @@
 import Button from '@/components/button/BaseButton'
-import Divider from '@/components/Divider'
 import Input from '@/components/input/Input'
 import ModalTemplate from '@/components/ModalTemplate'
 import { useTheme } from '@/context/ThemeContext'
 import useModalHandler from '@/hooks/useModalHandler'
-import { colors } from '@/src/const/color'
-import { inputElementStyles } from '@/src/styles/InputStyles'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapsModalProp } from '@/src/types/AddableTravels'
-import { formatLapTimeDisplay } from '@/src/utils/utils'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import {
-    Pressable,
-    ScrollView,
     StyleSheet,
-    Text,
     View
 } from 'react-native'
-import Animated, { FadeIn, FadeOut, LinearTransition } from 'react-native-reanimated'
 import AddLapModal from '../addModal/AddLapModal'
 import EditLapModal from '../editModal/EditLapModal'
+import FlatlistBase from '../FlatlistPicker'
 
 export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible, onClose, onSelect }: AddableLapsModalProp) {
     const { theme } = useTheme()
@@ -68,6 +61,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
     }
 
     const handleLapRemove = (id: number | string) => {
+        console.log(id)
         setLaps((laps) => {
             return laps.filter((lap) => lap.id !== id)
         })
@@ -92,41 +86,12 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                             <Input.Label>No lap found</Input.Label>
                         </View>
                     ) : (
-                        <ScrollView
-                            contentContainerStyle={modalStyles[theme].scrollView}
-                        >
-                            {laps.map((lap: AddableLap, index) => (
-                                <Animated.View
-                                    key={lap.id}
-                                    entering={FadeIn.duration(250)}
-                                    exiting={FadeOut.duration(125)}
-                                    layout={LinearTransition}
-                                >
-                                    <Pressable style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
-                                        <View style={{
-                                            flex: 1,
-                                            width: '100%',
-                                            justifyContent: 'space-between',
-                                            flexDirection: 'row',
-                                        }}>
-                                            <Input.Label>{formatLapTimeDisplay(lap.time)}</Input.Label>
-                                            <Pressable onPress={() => handleLapRemove(lap.id)}>
-                                                <Text style={[inputElementStyles[theme].insideLabel, { color: 'red' }]}>Remove</Text>
-                                            </Pressable>
-                                        </View>
-                                        {stops.find(stop => stop.id === lap.stop_id) ? (
-                                            <Input.Label style={{ color: colors.primary }}>
-                                                {stops.find(stop => stop.id === lap.stop_id)?.name}
-                                            </Input.Label>
-                                        ) : null}
-
-                                        {lap.note && (
-                                            <Input.Label>{lap.note}</Input.Label>)}
-                                    </Pressable>
-                                    {index < laps.length - 1 && <Divider />}
-                                </Animated.View>
-                            ))}
-                        </ScrollView>
+                        <FlatlistBase.LapAdd
+                            laps={laps}
+                            stops={stops}
+                            onPress={handleLapSelect}
+                            onRemove={handleLapRemove}
+                        />
                     )}
                 </View>
 

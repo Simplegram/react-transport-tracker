@@ -22,6 +22,7 @@ import {
 } from 'react-native'
 import AddLapModal from '../addModal/AddLapModal'
 import EditLapModal from '../editModal/EditLapModal'
+import FlatlistBase from '../FlatlistPicker'
 
 export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isModalVisible, onClose, onSelect }: EditableLapsModalProp) {
     const { theme } = useTheme()
@@ -88,27 +89,11 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                             <Input.Label>No lap found</Input.Label>
                         </View>
                     ) : (
-                        <ScrollView
-                            contentContainerStyle={{ gap: 10 }}
-                        >
-                            {laps.map((lap: EditableLap, index) => (
-                                <React.Fragment key={index}>
-                                    <Pressable style={styles[theme].detailRow} onPress={() => handleLapSelect(lap)}>
-                                        <Text style={inputElementStyles[theme].insideLabel}>{formatLapTimeDisplay(lap.time)}</Text>
-                                        {stops.find(stop => stop.id === lap.stop_id) ? (
-                                            <Input.Label style={{ color: colors.primary }}>
-                                                {stops.find(stop => stop.id === lap.stop_id)?.name}
-                                            </Input.Label>
-                                        ) : null}
-
-                                        {lap.note && (
-                                            <Input.Label>{lap.note}</Input.Label>
-                                        )}
-                                    </Pressable>
-                                    {index < laps.length - 1 && <Divider />}
-                                </React.Fragment>
-                            ))}
-                        </ScrollView>
+                        <FlatlistBase.Lap
+                            laps={laps}
+                            stops={stops}
+                            onPress={handleLapSelect}
+                        />
                     )}
                 </View>
 
