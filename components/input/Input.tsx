@@ -76,6 +76,15 @@ function Subtitle({ style, ...props }: TextProps) {
     )
 }
 
+function SubtitleWhite({ style, ...props }: TextProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    return (
+        <Subtitle style={[{ color: theme.palette.textWhite }, style]} {...props} />
+    )
+}
+
 function SubtitlePrimary({ style, ...props }: TextProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
@@ -155,7 +164,9 @@ Input.Header = Header
 
 Input.Title = Title
 Input.TitleDivide = TitleDivide
+
 Input.Subtitle = Subtitle
+Input.SubtitleWhite = SubtitleWhite
 Input.SubtitlePrimary = SubtitlePrimary
 
 Input.Label = Label

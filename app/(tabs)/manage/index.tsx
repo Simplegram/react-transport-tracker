@@ -1,8 +1,7 @@
-import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import DataButton from '@/components/button/DataButton'
+import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Divider from '@/components/Divider'
 import { useDataEditContext } from '@/context/DataEditContext'
-import { useTheme } from '@/context/ThemeContext'
 import { router } from 'expo-router'
 import React from 'react'
 import { FlatList, StyleSheet, View } from 'react-native'
@@ -43,7 +42,6 @@ const navigationButtons: ButtonConfig[] = [
 
 
 export default function NavigationPage() {
-    const { theme } = useTheme()
     const { setEditCategory } = useDataEditContext()
 
     const handleItemPress = (editCategory: string) => {

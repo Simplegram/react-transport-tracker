@@ -13,13 +13,11 @@ export interface Props extends Omit<PressableProps, 'style'> {
     children?: string | React.ReactNode
 }
 
-export default function Button(props: Props) {
+export default function Button({ style, textStyle, ...props }: Props) {
     const { theme } = useTheme()
 
-    const { style, ...restProps } = props
-
     const buttonContainerStyle = ({ pressed }: { pressed: boolean }) => {
-        const styleBackgroundColor = getBackgroundColorFromStyle(props.style)
+        const styleBackgroundColor = getBackgroundColorFromStyle(style)
         const baseBackgroundColor = styleBackgroundColor || props.color || '#f3f3f3'
 
         const backgroundColor = pressed ? darkenColor(baseBackgroundColor, props.darkenAmount || 0.3) : baseBackgroundColor
@@ -40,13 +38,13 @@ export default function Button(props: Props) {
                 backgroundColor,
                 opacity: opacity,
             },
-            props.style,
+            style,
         ] as StyleProp<ViewStyle>
     }
 
     return (
-        <Pressable style={buttonContainerStyle} {...restProps}>
-            <Input.Subtitle style={props.textStyle}>{props.label ? props.label : props.children}</Input.Subtitle>
+        <Pressable style={buttonContainerStyle} {...props}>
+            <Input.SubtitleWhite style={textStyle}>{props.label ? props.label : props.children}</Input.SubtitleWhite>
         </Pressable>
     )
 }
@@ -86,15 +84,7 @@ function AddButton({ style, textStyle, ...props }: Props) {
                 },
                 style,
             ]}
-            textStyle={[
-                {
-                    fontSize: 16,
-                    fontWeight: '600',
-
-                    color: theme.palette.textWhite,
-                },
-                textStyle,
-            ]}
+            textStyle={textStyle}
             {...props}
         />
     )
@@ -118,12 +108,9 @@ function DismissButton({ style, textStyle, ...props }: Props) {
             ]}
             textStyle={[
                 {
-                    fontSize: 16,
-                    fontWeight: '600',
-
-                    color: theme.palette.textBlack,
+                    color: theme.palette.textBlack
                 },
-                textStyle,
+                textStyle
             ]}
             {...props}
         />
@@ -146,15 +133,7 @@ function CancelButton({ style, textStyle, ...props }: Props) {
                 },
                 style,
             ]}
-            textStyle={[
-                {
-                    fontSize: 16,
-                    fontWeight: '600',
-
-                    color: theme.palette.textWhite,
-                },
-                textStyle,
-            ]}
+            textStyle={textStyle}
             {...props}
         />
     )
@@ -169,6 +148,21 @@ function SwitchButton({ style, textStyle, ...props }: SwitchButtonProps) {
     const newTheme = getTheme()
 
     const styles = StyleSheet.create({
+        addButton: {
+            flex: 1,
+            alignItems: 'center',
+            borderWidth: 1,
+            borderRadius: 10,
+            paddingVertical: 12,
+
+            backgroundColor: newTheme.palette.backgroundPrimary,
+        },
+        addButtonText: {
+            fontSize: 16,
+            fontWeight: '600',
+
+            color: newTheme.palette.textWhite,
+        },
         inactiveButton: {
             flex: 1,
             alignItems: 'center',

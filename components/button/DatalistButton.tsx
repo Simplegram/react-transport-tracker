@@ -38,7 +38,7 @@ export default function DataButtonBase({ name, onPress, ...props }: Props) {
         >
             <View style={{ flexDirection: 'column' }}>
                 {props.children}
-                <Input.Title>{name}</Input.Title>
+                <Input.Subtitle>{name}</Input.Subtitle>
             </View>
         </TouchableOpacity>
     )
@@ -48,7 +48,7 @@ function StopsButton(item: ItemTemplate) {
     return (
         <>
             <CustomIcon name={item.vehicle_type?.icon_id.name} />
-            <Input.Subtitle>{item.vehicle_type?.name}</Input.Subtitle>
+            <Input.SubtitlePrimary>{item.vehicle_type?.name}</Input.SubtitlePrimary>
         </>
     )
 }
@@ -57,7 +57,7 @@ function RoutesButton(item: ItemTemplate) {
     return (
         <>
             <CustomIcon name={item.vehicle_type_id?.icon_id.name} />
-            <Input.Subtitle>{item.code}</Input.Subtitle>
+            <Input.SubtitlePrimary>{item.code}</Input.SubtitlePrimary>
         </>
     )
 }

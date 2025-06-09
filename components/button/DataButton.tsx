@@ -2,8 +2,9 @@ import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
 import { buttonStyles } from "@/src/styles/ButtonStyles"
 import { useRef } from "react"
-import { Animated, Easing, EasingFunction, Text, TouchableOpacity } from "react-native"
+import { Animated, Easing, EasingFunction, TouchableOpacity } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
+import Input from "../input/Input"
 
 interface DataButtonProps {
     label: string
@@ -59,7 +60,7 @@ export default function DataButton({ label, iconName, onPress }: DataButtonProps
                 transform: [{ scale: itemScale }],
             }}>
                 <Icon name={iconName} color={newTheme.palette.textWhite} size={24}></Icon>
-                <Text style={buttonStyles[theme].addButtonText}>{label}</Text>
+                <Input.SubtitleWhite>{label}</Input.SubtitleWhite>
             </Animated.View>
             <Animated.View
                 style={{
