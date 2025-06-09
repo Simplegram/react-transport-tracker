@@ -12,7 +12,7 @@ const lightTravelCardStyles = StyleSheet.create({
         backgroundColor: colors.white_100,
         borderRadius: 10,
         borderColor: '#000',
-        height: 300,
+        height: 290,
         justifyContent: 'space-between',
     },
     routeInfoSection: {},
@@ -30,10 +30,6 @@ const lightTravelCardStyles = StyleSheet.create({
         paddingHorizontal: 6,
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    stopArrowText: {
-        fontSize: 20,
-        color: '#7f8c8d',
     },
     lapsSection: {
         justifyContent: 'center',
@@ -64,10 +60,6 @@ export const travelCardStyles = {
         },
         stopArrowBlock: {
             ...lightTravelCardStyles.stopArrowBlock,
-        },
-        stopArrowText: {
-            ...lightTravelCardStyles.stopArrowText,
-            color: colors.white_300,
         },
         lapsSection: {
             ...lightTravelCardStyles.lapsSection,

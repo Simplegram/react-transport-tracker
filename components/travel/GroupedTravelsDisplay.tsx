@@ -53,7 +53,6 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
             overflow: 'hidden',
             borderWidth: 1,
             borderRadius: 10,
-            paddingBottom: 5,
             paddingHorizontal: 10,
 
             borderColor: theme.palette.borderColor,

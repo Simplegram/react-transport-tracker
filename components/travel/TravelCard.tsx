@@ -5,7 +5,7 @@ import { DataItemWithNewKey } from "@/src/utils/dataUtils"
 import { formatDate } from "@/src/utils/dateUtils"
 import { calculateDuration } from "@/src/utils/utils"
 import React from "react"
-import { Text, View } from "react-native"
+import { View } from "react-native"
 import { Gesture, GestureDetector } from "react-native-gesture-handler"
 import Animated, { interpolate, interpolateColor, runOnJS, SharedValue, useAnimatedStyle, useSharedValue, withDelay, withSequence, withTiming } from "react-native-reanimated"
 import Divider from "../Divider"
@@ -109,7 +109,7 @@ export default function TravelCard({ item, index, directionNameKey, activeIndex,
                         </View>
 
                         <View style={travelCardStyles[theme].stopArrowBlock}>
-                            <Text style={travelCardStyles[theme].stopArrowText}>➜</Text>
+                            <Input.Title>➜</Input.Title>
                             <Input.Text>{calculateDuration(item)}</Input.Text>
                         </View>
 
