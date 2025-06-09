@@ -62,8 +62,9 @@ function ModalContainer(props: ViewProps) {
                     gap: 10,
                     padding: 20,
                     borderWidth: 1,
-                    borderRadius: 10,
                     justifyContent: 'space-between',
+                    borderTopLeftRadius: 16,
+                    borderTopRightRadius: 16,
 
                     borderTopColor: theme.palette.borderColor,
                     backgroundColor: theme.palette.background,

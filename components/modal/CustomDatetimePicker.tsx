@@ -134,57 +134,54 @@ export default function CustomDateTimePicker({
     const modalWidth = screenWidth < screenHeight ? screenWidth * 0.85 : screenHeight * 0.85
 
     return (
-        <ModalTemplate
+        <ModalTemplate.Bottom
             visible={visible}
-            animationType="fade"
             onRequestClose={onClose}
         >
-            <ModalTemplate.Backdrop style={{ alignItems: 'center' }} onPress={onClose}>
-                {loading ? (
-                    <></>
-                ) : (
-                    <ModalTemplate.Container style={{ width: modalWidth, borderColor: theme.palette.borderColor }}>
-                        <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ gap: 10 }}>
-                            <Text style={[
-                                {
-                                    fontSize: 20,
-                                    textAlign: 'center',
-                                    fontWeight: 'bold',
-                                    paddingBottom: 5,
+            {loading ? (
+                <></>
+            ) : (
+                <ModalTemplate.Container>
+                    <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ gap: 10 }}>
+                        <Text style={[
+                            {
+                                fontSize: 20,
+                                textAlign: 'center',
+                                fontWeight: 'bold',
+                                paddingBottom: 5,
 
-                                    color: theme.palette.textBlack
-                                }
-                            ]}>Set Date and Time</Text>
+                                color: theme.palette.textBlack
+                            }
+                        ]}>Set Date and Time</Text>
 
-                            <TimeSection>
-                                <NumberInput label='Year' value={year} placeholder='YYYY' onChangeText={(text) => handlePartChange('year', text)} maxLength={4} />
-                                <NumberInput label='Month' value={month} placeholder='MM' onChangeText={(text) => handlePartChange('month', text)} />
-                                <NumberInput label='Day' value={day} placeholder='DD' onChangeText={(text) => handlePartChange('day', text)} />
-                            </TimeSection>
+                        <TimeSection>
+                            <NumberInput label='Year' value={year} placeholder='YYYY' onChangeText={(text) => handlePartChange('year', text)} maxLength={4} />
+                            <NumberInput label='Month' value={month} placeholder='MM' onChangeText={(text) => handlePartChange('month', text)} />
+                            <NumberInput label='Day' value={day} placeholder='DD' onChangeText={(text) => handlePartChange('day', text)} />
+                        </TimeSection>
 
-                            <TimeSection>
-                                <NumberInput label='Hours' value={hours} placeholder='HH' onChangeText={(text) => handlePartChange('hours', text)} />
-                                <NumberInput label='Minutes' value={minutes} placeholder='MM' onChangeText={(text) => handlePartChange('minutes', text)} />
-                                <NumberInput label='Seconds' value={seconds} placeholder='ss' onChangeText={(text) => handlePartChange('seconds', text)} />
-                            </TimeSection>
+                        <TimeSection>
+                            <NumberInput label='Hours' value={hours} placeholder='HH' onChangeText={(text) => handlePartChange('hours', text)} />
+                            <NumberInput label='Minutes' value={minutes} placeholder='MM' onChangeText={(text) => handlePartChange('minutes', text)} />
+                            <NumberInput label='Seconds' value={seconds} placeholder='ss' onChangeText={(text) => handlePartChange('seconds', text)} />
+                        </TimeSection>
 
-                            <Button.Dismiss onPress={handleTimeNow}>Now</Button.Dismiss>
+                        <Button.Dismiss onPress={handleTimeNow}>Now</Button.Dismiss>
 
-                            <Divider />
+                        <Divider />
 
-                            <View style={{
-                                gap: 10,
-                                flexDirection: 'row',
-                                justifyContent: 'center',
-                            }}>
-                                <Button.Cancel onPress={onClose}>Cancel</Button.Cancel>
-                                <Button.Add onPress={handleConfirm}>Confirm</Button.Add>
-                            </View>
-                        </ScrollView>
-                    </ModalTemplate.Container>
-                )}
-            </ModalTemplate.Backdrop>
-        </ModalTemplate>
+                        <View style={{
+                            gap: 10,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                        }}>
+                            <Button.Cancel onPress={onClose}>Cancel</Button.Cancel>
+                            <Button.Add onPress={handleConfirm}>Confirm</Button.Add>
+                        </View>
+                    </ScrollView>
+                </ModalTemplate.Container>
+            )}
+        </ModalTemplate.Bottom>
     )
 }
 
