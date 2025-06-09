@@ -60,7 +60,7 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
 
     return (
         <ModalTemplate.Bottom visible={isModalVisible}>
-            <ModalTemplate.Container style={{ height: 475 }}>
+            <ModalTemplate.BottomContainer style={{ height: 475 }}>
                 <MapDisplay
                     mapRef={mapRef}
                     zoomLevel={zoomLevel}
@@ -71,7 +71,7 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
                     <Button.Dismiss label='Cancel' onPress={onClose} />
                     <Button.Add label='Pick Coordinate' onPress={handleOnSubmit} />
                 </Button.Row>
-            </ModalTemplate.Container>
+            </ModalTemplate.BottomContainer>
         </ModalTemplate.Bottom>
     )
 }

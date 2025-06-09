@@ -23,7 +23,7 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
             visible={isModalVisible}
             onRequestClose={onClose}
         >
-            <ModalTemplate.Container>
+            <ModalTemplate.BottomContainer>
                 <View style={modalElementStyles[theme].header}>
                     <Text style={modalElementStyles[theme].title}>Select a Direction</Text>
                     <Pressable onPress={onClose}>
@@ -49,7 +49,7 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
                         )}
                     </FlatlistBase.Picker>
                 )}
-            </ModalTemplate.Container>
+            </ModalTemplate.BottomContainer>
         </ModalTemplate.Bottom>
     )
 }

@@ -2,7 +2,6 @@ import { useTheme } from '@/context/ThemeContext'
 import {
     Modal,
     ModalProps,
-    Text,
     TouchableOpacity,
     TouchableOpacityProps,
     View,
@@ -10,6 +9,7 @@ import {
 } from 'react-native'
 
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import Input from './input/Input'
 
 export default function ModalTemplate({ visible, onRequestClose, ...props }: ModalProps) {
     const { transparent, statusBarTranslucent, ...restProps } = props
@@ -62,6 +62,33 @@ function ModalContainer(props: ViewProps) {
                     gap: 10,
                     padding: 20,
                     borderWidth: 1,
+                    borderRadius: 10,
+                    justifyContent: 'space-between',
+
+                    borderColor: theme.palette.borderColor,
+                    backgroundColor: theme.palette.background,
+                }, style
+            ]}
+            {...restProps}
+        >
+            {children}
+        </View>
+    )
+}
+
+function ModalBottomContainer(props: ViewProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    const { children, style, ...restProps } = props
+
+    return (
+        <View
+            style={[
+                {
+                    gap: 10,
+                    padding: 20,
+                    borderWidth: 1,
                     justifyContent: 'space-between',
                     borderTopLeftRadius: 16,
                     borderTopRightRadius: 16,
@@ -99,31 +126,25 @@ interface ModalBottomInputProps extends ModalProps {
 }
 
 function ModalBottomInput({ title, visible, onRequestClose, ...props }: ModalBottomInputProps) {
-    const { getTheme } = useTheme()
-    const theme = getTheme()
-
     return (
         <ModalBottom
             visible={visible}
             onRequestClose={onRequestClose}
         >
-            <ModalTemplate.Container>
-                <Text style={{
-                    fontSize: 20,
-                    fontWeight: 'bold',
-
-                    color: theme.palette.textBlack,
-                }}>{title}</Text>
+            <ModalTemplate.BottomContainer>
+                <Input.Header>{title}</Input.Header>
                 <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
                     {props.children}
                 </KeyboardAwareScrollView>
-            </ModalTemplate.Container>
+            </ModalTemplate.BottomContainer>
         </ModalBottom>
     )
 }
 
 ModalTemplate.Backdrop = ModalBackdrop
+
 ModalTemplate.Container = ModalContainer
+ModalTemplate.BottomContainer = ModalBottomContainer
 
 ModalTemplate.Bottom = ModalBottom
 ModalTemplate.BottomInput = ModalBottomInput

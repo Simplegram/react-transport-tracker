@@ -32,7 +32,7 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
             visible={isModalVisible}
             onRequestClose={onClose}
         >
-            <ModalTemplate.Container>
+            <ModalTemplate.BottomContainer>
                 <View style={modalElementStyles[theme].header}>
                     <Text style={modalElementStyles[theme].title}>Select a Stop</Text>
                     <Pressable onPress={onClose}>
@@ -76,7 +76,7 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                         )}
                     </FlatlistBase.Picker>
                 )}
-            </ModalTemplate.Container>
+            </ModalTemplate.BottomContainer>
         </ModalTemplate.Bottom>
     )
 }

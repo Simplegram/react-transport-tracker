@@ -25,7 +25,7 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
             visible={isModalVisible}
             onRequestClose={onClose}
         >
-            <ModalTemplate.Container>
+            <ModalTemplate.BottomContainer>
                 <View style={modalElementStyles[theme].header}>
                     <Text style={modalElementStyles[theme].title}>Select a Route</Text>
                     <Pressable onPress={onClose}>
@@ -62,7 +62,7 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
                         )}
                     </FlatlistBase.Picker>
                 )}
-            </ModalTemplate.Container>
+            </ModalTemplate.BottomContainer>
         </ModalTemplate.Bottom>
     )
 }

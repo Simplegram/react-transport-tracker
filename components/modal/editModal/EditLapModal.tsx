@@ -92,7 +92,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                 <LoadingScreen></LoadingScreen>
             ) : (
                 <>
-                    <ModalTemplate.Container style={{ maxHeight: 600 }}>
+                    <ModalTemplate.BottomContainer style={{ maxHeight: 600 }}>
                         <ModalButton.Block
                             label='Time:'
                             condition={lap.time}
@@ -120,7 +120,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             <Button.Dismiss label='Cancel' onPress={onClose} />
                             <Button.Add label='Edit Lap' onPress={handleOnSubmit} />
                         </Button.Row>
-                    </ModalTemplate.Container>
+                    </ModalTemplate.BottomContainer>
 
                     <EditTravelStopModal
                         stops={stops}

@@ -110,7 +110,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                 <Input.LoadingLabel />
             ) : (
                 <>
-                    <ModalTemplate.Container style={{ maxHeight: 600 }}>
+                    <ModalTemplate.BottomContainer style={{ maxHeight: 600 }}>
                         <ModalButton.Block
                             label='Time:'
                             condition={lap.time}
@@ -148,7 +148,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                             <Button.Dismiss label='Cancel' onPress={onClose} />
                             <Button.Add label='Add Lap' onPress={handleOnSubmit} />
                         </Button.Row>
-                    </ModalTemplate.Container>
+                    </ModalTemplate.BottomContainer>
 
                     <EditTravelStopModal
                         stops={stops}

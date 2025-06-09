@@ -139,7 +139,7 @@ export default function CustomDateTimePicker({
             {loading ? (
                 <></>
             ) : (
-                <ModalTemplate.Container>
+                <ModalTemplate.BottomContainer>
                     <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ gap: 10 }}>
                         <Text style={[
                             {
@@ -177,7 +177,7 @@ export default function CustomDateTimePicker({
                             <Button.Add onPress={handleConfirm}>Confirm</Button.Add>
                         </View>
                     </ScrollView>
-                </ModalTemplate.Container>
+                </ModalTemplate.BottomContainer>
             )}
         </ModalTemplate.Bottom>
     )

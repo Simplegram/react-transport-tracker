@@ -82,7 +82,7 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
 
     return (
         <ModalTemplate.Bottom visible={isModalVisible}>
-            <ModalTemplate.Container>
+            <ModalTemplate.BottomContainer>
                 <View style={modalStyles[theme].inputContainer}>
                     {laps.length === 0 ? (
                         <View style={styles[theme].emptyList}>
@@ -105,7 +105,7 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                     <Button.Dismiss label='Cancel' onPress={onClose} />
                     <Button.Add label='Save Laps' onPress={handleOnSubmit} />
                 </Button.Row>
-            </ModalTemplate.Container>
+            </ModalTemplate.BottomContainer>
 
             <EditLapModal
                 stops={stops}
