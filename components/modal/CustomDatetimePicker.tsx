@@ -4,8 +4,6 @@ import React, { useEffect, useState } from 'react'
 import {
     Alert,
     Dimensions,
-    Modal,
-    Pressable,
     ScrollView,
     Text,
     View,
@@ -14,6 +12,7 @@ import {
 import Button from '../button/BaseButton'
 import Divider from '../Divider'
 import { TextInputBase } from '../input/TextInput'
+import ModalTemplate from '../ModalTemplate'
 
 interface CustomDateTimePickerProps {
     visible: boolean
@@ -29,8 +28,8 @@ export default function CustomDateTimePicker({
     onClose,
     onConfirm,
 }: CustomDateTimePickerProps) {
-    const { theme, getTheme } = useTheme()
-    const newTheme = getTheme()
+    const { getTheme } = useTheme()
+    const theme = getTheme()
 
     const { loading } = useLoading(25)
 
@@ -135,36 +134,16 @@ export default function CustomDateTimePicker({
     const modalWidth = screenWidth < screenHeight ? screenWidth * 0.85 : screenHeight * 0.85
 
     return (
-        <Modal
+        <ModalTemplate
             visible={visible}
-            transparent={true}
             animationType="fade"
             onRequestClose={onClose}
         >
-            {loading ? (
-                <></>
-            ) : (
-                <Pressable
-                    style={{
-                        flex: 1,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: 'rgba(0,0,0,0.5)',
-                    }}
-                    onPress={onClose}
-                >
-                    <Pressable
-                        style={{
-                            padding: 20,
-                            borderWidth: 1,
-                            borderRadius: 10,
-
-                            width: modalWidth,
-                            borderColor: newTheme.palette.textBlack,
-                            backgroundColor: newTheme.palette.background,
-                        }}
-                        onPress={(e) => e.stopPropagation()}
-                    >
+            <ModalTemplate.Backdrop style={{ alignItems: 'center' }} onPress={onClose}>
+                {loading ? (
+                    <></>
+                ) : (
+                    <ModalTemplate.Container style={{ width: modalWidth, borderColor: theme.palette.borderColor }}>
                         <ScrollView keyboardShouldPersistTaps="handled" contentContainerStyle={{ gap: 10 }}>
                             <Text style={[
                                 {
@@ -173,7 +152,7 @@ export default function CustomDateTimePicker({
                                     fontWeight: 'bold',
                                     paddingBottom: 5,
 
-                                    color: newTheme.palette.textBlack
+                                    color: theme.palette.textBlack
                                 }
                             ]}>Set Date and Time</Text>
 
@@ -202,10 +181,10 @@ export default function CustomDateTimePicker({
                                 <Button.Add onPress={handleConfirm}>Confirm</Button.Add>
                             </View>
                         </ScrollView>
-                    </Pressable>
-                </Pressable>
-            )}
-        </Modal>
+                    </ModalTemplate.Container>
+                )}
+            </ModalTemplate.Backdrop>
+        </ModalTemplate>
     )
 }
 
