@@ -2,6 +2,7 @@ import AnnotationContent from '@/components/AnnotationContent'
 import TypeButton from '@/components/button/TypeButton'
 import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Container from '@/components/Container'
+import Input from '@/components/input/Input'
 import LoadingScreen from '@/components/LoadingScreen'
 import IndividualTravelDetailCard from '@/components/travel/IndividualTravelDetailCard'
 import { useTheme } from '@/context/ThemeContext'
@@ -9,7 +10,6 @@ import { useTravelContext } from '@/context/TravelContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import useTravelDetail from '@/hooks/useTravelDetail'
 import { colors } from '@/src/const/color'
-import { inputElementStyles } from '@/src/styles/InputStyles'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
 import { DataItem, Stop } from '@/src/types/Travels'
 import { formatMsToMinutes, sumTimesToMs } from '@/src/utils/dateUtils'
@@ -258,25 +258,12 @@ export default function TravelDetail() {
                         </Text>
                     </Container.DetailRow>
 
-                    <View style={inputElementStyles[theme].inputGroup}>
-                        <View style={{ gap: 10, flexDirection: 'row' }}>
-                            <TypeButton
-                                label='Best'
-                                onPress={() => setType('best')}
-                                typeSelected={type === 'best'}
-                            />
-                            <TypeButton
-                                label='Average'
-                                onPress={() => setType('average')}
-                                typeSelected={type === 'average'}
-                            />
-                            <TypeButton
-                                label='Worst'
-                                onPress={() => setType('worst')}
-                                typeSelected={type === 'worst'}
-                            />
-                        </View>
-                    </View>
+                    <Input>
+                        <TypeButton.Block
+                            type={type}
+                            onPress={setType}
+                        />
+                    </Input>
                 </View>
 
                 {sortedData.length > 0 && (

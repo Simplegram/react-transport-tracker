@@ -1,7 +1,9 @@
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
+import { timeCase } from "@/src/const/timeCase"
 import { travelDetailStyles } from "@/src/styles/TravelDetailStyles"
-import { TouchableOpacity } from "react-native"
+import { datetimeFieldToCapitals } from "@/src/utils/utils"
+import { TouchableOpacity, View } from "react-native"
 import Input from "../input/Input"
 
 interface TypeButtonProps {
@@ -34,3 +36,25 @@ export default function TypeButton({ label, onPress, typeSelected }: TypeButtonP
         </TouchableOpacity>
     )
 }
+
+interface ButtonBlockProps {
+    type: string
+    onPress: (key: any) => void
+}
+
+function TypeButtonBlock({ type, onPress }: ButtonBlockProps) {
+    return (
+        <View style={{ gap: 10, flexDirection: 'row' }}>
+            {timeCase.map((time) => (
+                <TypeButton
+                    key={time}
+                    label={datetimeFieldToCapitals(time)}
+                    onPress={() => onPress(time)}
+                    typeSelected={type === time}
+                />
+            ))}
+        </View>
+    )
+}
+
+TypeButton.Block = TypeButtonBlock

@@ -116,6 +116,10 @@ export default function EstimationPage() {
         }
     }
 
+    const setTimeCase = (time: any) => {
+        setInput({ ...input, estimate_type: time })
+    }
+
     const route = routes.find(item => item.id === input.route_id)
     const tripIdentifier = route ? `${route && route.code} | ${route && route.name}` : 'East to West'
 
@@ -176,23 +180,10 @@ export default function EstimationPage() {
 
                     <Input>
                         <Input.Label>Estimate Type:</Input.Label>
-                        <View style={{ gap: 10, flexDirection: 'row' }}>
-                            <TypeButton
-                                label='Best'
-                                onPress={() => setInput({ ...input, estimate_type: 'best' })}
-                                typeSelected={input.estimate_type === 'best'}
-                            />
-                            <TypeButton
-                                label='Average'
-                                onPress={() => setInput({ ...input, estimate_type: 'average' })}
-                                typeSelected={input.estimate_type === 'average'}
-                            />
-                            <TypeButton
-                                label='Worst'
-                                onPress={() => setInput({ ...input, estimate_type: 'worst' })}
-                                typeSelected={input.estimate_type === 'worst'}
-                            />
-                        </View>
+                        <TypeButton.Block
+                            type={input.estimate_type}
+                            onPress={setTimeCase}
+                        />
                     </Input>
                 </View>
             </Input.Container>
