@@ -9,8 +9,6 @@ import {
     ViewProps
 } from 'react-native'
 
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import Input from './input/Input'
 
 export default function ModalTemplate({ visible, onRequestClose, style, ...props }: ModalProps) {
     const { transparent, statusBarTranslucent, ...restProps } = props
@@ -169,26 +167,6 @@ function ModalBottom({ visible, onRequestClose, ...props }: ModalProps) {
     )
 }
 
-interface ModalBottomInputProps extends ModalProps {
-    title: string
-}
-
-function ModalBottomInput({ title, visible, onRequestClose, ...props }: ModalBottomInputProps) {
-    return (
-        <ModalBottom
-            visible={visible}
-            onRequestClose={onRequestClose}
-        >
-            <ModalTemplate.BottomContainer>
-                <Input.Header>{title}</Input.Header>
-                <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
-                    {props.children}
-                </KeyboardAwareScrollView>
-            </ModalTemplate.BottomContainer>
-        </ModalBottom>
-    )
-}
-
 ModalTemplate.Backdrop = ModalBackdrop
 
 ModalTemplate.Container = ModalContainer
@@ -196,4 +174,3 @@ ModalTemplate.BottomContainer = ModalBottomContainer
 ModalTemplate.CalendarContainer = CalendarContainer
 
 ModalTemplate.Bottom = ModalBottom
-ModalTemplate.BottomInput = ModalBottomInput

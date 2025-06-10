@@ -17,6 +17,7 @@ import useModalHandler from '@/hooks/useModalHandler'
 import { useFocusEffect } from 'expo-router'
 import React from 'react'
 import { FlatList, View } from 'react-native'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function DataListScreen() {
     const { dialog } = useDialog()
@@ -141,22 +142,26 @@ export default function DataListScreen() {
                         <Button.Add label={`Add New ${dataType.slice(0, -1)}`} onPress={handleAddNew} />
                     </Button.Row>
 
-                    <ModalTemplate.BottomInput
+                    <ModalTemplate.Bottom
                         visible={showModal}
                         onRequestClose={closeModal}
-                        title={activeModalConfig ? activeModalConfig.title : 'Modal'}
                     >
-                        {ModalContentComponent ? (
-                            <ModalContentComponent
-                                stops={stops}
-                                icons={icons}
-                                onSubmit={handleSubmitFromModal}
-                                onCancel={closeModal}
-                            />
-                        ) : (
-                            <Input.LoadingLabel />
-                        )}
-                    </ModalTemplate.BottomInput>
+                        <ModalTemplate.BottomContainer>
+                            <Input.Header>{activeModalConfig ? activeModalConfig.title : 'Modal'}</Input.Header>
+                            <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
+                                {ModalContentComponent ? (
+                                    <ModalContentComponent
+                                        stops={stops}
+                                        icons={icons}
+                                        onSubmit={handleSubmitFromModal}
+                                        onCancel={closeModal}
+                                    />
+                                ) : (
+                                    <Input.LoadingLabel />
+                                )}
+                            </KeyboardAwareScrollView>
+                        </ModalTemplate.BottomContainer>
+                    </ModalTemplate.Bottom>
                 </>
             )}
         </Container>

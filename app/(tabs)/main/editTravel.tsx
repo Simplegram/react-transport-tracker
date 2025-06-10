@@ -7,6 +7,7 @@ import Input from '@/components/input/Input'
 import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
+import { ManageableLap } from '@/components/modal/FlatlistPicker'
 import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal'
 import EditTravelLapsModal from '@/components/modal/travelModal/EditTravelLapsModal'
 import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal'
@@ -22,7 +23,6 @@ import useModifyTravelData from '@/hooks/useModifyTravelData'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap } from '@/src/types/AddableTravels'
 import { EditableTravel } from '@/src/types/EditableTravels'
-import { Lap } from '@/src/types/Travels'
 import { datetimeFieldToCapitals, formatDateForDisplay } from '@/src/utils/utils'
 import { router, useFocusEffect } from 'expo-router'
 import moment from 'moment-timezone'
@@ -51,7 +51,7 @@ export default function EditTravelItem() {
 
     const {
         editTravel,
-        addLaps, editLaps
+        addLaps, editLaps, deleteLaps
     } = useModifyTravelData()
 
     const [lapsCount, setLapsCount] = useState<number>(0)
@@ -175,7 +175,7 @@ export default function EditTravelItem() {
         closeDirectionModal()
     }
 
-    const handleLapsSelect = (laps: Lap[]) => {
+    const handleLapsSelect = (laps: ManageableLap[]) => {
         if (laps) setLaps(laps)
 
         closeLapsModal()
@@ -205,8 +205,10 @@ export default function EditTravelItem() {
         if (laps) {
             const idedLaps = laps.map(lap => { return { ...lap, travel_id: travel.id } })
 
-            const lapsToEdit = idedLaps.filter(lap => typeof lap.id === 'number')
+            const lapsToEdit = idedLaps.filter(lap => typeof lap.id === 'number' && !lap.status)
             const lapsToAdd = idedLaps.filter(lap => typeof lap.id === 'string')
+            const lapsToDelete = idedLaps.filter(lap => lap.status === 'deleted')
+
 
             const cleanedLapsToAdd = lapsToAdd.map(item => {
                 if (typeof item.id === 'string') {
@@ -223,11 +225,27 @@ export default function EditTravelItem() {
             if (lapsToAdd.length > 0) {
                 addLaps(cleanedLapsToAdd)
             }
+
+            if (lapsToDelete.length > 0) {
+                const lapIds = lapsToDelete.map(lap => lap.id)
+                deleteLaps(lapIds)
+            }
         }
 
         setLoading(false)
 
         router.back()
+    }
+
+    const getLapsCount = () => {
+        const totalText = `${lapsCount} lap${lapsCount !== 1 ? 's' : ''} total`
+
+        const totalDeletedLaps = laps.filter(lap => lap.status === 'deleted').length
+        const deletedText = (totalDeletedLaps > 0) ? `(${totalDeletedLaps} to be deleted)` : ''
+
+        const finalString = `${totalText} ${deletedText}`
+
+        return finalString
     }
 
     return (
@@ -348,7 +366,7 @@ export default function EditTravelItem() {
                             <ModalButton.Block
                                 label='Laps:'
                                 condition={lapsCount > 0}
-                                value={`${lapsCount} lap${lapsCount !== 1 ? 's' : ''} selected`}
+                                value={getLapsCount()}
                                 onPress={() => openLapsModal()}
                             />
                         </View>
