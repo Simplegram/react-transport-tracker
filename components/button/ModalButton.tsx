@@ -30,6 +30,7 @@ export function ModalButton({ condition, value, style, onPress }: ModalButtonPro
                     borderColor: theme.palette.borderColorSoft,
                     backgroundColor: theme.palette.background,
                 },
+                condition && { borderColor: theme.palette.borderColor, fontWeight: '900' },
                 style
             ]}
         >
@@ -41,8 +42,6 @@ export function ModalButton({ condition, value, style, onPress }: ModalButtonPro
 }
 
 function ModalButtonBlock({ label, condition, value, style, onPress }: ModalButtonProps) {
-    const { theme } = useTheme()
-
     return (
         <Input>
             <Input.Label>{label}</Input.Label>
