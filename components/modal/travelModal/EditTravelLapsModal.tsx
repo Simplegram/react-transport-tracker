@@ -95,10 +95,11 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                             <Input.Label>No lap found</Input.Label>
                         </View>
                     ) : (
-                        <FlatlistBase.Lap
+                        <FlatlistBase.LapList
                             laps={laps}
                             stops={stops}
                             onPress={handleLapSelect}
+                            onRemove={handleLapRemove}
                         />
                     )}
                 </View>
@@ -113,13 +114,15 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
                 </Button.Row>
             </ModalTemplate.BottomContainer>
 
-            <EditLapModal
-                stops={stops}
-                selectedLap={selectedLap}
-                isModalVisible={showEditLapModal}
-                onSelect={handleLapEdit}
-                onClose={closeEditLapModal}
-            />
+            {selectedLap && (
+                <EditLapModal
+                    stops={stops}
+                    selectedLap={selectedLap}
+                    isModalVisible={showEditLapModal}
+                    onSelect={handleLapEdit}
+                    onClose={closeEditLapModal}
+                />
+            )}
 
             <AddLapModal
                 stops={stops}

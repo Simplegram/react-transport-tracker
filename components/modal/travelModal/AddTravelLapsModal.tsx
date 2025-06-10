@@ -61,7 +61,6 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
     }
 
     const handleLapRemove = (id: number | string) => {
-        console.log(id)
         setLaps((laps) => {
             return laps.filter((lap) => lap.id !== id)
         })
@@ -86,7 +85,7 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
                             <Input.Label>No lap found</Input.Label>
                         </View>
                     ) : (
-                        <FlatlistBase.LapAdd
+                        <FlatlistBase.LapList
                             laps={laps}
                             stops={stops}
                             onPress={handleLapSelect}

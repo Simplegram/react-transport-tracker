@@ -93,55 +93,13 @@ export interface ManageableLap {
 }
 
 interface LapProps {
-    laps: EditableLap[]
+    laps: ManageableLap[]
     stops: Stop[]
     onPress: (key: any) => void
-}
-
-export function LapFlatlist({ laps, stops, onPress }: LapProps) {
-    return (
-        <FlatList
-            data={laps}
-            keyExtractor={(lap) => lap.id.toString()}
-            renderItem={({ item, index }) => (
-                <>
-                    <Pressable
-                        style={{
-                            alignItems: 'flex-start',
-                            borderRadius: 10,
-                            flexDirection: 'column',
-                            justifyContent: 'space-between',
-                        }}
-                        onPress={() => onPress(item)}
-                    >
-                        <Input.LabelLight>{formatLapTimeDisplay(item.time)}</Input.LabelLight>
-                        {stops.find(stop => stop.id === item.stop_id) ? (
-                            <Input.Label style={{ color: colors.primary, marginBottom: 0 }}>
-                                {stops.find(stop => stop.id === item.stop_id)?.name}
-                            </Input.Label>
-                        ) : null}
-
-                        {item.note && (
-                            <Input.Label>{item.note}</Input.Label>
-                        )}
-
-                    </Pressable>
-                    {index < (laps.length - 1) && (
-                        <Divider />
-                    )}
-                </>
-            )}
-            contentContainerStyle={{ gap: 5 }}
-        />
-    )
-}
-
-interface LapAddProps extends Omit<LapProps, 'laps'> {
-    laps: AddableLap[]
     onRemove: (key: any) => void
 }
 
-function LapFlatlistAdd({ laps, stops, onPress, onRemove }: LapAddProps) {
+function LapList({ laps, stops, onPress, onRemove }: LapProps) {
     return (
         <Animated.FlatList
             data={laps}
@@ -149,8 +107,9 @@ function LapFlatlistAdd({ laps, stops, onPress, onRemove }: LapAddProps) {
             renderItem={({ item, index }) => (
                 <Animated.View
                     key={item.id}
-                    entering={FadeIn.duration(250)}
-                    exiting={FadeOut.duration(125)}
+                    entering={(item.status === 'deleted') ? undefined : FadeIn.duration(250)}
+                    exiting={(item.status === 'deleted') ? undefined : FadeOut.duration(125)}
+                    style={(item.status === 'deleted') && { opacity: 0.4 }}
                 >
                     <Pressable
                         style={{
@@ -168,7 +127,9 @@ function LapFlatlistAdd({ laps, stops, onPress, onRemove }: LapAddProps) {
                             flexDirection: 'row',
                         }}>
                             <Input.LabelLight style={{ marginBottom: 5 }}>{formatLapTimeDisplay(item.time)}</Input.LabelLight>
-                            <Input.Remove onPress={() => onRemove(item.id)} />
+                            {!item.status && (
+                                <Input.Remove onPress={() => onRemove(item.id)} />
+                            )}
                         </View>
                         {stops.find(stop => stop.id === item.stop_id) ? (
                             <Input.Label style={{ color: colors.primary, marginBottom: 0 }}>
@@ -196,5 +157,4 @@ function LapFlatlistAdd({ laps, stops, onPress, onRemove }: LapAddProps) {
 FlatlistBase.Picker = PickerFlatlist
 FlatlistBase.PickerItem = PickerItem
 
-FlatlistBase.Lap = LapFlatlist
-FlatlistBase.LapAdd = LapFlatlistAdd
+FlatlistBase.LapList = LapList
