@@ -158,9 +158,7 @@ function LapFlatlistAdd({ laps, stops, onPress, onRemove }: LapAddProps) {
                             flexDirection: 'row',
                         }}>
                             <Input.LabelLight style={{ marginBottom: 5 }}>{formatLapTimeDisplay(item.time)}</Input.LabelLight>
-                            <Pressable onPress={() => onRemove(item.id)}>
-                                <Input.LabelLight style={{ color: 'red' }}>Remove</Input.LabelLight>
-                            </Pressable>
+                            <Input.Remove onPress={() => onRemove(item.id)} />
                         </View>
                         {stops.find(stop => stop.id === item.stop_id) ? (
                             <Input.Label style={{ color: colors.primary, marginBottom: 0 }}>

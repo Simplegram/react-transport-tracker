@@ -1,5 +1,5 @@
 import { useTheme } from "@/context/ThemeContext"
-import { Text, TextProps, View, ViewProps } from "react-native"
+import { Pressable, Text, TextProps, View, ViewProps } from "react-native"
 
 export default function Input(props: ViewProps) {
     return (
@@ -20,6 +20,18 @@ function Container(props: ViewProps) {
             ]}
             {...restProps}
         />
+    )
+}
+
+interface RemoveProps {
+    onPress: () => void
+}
+
+function Remove({ onPress }: RemoveProps) {
+    return (
+        <Pressable onPress={onPress}>
+            <Input.LabelLight style={{ color: 'red' }}>Remove</Input.LabelLight>
+        </Pressable>
     )
 }
 
@@ -157,6 +169,8 @@ function LoadingLabel(props: TextProps) {
 }
 
 Input.Container = Container
+
+Input.Remove = Remove
 
 Input.Text = TextBase
 
