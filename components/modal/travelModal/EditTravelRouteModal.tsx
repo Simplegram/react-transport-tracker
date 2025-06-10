@@ -1,10 +1,10 @@
-import CustomIcon from "@/components/CustomIcon"
 import Input from "@/components/input/Input"
 import { TextInputBase } from "@/components/input/TextInput"
 import ModalTemplate from "@/components/ModalTemplate"
 import { useTheme } from "@/context/ThemeContext"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { EditableTravelRouteModalProp } from "@/src/types/EditableTravels"
+import { Route } from "@/src/types/Travels"
 import { useMemo } from "react"
 import { Pressable, View } from "react-native"
 import FlatlistBase from "../FlatlistPicker"
@@ -47,15 +47,11 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
                         items={filteredItems}
                         onSelect={onSelect}
                     >
-                        {(item) => (
-                            <>
-                                {item.vehicle_type_id?.name ? (
-                                    <CustomIcon style={{ width: 20 }} name={item.vehicle_type_id.icon_id.name.toLocaleLowerCase()} size={16} />
-                                ) : (
-                                    <CustomIcon name="train" size={16} />
-                                )}
-                                <Input.Label>{`${item.code} | ${item.name}`}</Input.Label>
-                            </>
+                        {(item: Route) => (
+                            <FlatlistBase.PickerItem item={item}>
+                                <Input.ValueText>{item.code}</Input.ValueText>
+                                <Input.ValuePrimary>{item.name}</Input.ValuePrimary>
+                            </FlatlistBase.PickerItem>
                         )}
                     </FlatlistBase.Picker>
                 )}

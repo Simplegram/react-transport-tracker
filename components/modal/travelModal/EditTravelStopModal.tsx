@@ -1,5 +1,4 @@
 import Button from "@/components/button/BaseButton"
-import CustomIcon from "@/components/CustomIcon"
 import Input from "@/components/input/Input"
 import { TextInputBase } from "@/components/input/TextInput"
 import ModalTemplate from "@/components/ModalTemplate"
@@ -7,6 +6,7 @@ import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { EditableTravelStopModalProp } from "@/src/types/EditableTravels"
+import { Stop } from "@/src/types/Travels"
 import { useMemo, useState } from "react"
 import { Pressable, View } from "react-native"
 import FlatlistBase from "../FlatlistPicker"
@@ -61,15 +61,10 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                         items={filteredStops}
                         onSelect={onSelect}
                     >
-                        {(item) => (
-                            <>
-                                {item.vehicle_type?.name ? (
-                                    <CustomIcon style={{ width: 20 }} name={item.vehicle_type.icon_id.name.toLocaleLowerCase()} size={16} />
-                                ) : (
-                                    <CustomIcon name="train" size={16} />
-                                )}
-                                <Input.Label>{item.name}</Input.Label>
-                            </>
+                        {(item: Stop) => (
+                            <FlatlistBase.PickerItem item={item}>
+                                <Input.SubtitlePrimary>{item.name}</Input.SubtitlePrimary>
+                            </FlatlistBase.PickerItem>
                         )}
                     </FlatlistBase.Picker>
                 )}

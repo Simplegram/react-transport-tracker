@@ -5,8 +5,9 @@ import { EditableLap } from "@/src/types/EditableTravels"
 import { Stop } from "@/src/types/Travels"
 import { formatLapTimeDisplay } from "@/src/utils/utils"
 import React from "react"
-import { FlatList, Pressable, TouchableOpacity, View } from "react-native"
+import { FlatList, Pressable, TouchableOpacity, View, ViewProps } from "react-native"
 import Animated, { FadeIn, FadeOut, LinearTransition } from "react-native-reanimated"
+import CustomIcon from "../CustomIcon"
 import Divider from "../Divider"
 import Input from "../input/Input"
 
@@ -29,6 +30,7 @@ function PickerFlatlist({ items, maxHeight = 300, onSelect, children }: PickerPr
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
                 <TouchableOpacity
+                    activeOpacity={0.5}
                     style={{
                         gap: 10,
                         display: 'flex',
@@ -51,6 +53,32 @@ function PickerFlatlist({ items, maxHeight = 300, onSelect, children }: PickerPr
                 maxHeight: maxHeight
             }}
         />
+    )
+}
+
+interface PickerItemProps extends ViewProps {
+    item: any
+}
+
+function PickerItem({ item, children, ...props }: PickerItemProps) {
+    return (
+        <View style={{ gap: 10, flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{
+                width: 35,
+                alignItems: 'center',
+                flexDirection: 'column',
+            }}>
+                {item.vehicle_type.name ? (
+                    <CustomIcon name={item.vehicle_type.icon_id.name.toLocaleLowerCase()} />
+                ) : (
+                    <CustomIcon name="train" />
+                )}
+                <Input.ValueText>{item.vehicle_type.name.slice(0, 3)}</Input.ValueText>
+            </View>
+            <View style={{ gap: 2, flexDirection: 'column' }}>
+                {children}
+            </View>
+        </View>
     )
 }
 
@@ -158,5 +186,7 @@ function LapFlatlistAdd({ laps, stops, onPress, onRemove }: LapAddProps) {
 }
 
 FlatlistBase.Picker = PickerFlatlist
+FlatlistBase.PickerItem = PickerItem
+
 FlatlistBase.Lap = LapFlatlist
 FlatlistBase.LapAdd = LapFlatlistAdd
