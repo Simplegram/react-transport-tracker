@@ -41,7 +41,7 @@ interface InputClearProps extends TextInputProps {
     onClear?: () => void
 }
 
-function TextInputWithClear({ onClear, style, containerStyle, ...props }: InputClearProps) {
+function TextInputWithClear({ onClear, style, containerStyle, value, ...props }: InputClearProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -55,11 +55,11 @@ function TextInputWithClear({ onClear, style, containerStyle, ...props }: InputC
 
                 borderColor: theme.palette.borderColorSoft,
             },
-            props.value && { borderColor: theme.palette.borderColor },
+            value && { borderColor: theme.palette.borderColor },
             containerStyle
         ]}>
-            <TextInputBase style={[{ flex: 1, borderWidth: 0 }, style]} {...props} />
-            {onClear && (
+            <TextInputBase style={[{ flex: 1, borderWidth: 0 }, style]} value={value} {...props} />
+            {onClear && value && (
                 <Pressable onPress={onClear}>
                     <CustomIcon name='xmark' style={[
                         {
@@ -67,7 +67,7 @@ function TextInputWithClear({ onClear, style, containerStyle, ...props }: InputC
                             paddingRight: 15,
 
                             color: theme.palette.borderColorSoft,
-                        }, props.value && { color: theme.palette.borderColor }
+                        }, value && { color: theme.palette.borderColor }
                     ]} />
                 </Pressable>
             )}
