@@ -11,6 +11,7 @@ export default function useGetTravelData() {
     const [fullVehicleTypes, setFullVehicleTypes] = useState<VehicleType[]>([])
     const [vehicleTypes, setVehicleTypes] = useState<VehicleType[]>([])
     const [icons, setIcons] = useState<IconType[]>([])
+    const [averageTime, setAverageTime] = useState()
 
     const [laps, setLaps] = useState<Lap[]>([])
     const [travelLaps, setTravelLaps] = useState<FullLap[] | undefined>(undefined)
@@ -37,7 +38,7 @@ export default function useGetTravelData() {
     const getRoutes = async () => {
         const { data, error } = await supabase
             .from("routes")
-            .select("*, first_stop_id(id, name), last_stop_id(id, name), vehicle_type_id(id, name, icon_id(id, name))")
+            .select("*, first_stop_id(id, name), last_stop_id(id, name), vehicle_type:vehicle_type_id(id, name, icon_id(id, name))")
             .order("code")
 
         if (error) console.log(error)

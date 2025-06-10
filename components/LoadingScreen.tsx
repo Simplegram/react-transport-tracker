@@ -1,54 +1,32 @@
 import { useTheme } from '@/context/ThemeContext'
-import { loadingStyles } from '@/src/styles/LoadingScreenStyles'
 import React from 'react'
-import {
-    ActivityIndicator,
-    Dimensions,
-    Modal,
-    StyleSheet,
-    Text,
-    View
-} from 'react-native'
+import { ActivityIndicator, Dimensions } from 'react-native'
+import ModalTemplate from './ModalTemplate'
+import Input from './input/Input'
 
 type Props = {
     text?: String
 }
 
 export default function LoadingScreen({ text = "Loading..." }: Props) {
-    const { theme } = useTheme()
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    const { width: screenWidth, height: screenHeight } = Dimensions.get('screen')
 
     return (
-        <Modal transparent animationType="fade" visible={true}>
-            <View style={loadingStyles[theme].modalOverlay}>
-                <View style={loadingStyles[theme].modalContent}>
+        <ModalTemplate style={{ width: screenWidth, height: screenHeight }} animationType="fade" visible={true}>
+            <ModalTemplate.Backdrop style={{ alignItems: 'center', width: screenWidth, height: screenHeight }}>
+                <ModalTemplate.Container style={
+                    {
+                        borderColor: theme.palette.borderColor,
+                        borderRadius: 10,
+                    }
+                }>
                     <ActivityIndicator size="large" color="#007AFF" />
-                    <Text style={loadingStyles[theme].loadingText}>{text}</Text>
-                </View>
-            </View>
-        </Modal>
+                    <Input.Title>{text}</Input.Title>
+                </ModalTemplate.Container>
+            </ModalTemplate.Backdrop>
+        </ModalTemplate>
     )
-};
-
-const { width, height } = Dimensions.get('window')
-const styles = StyleSheet.create({
-    modalOverlay: {
-        width: width,
-        height: height,
-        flex: 1,
-        position: "absolute",
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    modalContent: {
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 10,
-        alignItems: 'center',
-    },
-    loadingText: {
-        marginTop: 10,
-        fontSize: 16,
-        fontWeight: "bold",
-    },
-})
+}

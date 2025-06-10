@@ -1,13 +1,13 @@
-import { colors } from "@/const/color"
+import Input from "@/components/input/Input"
+import { TextInputBase } from "@/components/input/TextInput"
+import ModalTemplate from "@/components/ModalTemplate"
 import { useTheme } from "@/context/ThemeContext"
-import { inputStyles } from "@/src/styles/InputStyles"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
-import { styles } from "@/src/styles/Styles"
 import { EditableTravelRouteModalProp } from "@/src/types/EditableTravels"
+import { Route } from "@/src/types/Travels"
 import { useMemo } from "react"
-import { Modal, Pressable, Text, TextInput, View } from "react-native"
-import Icon from 'react-native-vector-icons/FontAwesome6'
-import FlatlistPicker from "../FlatlistPicker"
+import { Pressable, View } from "react-native"
+import FlatlistBase from "../FlatlistPicker"
 
 export default function EditTravelRouteModal({ routes, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelRouteModalProp) {
     const { theme } = useTheme()
@@ -21,52 +21,41 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
     }, [routes, searchQuery])
 
     return (
-        <Modal
+        <ModalTemplate.Bottom
             visible={isModalVisible}
-            transparent={true}
-            animationType="slide"
             onRequestClose={onClose}
         >
-            <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose}>
-                <View style={modalStyles[theme].modalContainer}>
-                    <View style={modalElementStyles[theme].header}>
-                        <Text style={modalElementStyles[theme].title}>Select a Route</Text>
-                        <Text style={modalElementStyles[theme].closeLabel}>Close</Text>
-                    </View>
-                    <TextInput
-                        style={inputStyles[theme].textInput}
-                        placeholder="Search stop..."
-                        placeholderTextColor={colors.text.placeholderGray}
-                        value={searchQuery}
-                        onChangeText={setSearchQuery}
-                    />
-                    {filteredItems.length === 0 ? (
-                        <View style={modalStyles[theme].emptyList}>
-                            <Text style={modalElementStyles[theme].label}>No route found</Text>
-                        </View>
-                    ) : (
-                        <FlatlistPicker
-                            items={filteredItems}
-                            onSelect={onSelect}
-                        >
-                            {(item) => (
-                                <>
-                                    {item.vehicle_type_id?.name ? (
-                                        <Icon
-                                            style={[styles[theme].icon, { width: 20 }]}
-                                            name={item.vehicle_type_id.icon_id.name.toLocaleLowerCase()}
-                                            size={16}
-                                        />
-                                    ) : (
-                                        <Icon style={styles[theme].icon} name="train" size={16} />
-                                    )}
-                                    <Text style={modalElementStyles[theme].label}>{`${item.code} | ${item.name}`}</Text>
-                                </>
-                            )}
-                        </FlatlistPicker>
-                    )}
+            <ModalTemplate.BottomContainer>
+                <View style={modalElementStyles[theme].header}>
+                    <Input.Header>Select a route</Input.Header>
+                    <Pressable onPress={onClose}>
+                        <Input.Subtitle>Close</Input.Subtitle>
+                    </Pressable>
                 </View>
-            </Pressable>
-        </Modal>
+                <TextInputBase.Clear
+                    value={searchQuery}
+                    placeholder="Search route..."
+                    onChangeText={setSearchQuery}
+                    onClear={() => setSearchQuery('')}
+                />
+                {filteredItems.length === 0 ? (
+                    <View style={modalStyles[theme].emptyList}>
+                        <Input.Label>No route found</Input.Label>
+                    </View>
+                ) : (
+                    <FlatlistBase.Picker
+                        items={filteredItems}
+                        onSelect={onSelect}
+                    >
+                        {(item: Route) => (
+                            <FlatlistBase.PickerItem item={item}>
+                                <Input.ValueText>{item.code}</Input.ValueText>
+                                <Input.ValuePrimary>{item.name}</Input.ValuePrimary>
+                            </FlatlistBase.PickerItem>
+                        )}
+                    </FlatlistBase.Picker>
+                )}
+            </ModalTemplate.BottomContainer>
+        </ModalTemplate.Bottom>
     )
 }

@@ -1,7 +1,7 @@
 import { useSupabase } from '@/context/SupabaseContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Session, User } from '@supabase/supabase-js'
-import React, { createContext, PropsWithChildren, useEffect, useState } from 'react'
+import React, { createContext, PropsWithChildren, useContext, useEffect, useState } from 'react'
 
 type AuthProps = {
     user: User | null
@@ -11,10 +11,6 @@ type AuthProps = {
 }
 
 export const AuthContext = createContext<Partial<AuthProps>>({})
-
-export function useAuth() {
-    return React.useContext(AuthContext)
-}
 
 export const AuthProvider = ({ children }: PropsWithChildren) => {
     const { supabaseClient } = useSupabase()
@@ -44,12 +40,22 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
         }
     }
 
-    const value = {
-        user,
-        session,
-        initialized,
-        signOut,
-    }
+    return (
+        <AuthContext.Provider value={{
+            user,
+            session,
+            initialized,
+            signOut,
+        }}>
+            {children}
+        </AuthContext.Provider>
+    )
+}
 
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+export const useAuth = () => {
+    const context = useContext(AuthContext)
+    if (context === undefined) {
+        throw new Error('useAuth must be used within a AuthProvider')
+    }
+    return context
 }

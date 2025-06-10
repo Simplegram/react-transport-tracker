@@ -30,7 +30,7 @@ export default {
     expo: {
         name: getAppName(),
         slug: "TransportTracker",
-        version: "1.6.0b4",
+        version: "1.6.0-rc.2",
         icon: "./assets/images/icon.png",
         ios: {
             bundleIdentifier: getUniqueIdentifier(),
@@ -41,7 +41,8 @@ export default {
             permissions: [
                 "android.permission.ACCESS_COARSE_LOCATION", 
                 "android.permission.ACCESS_FINE_LOCATION", 
-                "android.permission.FOREGROUND_SERVICE"
+                "android.permission.FOREGROUND_SERVICE",
+                "android.permission.VIBRATE",
             ]
         },
         newArchEnabled: false,

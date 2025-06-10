@@ -1,9 +1,9 @@
-interface Direction {
+export interface Direction {
     id: number
     name: string
 }
 
-interface Stop {
+export interface Stop {
     id: number,
     name: string,
     lat?: number,
@@ -12,27 +12,27 @@ interface Stop {
     vehicle_type?: VehicleType
 }
 
-interface Route {
+export interface Route {
     id: number
     first_stop_id: Stop
     last_stop_id: Stop
     code: string
     name: string
-    vehicle_type_id: VehicleType
+    vehicle_type: VehicleType
 }
 
-interface VehicleType {
+export interface VehicleType {
     id: number
     name: string,
     icon_id: IconType,
 }
 
-interface IconType {
+export interface IconType {
     id: number,
     name: string
 }
 
-interface DataItem {
+export interface DataItem {
     id: number
     created_at: string
     bus_initial_arrival: string
@@ -47,7 +47,7 @@ interface DataItem {
     types: VehicleType
 }
 
-interface Lap {
+export interface Lap {
     id: number
     travel_id: number
     time: string
@@ -55,21 +55,32 @@ interface Lap {
     note: string | null
 }
 
-interface FullLap {
+export interface FullLap {
     id: number
     travel_id: number
     time: string
+    lon: number | null
+    lat: number | null
     stop_id: Stop | null
     note: string | null
 }
 
-interface Coordinates {
+export interface Coordinates {
     lon: number
     lat: number
 }
 
-export {
-    Coordinates,
-    DataItem, Direction, FullLap, IconType,
-    Lap, Route, Stop, VehicleType
+export interface AverageTimes {
+    [key: string]: number
+    avg_travel_time: number
+    avg_top_5_longest: number
+    min_top_5_longest: number
+    max_top_5_longest: number
+    avg_top_5_shortest: number
+    min_top_5_shortest: number
+    max_top_5_shortest: number
+}
+
+export interface TravelTimeData {
+    [key: string]: AverageTimes
 }

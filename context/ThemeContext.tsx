@@ -1,24 +1,33 @@
-import React, { createContext, useContext } from "react"
+import { darkTheme, lightTheme, Theme } from "@/src/styles/themes"
+import React, { createContext, PropsWithChildren, useContext } from "react"
 import { MMKVLoader, useMMKVStorage } from "react-native-mmkv-storage"
 
 interface ThemeContextType {
     theme: 'light' | 'dark'
     setTheme: (key: 'light' | 'dark') => void
-}
-
-interface ThemeProviderProps {
-    children: React.ReactNode
+    getTheme: () => Theme
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
+export const ThemeProvider = ({ children }: PropsWithChildren) => {
     const storage = new MMKVLoader().initialize()
     const [theme, setTheme] = useMMKVStorage<'light' | 'dark'>('appTheme', storage, 'light')
 
+    const getTheme = () => {
+        switch (theme) {
+            case 'light':
+                return lightTheme
+            case 'dark':
+                return darkTheme
+            default:
+                return lightTheme
+        }
+    }
+
     return (
         <ThemeContext.Provider value={{
-            theme, setTheme
+            theme, setTheme, getTheme
         }}>
             {children}
         </ThemeContext.Provider>
