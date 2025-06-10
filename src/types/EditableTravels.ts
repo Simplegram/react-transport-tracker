@@ -1,5 +1,5 @@
 import { AddableIconType } from "./AddableTravels"
-import { Direction, IconType, Route, Stop } from "./Travels"
+import { Direction, IconType, Route, Stop, VehicleType } from "./Travels"
 
 interface EditableStop {
     id: number,
@@ -22,6 +22,7 @@ interface EditableRoute {
     last_stop_id: number,
     code: string,
     name: string,
+    vehicle_type: VehicleType,
     vehicle_type_id: number,
 }
 

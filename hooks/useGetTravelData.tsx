@@ -38,7 +38,7 @@ export default function useGetTravelData() {
     const getRoutes = async () => {
         const { data, error } = await supabase
             .from("routes")
-            .select("*, first_stop_id(id, name), last_stop_id(id, name), vehicle_type_id(id, name, icon_id(id, name))")
+            .select("*, first_stop_id(id, name), last_stop_id(id, name), vehicle_type:vehicle_type_id(id, name, icon_id(id, name))")
             .order("code")
 
         if (error) console.log(error)

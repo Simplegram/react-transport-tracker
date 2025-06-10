@@ -41,10 +41,10 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
         ...data,
         'first_stop_id': data.first_stop_id.id,
         'last_stop_id': data.last_stop_id.id,
-        'vehicle_type_id': data.vehicle_type_id.id
+        'vehicle_type_id': data.vehicle_type.id
     })
 
-    const savedVehicleTypeId = useRef(route.vehicle_type_id)
+    const savedVehicleTypeId = useRef(route.vehicle_type.id)
 
     const { loading } = useLoading()
 
@@ -64,12 +64,14 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
     }
 
     const handleOnSubmit = () => {
-        if (!route.name || !route.first_stop_id || !route.last_stop_id || !route.vehicle_type_id) {
+        if (!route.name || !route.first_stop_id || !route.last_stop_id || !route.vehicle_type) {
             Alert.alert('Input Required', 'Please add route name/stops/vehicle type')
             return
         }
 
-        onSubmit(route)
+        const { vehicle_type, ...cleanRoute } = route
+
+        onSubmit(cleanRoute)
     }
 
     return (

@@ -156,7 +156,7 @@ export default function EditTravelItem() {
                 if (prev) return {
                     ...prev,
                     route_id: routeId,
-                    type_id: routes.find(route => route.id === routeId)?.vehicle_type_id.id,
+                    type_id: routes.find(route => route.id === routeId)?.vehicle_type.id,
                     first_stop_id: routes.find(route => route.id === routeId)?.first_stop_id.id,
                     last_stop_id: routes.find(route => route.id === routeId)?.last_stop_id.id,
                 }

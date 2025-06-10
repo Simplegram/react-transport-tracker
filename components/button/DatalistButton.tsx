@@ -56,7 +56,7 @@ function StopsButton(item: ItemTemplate) {
 function RoutesButton(item: ItemTemplate) {
     return (
         <>
-            <CustomIcon name={item.vehicle_type_id?.icon_id.name} />
+            <CustomIcon name={item.vehicle_type?.icon_id.name} />
             <Input.SubtitlePrimary>{item.code}</Input.SubtitlePrimary>
         </>
     )

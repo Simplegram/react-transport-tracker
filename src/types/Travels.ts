@@ -18,7 +18,7 @@ export interface Route {
     last_stop_id: Stop
     code: string
     name: string
-    vehicle_type_id: VehicleType
+    vehicle_type: VehicleType
 }
 
 export interface VehicleType {
