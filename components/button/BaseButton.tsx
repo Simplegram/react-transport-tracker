@@ -29,7 +29,7 @@ export default function Button({ style, textStyle, ...props }: Props) {
                 borderWidth: 1,
                 borderRadius: 10,
                 paddingVertical: 12,
-                paddingHorizontal: 20,
+                paddingHorizontal: 15,
 
                 alignItems: 'center',
                 justifyContent: 'center',
