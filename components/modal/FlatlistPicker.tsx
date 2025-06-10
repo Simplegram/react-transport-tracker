@@ -1,6 +1,5 @@
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
-import { AddableLap } from "@/src/types/AddableTravels"
 import { EditableLap } from "@/src/types/EditableTravels"
 import { Stop } from "@/src/types/Travels"
 import { formatLapTimeDisplay } from "@/src/utils/utils"
@@ -80,6 +79,17 @@ function PickerItem({ item, children, ...props }: PickerItemProps) {
             </View>
         </View>
     )
+}
+
+export interface ManageableLap {
+    id: number | string
+    travel_id?: number | undefined
+    time: string | undefined
+    lat: number | undefined
+    lon: number | undefined
+    stop_id: number | undefined
+    note: string | undefined
+    status?: string | undefined
 }
 
 interface LapProps {

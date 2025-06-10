@@ -7,6 +7,7 @@ import Input from '@/components/input/Input'
 import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
+import { ManageableLap } from '@/components/modal/FlatlistPicker'
 import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal'
 import EditTravelLapsModal from '@/components/modal/travelModal/EditTravelLapsModal'
 import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal'
@@ -22,7 +23,6 @@ import useModifyTravelData from '@/hooks/useModifyTravelData'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap } from '@/src/types/AddableTravels'
 import { EditableTravel } from '@/src/types/EditableTravels'
-import { Lap } from '@/src/types/Travels'
 import { datetimeFieldToCapitals, formatDateForDisplay } from '@/src/utils/utils'
 import { router, useFocusEffect } from 'expo-router'
 import moment from 'moment-timezone'
@@ -175,7 +175,7 @@ export default function EditTravelItem() {
         closeDirectionModal()
     }
 
-    const handleLapsSelect = (laps: Lap[]) => {
+    const handleLapsSelect = (laps: ManageableLap[]) => {
         if (laps) setLaps(laps)
 
         closeLapsModal()

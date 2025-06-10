@@ -1,5 +1,6 @@
+import { ManageableLap } from "@/components/modal/FlatlistPicker"
 import { useSupabase } from "@/context/SupabaseContext"
-import { Direction, FullLap, IconType, Lap, Route, Stop, VehicleType } from "@/src/types/Travels"
+import { Direction, FullLap, IconType, Route, Stop, VehicleType } from "@/src/types/Travels"
 import { useEffect, useState } from "react"
 
 export default function useGetTravelData() {
@@ -13,7 +14,7 @@ export default function useGetTravelData() {
     const [icons, setIcons] = useState<IconType[]>([])
     const [averageTime, setAverageTime] = useState()
 
-    const [laps, setLaps] = useState<Lap[]>([])
+    const [laps, setLaps] = useState<ManageableLap[]>([])
     const [travelLaps, setTravelLaps] = useState<FullLap[] | undefined>(undefined)
 
     const getDirections = async () => {

@@ -7,10 +7,11 @@ import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import ModalTemplate from '@/components/ModalTemplate'
 import { useDialog } from '@/context/DialogContext'
 import useModalHandler from '@/hooks/useModalHandler'
-import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels'
+import { EditableLapModalProp } from '@/src/types/EditableTravels'
 import { formatDateForDisplay } from '@/src/utils/utils'
 import moment from 'moment-timezone'
 import React, { useEffect, useState } from 'react'
+import { ManageableLap } from '../FlatlistPicker'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
 
 export default function EditLapModal({ stops, selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
@@ -24,7 +25,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
         closeModal
     } = useModalHandler()
 
-    const [lap, setLap] = useState<EditableLap>()
+    const [lap, setLap] = useState<ManageableLap>()
 
     const [showDatetimePicker, setShowDatetimePicker] = useState(false)
 

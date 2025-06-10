@@ -1,4 +1,4 @@
-import { EditableLap } from "../types/EditableTravels"
+import { ManageableLap } from "@/components/modal/FlatlistPicker"
 import { DataItem, Lap } from "../types/Travels"
 import { getCleanMomentTime } from "./dateUtils"
 
@@ -56,7 +56,7 @@ export function getKeysSortedByCreatedAt(data: Record<string, DataItemWithNewKey
     return keys
 }
 
-export function sortLaps(laps: EditableLap[]) {
+export function sortLaps(laps: ManageableLap[]) {
     const sortedLaps = laps.sort((a, b) => {
         return getCleanMomentTime(b.time).diff(getCleanMomentTime(a.time))
     })
