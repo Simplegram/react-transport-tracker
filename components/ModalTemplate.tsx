@@ -27,7 +27,7 @@ export default function ModalTemplate({ visible, onRequestClose, ...props }: Mod
     )
 }
 
-function ModalBackdrop(props: TouchableOpacityProps) {
+function ModalPresssable(props: TouchableOpacityProps) {
     const { children, style, onPress, ...restProps } = props
 
     return (
@@ -38,7 +38,6 @@ function ModalBackdrop(props: TouchableOpacityProps) {
                 {
                     flex: 1,
                     justifyContent: 'center',
-                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
                 }, style
             ]}
             onPress={onPress}
@@ -46,6 +45,25 @@ function ModalBackdrop(props: TouchableOpacityProps) {
         >
             {children}
         </TouchableOpacity>
+    )
+}
+
+function ModalBackdrop(props: TouchableOpacityProps) {
+    const { children, style, onPress, ...restProps } = props
+
+    return (
+        <View
+            style={[
+                {
+                    flex: 1,
+                    justifyContent: 'center',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                }, style
+            ]}
+            {...restProps}
+        >
+            {children}
+        </View>
     )
 }
 
@@ -138,8 +156,10 @@ function ModalBottom({ visible, onRequestClose, ...props }: ModalProps) {
             visible={visible}
             onRequestClose={onRequestClose}
         >
-            <ModalTemplate.Backdrop style={{ justifyContent: 'flex-end' }} onPress={onRequestClose} />
-            {restProps.children}
+            <ModalBackdrop style={{ justifyContent: 'flex-end' }}>
+                <ModalPresssable onPress={onRequestClose} />
+                {restProps.children}
+            </ModalBackdrop>
         </ModalTemplate>
     )
 }
