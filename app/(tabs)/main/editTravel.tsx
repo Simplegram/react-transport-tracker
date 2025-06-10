@@ -51,7 +51,7 @@ export default function EditTravelItem() {
 
     const {
         editTravel,
-        addLaps, editLaps
+        addLaps, editLaps, deleteLaps
     } = useModifyTravelData()
 
     const [lapsCount, setLapsCount] = useState<number>(0)
@@ -205,8 +205,10 @@ export default function EditTravelItem() {
         if (laps) {
             const idedLaps = laps.map(lap => { return { ...lap, travel_id: travel.id } })
 
-            const lapsToEdit = idedLaps.filter(lap => typeof lap.id === 'number')
+            const lapsToEdit = idedLaps.filter(lap => typeof lap.id === 'number' && !lap.status)
             const lapsToAdd = idedLaps.filter(lap => typeof lap.id === 'string')
+            const lapsToDelete = idedLaps.filter(lap => lap.status === 'deleted')
+
 
             const cleanedLapsToAdd = lapsToAdd.map(item => {
                 if (typeof item.id === 'string') {
@@ -223,11 +225,27 @@ export default function EditTravelItem() {
             if (lapsToAdd.length > 0) {
                 addLaps(cleanedLapsToAdd)
             }
+
+            if (lapsToDelete.length > 0) {
+                const lapIds = lapsToDelete.map(lap => lap.id)
+                deleteLaps(lapIds)
+            }
         }
 
         setLoading(false)
 
         router.back()
+    }
+
+    const getLapsCount = () => {
+        const totalText = `${lapsCount} lap${lapsCount !== 1 ? 's' : ''} total`
+
+        const totalDeletedLaps = laps.filter(lap => lap.status === 'deleted').length
+        const deletedText = (totalDeletedLaps > 0) ? `(${totalDeletedLaps} to be deleted)` : ''
+
+        const finalString = `${totalText} ${deletedText}`
+
+        return finalString
     }
 
     return (
@@ -348,7 +366,7 @@ export default function EditTravelItem() {
                             <ModalButton.Block
                                 label='Laps:'
                                 condition={lapsCount > 0}
-                                value={`${lapsCount} lap${lapsCount !== 1 ? 's' : ''} selected`}
+                                value={getLapsCount()}
                                 onPress={() => openLapsModal()}
                             />
                         </View>
