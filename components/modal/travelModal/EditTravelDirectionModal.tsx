@@ -31,10 +31,11 @@ export default function EditTravelDirectionModal({ directions, searchQuery, isMo
                         <Input.Subtitle>Close</Input.Subtitle>
                     </Pressable>
                 </View>
-                <TextInputBase
+                <TextInputBase.Clear
                     value={searchQuery}
                     placeholder="Search direction..."
                     onChangeText={setSearchQuery}
+                    onClear={() => setSearchQuery('')}
                 />
                 {filteredItems.length === 0 ? (
                     <View style={modalStyles[theme].emptyList}>

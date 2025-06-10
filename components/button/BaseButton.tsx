@@ -153,7 +153,8 @@ function SwitchButton({ style, textStyle, ...props }: SwitchButtonProps) {
             borderWidth: 1,
             borderRadius: 10,
             paddingVertical: 12,
-
+            
+            borderColor: theme.palette.borderColorPrimary,
             backgroundColor: theme.palette.backgroundPrimary,
         },
         addButtonText: {

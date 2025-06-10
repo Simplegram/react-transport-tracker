@@ -1,6 +1,7 @@
 import { useTheme } from "@/context/ThemeContext"
 import { inputElementStyles } from "@/src/styles/InputStyles"
-import { TextInput, TextInputProps, View } from "react-native"
+import { Pressable, TextInput, TextInputProps, View } from "react-native"
+import CustomIcon from "../CustomIcon"
 import Input from "./Input"
 
 export function TextInputBase(props: TextInputProps) {
@@ -26,12 +27,48 @@ export function TextInputBase(props: TextInputProps) {
                     borderColor: theme.palette.borderColorSoft,
                     backgroundColor: theme.palette.background,
                 },
-                props.value && { fontWeight: '900' },
+                props.value && { borderColor: theme.palette.borderColor, fontWeight: '900' },
                 props.style
             ]}
             placeholderTextColor={theme.palette.textPlaceholder}
             {...restOfProps}
         />
+    )
+}
+
+interface InputClearProps extends TextInputProps {
+    onClear: () => void
+}
+
+function TextInputWithClear({ onClear, style, ...props }: InputClearProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    return (
+        <View style={[
+            {
+                alignItems: 'center',
+                borderWidth: 1,
+                borderRadius: 10,
+                flexDirection: 'row',
+
+                borderColor: theme.palette.borderColorSoft,
+            }, 
+            props.value && { borderColor: theme.palette.borderColor }, 
+            style,
+        ]}>
+            <TextInputBase style={{ flex: 1, borderWidth: 0 }} {...props} />
+            <Pressable onPress={onClear}>
+                <CustomIcon name='xmark' style={[
+                    {
+                        paddingLeft: 5,
+                        paddingRight: 15,
+
+                        color: theme.palette.borderColorSoft,
+                    }, props.value && { color: theme.palette.borderColor }
+                ]} />
+            </Pressable>
+        </View>
     )
 }
 
@@ -80,6 +117,8 @@ function TextInputMultiline(props: TextInputBlockProps) {
         />
     )
 }
+
+TextInputBase.Clear = TextInputWithClear
 
 TextInputBase.Numeric = TextInputNumeric
 

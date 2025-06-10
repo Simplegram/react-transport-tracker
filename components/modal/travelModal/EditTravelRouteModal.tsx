@@ -32,10 +32,11 @@ export default function EditTravelRouteModal({ routes, searchQuery, isModalVisib
                         <Input.Subtitle>Close</Input.Subtitle>
                     </Pressable>
                 </View>
-                <TextInputBase
+                <TextInputBase.Clear
                     value={searchQuery}
                     placeholder="Search route..."
                     onChangeText={setSearchQuery}
+                    onClear={() => setSearchQuery('')}
                 />
                 {filteredItems.length === 0 ? (
                     <View style={modalStyles[theme].emptyList}>

@@ -43,10 +43,11 @@ export default function EditTravelStopModal({ stops, searchQuery, isModalVisible
                     gap: 5,
                     flexDirection: 'row'
                 }}>
-                    <TextInputBase
+                    <TextInputBase.Clear
                         value={searchQuery}
                         placeholder="Search stop..."
                         onChangeText={setSearchQuery}
+                        onClear={() => setSearchQuery('')}
                         style={{ flex: 5 }}
                     />
                     <Button.Switch switch={enableFilter} onPress={() => setEnableFilter(!enableFilter)}>Filter</Button.Switch>

@@ -14,7 +14,6 @@ import useDatalistModal from '@/hooks/useDatalistModal'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import { useLoading } from '@/hooks/useLoading'
 import useModalHandler from '@/hooks/useModalHandler'
-import { colors } from '@/src/const/color'
 import { useFocusEffect } from 'expo-router'
 import React from 'react'
 import { Alert, FlatList, View } from 'react-native'
@@ -131,11 +130,11 @@ export default function DataListScreen() {
 
                     <Divider />
 
-                    <TextInputBase
+                    <TextInputBase.Clear
                         value={searchQuery}
                         placeholder={`Search ${dataType}...`}
                         onChangeText={setSearchQuery}
-                        style={theme === 'light' ? { borderColor: colors.black } : { borderColor: colors.white_100 }}
+                        onClear={() => setSearchQuery('')}
                     />
 
                     <Button.Row>
