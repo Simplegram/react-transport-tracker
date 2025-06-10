@@ -1,6 +1,6 @@
 import { useTheme } from "@/context/ThemeContext"
 import { inputElementStyles } from "@/src/styles/InputStyles"
-import { Pressable, TextInput, TextInputProps, View } from "react-native"
+import { Pressable, StyleProp, TextInput, TextInputProps, View, ViewStyle } from "react-native"
 import CustomIcon from "../CustomIcon"
 import Input from "./Input"
 
@@ -37,10 +37,11 @@ export function TextInputBase(props: TextInputProps) {
 }
 
 interface InputClearProps extends TextInputProps {
-    onClear: () => void
+    containerStyle?: StyleProp<ViewStyle>
+    onClear?: () => void
 }
 
-function TextInputWithClear({ onClear, style, ...props }: InputClearProps) {
+function TextInputWithClear({ onClear, style, containerStyle, ...props }: InputClearProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -53,21 +54,23 @@ function TextInputWithClear({ onClear, style, ...props }: InputClearProps) {
                 flexDirection: 'row',
 
                 borderColor: theme.palette.borderColorSoft,
-            }, 
-            props.value && { borderColor: theme.palette.borderColor }, 
-            style,
+            },
+            props.value && { borderColor: theme.palette.borderColor },
+            containerStyle
         ]}>
-            <TextInputBase style={{ flex: 1, borderWidth: 0 }} {...props} />
-            <Pressable onPress={onClear}>
-                <CustomIcon name='xmark' style={[
-                    {
-                        paddingLeft: 5,
-                        paddingRight: 15,
+            <TextInputBase style={[{ flex: 1, borderWidth: 0 }, style]} {...props} />
+            {onClear && (
+                <Pressable onPress={onClear}>
+                    <CustomIcon name='xmark' style={[
+                        {
+                            paddingLeft: 5,
+                            paddingRight: 15,
 
-                        color: theme.palette.borderColorSoft,
-                    }, props.value && { color: theme.palette.borderColor }
-                ]} />
-            </Pressable>
+                            color: theme.palette.borderColorSoft,
+                        }, props.value && { color: theme.palette.borderColor }
+                    ]} />
+                </Pressable>
+            )}
         </View>
     )
 }
@@ -85,11 +88,11 @@ function TextInputNumeric(props: TextInputProps) {
     )
 }
 
-interface TextInputBlockProps extends TextInputProps {
+interface TextInputBlockProps extends InputClearProps {
     label: string
 }
 
-export function TextInputBlock(props: TextInputBlockProps) {
+export function TextInputBlock({ style, ...props }: TextInputBlockProps) {
     const { theme } = useTheme()
 
     const { label, ...restOfProps } = props
@@ -97,7 +100,7 @@ export function TextInputBlock(props: TextInputBlockProps) {
     return (
         <View style={inputElementStyles[theme].inputGroup}>
             {props.label && <Input.Label>{props.label}</Input.Label>}
-            <TextInputBase {...restOfProps} />
+            <TextInputWithClear style={style} {...restOfProps} />
         </View>
     )
 }
