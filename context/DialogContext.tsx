@@ -1,8 +1,8 @@
-import DialogBase, { DialogContent } from "@/components/modal/Dialog"
+import DialogBase, { DialogButton, DialogContent } from "@/components/modal/Dialog"
 import React, { createContext, PropsWithChildren, useContext, useState } from "react"
 
 interface ContextType {
-    dialog: ({ label, content, buttons }: DialogContent) => void
+    dialog: (label: string, content: string, buttons?: DialogButton[]) => void
 }
 
 const DialogContext = createContext<ContextType | undefined>(undefined)
@@ -15,12 +15,12 @@ export const DialogProvider = ({ children }: PropsWithChildren) => {
         buttons: []
     })
 
-    const dialog = ({ label, content, buttons = [] }: DialogContent) => {
+    const dialog = (label: string, content: string, buttons: DialogButton[] = []) => {
         setDialogContent({
             ...dialogContent,
             label: label,
             content: content,
-            buttons: (buttons.length === 0) ? [{ text: 'Dismiss', onPress: () => setShowDialog(false) }] : buttons
+            buttons: (buttons.length === 0) ? [{ text: 'OK', onPress: () => setShowDialog(false) }] : buttons
         })
         setShowDialog(true)
     }
