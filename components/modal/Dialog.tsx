@@ -5,7 +5,9 @@ import Button from '../button/BaseButton'
 import Input from '../input/Input'
 
 export default function DialogBase({ visible, onRequestClose, children, ...props }: ModalProps) {
-    const { width } = useWindowDimensions()
+    const { width, height } = useWindowDimensions()
+
+    const maxWidth = (width < height) ? width : height
 
     return (
         <ModalTemplate
@@ -15,7 +17,7 @@ export default function DialogBase({ visible, onRequestClose, children, ...props
             onRequestClose={onRequestClose}
         >
             <ModalTemplate.Backdrop style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <ModalTemplate.Container style={{ maxWidth: width * 0.9 }}>
+                <ModalTemplate.Container style={{ width: maxWidth * 0.85 }}>
                     {children}
                 </ModalTemplate.Container>
             </ModalTemplate.Backdrop>
