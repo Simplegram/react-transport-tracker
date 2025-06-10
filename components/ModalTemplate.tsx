@@ -138,9 +138,8 @@ function ModalBottom({ visible, onRequestClose, ...props }: ModalProps) {
             visible={visible}
             onRequestClose={onRequestClose}
         >
-            <ModalTemplate.Backdrop style={{ justifyContent: 'flex-end' }} onPress={onRequestClose}>
-                {restProps.children}
-            </ModalTemplate.Backdrop>
+            <ModalTemplate.Backdrop style={{ justifyContent: 'flex-end' }} onPress={onRequestClose} />
+            {restProps.children}
         </ModalTemplate>
     )
 }
