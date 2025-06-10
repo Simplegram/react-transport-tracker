@@ -2,6 +2,7 @@ import Button from '@/components/button/BaseButton'
 import Input from '@/components/input/Input'
 import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
+import { useDialog } from '@/context/DialogContext'
 import { useSupabase } from '@/context/SupabaseContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useToggleLoading } from '@/hooks/useLoading'
@@ -9,7 +10,7 @@ import { colors } from '@/src/const/color'
 import { statusBarStyles } from '@/src/styles/Styles'
 import { SupabaseClient } from '@supabase/supabase-js'
 import React, { useEffect, useState } from 'react'
-import { Alert, KeyboardAvoidingView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { KeyboardAvoidingView, StatusBar, StyleSheet, Text, View } from 'react-native'
 
 const Login = () => {
     const {
@@ -17,6 +18,7 @@ const Login = () => {
         supabaseUrl, setSupabaseUrl,
         supabaseAnonKey, setSupabaseAnonKey
     } = useSupabase()
+    const { dialog } = useDialog()
     const { loading, setLoading, toggleLoading } = useToggleLoading(500, true)
 
     const { theme } = useTheme()
@@ -41,13 +43,13 @@ const Login = () => {
                     password,
                 })
 
-                if (error) Alert.alert(
+                if (error) dialog(
                     error.name,
                     error.message
                 )
             } catch (err: any) {
                 console.error("An unexpected error during sign-in:", err)
-                Alert.alert('Supabase URL or Anon Key missing', 'The Supabase client could not be initialized with missing Supabase URL or Anon Key')
+                dialog('Supabase URL or Anon Key missing', 'The Supabase client could not be initialized with missing Supabase URL or Anon Key')
             } finally {
                 setLoading(false)
             }

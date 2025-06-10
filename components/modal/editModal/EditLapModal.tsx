@@ -5,19 +5,16 @@ import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import ModalTemplate from '@/components/ModalTemplate'
-import { useTheme } from '@/context/ThemeContext'
+import { useDialog } from '@/context/DialogContext'
 import useModalHandler from '@/hooks/useModalHandler'
 import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels'
 import { formatDateForDisplay } from '@/src/utils/utils'
 import moment from 'moment-timezone'
 import React, { useEffect, useState } from 'react'
-import {
-    Alert
-} from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
 
 export default function EditLapModal({ stops, selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
-    const { theme } = useTheme()
+    const { dialog } = useDialog()
 
     const {
         showModal,
@@ -39,7 +36,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
 
         if (!lap) {
-            Alert.alert(
+            dialog(
                 "Unexpected Error",
                 `Lap is null which is not supposed to happen. Try again.\nSelected date is ${isoSelectedDate}`
             )
@@ -47,7 +44,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
         }
 
         if (!lap.time) {
-            Alert.alert('Input Required', 'Please select time')
+            dialog('Input Required', 'Please select time')
             return
         }
 
@@ -58,7 +55,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
 
     const handleStopSelect = (stopId: number) => {
         if (!lap) {
-            Alert.alert(
+            dialog(
                 "Unexpected Error",
                 "Lap is null which is not supposed to happen. Try again."
             )
@@ -72,7 +69,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
 
     const handleOnSubmit = () => {
         if (!lap) {
-            Alert.alert(
+            dialog(
                 "Unexpected Error",
                 "Lap is null which is not supposed to happen. Try again."
             )

@@ -2,14 +2,16 @@ import Button from "@/components/button/BaseButton"
 import CustomIcon from "@/components/CustomIcon"
 import Input from "@/components/input/Input"
 import { TextInputBase } from "@/components/input/TextInput"
+import { useDialog } from "@/context/DialogContext"
 import { useTheme } from "@/context/ThemeContext"
 import { inputElementStyles } from "@/src/styles/InputStyles"
 import { AddableIconType } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, View } from "react-native"
+import { View } from "react-native"
 
 export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentProps) {
+    const { dialog } = useDialog()
     const { theme } = useTheme()
 
     const [icon, setIcon] = useState<AddableIconType>({ 'name': undefined })
@@ -17,7 +19,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
 
     const handleOnSubmit = () => {
         if (!icon.name?.trim()) {
-            Alert.alert('Input Required', 'Please enter icon name')
+            dialog('Input Required', 'Please enter icon name')
             return
         }
 

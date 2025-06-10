@@ -1,8 +1,8 @@
+import { useDialog } from '@/context/DialogContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useLoading } from '@/hooks/useLoading'
 import React, { useEffect, useState } from 'react'
 import {
-    Alert,
     ScrollView,
     Text,
     View,
@@ -29,6 +29,7 @@ export default function CustomDateTimePicker({
     onClose,
     onConfirm,
 }: CustomDateTimePickerProps) {
+    const { dialog } = useDialog()
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -100,14 +101,14 @@ export default function CustomDateTimePicker({
         }
 
         if (errorMessage) {
-            Alert.alert("Invalid Input", errorMessage)
+            dialog("Invalid Input", errorMessage)
             return null
         }
 
         const date = new Date(y, m - 1, d, h, min, s)
 
         if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) {
-            Alert.alert("Invalid Date", "The day is not valid for the selected month and year.")
+            dialog("Invalid Date", "The day is not valid for the selected month and year.")
             return null
         }
         return date

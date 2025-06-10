@@ -1,4 +1,5 @@
 import { AuthProvider, useAuth } from '@/context/AuthContext'
+import { DialogProvider } from '@/context/DialogContext'
 import { SettingsProvider } from '@/context/SettingsContext'
 import { SupabaseProvider } from '@/context/SupabaseContext'
 import { ThemeProvider } from '@/context/ThemeContext'
@@ -31,7 +32,9 @@ const RootLayout = () => {
             <AuthProvider>
                 <SettingsProvider>
                     <ThemeProvider>
-                        <InitialLayout />
+                        <DialogProvider>
+                            <InitialLayout />
+                        </DialogProvider>
                     </ThemeProvider>
                 </SettingsProvider>
             </AuthProvider>

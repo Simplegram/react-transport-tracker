@@ -4,6 +4,7 @@ import {
     ModalProps,
     TouchableOpacity,
     TouchableOpacityProps,
+    useWindowDimensions,
     View,
     ViewProps
 } from 'react-native'
@@ -11,8 +12,10 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import Input from './input/Input'
 
-export default function ModalTemplate({ visible, onRequestClose, ...props }: ModalProps) {
+export default function ModalTemplate({ visible, onRequestClose, style, ...props }: ModalProps) {
     const { transparent, statusBarTranslucent, ...restProps } = props
+
+    const { height, width } = useWindowDimensions()
 
     return (
         <Modal
@@ -20,7 +23,9 @@ export default function ModalTemplate({ visible, onRequestClose, ...props }: Mod
             transparent={true}
             onRequestClose={onRequestClose}
             statusBarTranslucent={true}
-            {...props}
+            style={[{ width: width, height: height }, style]}
+
+            {...restProps}
         >
             {restProps.children}
         </Modal>

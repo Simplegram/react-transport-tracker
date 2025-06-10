@@ -3,6 +3,7 @@ import { ModalButton } from "@/components/button/ModalButton"
 import Input from "@/components/input/Input"
 import { TextInputBase, TextInputBlock } from "@/components/input/TextInput"
 import VehicleSelector from "@/components/input/VehicleSelector"
+import { useDialog } from "@/context/DialogContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
@@ -11,10 +12,11 @@ import { inputElementStyles } from "@/src/styles/InputStyles"
 import { AddableCoordinates, AddableStop } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, ScrollView, View } from "react-native"
+import { ScrollView, View } from "react-native"
 import AddCoordModal from "./AddCoordModal"
 
 export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
+    const { dialog } = useDialog()
     const { theme } = useTheme()
 
     const { fullVehicleTypes } = useGetTravelData()
@@ -37,7 +39,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
 
     const handleCoordSelect = (coordinates: AddableCoordinates) => {
         if (!coordinates.lat || !coordinates.lon) {
-            Alert.alert('Input Required', 'Please pick the right coordinates')
+            dialog('Input Required', 'Please pick the right coordinates')
             return
         }
 
@@ -47,7 +49,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
 
     const handleOnSubmit = () => {
         if (!stop.name?.trim() || !stop.vehicle_type) {
-            Alert.alert('Input Required', 'Please enter a stop name and choose a vehicle type.')
+            dialog('Input Required', 'Please enter a stop name and choose a vehicle type.')
             return
         }
 

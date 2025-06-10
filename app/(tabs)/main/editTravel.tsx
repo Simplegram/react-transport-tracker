@@ -11,6 +11,7 @@ import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelD
 import EditTravelLapsModal from '@/components/modal/travelModal/EditTravelLapsModal'
 import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal'
 import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal'
+import { useDialog } from '@/context/DialogContext'
 import { useModalContext } from '@/context/ModalContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useTravelContext } from '@/context/TravelContext'
@@ -27,12 +28,13 @@ import { router, useFocusEffect } from 'expo-router'
 import moment from 'moment-timezone'
 import React, { useState } from 'react'
 import {
-    Alert,
     View
 } from 'react-native'
 
 export default function EditTravelItem() {
     const { theme } = useTheme()
+    const { dialog } = useDialog()
+
     const { selectedItem: data } = useTravelContext()
     const { setVehicleTypeId } = useModalContext()
 
@@ -181,7 +183,7 @@ export default function EditTravelItem() {
 
     const handleOnSubmit = () => {
         if (!travel) {
-            Alert.alert('Input Required', 'Data is broken.')
+            dialog('Input Required', 'Data is broken.')
             return
         }
 
@@ -192,7 +194,7 @@ export default function EditTravelItem() {
             !travel.route_id ||
             !travel.type_id
         ) {
-            Alert.alert('Input Required', 'Please choose a route/direction/stops.')
+            dialog('Input Required', 'Please choose a route/direction/stops.')
             return
         }
 

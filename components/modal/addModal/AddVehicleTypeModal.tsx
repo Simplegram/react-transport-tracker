@@ -2,15 +2,17 @@ import Button from "@/components/button/BaseButton"
 import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { IconSelector } from "@/components/input/VehicleSelector"
+import { useDialog } from "@/context/DialogContext"
 import { useTheme } from "@/context/ThemeContext"
 import { useLoading } from "@/hooks/useLoading"
 import { inputElementStyles } from "@/src/styles/InputStyles"
 import { AddableVehicleType } from "@/src/types/AddableTravels"
 import { VehicleTypeModalProp } from "@/src/types/TravelModal"
 import { useState } from "react"
-import { Alert, ScrollView, View } from "react-native"
+import { ScrollView, View } from "react-native"
 
 export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: VehicleTypeModalProp) {
+    const { dialog } = useDialog()
     const { theme } = useTheme()
 
     const { loading } = useLoading()
@@ -19,7 +21,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
 
     const handleOnSubmit = () => {
         if (!vehicleType.name || !vehicleType.icon_id) {
-            Alert.alert('Input Required', 'Please enter a type name and choose an icon.')
+            dialog('Input Required', 'Please enter a type name and choose an icon.')
             return
         }
 

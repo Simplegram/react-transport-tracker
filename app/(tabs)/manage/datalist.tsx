@@ -8,7 +8,7 @@ import LoadingScreen from '@/components/LoadingScreen'
 import ModalTemplate from '@/components/ModalTemplate'
 import { EmptyHeaderComponent } from '@/components/travel/TravelFlatlist'
 import { useDataEditContext } from '@/context/DataEditContext'
-import { useTheme } from '@/context/ThemeContext'
+import { useDialog } from '@/context/DialogContext'
 import useDataList from '@/hooks/useDataList'
 import useDatalistModal from '@/hooks/useDatalistModal'
 import useGetTravelData from '@/hooks/useGetTravelData'
@@ -16,10 +16,10 @@ import { useLoading } from '@/hooks/useLoading'
 import useModalHandler from '@/hooks/useModalHandler'
 import { useFocusEffect } from 'expo-router'
 import React from 'react'
-import { Alert, FlatList, View } from 'react-native'
+import { FlatList, View } from 'react-native'
 
 export default function DataListScreen() {
-    const { theme } = useTheme()
+    const { dialog } = useDialog()
 
     const { setModalData } = useDataEditContext()
 
@@ -74,7 +74,7 @@ export default function DataListScreen() {
             activeModalConfig.onSubmitDataHandler(data)
         } else {
             console.error("No data handler defined for this modal config.")
-            Alert.alert("Error", "Configuration error: Could not process data.")
+            dialog("Error", "Configuration error: Could not process data.")
         }
         closeModal()
     }
