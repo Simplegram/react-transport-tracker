@@ -44,11 +44,12 @@ export default function EditIconModal({ onCancel, onSubmit }: BaseModalContentPr
             <Input.Container>
                 <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupIcon]}>
                     <CustomIcon name={icon.name ? icon.name : 'xmark'} size={32} />
-                    <TextInputBase
+                    <TextInputBase.Clear
                         value={iconQuery}
                         placeholder="e.g., train-subway"
                         onChangeText={changeIcon}
-                        style={{ flex: 1 }}
+                        containerStyle={{ flex: 1 }}
+                        onClear={() => changeIcon('')}
                     />
                 </View>
             </Input.Container>
