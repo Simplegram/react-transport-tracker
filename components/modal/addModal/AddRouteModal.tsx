@@ -77,6 +77,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             value={route.code}
                             placeholder="Route code..."
                             onChangeText={(text) => setRoute({ ...route, "code": text })}
+                            onClear={() => setRoute({ ...route, "code": '' })}
                         />
 
                         <TextInputBlock
@@ -84,6 +85,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             value={route.name}
                             placeholder="Route name..."
                             onChangeText={(text) => setRoute({ ...route, "name": text })}
+                            onClear={() => setRoute({ ...route, "name": '' })}
                         />
 
                         <ModalButton.Block

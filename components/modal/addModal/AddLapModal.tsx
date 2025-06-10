@@ -140,6 +140,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                             value={lap.note}
                             placeholder='Notes (optional)'
                             onChangeText={(text) => setLap({ ...lap, note: text })}
+                            onClear={() => setLap({ ...lap, note: '' })}
                         />
 
                         <Divider />

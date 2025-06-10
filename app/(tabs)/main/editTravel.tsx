@@ -129,17 +129,6 @@ export default function EditTravelItem() {
         closeModal: closeLapsModal
     } = useModalHandler()
 
-    const handleChangeText = (field: keyof EditableTravel, value: string) => {
-        setTravel(prev => {
-            if (prev) {
-                if (field in prev) {
-                    return { ...prev, [field]: value }
-                }
-                return prev
-            }
-        })
-    }
-
     const handleCustomDateConfirm = (selectedDate: Date) => {
         const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
 
@@ -311,7 +300,8 @@ export default function EditTravelItem() {
                                 label='Vehicle Code:'
                                 placeholder='Enter vehicle code'
                                 value={travel.vehicle_code}
-                                onChangeText={(text) => handleChangeText('vehicle_code', text)}
+                                onChangeText={(text) => setTravel({ ...travel, vehicle_code: text })}
+                                onClear={() => setTravel({ ...travel, vehicle_code: '' })}
                             />
                         </View>
 
@@ -347,7 +337,8 @@ export default function EditTravelItem() {
                                 label='Notes:'
                                 value={travel.notes}
                                 placeholder='Notes (optional)'
-                                onChangeText={(text) => handleChangeText('notes', text)}
+                                onChangeText={(text) => setTravel({ ...travel, notes: text })}
+                                onClear={() => setTravel({ ...travel, notes: '' })}
                             />
                         </View>
 

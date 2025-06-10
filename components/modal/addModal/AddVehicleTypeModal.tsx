@@ -38,6 +38,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
                             value={vehicleType.name}
                             placeholder="e.g., Standard Bus"
                             onChangeText={(text) => setVehicleType({ ...vehicleType, "name": text })}
+                            onClear={() => setVehicleType({ ...vehicleType, "name": '' })}
                         />
 
                         <View style={inputElementStyles[theme].inputGroup}>

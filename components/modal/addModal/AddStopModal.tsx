@@ -66,6 +66,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             value={stop.name}
                             placeholder="Stop name..."
                             onChangeText={(text) => setStop({ ...stop, "name": text })}
+                            onClear={() => setStop({ ...stop, "name": '' })}
                         />
 
                         <View style={inputElementStyles[theme].inputGroup}>
@@ -94,9 +95,10 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
 
                         <TextInputBlock
                             label="Alternative name:"
-                            value={stop.name_alt}
+                            value={stop.name_alt || ''}
                             placeholder="Alternative name..."
                             onChangeText={(text) => setStop({ ...stop, "name_alt": text })}
+                            onClear={() => setStop({ ...stop, "name_alt": '' })}
                         />
 
                         <View style={inputElementStyles[theme].inputGroup}>

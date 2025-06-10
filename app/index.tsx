@@ -88,6 +88,7 @@ const Login = () => {
                                     value={currentSupabaseUrl}
                                     onChangeText={setCurrentSupabaseUrl}
                                     numberOfLines={1}
+                                    onClear={() => setCurrentSupabaseUrl('')}
                                 />
                                 <TextInputBlock
                                     label='Supabase Anon Key'
@@ -96,6 +97,7 @@ const Login = () => {
                                     value={currentSupabaseAnonKey}
                                     onChangeText={setCurrentSupabaseAnonKey}
                                     numberOfLines={1}
+                                    onClear={() => setCurrentSupabaseAnonKey('')}
                                 />
                                 <TextInputBlock
                                     label='Supabase Account Email'
@@ -103,6 +105,7 @@ const Login = () => {
                                     placeholder="john@doe.com"
                                     value={email}
                                     onChangeText={setEmail}
+                                    onClear={() => setEmail('')}
                                 />
                                 <TextInputBlock
                                     label='Supabase Account Password'
@@ -111,6 +114,7 @@ const Login = () => {
                                     value={password}
                                     onChangeText={setPassword}
                                     secureTextEntry
+                                    onClear={() => setPassword('')}
                                 />
                             </Input.Container>
                             <Button.Add label='Sign in' onPress={onSignInPress} />

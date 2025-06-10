@@ -39,6 +39,7 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
                             label="Name:"
                             placeholder="Direction name..."
                             onChangeText={(text) => setDirection({ ...direction, "name": text })}
+                            onClear={() => setDirection({ ...direction, "name": '' })}
                         />
                     </Input.Container>
 

@@ -51,6 +51,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                             value={vehicleType.name}
                             placeholder="e.g., Standard Bus"
                             onChangeText={(text) => setVehicleType({ ...vehicleType, "name": text })}
+                            onClear={() => setVehicleType({ ...vehicleType, "name": '' })}
                         />
 
                         <View style={inputElementStyles[theme].inputGroup}>
