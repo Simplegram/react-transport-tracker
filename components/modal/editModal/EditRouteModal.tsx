@@ -4,6 +4,7 @@ import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
 import VehicleSelector from "@/components/input/VehicleSelector"
 import { useDataEditContext } from "@/context/DataEditContext"
+import { useDialog } from "@/context/DialogContext"
 import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
@@ -16,11 +17,12 @@ import { VehicleType } from "@/src/types/Travels"
 import { sortByIdToFront } from "@/src/utils/utils"
 import { useFocusEffect } from "expo-router"
 import { useCallback, useRef, useState } from "react"
-import { Alert, ScrollView, View } from "react-native"
+import { ScrollView, View } from "react-native"
 import EditTravelStopModal from "../travelModal/EditTravelStopModal"
 
 
 export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: ModalProp) {
+    const { dialog } = useDialog()
     const { theme } = useTheme()
     const { setVehicleTypeId } = useModalContext()
 
@@ -65,7 +67,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
 
     const handleOnSubmit = () => {
         if (!route.name || !route.first_stop_id || !route.last_stop_id || !route.vehicle_type) {
-            Alert.alert('Input Required', 'Please add route name/stops/vehicle type')
+            dialog('Input Required', 'Please add route name/stops/vehicle type')
             return
         }
 

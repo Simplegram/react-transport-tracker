@@ -1,15 +1,16 @@
+import { useDialog } from "@/context/DialogContext"
+import * as Location from 'expo-location'
 import { useEffect, useState } from "react"
 
-import * as Location from 'expo-location'
-import { Alert } from "react-native"
-
 export default function useLocation() {
+    const { dialog } = useDialog()
+
     const [location, setLocation] = useState<Location.LocationObject | null>()
 
     async function getCurrentLocation() {
         let { status } = await Location.requestForegroundPermissionsAsync()
         if (status !== 'granted') {
-            Alert.alert('Location access denied', 'Permission to access location was denied')
+            dialog('Location access denied', 'Permission to access location was denied')
             setLocation(null)
             return
         }

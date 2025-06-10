@@ -8,11 +8,11 @@ import EditIconModal from "@/components/modal/editModal/EditIconModal"
 import EditRouteModal from "@/components/modal/editModal/EditRouteModal"
 import EditStopModal from "@/components/modal/editModal/EditStopModal"
 import EditVehicleTypeModal from "@/components/modal/editModal/EditVehicleTypeModal"
+import { useDialog } from "@/context/DialogContext"
 import { AddableDirection, AddableIconType, AddableRoute, AddableStop, AddableVehicleType } from "@/src/types/AddableTravels"
 import { EditableRoute, EditableStop, EditableVehicleType } from "@/src/types/EditableTravels"
 import { Direction, IconType } from "@/src/types/Travels"
 import { useCallback, useState } from "react"
-import { Alert } from "react-native"
 import useModifyTravelData from "./useModifyTravelData"
 
 interface ModalConfig {
@@ -26,6 +26,8 @@ interface ModalConfigMap {
 }
 
 export default function useDatalistModal(refetch: () => void) {
+    const { dialog } = useDialog()
+
     const {
         addDirection, editDirection,
         addStop, editStop,
@@ -39,31 +41,31 @@ export default function useDatalistModal(refetch: () => void) {
     const handleAddDirection = (data: AddableDirection) => {
         addDirection(data)
         refetch()
-        Alert.alert('Direction Added', `Vehicle Type "${data.name}" has been saved.`)
+        dialog('Direction Added', `Vehicle Type "${data.name}" has been saved.`)
     }
 
     const handleAddStop = (data: AddableStop) => {
         addStop(data)
         refetch()
-        Alert.alert('Stop Added', `Vehicle Type "${data.name}" has been saved.`)
+        dialog('Stop Added', `Vehicle Type "${data.name}" has been saved.`)
     }
 
     const handleAddRoute = (data: AddableRoute) => {
         addRoute(data)
         refetch()
-        Alert.alert('Route Added', `Vehicle Type "${data.name}" has been saved.`)
+        dialog('Route Added', `Vehicle Type "${data.name}" has been saved.`)
     }
 
     const handleAddVehicleType = (data: AddableVehicleType) => {
         addVehicleType(data)
         refetch()
-        Alert.alert('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`)
+        dialog('Vehicle Type Added', `Vehicle Type "${data.name}" has been saved.`)
     }
 
     const handleAddIcon = (data: AddableIconType) => {
         addIcon(data)
         refetch()
-        Alert.alert('Icon Added', `Icon "${data.name}" has been saved.`)
+        dialog('Icon Added', `Icon "${data.name}" has been saved.`)
     }
 
     // ---
@@ -71,31 +73,31 @@ export default function useDatalistModal(refetch: () => void) {
     const handleEditDirection = (data: Direction) => {
         editDirection(data)
         refetch()
-        Alert.alert('Direction Changed', `Stop "${data.name}" has been saved.`)
+        dialog('Direction Changed', `Stop "${data.name}" has been saved.`)
     }
 
     const handleEditStop = (data: EditableStop) => {
         editStop(data)
         refetch()
-        Alert.alert('Stop Changed', `Stop "${data.name}" has been saved.`)
+        dialog('Stop Changed', `Stop "${data.name}" has been saved.`)
     }
 
     const handleEditVehicleType = (data: EditableVehicleType) => {
         editVehicleType(data)
         refetch()
-        Alert.alert('Vehicle Type Changed', `Vehicle Type "${data.name}" has been saved.`)
+        dialog('Vehicle Type Changed', `Vehicle Type "${data.name}" has been saved.`)
     }
 
     const handleEditRoute = (data: EditableRoute) => {
         editRoute(data)
         refetch()
-        Alert.alert('Route Changed', `Route "${data.name}" has been saved.`)
+        dialog('Route Changed', `Route "${data.name}" has been saved.`)
     }
 
     const handleEditIcon = (data: IconType) => {
         editIcon(data)
         refetch()
-        Alert.alert('Route Changed', `Route "${data.name}" has been saved.`)
+        dialog('Route Changed', `Route "${data.name}" has been saved.`)
     }
 
     const addModalConfigs: ModalConfigMap = {

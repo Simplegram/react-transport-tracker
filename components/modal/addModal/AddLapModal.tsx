@@ -6,6 +6,7 @@ import { TextInputBlock } from '@/components/input/TextInput'
 import MapDisplay from '@/components/MapDisplay'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import ModalTemplate from '@/components/ModalTemplate'
+import { useDialog } from '@/context/DialogContext'
 import { useTheme } from '@/context/ThemeContext'
 import useLocation from '@/hooks/useLocation'
 import useModalHandler from '@/hooks/useModalHandler'
@@ -17,12 +18,12 @@ import { useFocusEffect } from 'expo-router'
 import moment from 'moment-timezone'
 import React, { useRef, useState } from 'react'
 import {
-    Alert,
     View
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
 
 export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
+    const { dialog } = useDialog()
     const { theme } = useTheme()
 
     const {
@@ -94,7 +95,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
     const handleOnSubmit = () => {
         if (!lap.time) {
-            Alert.alert('Input Required', 'Please select time')
+            dialog('Input Required', 'Please select time')
             return
         }
 

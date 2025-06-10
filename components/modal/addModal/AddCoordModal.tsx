@@ -1,15 +1,14 @@
 import Button from "@/components/button/BaseButton"
 import MapDisplay from "@/components/MapDisplay"
 import ModalTemplate from "@/components/ModalTemplate"
-import { useTheme } from "@/context/ThemeContext"
+import { useDialog } from "@/context/DialogContext"
 import useLocation from "@/hooks/useLocation"
 import { AddableCoordModalProp } from "@/src/types/AddableTravels"
 import { LocationObject } from "expo-location"
 import { useEffect, useRef, useState } from "react"
-import { Alert } from "react-native"
 
 export default function AddCoordModal({ currentCoordinates, isModalVisible, onClose, onSelect }: AddableCoordModalProp) {
-    const { theme } = useTheme()
+    const { dialog } = useDialog()
 
     const mapRef = useRef(null)
 
@@ -45,7 +44,7 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
         const currentMapRef = mapRef.current
 
         if (currentMapRef === null) {
-            Alert.alert('MapRef not available', 'There is a problem obtaining current map ref')
+            dialog('MapRef not available', 'There is a problem obtaining current map ref')
             return
         }
 

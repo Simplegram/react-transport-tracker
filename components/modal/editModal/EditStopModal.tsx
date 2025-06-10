@@ -4,6 +4,7 @@ import Input from "@/components/input/Input"
 import { TextInputBase, TextInputBlock } from "@/components/input/TextInput"
 import VehicleSelector from "@/components/input/VehicleSelector"
 import { useDataEditContext } from "@/context/DataEditContext"
+import { useDialog } from "@/context/DialogContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
@@ -14,10 +15,11 @@ import { EditableStop } from "@/src/types/EditableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { sortByIdToFront } from "@/src/utils/utils"
 import { useRef, useState } from "react"
-import { Alert, ScrollView, View } from "react-native"
+import { ScrollView, View } from "react-native"
 import AddCoordModal from "../addModal/AddCoordModal"
 
 export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
+    const { dialog } = useDialog()
     const { theme } = useTheme()
 
     const { modalData: data } = useDataEditContext()
@@ -37,7 +39,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
 
     const handleCoordSelect = (coordinates: AddableCoordinates) => {
         if (!coordinates.lat || !coordinates.lon) {
-            Alert.alert('Input Required', 'Please pick the right coordinates')
+            dialog('Input Required', 'Please pick the right coordinates')
             return
         }
 
@@ -47,7 +49,7 @@ export default function EditStopModal({ onCancel, onSubmit }: BaseModalContentPr
 
     const handleOnSubmit = () => {
         if (!stop.name.trim() || !stop.vehicle_type) {
-            Alert.alert('Input Required', 'Please enter a stop name and choose a vehicle type')
+            dialog('Input Required', 'Please enter a stop name and choose a vehicle type')
             return
         }
 

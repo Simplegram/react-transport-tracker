@@ -3,6 +3,7 @@ import Input from "@/components/input/Input"
 import { TextInputBlock } from "@/components/input/TextInput"
 import { IconSelector } from "@/components/input/VehicleSelector"
 import { useDataEditContext } from "@/context/DataEditContext"
+import { useDialog } from "@/context/DialogContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
@@ -12,9 +13,10 @@ import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { IconType } from "@/src/types/Travels"
 import { sortByIdToFront } from "@/src/utils/utils"
 import { useEffect, useRef, useState } from "react"
-import { Alert, ScrollView, View } from "react-native"
+import { ScrollView, View } from "react-native"
 
 export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalContentProps) {
+    const { dialog } = useDialog()
     const { theme } = useTheme()
 
     const { modalData: data } = useDataEditContext()
@@ -32,7 +34,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
 
     const handleOnSubmit = () => {
         if (!vehicleType.name || !vehicleType.icon_id) {
-            Alert.alert('Input Required', 'Please enter a type name and choose an icon.')
+            dialog('Input Required', 'Please enter a type name and choose an icon.')
             return
         }
 

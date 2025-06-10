@@ -11,6 +11,7 @@ import AddTravelLapsModal from '@/components/modal/travelModal/AddTravelLapsModa
 import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelDirectionModal'
 import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal'
 import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal'
+import { useDialog } from '@/context/DialogContext'
 import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import { useToggleLoading } from '@/hooks/useLoading'
@@ -23,12 +24,13 @@ import { router, useFocusEffect } from 'expo-router'
 import moment from 'moment-timezone'
 import React, { useEffect, useState } from 'react'
 import {
-    Alert,
     View
 } from 'react-native'
 
 export default function AddTravel() {
     const { theme } = useTheme()
+    const { dialog } = useDialog()
+
     const { addTravel, addLaps } = useModifyTravelData()
     const { stops, routes, directions, vehicleTypes, refetchTravelData } = useGetTravelData()
 
@@ -169,7 +171,7 @@ export default function AddTravel() {
             !travel.route_id ||
             !travel.type_id
         ) {
-            Alert.alert('Input Required', 'Please choose a route/direction/stops.')
+            dialog('Input Required', 'Please choose route/direction/stops')
             return
         }
 
