@@ -177,23 +177,29 @@ export default function AddTravel() {
 
         setLoading(true)
 
-        const newTravel = await addTravel(travel, true)
+        await addTravel(travel, true)
+            .then(data => {
+                if (Array.isArray(data)) {
+                    let newLaps: AddableLap[] = []
+                    if (data && data.length > 0) {
+                        newLaps = laps.map(lap => {
+                            const idedLaps = { ...lap, travel_id: data[0].id }
+                            const { id, ...newLap } = idedLaps
 
-        let newLaps: AddableLap[] = []
-        if (newTravel && newTravel.length > 0) {
-            newLaps = laps.map(lap => {
-                return { ...lap, travel_id: newTravel[0].id }
+                            return newLap
+                        })
+
+                        if (newLaps.length > 0) addLaps(newLaps)
+                    }
+                    setDefaultTravel()
+
+                    router.push('/(tabs)/main')
+                } else {
+                    dialog('An unexpected error occured', JSON.stringify(data))
+                }
+
+                setLoading(false)
             })
-            if (newLaps.length > 0) {
-                addLaps(newLaps)
-            }
-        }
-
-        setDefaultTravel()
-
-        setLoading(false)
-
-        router.push('/(tabs)/main')
     }
 
     return (

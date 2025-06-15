@@ -52,7 +52,10 @@ export default function useModifyTravelData() {
             .insert(item)
             .select()
 
-        if (error) console.log(error)
+        if (error) {
+            console.log(error)
+            return error
+        }
         if (getData === true) return data
     }
 
