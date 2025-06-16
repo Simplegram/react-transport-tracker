@@ -195,7 +195,7 @@ export default function AddTravel() {
 
                     router.push('/(tabs)/main')
                 } else {
-                    dialog('An unexpected error occured', JSON.stringify(data))
+                    dialog('An unexpected error occured', JSON.stringify(data, null, 2))
                 }
 
                 setLoading(false)
