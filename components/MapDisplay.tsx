@@ -42,7 +42,7 @@ export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, dragga
             {getCurrentCoordinate && (
                 <View style={styles.buttonContainer}>
                     <Button style={styles.button} onPress={getCurrentCoordinate}>
-                        <Icon name="location-crosshairs" size={24} />
+                        <Icon name="location-crosshairs" style={{ color: 'black' }} size={24} />
                     </Button>
                 </View>
             )}
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
         pointerEvents: 'box-none',
     },
     button: {
-        backgroundColor: 'transparent'
+        borderWidth: 0,
+        backgroundColor: 'transparent',
     },
 })
