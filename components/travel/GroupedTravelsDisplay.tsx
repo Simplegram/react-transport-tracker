@@ -53,11 +53,9 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
 
     const styles = StyleSheet.create({
         content: {
-            flex: 1.65,
+            flex: 1,
             overflow: 'hidden',
-            borderWidth: 1,
-            borderRadius: 10,
-            paddingHorizontal: 10,
+            borderTopWidth: 1,
 
             borderColor: theme.palette.borderColor,
         },
@@ -74,14 +72,14 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
             borderColor: theme.palette.borderColor,
         },
         cardCanvas: {
-            height: 314,
+            minHeight: 300,
+            maxHeight: 325,
         },
     })
 
     return (
         <View style={{ flex: 1 }}>
             <View style={{
-                flex: 1,
                 marginVertical: 10,
                 justifyContent: 'flex-end',
             }}>
@@ -104,7 +102,6 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                     initialPage={0}
                     key={directionNames.length}
                     pageMargin={10}
-
                 >
                     {directionNames.length > 0 ? (
                         directionNames.map((directionNameKey, index) => (
@@ -114,7 +111,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                         style={{
                                             justifyContent: 'center',
                                             alignItems: 'center',
-                                            paddingBottom: 20,
+                                            paddingBottom: 25,
                                         }}
                                         onPress={() => handleViewTravelDetails(directionNameKey)}
                                     >
