@@ -118,6 +118,7 @@ export default function HomePage() {
                     <GroupedDataDisplay data={groupedData} currentDate={selectedDate} refetch={refetchTravels}></GroupedDataDisplay>
                 )}
             </View>
+            <Button.Dismiss label="Refresh" onPress={refetchTravels} />
             <View style={{
                 gap: 8,
                 width: '100%',
