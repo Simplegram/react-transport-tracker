@@ -5,7 +5,7 @@ import React from "react"
 import { View } from "react-native"
 import { Directions, Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler"
 import { useSharedValue, withTiming } from "react-native-reanimated"
-import TravelCard from "./TravelCard"
+import StackedTravelCard from "./TravelCard"
 
 interface TravelCardsProps {
     data: DataItemWithNewKey[]
@@ -45,7 +45,7 @@ export default function TravelCards({ data, directionNameKey, onPress }: TravelC
                 <View>
                     <View style={travelCardStyles[theme].cardHolder}>
                         {data.map((item, index) => (
-                            <TravelCard
+                            <StackedTravelCard
                                 key={index}
                                 item={item}
                                 index={index}

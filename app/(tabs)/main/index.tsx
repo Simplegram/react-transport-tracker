@@ -28,8 +28,8 @@ interface DateObject {
 export default function HomePage() {
     const { supabaseClient: supabase } = useSupabase()
 
-    const { theme, getTheme } = useTheme()
-    const newTheme = getTheme()
+    const { getTheme } = useTheme()
+    const theme = getTheme()
 
     const {
         travelAtDate, getTravelAtDate, getDates,
@@ -126,7 +126,7 @@ export default function HomePage() {
                 justifyContent: 'flex-end',
                 borderBottomWidth: 1,
 
-                borderColor: newTheme.palette.borderColor,
+                borderColor: theme.palette.borderColor,
             }}>
                 <View style={{
                     flexDirection: 'row',
@@ -145,13 +145,12 @@ export default function HomePage() {
                 {loading || !supabase || !groupedData ? (
                     <LoadingScreen></LoadingScreen>
                 ) : (
-                    <GroupedDataDisplay data={groupedData} currentDate={selectedDate} refetch={refetchTravels}></GroupedDataDisplay>
+                    <GroupedDataDisplay data={groupedData} currentDate={selectedDate} refetch={() => {
+                        setLoading(true)
+                        refetchTravels()
+                    }}></GroupedDataDisplay>
                 )}
             </View>
-            <Button.Dismiss label="Refresh" onPress={() => {
-                setLoading(true)
-                refetchTravels()
-            }} />
             <View style={{
                 gap: 8,
                 width: '100%',

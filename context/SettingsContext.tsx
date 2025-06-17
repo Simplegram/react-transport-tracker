@@ -6,6 +6,8 @@ interface SettingsContextType {
     setEnableVibration: (key: boolean) => void
     theme: 'light' | 'dark'
     setTheme: (key: 'light' | 'dark') => void
+    travelDisplayMode: 'card' | 'list'
+    setTravelDisplayMode: (key: 'card' | 'list') => void
 }
 
 const SettingsContext = createContext<SettingsContextType | undefined>(undefined)
@@ -14,11 +16,13 @@ export const SettingsProvider = ({ children }: PropsWithChildren) => {
     const storage = new MMKVLoader().initialize()
     const [theme, setTheme] = useMMKVStorage<'light' | 'dark'>('appTheme', storage, 'light')
     const [enableVibration, setEnableVibration] = useMMKVStorage<boolean>('settings_vibration', storage, true)
+    const [travelDisplayMode, setTravelDisplayMode] = useMMKVStorage<'card' | 'list'>('settings_travelDisplayMode', storage, 'card')
 
     return (
         <SettingsContext.Provider value={{
-            enableVibration, setEnableVibration,
             theme, setTheme,
+            enableVibration, setEnableVibration,
+            travelDisplayMode, setTravelDisplayMode,
         }}>
             {children}
         </SettingsContext.Provider>
