@@ -28,7 +28,7 @@ const InitialLayout = () => {
 
 const RootLayout = () => {
     return (
-        <SupabaseProvider>
+        <SupabaseProvider schema={process.env.EXPO_PUBLIC_SUPABASE_SCHEMA}>
             <AuthProvider>
                 <SettingsProvider>
                     <ThemeProvider>
