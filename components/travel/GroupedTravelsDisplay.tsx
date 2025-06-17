@@ -80,19 +80,18 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
     })
 
     return (
-        <View style={{ flex: 1, gap: 5 }}>
-            <View style={styles.content}>
-                <AnimatedPagerView
-                    style={styles.pagerView}
-                    initialPage={0}
-                    key={directionNames.length}
-                    pageMargin={10}
-                >
-                    {directionNames.length > 0 ? (
-                        directionNames.map((directionNameKey, index) =>
-                            travelDisplayMode === 'card' ? (
-                                <GestureHandlerRootView key={directionNameKey}>
-                                    <View style={styles.pagerViewContentContainer}>
+        <GestureHandlerRootView>
+            <View style={{ flex: 1, gap: 5 }}>
+                <View style={styles.content}>
+                    <AnimatedPagerView
+                        style={styles.pagerView}
+                        pageMargin={10}
+                        initialPage={0}
+                    >
+                        {directionNames.length > 0 ? (
+                            directionNames.map((directionNameKey, index) =>
+                                travelDisplayMode === 'card' ? (
+                                    <View key={directionNameKey} style={styles.pagerViewContentContainer}>
                                         <Pressable
                                             style={{
                                                 justifyContent: 'center',
@@ -112,56 +111,56 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                             />
                                         </View>
                                     </View>
-                                </GestureHandlerRootView>
-                            ) :
-                                travelDisplayMode === 'list' && (
-                                    <GestureHandlerRootView key={directionNameKey}>
-                                        <Pressable
-                                            style={{
-                                                width: '100%',
+                                ) :
+                                    travelDisplayMode === 'list' && (
+                                        <React.Fragment key={directionNameKey}>
+                                            <Pressable
+                                                style={{
+                                                    width: '100%',
 
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    justifyContent: 'center',
 
-                                                paddingBottom: 10,
-                                                paddingHorizontal: 5,
-                                            }}
-                                            onPress={() => handleViewTravelDetails(directionNameKey)}
-                                        >
-                                            <Input.Title>{moment(currentDate).format('LL')}</Input.Title>
-                                            <Input.Title>{`Direction (${index + 1}/${directionNames.length}): ${directionNameKey}`}</Input.Title>
-                                        </Pressable>
-                                        <FlatList
-                                            data={finalGroupedData[directionNameKey]}
-                                            renderItem={({ item, index }) => (
-                                                <TravelCard
-                                                    key={index}
-                                                    item={item}
-                                                    index={index}
-                                                    directionNameKey={directionNameKey}
-                                                    onPress={handleItemPress}
-                                                />
-                                            )}
-                                            showsVerticalScrollIndicator={false}
-                                            contentContainerStyle={{ gap: 10, paddingBottom: 10 }}
-                                        />
-                                    </GestureHandlerRootView>
-                                )
-                        )
-                    ) : (
-                        <View style={{
-                            flex: 1,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}>
-                            <Input.Label>No travel to display for today</Input.Label>
-                        </View>
-                    )}
-                </AnimatedPagerView>
+                                                    paddingBottom: 10,
+                                                    paddingHorizontal: 5,
+                                                }}
+                                                onPress={() => handleViewTravelDetails(directionNameKey)}
+                                            >
+                                                <Input.Title>{moment(currentDate).format('LL')}</Input.Title>
+                                                <Input.Title>{`Direction (${index + 1}/${directionNames.length}): ${directionNameKey}`}</Input.Title>
+                                            </Pressable>
+                                            <FlatList
+                                                data={finalGroupedData[directionNameKey]}
+                                                renderItem={({ item, index }) => (
+                                                    <TravelCard
+                                                        key={index}
+                                                        item={item}
+                                                        index={index}
+                                                        directionNameKey={directionNameKey}
+                                                        onPress={handleItemPress}
+                                                    />
+                                                )}
+                                                showsVerticalScrollIndicator={false}
+                                                contentContainerStyle={{ gap: 10, paddingBottom: 10 }}
+                                            />
+                                        </React.Fragment>
+                                    )
+                            )
+                        ) : (
+                            <View style={{
+                                flex: 1,
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}>
+                                <Input.Label>No travel to display for today</Input.Label>
+                            </View>
+                        )}
+                    </AnimatedPagerView>
+                </View>
+                {travelDisplayMode === 'card' && (
+                    <Button.Dismiss label="Refresh" onPress={refetch} />
+                )}
             </View>
-            {travelDisplayMode === 'card' && (
-                <Button.Dismiss label="Refresh" onPress={refetch} />
-            )}
-        </View>
+        </GestureHandlerRootView>
     )
 }
