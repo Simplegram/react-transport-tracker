@@ -14,12 +14,12 @@ interface MapDisplayProps {
     mapRef: React.MutableRefObject<null>
     zoomLevel: number
     centerCoordinate: number[]
-    draggable?: boolean
+    interactable?: boolean
     updateLocation?: () => void
     children?: React.ReactNode
 }
 
-export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, draggable = true, updateLocation, children }: MapDisplayProps) {
+export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, interactable = true, updateLocation, children }: MapDisplayProps) {
     const { theme } = useTheme()
 
     return (
@@ -29,7 +29,8 @@ export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, dragga
                 style={{ flex: 1 }}
                 rotateEnabled={false}
                 mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
-                scrollEnabled={draggable}
+                scrollEnabled={interactable}
+                zoomEnabled={interactable}
             >
                 {children}
                 <Camera

@@ -21,6 +21,7 @@ import {
     View
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
+import { UserLocation } from '@maplibre/maplibre-react-native'
 
 export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { dialog } = useDialog()
@@ -131,8 +132,8 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 mapRef={mapRef}
                                 zoomLevel={15}
                                 centerCoordinate={centerCoordinate}
-                                draggable={false}
-                                getCurrentCoordinate={refetchLocation}
+                                interactable={false}
+                                updateLocation={refetchLocation}
                             />
                         </View>
 
