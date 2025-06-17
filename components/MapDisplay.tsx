@@ -15,10 +15,11 @@ interface MapDisplayProps {
     zoomLevel: number
     centerCoordinate: number[]
     draggable?: boolean
-    getCurrentCoordinate?: () => void
+    updateLocation?: () => void
+    children?: React.ReactNode
 }
 
-export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, draggable = true, getCurrentCoordinate }: MapDisplayProps) {
+export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, draggable = true, updateLocation, children }: MapDisplayProps) {
     const { theme } = useTheme()
 
     return (
@@ -30,6 +31,7 @@ export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, dragga
                 mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
                 scrollEnabled={draggable}
             >
+                {children}
                 <Camera
                     zoomLevel={zoomLevel}
                     centerCoordinate={centerCoordinate}
@@ -39,9 +41,9 @@ export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, dragga
             <View style={styles.pointContainer}>
                 <View style={styles.point} />
             </View>
-            {getCurrentCoordinate && (
+            {updateLocation && (
                 <View style={styles.buttonContainer}>
-                    <Button style={styles.button} onPress={getCurrentCoordinate}>
+                    <Button style={styles.button} onPress={updateLocation}>
                         <Icon name="location-crosshairs" style={{ color: 'black' }} size={24} />
                     </Button>
                 </View>
