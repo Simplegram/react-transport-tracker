@@ -1,5 +1,4 @@
 import { useTheme } from "@/context/ThemeContext"
-import { useEffect, useState } from "react"
 import { Image, Pressable, View } from "react-native"
 import Input from "./Input"
 
@@ -35,13 +34,14 @@ export function PickerItem({ imagePath, label, selected = false, onPress }: Pick
                     alignItems: 'center',
                     justifyContent: 'center',
                 }}>
-                    <View style={{
+                    <View style={[{
                         width: 20,
                         height: 20,
                         borderWidth: 1,
                         borderRadius: 50,
-                        borderColor: 'white',
-                    }} />
+
+                        borderColor: selected ? theme.palette.borderColorPrimary : theme.palette.borderColor,
+                    }]} />
                     {selected && (
                         <View style={{
                             width: 13,
