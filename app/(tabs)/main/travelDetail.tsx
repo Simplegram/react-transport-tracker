@@ -17,7 +17,7 @@ import { getSimpleCentroid } from '@/src/utils/mapUtils'
 import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
-import { Dimensions, Text, View } from 'react-native'
+import { Dimensions, View } from 'react-native'
 
 const { width: screenWidth } = Dimensions.get("screen")
 
