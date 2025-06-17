@@ -1,5 +1,6 @@
 import Button from "@/components/button/BaseButton"
 import Container from "@/components/Container"
+import Input from "@/components/input/Input"
 import LoadingScreen from "@/components/LoadingScreen"
 import CalendarModal from "@/components/modal/CalendarModal"
 import GroupedDataDisplay from "@/components/travel/GroupedTravelsDisplay"
@@ -10,8 +11,9 @@ import { useToggleLoading } from "@/hooks/useLoading"
 import useModalHandler from "@/hooks/useModalHandler"
 import useTravelCalendar from "@/hooks/useTravelCalendar"
 import { DataItemWithNewKey, getGroupedData } from "@/src/utils/dataUtils"
-import { getDateString } from "@/src/utils/dateUtils"
+import { getDateString, getTimeString } from "@/src/utils/dateUtils"
 import { router, useFocusEffect } from "expo-router"
+import moment from "moment"
 import React, { useEffect, useMemo, useState } from "react"
 import { View } from "react-native"
 
@@ -26,7 +28,8 @@ interface DateObject {
 export default function HomePage() {
     const { supabaseClient: supabase } = useSupabase()
 
-    const { theme } = useTheme()
+    const { theme, getTheme } = useTheme()
+    const newTheme = getTheme()
 
     const {
         travelAtDate, getTravelAtDate, getDates,
@@ -38,6 +41,14 @@ export default function HomePage() {
     const { laps, getAllLaps } = useGetTravelData()
 
     const [groupedData, setGroupedData] = useState<Record<string, DataItemWithNewKey[]>>()
+
+    const [currentTime, setCurrentTime] = useState<string>(getTimeString())
+
+    useEffect(() => {
+        setInterval(() => {
+            setCurrentTime(getTimeString())
+        }, 1000)
+    }, [])
 
     const {
         showModal: showCalendarModal,
@@ -111,6 +122,26 @@ export default function HomePage() {
 
     return (
         <Container>
+            <View style={{
+                paddingVertical: 10,
+                justifyContent: 'flex-end',
+                borderBottomWidth: 1,
+
+                borderColor: newTheme.palette.borderColor,
+            }}>
+                <View style={{
+                    flexDirection: 'row',
+                    alignItems: 'flex-end',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: 5,
+                }}>
+                    <View>
+                        <Input.Header>{moment(getDateString()).format('dddd')}</Input.Header>
+                        <Input.Header>{moment(getDateString()).format('LL')}</Input.Header>
+                    </View>
+                    <Input.Header>{currentTime}</Input.Header>
+                </View>
+            </View>
             <View style={{ flex: 1 }}>
                 {loading || !supabase || !groupedData ? (
                     <LoadingScreen></LoadingScreen>

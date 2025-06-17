@@ -1,5 +1,5 @@
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import PagerView from 'react-native-pager-view'
 
 import { useTheme } from '@/context/ThemeContext'
@@ -8,7 +8,6 @@ import { DataItemWithNewKey, getKeysSortedByCreatedAt } from '@/src/utils/dataUt
 import { router } from 'expo-router'
 import { StyleSheet, View } from 'react-native'
 
-import { getDateString, getTimeString } from '@/src/utils/dateUtils'
 import { GestureHandlerRootView, Pressable } from 'react-native-gesture-handler'
 import Animated from 'react-native-reanimated'
 import Input from '../input/Input'
@@ -30,14 +29,6 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
 
     const directionNames = getKeysSortedByCreatedAt(finalGroupedData)
 
-    const [currentTime, setCurrentTime] = useState<string>(getTimeString())
-
-    useEffect(() => {
-        setInterval(() => {
-            setCurrentTime(getTimeString())
-        }, 1000)
-    }, [])
-
     const handleItemPress = (directionNameKey: string, itemIndex: number) => {
         const itemToSelect = finalGroupedData[directionNameKey][itemIndex]
         if (itemToSelect) {
@@ -55,9 +46,6 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
         content: {
             flex: 1,
             overflow: 'hidden',
-            borderTopWidth: 1,
-
-            borderColor: theme.palette.borderColor,
         },
         pagerView: {
             flex: 1,
@@ -79,23 +67,6 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
 
     return (
         <View style={{ flex: 1 }}>
-            <View style={{
-                marginVertical: 10,
-                justifyContent: 'flex-end',
-            }}>
-                <View style={{
-                    flexDirection: 'row',
-                    alignItems: 'flex-end',
-                    justifyContent: 'space-between',
-                    paddingHorizontal: 5,
-                }}>
-                    <View>
-                        <Input.Header>{moment(getDateString()).format('dddd')}</Input.Header>
-                        <Input.Header>{moment(getDateString()).format('LL')}</Input.Header>
-                    </View>
-                    <Input.Header>{currentTime}</Input.Header>
-                </View>
-            </View>
             <View style={styles.content}>
                 <AnimatedPagerView
                     style={styles.pagerView}
@@ -111,7 +82,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                         style={{
                                             justifyContent: 'center',
                                             alignItems: 'center',
-                                            paddingBottom: 25,
+                                            paddingBottom: 20,
                                         }}
                                         onPress={() => handleViewTravelDetails(directionNameKey)}
                                     >
