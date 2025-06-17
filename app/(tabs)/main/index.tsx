@@ -122,9 +122,7 @@ export default function HomePage() {
     return (
         <Container>
             <View style={{
-                paddingVertical: 10,
                 justifyContent: 'flex-end',
-                borderBottomWidth: 1,
 
                 borderColor: theme.palette.borderColor,
             }}>
@@ -148,7 +146,7 @@ export default function HomePage() {
                     <GroupedDataDisplay data={groupedData} currentDate={selectedDate} refetch={() => {
                         setLoading(true)
                         refetchTravels()
-                    }}></GroupedDataDisplay>
+                    }} />
                 )}
             </View>
             <View style={{

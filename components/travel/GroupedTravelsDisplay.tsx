@@ -51,6 +51,14 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
         content: {
             flex: 1,
             overflow: 'hidden',
+
+            paddingTop: 10,
+            paddingLeft: 10,
+            paddingRight: 10,
+            borderWidth: 1,
+            borderRadius: 10,
+
+            borderColor: theme.palette.borderColor,
         },
         pagerView: {
             flex: 1,
@@ -72,7 +80,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
     })
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, gap: 5 }}>
             <View style={styles.content}>
                 <AnimatedPagerView
                     style={styles.pagerView}
@@ -110,8 +118,11 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                     <GestureHandlerRootView key={directionNameKey}>
                                         <Pressable
                                             style={{
-                                                justifyContent: 'space-between',
+                                                width: '100%',
+
                                                 alignItems: 'center',
+                                                justifyContent: 'center',
+
                                                 paddingBottom: 10,
                                                 paddingHorizontal: 5,
                                             }}
@@ -132,7 +143,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                                                 />
                                             )}
                                             showsVerticalScrollIndicator={false}
-                                            contentContainerStyle={{ gap: 10 }}
+                                            contentContainerStyle={{ gap: 10, paddingBottom: 10 }}
                                         />
                                     </GestureHandlerRootView>
                                 )
@@ -147,10 +158,10 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                         </View>
                     )}
                 </AnimatedPagerView>
-                {travelDisplayMode === 'card' && (
-                    <Button.Dismiss label="Refresh" onPress={refetch} />
-                )}
             </View>
-        </View >
+            {travelDisplayMode === 'card' && (
+                <Button.Dismiss label="Refresh" onPress={refetch} />
+            )}
+        </View>
     )
 }
