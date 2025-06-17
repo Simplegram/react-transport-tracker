@@ -13,6 +13,7 @@ import useModalHandler from '@/hooks/useModalHandler'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
 import { formatDateForDisplay, formatLapTimeDisplay } from '@/src/utils/utils'
+import { UserLocation } from '@maplibre/maplibre-react-native'
 import * as Crypto from 'expo-crypto'
 import { useFocusEffect } from 'expo-router'
 import moment from 'moment-timezone'
@@ -21,7 +22,6 @@ import {
     View
 } from 'react-native'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
-import { UserLocation } from '@maplibre/maplibre-react-native'
 
 export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }: AddableLapModalProp) {
     const { dialog } = useDialog()
@@ -134,7 +134,9 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 centerCoordinate={centerCoordinate}
                                 interactable={false}
                                 updateLocation={refetchLocation}
-                            />
+                            >
+                                <UserLocation visible={true} />
+                            </MapDisplay>
                         </View>
 
                         <TextInputBlock.Multiline
