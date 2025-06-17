@@ -13,11 +13,11 @@ import useModalHandler from '@/hooks/useModalHandler'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
 import { formatDateForDisplay, formatLapTimeDisplay } from '@/src/utils/utils'
-import { UserLocation } from '@maplibre/maplibre-react-native'
+import { LocationManager, UserLocation } from '@maplibre/maplibre-react-native'
 import * as Crypto from 'expo-crypto'
 import { useFocusEffect } from 'expo-router'
 import moment from 'moment-timezone'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
     View
 } from 'react-native'
@@ -44,6 +44,14 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
     const [showDatetimePicker, setShowDatetimePicker] = useState(false)
 
     const [centerCoordinate, setCenterCoordinate] = useState<number[]>([0, 0])
+
+    useEffect(() => {
+        LocationManager.start()
+
+        return () => {
+            LocationManager.stop()
+        }
+    }, [])
 
     useFocusEffect(
         React.useCallback(() => {
