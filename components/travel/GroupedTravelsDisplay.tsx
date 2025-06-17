@@ -105,7 +105,7 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
                             alignItems: 'center',
                             justifyContent: 'center',
                         }}>
-                            <Input.Label>No data available to display</Input.Label>
+                            <Input.Label>No travel to display for today</Input.Label>
                         </View>
                     )}
                 </AnimatedPagerView>
