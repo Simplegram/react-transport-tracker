@@ -1,5 +1,6 @@
 import Button from "@/components/button/BaseButton"
 import Container from "@/components/Container"
+import CustomIcon from "@/components/CustomIcon"
 import Input from "@/components/input/Input"
 import LoadingScreen from "@/components/LoadingScreen"
 import CalendarModal from "@/components/modal/CalendarModal"
@@ -154,8 +155,14 @@ export default function HomePage() {
                 width: '100%',
                 flexDirection: 'row',
             }}>
-                <Button.Add label="Time Estimation" onPress={() => router.push("main/estimate")} />
-                <Button.Add label="View Calendar" onPress={() => openCalendarModal()} />
+                <Button.Add label="Estimation" onPress={() => router.push("main/estimate")} />
+                <Button.Add style={{ flex: 0.5 }} onPress={() => {
+                    setLoading(true)
+                    refetchTravels()
+                }}>
+                    <CustomIcon name="arrows-rotate"/>
+                </Button.Add>
+                <Button.Add label="Calendar" onPress={() => openCalendarModal()} />
             </View>
             <CalendarModal
                 dates={dates}
