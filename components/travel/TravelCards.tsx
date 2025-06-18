@@ -1,7 +1,7 @@
 import { DataItemWithNewKey } from "@/src/utils/dataUtils"
 import React from "react"
 import { View } from "react-native"
-import { Directions, Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler"
+import { Directions, Gesture, GestureDetector } from "react-native-gesture-handler"
 import { useSharedValue, withTiming } from "react-native-reanimated"
 import StackedTravelCard from "./TravelCard"
 
@@ -36,27 +36,25 @@ export default function TravelCards({ data, directionNameKey, onPress }: TravelC
         })
 
     return (
-        <GestureHandlerRootView>
-            <GestureDetector gesture={Gesture.Exclusive(flingUp, flingDown)}>
-                <View>
-                    <View style={{
-                        gap: 12,
-                        flexGrow: 1,
-                    }}>
-                        {data.map((item, index) => (
-                            <StackedTravelCard
-                                key={index}
-                                item={item}
-                                index={index}
-                                directionNameKey={directionNameKey}
-                                totalLength={data.length - 1}
-                                activeIndex={activeIndex}
-                                onPress={() => onPress(directionNameKey, index)}
-                            />
-                        ))}
-                    </View>
+        <GestureDetector gesture={Gesture.Exclusive(flingUp, flingDown)}>
+            <View>
+                <View style={{
+                    gap: 12,
+                    flexGrow: 1,
+                }}>
+                    {data.map((item, index) => (
+                        <StackedTravelCard
+                            key={index}
+                            item={item}
+                            index={index}
+                            directionNameKey={directionNameKey}
+                            totalLength={data.length - 1}
+                            activeIndex={activeIndex}
+                            onPress={() => onPress(directionNameKey, index)}
+                        />
+                    ))}
                 </View>
-            </GestureDetector>
-        </GestureHandlerRootView>
+            </View>
+        </GestureDetector>
     )
 }
