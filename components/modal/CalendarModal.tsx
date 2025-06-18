@@ -1,13 +1,11 @@
 import { useTheme } from "@/context/ThemeContext"
 import { calendarTheme } from "@/src/styles/CalendarStyles"
 import { StandaloneModalProp } from "@/src/types/AddableTravels"
-import { getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils"
-import { useState } from "react"
+import { getDateString, getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils"
 import { View } from "react-native"
 import { CalendarList } from "react-native-calendars"
 import Button from "../button/BaseButton"
 import ModalTemplate from "../ModalTemplate"
-import moment from "moment"
 
 interface CalendarModalProps {
     dates: any
@@ -25,7 +23,6 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
 
     const pastScrollRange = getMonthsSinceEarliestDate(dates, currentSelectedDate)
     const futureScrollRange = getFutureMonthFromLatestDate(currentSelectedDate)
-    const [currentDate] = useState(moment().tz('Asia/Jakarta').format("Y-MM-DD"))
 
     return (
         <ModalTemplate
@@ -55,7 +52,7 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
                         flexDirection: 'row',
                         gap: 5,
                     }}>
-                        <Button.Add label="Set Today" onPress={() => modalElements.onSelect({ dateString: currentDate })} style={{ flex: 0 }} />
+                        <Button.Add label="Set Today" onPress={() => modalElements.onSelect({ dateString: getDateString() })} style={{ flex: 0 }} />
                         <Button.Dismiss label="Close" onPress={modalElements.onClose} style={{ flex: 0 }} />
                     </View>
                 </ModalTemplate.CalendarContainer>
