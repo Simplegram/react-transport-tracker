@@ -1,20 +1,24 @@
-import moment from "moment"
+import { getCalendars } from 'expo-localization'
+import moment from "moment-timezone"
 import { padNumber } from "./utils"
 
+const timezone = getCalendars()[0].timeZone || 'Africa/Casablanca' // defaults to UTC+0 if null, can also use 'Atlantic/Reykjavik'
+
 const getCurrentTime = () => {
-    const todaysDate = new Date().toISOString().toString()
+    const todaysDate = moment().tz(timezone)
     return todaysDate
 }
 
 export const getTimeString = () => {
-    const todaysDate = new Date().toISOString()
-    const cleanDate = moment(todaysDate).format("HH:mm:ss")
-    return cleanDate
+    const todaysDate = getCurrentTime()
+    const formattedDate = todaysDate.format("HH:mm:ss")
+    return formattedDate
 }
 
 export const getDateString = () => {
-    const todaysDate = new Date().toISOString().split('T')[0].toString()
-    return todaysDate
+    const todaysDate = getCurrentTime()
+    const formattedDate = todaysDate.format("Y-MM-DD")
+    return formattedDate
 }
 
 export const getCleanMomentTime = (date: string) => {
@@ -22,6 +26,12 @@ export const getCleanMomentTime = (date: string) => {
     const momentTime = moment(cleanDate, "YYYY-MM-DD hh:mm:ss")
 
     return momentTime
+}
+
+export const getDateToIsoString = (date: Date) => {
+    const isoString = moment(date).tz(timezone).format()
+
+    return isoString
 }
 
 export const formatDate = (date: string) => {

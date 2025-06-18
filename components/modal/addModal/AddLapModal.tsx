@@ -12,11 +12,11 @@ import useLocation from '@/hooks/useLocation'
 import useModalHandler from '@/hooks/useModalHandler'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
+import { getDateToIsoString } from '@/src/utils/dateUtils'
 import { formatDateForDisplay, formatLapTimeDisplay } from '@/src/utils/utils'
 import { LocationManager, UserLocation } from '@maplibre/maplibre-react-native'
 import * as Crypto from 'expo-crypto'
 import { useFocusEffect } from 'expo-router'
-import moment from 'moment-timezone'
 import React, { useEffect, useRef, useState } from 'react'
 import {
     View
@@ -83,7 +83,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
     )
 
     const handleCustomDateConfirm = (selectedDate: Date) => {
-        const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
+        const isoSelectedDate = getDateToIsoString(selectedDate)
 
         setLap({ ...lap, time: isoSelectedDate })
 

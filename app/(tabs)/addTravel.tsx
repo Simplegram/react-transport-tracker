@@ -19,9 +19,9 @@ import useModalHandler from '@/hooks/useModalHandler'
 import useModifyTravelData from '@/hooks/useModifyTravelData'
 import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap, AddableTravel } from '@/src/types/AddableTravels'
+import { getDateToIsoString } from '@/src/utils/dateUtils'
 import { datetimeFieldToCapitals, formatDateForDisplay } from '@/src/utils/utils'
 import { router, useFocusEffect } from 'expo-router'
-import moment from 'moment-timezone'
 import React, { useEffect, useState } from 'react'
 import {
     View
@@ -112,7 +112,7 @@ export default function AddTravel() {
     )
 
     const handleCustomDateConfirm = (selectedDate: Date) => {
-        const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
+        const isoSelectedDate = getDateToIsoString(selectedDate)
 
         if (datetimeField) {
             setTravel(prev => prev ? ({ ...prev, [datetimeField]: isoSelectedDate }) : null)

@@ -7,6 +7,7 @@ import { View } from "react-native"
 import { CalendarList } from "react-native-calendars"
 import Button from "../button/BaseButton"
 import ModalTemplate from "../ModalTemplate"
+import moment from "moment"
 
 interface CalendarModalProps {
     dates: any
@@ -24,7 +25,7 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
 
     const pastScrollRange = getMonthsSinceEarliestDate(dates, currentSelectedDate)
     const futureScrollRange = getFutureMonthFromLatestDate(currentSelectedDate)
-    const [currentDate] = useState(new Date().toISOString().split('T')[0])
+    const [currentDate] = useState(moment().tz('Asia/Jakarta').format("Y-MM-DD"))
 
     return (
         <ModalTemplate

@@ -8,8 +8,8 @@ import ModalTemplate from '@/components/ModalTemplate'
 import { useDialog } from '@/context/DialogContext'
 import useModalHandler from '@/hooks/useModalHandler'
 import { EditableLapModalProp } from '@/src/types/EditableTravels'
+import { getDateToIsoString } from '@/src/utils/dateUtils'
 import { formatDateForDisplay } from '@/src/utils/utils'
-import moment from 'moment-timezone'
 import React, { useEffect, useState } from 'react'
 import { ManageableLap } from '../FlatlistPicker'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
@@ -34,7 +34,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
     }, [selectedLap])
 
     const handleCustomDateConfirm = (selectedDate: Date) => {
-        const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
+        const isoSelectedDate = getDateToIsoString(selectedDate)
 
         if (!lap) {
             dialog(
