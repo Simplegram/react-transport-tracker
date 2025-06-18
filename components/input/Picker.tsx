@@ -40,7 +40,7 @@ export function PickerItem({ imagePath, label, selected = false, onPress }: Pick
                         borderWidth: 1,
                         borderRadius: 50,
 
-                        borderColor: selected ? theme.palette.borderColorPrimary : theme.palette.borderColor,
+                        borderColor: selected ? theme.palette.textPrimary : theme.palette.borderColor,
                     }]} />
                     {selected && (
                         <View style={{
@@ -50,7 +50,8 @@ export function PickerItem({ imagePath, label, selected = false, onPress }: Pick
                             borderWidth: 1,
                             borderRadius: 50,
 
-                            backgroundColor: theme.palette.borderColorPrimary,
+                            borderColor: theme.palette.textPrimary,
+                            backgroundColor: theme.palette.textPrimary,
                         }} />
                     )}
                 </View>
