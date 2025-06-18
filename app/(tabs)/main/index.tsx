@@ -172,7 +172,7 @@ export default function HomePage() {
                     setLoading(true)
                     refetchTravels()
                 }}>
-                    <CustomIcon name="arrows-rotate" />
+                    <CustomIcon style={{ color: theme.palette.textWhite }} name="arrows-rotate" />
                 </Button.Add>
                 <Button.Add label="Calendar" onPress={() => openCalendarModal()} />
             </View>
