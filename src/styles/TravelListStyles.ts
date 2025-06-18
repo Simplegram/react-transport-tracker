@@ -2,10 +2,6 @@ import { colors } from "@/src/const/color"
 import { StyleSheet } from "react-native"
 
 const lightTravelCardStyles = StyleSheet.create({
-    cardHolder: {
-        gap: 12,
-        flexGrow: 1,
-    },
     card: {
         gap: 8,
         padding: 12,
@@ -41,9 +37,6 @@ const lightTravelCardStyles = StyleSheet.create({
 export const travelCardStyles = {
     light: lightTravelCardStyles,
     dark: StyleSheet.create({
-        cardHolder: {
-            ...lightTravelCardStyles.cardHolder,
-        },
         card: {
             ...lightTravelCardStyles.card,
             backgroundColor: colors.black,
