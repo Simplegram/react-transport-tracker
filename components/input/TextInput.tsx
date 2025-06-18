@@ -54,6 +54,7 @@ function TextInputWithClear({ onClear, style, containerStyle, value, ...props }:
                 flexDirection: 'row',
 
                 borderColor: theme.palette.borderColorSoft,
+                backgroundColor: theme.palette.background,
             },
             value && { borderColor: theme.palette.borderColor },
             containerStyle
