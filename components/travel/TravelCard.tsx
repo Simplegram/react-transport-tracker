@@ -159,6 +159,7 @@ export default function StackedTravelCard({ item, index, directionNameKey, activ
                     )
                 }
             ],
+            overflow: 'hidden',
         }
     })
 

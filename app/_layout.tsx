@@ -5,6 +5,7 @@ import { SupabaseProvider } from '@/context/SupabaseContext'
 import { ThemeProvider } from '@/context/ThemeContext'
 import { Slot, useRouter, useSegments } from 'expo-router'
 import { useEffect } from 'react'
+import { GestureHandlerRootView } from 'react-native-gesture-handler'
 
 const InitialLayout = () => {
     const { session, initialized } = useAuth()
@@ -33,7 +34,9 @@ const RootLayout = () => {
                 <SettingsProvider>
                     <ThemeProvider>
                         <DialogProvider>
-                            <InitialLayout />
+                            <GestureHandlerRootView>
+                                <InitialLayout />
+                            </GestureHandlerRootView>
                         </DialogProvider>
                     </ThemeProvider>
                 </SettingsProvider>

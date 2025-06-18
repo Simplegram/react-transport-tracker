@@ -1,5 +1,3 @@
-import { useTheme } from "@/context/ThemeContext"
-import { travelCardStyles } from "@/src/styles/TravelListStyles"
 import { DataItemWithNewKey } from "@/src/utils/dataUtils"
 import React from "react"
 import { View } from "react-native"
@@ -14,8 +12,6 @@ interface TravelCardsProps {
 }
 
 export default function TravelCards({ data, directionNameKey, onPress }: TravelCardsProps) {
-    const { theme } = useTheme()
-
     const duration = 200
     const activeIndex = useSharedValue(0)
 
@@ -43,7 +39,10 @@ export default function TravelCards({ data, directionNameKey, onPress }: TravelC
         <GestureHandlerRootView>
             <GestureDetector gesture={Gesture.Exclusive(flingUp, flingDown)}>
                 <View>
-                    <View style={travelCardStyles[theme].cardHolder}>
+                    <View style={{
+                        gap: 12,
+                        flexGrow: 1,
+                    }}>
                         {data.map((item, index) => (
                             <StackedTravelCard
                                 key={index}

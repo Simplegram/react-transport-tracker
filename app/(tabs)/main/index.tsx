@@ -5,6 +5,7 @@ import Input from "@/components/input/Input"
 import LoadingScreen from "@/components/LoadingScreen"
 import CalendarModal from "@/components/modal/CalendarModal"
 import GroupedDataDisplay from "@/components/travel/GroupedTravelsDisplay"
+import { useSettings } from "@/context/SettingsContext"
 import { useSupabase } from "@/context/SupabaseContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
@@ -31,6 +32,8 @@ export default function HomePage() {
 
     const { getTheme } = useTheme()
     const theme = getTheme()
+
+    const { travelDisplayMode } = useSettings()
 
     const {
         travelAtDate, getTravelAtDate, getDates,
@@ -121,7 +124,9 @@ export default function HomePage() {
     )
 
     return (
-        <Container>
+        <Container style={{
+            justifyContent: 'flex-end',
+        }}>
             <View style={{
                 justifyContent: 'flex-end',
 
@@ -140,10 +145,8 @@ export default function HomePage() {
                     <Input.Header>{currentTime}</Input.Header>
                 </View>
             </View>
-            <View style={{ flex: 1 }}>
-                <View style={{
-                    flex: 1,
-
+            <View style={[
+                {
                     paddingTop: 10,
                     paddingLeft: 10,
                     paddingRight: 10,
@@ -151,16 +154,20 @@ export default function HomePage() {
                     borderRadius: 10,
 
                     borderColor: theme.palette.borderColor,
-                }}>
-                    {loading || !supabase || !groupedData ? (
-                        <LoadingScreen></LoadingScreen>
-                    ) : (
-                        <GroupedDataDisplay data={groupedData} currentDate={selectedDate} refetch={() => {
-                            setLoading(true)
-                            refetchTravels()
-                        }} />
-                    )}
-                </View>
+                }, travelDisplayMode === 'card' && {
+                    height: 395,
+                }, travelDisplayMode === 'list' && {
+                    flex: 1,
+                }
+            ]}>
+                {loading || !supabase || !groupedData ? (
+                    <LoadingScreen></LoadingScreen>
+                ) : (
+                    <GroupedDataDisplay data={groupedData} currentDate={selectedDate} refetch={() => {
+                        setLoading(true)
+                        refetchTravels()
+                    }} />
+                )}
             </View>
             <View style={{
                 gap: 8,
