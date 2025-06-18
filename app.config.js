@@ -45,6 +45,7 @@ export default {
                 "android.permission.VIBRATE",
             ]
         },
+        orientation: 'portrait',
         newArchEnabled: false,
         updates: {
             url: 'https://u.expo.dev/e8e4f24c-2007-4cad-a12f-7310de360390'
