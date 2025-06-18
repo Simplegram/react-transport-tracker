@@ -141,14 +141,26 @@ export default function HomePage() {
                 </View>
             </View>
             <View style={{ flex: 1 }}>
-                {loading || !supabase || !groupedData ? (
-                    <LoadingScreen></LoadingScreen>
-                ) : (
-                    <GroupedDataDisplay data={groupedData} currentDate={selectedDate} refetch={() => {
-                        setLoading(true)
-                        refetchTravels()
-                    }} />
-                )}
+                <View style={{
+                    flex: 1,
+
+                    paddingTop: 10,
+                    paddingLeft: 10,
+                    paddingRight: 10,
+                    borderWidth: 1,
+                    borderRadius: 10,
+
+                    borderColor: theme.palette.borderColor,
+                }}>
+                    {loading || !supabase || !groupedData ? (
+                        <LoadingScreen></LoadingScreen>
+                    ) : (
+                        <GroupedDataDisplay data={groupedData} currentDate={selectedDate} refetch={() => {
+                            setLoading(true)
+                            refetchTravels()
+                        }} />
+                    )}
+                </View>
             </View>
             <View style={{
                 gap: 8,
@@ -160,7 +172,7 @@ export default function HomePage() {
                     setLoading(true)
                     refetchTravels()
                 }}>
-                    <CustomIcon name="arrows-rotate"/>
+                    <CustomIcon name="arrows-rotate" />
                 </Button.Add>
                 <Button.Add label="Calendar" onPress={() => openCalendarModal()} />
             </View>

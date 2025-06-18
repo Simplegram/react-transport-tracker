@@ -47,19 +47,6 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
     }
 
     const styles = StyleSheet.create({
-        content: {
-            gap: 5,
-            flex: 1,
-            overflow: 'hidden',
-
-            paddingTop: 10,
-            paddingLeft: 10,
-            paddingRight: 10,
-            borderWidth: 1,
-            borderRadius: 10,
-
-            borderColor: theme.palette.borderColor,
-        },
         pagerView: {
             flex: 1,
             alignItems: 'center',
@@ -81,7 +68,11 @@ export default function GroupedDataDisplay({ data: finalGroupedData, currentDate
 
     return (
         <GestureHandlerRootView>
-            <View style={styles.content}>
+            <View style={{
+                gap: 5,
+                flex: 1,
+                overflow: 'hidden',
+            }}>
                 <AnimatedPagerView
                     style={styles.pagerView}
                     pageMargin={10}
