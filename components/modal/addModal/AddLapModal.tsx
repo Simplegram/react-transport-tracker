@@ -136,8 +136,8 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                         />
 
                         <View style={[inputElementStyles[theme].inputGroup, { height: 160 }]}>
-                            <MapDisplay
-                                ref={mapRef}
+                            <MapDisplay.Pin
+                                mapRef={mapRef}
                                 zoomLevel={15}
                                 centerCoordinate={centerCoordinate}
                                 zoomEnabled={false}
@@ -145,7 +145,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 updateLocation={refetchLocation}
                             >
                                 <UserLocation visible={true} />
-                            </MapDisplay>
+                            </MapDisplay.Pin>
                         </View>
 
                         <TextInputBlock.Multiline

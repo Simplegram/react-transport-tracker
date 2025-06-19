@@ -10,46 +10,73 @@ const pointSize = {
 }
 
 interface MapDisplayProps {
-    ref: React.MutableRefObject<null>
+    mapRef?: React.MutableRefObject<null>
 
     zoomLevel: number
     centerCoordinate: number[]
 
     zoomEnabled?: boolean
+    rotateEnabled?: boolean
     scrollEnabled?: boolean
-
-    updateLocation?: () => void
 
     children?: React.ReactNode
 }
 
-export default function MapDisplay({ ref, zoomLevel, centerCoordinate, scrollEnabled = true, zoomEnabled = true, updateLocation, children }: MapDisplayProps) {
+export default function MapDisplay({
+    mapRef,
+
+    zoomLevel,
+    centerCoordinate,
+
+    zoomEnabled = true,
+    rotateEnabled = false,
+    scrollEnabled = true,
+
+    children
+}: MapDisplayProps) {
     const { theme } = useTheme()
 
     return (
-        <View style={styles.mapContainer}>
-            <MapView
-                ref={ref}
-                style={{ flex: 1, overflow: 'hidden' }}
-                rotateEnabled={false}
-                mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
-                scrollEnabled={scrollEnabled}
-                zoomEnabled={zoomEnabled}
-            >
-                {children}
-                <Camera
-                    zoomLevel={zoomLevel}
-                    centerCoordinate={centerCoordinate}
-                    animationMode={"moveTo"}
-                />
-            </MapView>
+        <MapView
+            ref={mapRef}
+
+            zoomEnabled={zoomEnabled}
+            rotateEnabled={rotateEnabled}
+            scrollEnabled={scrollEnabled}
+
+            style={{ flex: 1, overflow: 'hidden', borderRadius: 10 }}
+            mapStyle={((theme === 'light') || (!process.env.EXPO_PUBLIC_MAP_STYLE_DARK)) ? process.env.EXPO_PUBLIC_MAP_STYLE : process.env.EXPO_PUBLIC_MAP_STYLE_DARK}
+        >
+            {children}
+            <Camera
+                zoomLevel={zoomLevel}
+                centerCoordinate={centerCoordinate}
+                animationMode={"moveTo"}
+            />
+        </MapView>
+    )
+}
+
+interface PinProps extends MapDisplayProps {
+    updateLocation?: () => void
+}
+
+export function Pin(props: PinProps) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    const { updateLocation, ...restProps } = props
+
+    return (
+        <View style={{ flex: 1 }}>
+            <MapDisplay {...restProps} />
             <View style={styles.pointContainer}>
                 <View style={styles.point} />
             </View>
             {updateLocation && (
                 <View style={styles.buttonContainer}>
                     <Button style={styles.button} onPress={updateLocation}>
-                        <Icon name="location-crosshairs" style={{ color: 'black' }} size={24} />
+                        <Icon name="location-crosshairs" style={{ color: theme.palette.textBlack }} size={24} />
                     </Button>
                 </View>
             )}
@@ -58,11 +85,6 @@ export default function MapDisplay({ ref, zoomLevel, centerCoordinate, scrollEna
 }
 
 const styles = StyleSheet.create({
-    mapContainer: {
-        flex: 1,
-        borderRadius: 10,
-        overflow: 'hidden',
-    },
     pointContainer: {
         position: 'absolute',
         top: 0,
@@ -93,3 +115,5 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
 })
+
+MapDisplay.Pin = Pin

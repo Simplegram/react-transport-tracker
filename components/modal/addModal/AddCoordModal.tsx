@@ -61,7 +61,7 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
         <ModalTemplate.Bottom visible={isModalVisible}>
             <ModalTemplate.BottomContainer style={{ height: 475 }}>
                 <MapDisplay
-                    ref={mapRef}
+                    mapRef={mapRef}
                     zoomLevel={zoomLevel}
                     centerCoordinate={centerCoordinate}
                 />

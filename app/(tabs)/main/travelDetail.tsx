@@ -4,6 +4,7 @@ import CollapsibleHeaderPage from '@/components/CollapsibleHeaderPage'
 import Container from '@/components/Container'
 import Input from '@/components/input/Input'
 import LoadingScreen from '@/components/LoadingScreen'
+import MapDisplay from '@/components/MapDisplay'
 import IndividualTravelDetailCard from '@/components/travel/IndividualTravelDetailCard'
 import { useTheme } from '@/context/ThemeContext'
 import { useTravelContext } from '@/context/TravelContext'
@@ -14,7 +15,7 @@ import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
 import { DataItem, Stop } from '@/src/types/Travels'
 import { formatMsToMinutes, sumTimesToMs } from '@/src/utils/dateUtils'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
-import { Camera, MapView, MarkerView } from '@maplibre/maplibre-react-native'
+import { MarkerView } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
 import React, { useEffect, useState } from 'react'
 import { Dimensions, View } from 'react-native'
@@ -282,17 +283,12 @@ export default function TravelDetail() {
                 )}
 
                 <View style={[travelDetailStyles[theme].card, { height: screenWidth * 0.95, padding: 0, overflow: 'hidden' }]}>
-                    <MapView
-                        style={{ flex: 1, overflow: 'hidden' }}
+                    <MapDisplay
+                        centerCoordinate={centerLatLon ? [centerLatLon?.center.lon, centerLatLon?.center.lat] : [0, 0]}
+                        zoomLevel={centerLatLon ? centerLatLon.zoom : 6}
+
                         rotateEnabled={false}
-                        mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
                     >
-                        {centerLatLon && (
-                            <Camera
-                                centerCoordinate={[centerLatLon?.center.lon, centerLatLon?.center.lat]}
-                                zoomLevel={centerLatLon?.zoom}
-                            />
-                        )}
                         {fullLatLon && fullLatLon
                             .filter(data =>
                                 data.coords !== undefined &&
@@ -313,7 +309,7 @@ export default function TravelDetail() {
                                     />
                                 </MarkerView>
                             ))}
-                    </MapView>
+                    </MapDisplay>
                 </View>
             </View>
         </CollapsibleHeaderPage >
