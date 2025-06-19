@@ -1,7 +1,7 @@
 import { Stop, VehicleType } from "@/src/types/Travels"
 import moment from "moment"
 import { useState } from "react"
-import { TouchableOpacity } from "react-native"
+import { TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 import Input from "./input/Input"
 
@@ -32,6 +32,18 @@ export default function AnnotationContent({ fullVehicleTypes, data_id, title, st
                 style={{
                     width: 21,
                     aspectRatio: 1,
+                    borderRadius: 10,
+
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+                onPress={() => setEnableTitle(!enableTitle)}
+                activeOpacity={1}
+            >
+                <View style={{
+                    width: stop ? 21 : 12,
+
+                    aspectRatio: 1,
                     borderWidth: 1,
                     borderColor: 'black',
                     borderRadius: 10,
@@ -40,13 +52,11 @@ export default function AnnotationContent({ fullVehicleTypes, data_id, title, st
                     justifyContent: 'center',
 
                     backgroundColor: data_id === "stop" ? 'limegreen' : 'yellow'
-                }}
-                onPress={() => setEnableTitle(!enableTitle)}
-                activeOpacity={1}
-            >
-                {stop && (
-                    <Icon size={12} name={fullVehicleTypes.find(type => type.id === Number(stop.vehicle_type))?.icon_id.name || 'truck-plane'} />
-                )}
+                }}>
+                    {stop && (
+                        <Icon size={12} name={fullVehicleTypes.find(type => type.id === Number(stop.vehicle_type))?.icon_id.name || 'truck-plane'} />
+                    )}
+                </View>
             </TouchableOpacity>
             {enableTitle && (
                 <TouchableOpacity onPress={() => setEnableTitle(!enableTitle)}>
