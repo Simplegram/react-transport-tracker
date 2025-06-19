@@ -1,8 +1,9 @@
 import { Stop, VehicleType } from "@/src/types/Travels"
 import moment from "moment"
 import { useState } from "react"
-import { StyleSheet, Text, TouchableOpacity } from "react-native"
+import { TouchableOpacity } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
+import Input from "./input/Input"
 
 interface AnnotationContentProps {
     fullVehicleTypes: VehicleType[]
@@ -18,53 +19,40 @@ export default function AnnotationContent({ fullVehicleTypes, data_id, title, st
     const formattedTime = time ? moment(time.replace("T", " "), "yyyy-mm-dd HH:mm:ss").format("HH:mm:ss") : "no time"
 
     return (
-        <TouchableOpacity style={styles.touchableContainer} disabled={true}>
+        <TouchableOpacity style={{
+            width: 70,
+            alignItems: 'center',
+        }} disabled={true}>
             {enableTitle && (
                 <TouchableOpacity onPress={() => setEnableTitle(!enableTitle)}>
-                    <Text style={styles.title}>
-                        {formattedTime}
-                    </Text>
+                    <Input.Text style={{ fontSize: 10 }}>{formattedTime}</Input.Text>
                 </TouchableOpacity>
             )}
             <TouchableOpacity
-                style={[
-                    styles.marker,
-                    { backgroundColor: data_id === "stop" ? 'limegreen' : 'yellow' }
-                ]}
+                style={{
+                    width: 21,
+                    aspectRatio: 1,
+                    borderWidth: 1,
+                    borderColor: 'black',
+                    borderRadius: 10,
+
+                    alignItems: 'center',
+                    justifyContent: 'center',
+
+                    backgroundColor: data_id === "stop" ? 'limegreen' : 'yellow'
+                }}
                 onPress={() => setEnableTitle(!enableTitle)}
+                activeOpacity={1}
             >
                 {stop && (
-                    <Icon size={10} name={fullVehicleTypes.find(type => type.id === Number(stop.vehicle_type))?.icon_id.name || 'truck-plane'} />
+                    <Icon size={12} name={fullVehicleTypes.find(type => type.id === Number(stop.vehicle_type))?.icon_id.name || 'truck-plane'} />
                 )}
             </TouchableOpacity>
             {enableTitle && (
                 <TouchableOpacity onPress={() => setEnableTitle(!enableTitle)}>
-                    <Text style={styles.title}>
-                        {title}
-                    </Text>
+                    <Input.Text style={{ fontSize: 10 }}>{title}</Input.Text>
                 </TouchableOpacity>
             )}
         </TouchableOpacity>
     )
 }
-
-const styles = StyleSheet.create({
-    touchableContainer: {
-        width: 70,
-        alignItems: 'center',
-    },
-    marker: {
-        width: 19,
-        aspectRatio: 1,
-        borderWidth: 2,
-        borderRadius: 10,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 10,
-        textAlign: 'center',
-        fontWeight: 'bold',
-        flexWrap: 'wrap'
-    },
-})
