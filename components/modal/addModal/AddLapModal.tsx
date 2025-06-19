@@ -137,10 +137,11 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
                         <View style={[inputElementStyles[theme].inputGroup, { height: 160 }]}>
                             <MapDisplay
-                                mapRef={mapRef}
+                                ref={mapRef}
                                 zoomLevel={15}
                                 centerCoordinate={centerCoordinate}
-                                interactable={false}
+                                zoomEnabled={false}
+                                scrollEnabled={false}
                                 updateLocation={refetchLocation}
                             >
                                 <UserLocation visible={true} />

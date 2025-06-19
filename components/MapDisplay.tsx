@@ -1,5 +1,4 @@
 import { useTheme } from "@/context/ThemeContext"
-import { inputElementStyles } from "@/src/styles/InputStyles"
 import { Camera, MapView } from "@maplibre/maplibre-react-native"
 import { StyleSheet, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
@@ -11,26 +10,31 @@ const pointSize = {
 }
 
 interface MapDisplayProps {
-    mapRef: React.MutableRefObject<null>
+    ref: React.MutableRefObject<null>
+
     zoomLevel: number
     centerCoordinate: number[]
-    interactable?: boolean
+
+    zoomEnabled?: boolean
+    scrollEnabled?: boolean
+
     updateLocation?: () => void
+
     children?: React.ReactNode
 }
 
-export default function MapDisplay({ mapRef, zoomLevel, centerCoordinate, interactable = true, updateLocation, children }: MapDisplayProps) {
+export default function MapDisplay({ ref, zoomLevel, centerCoordinate, scrollEnabled = true, zoomEnabled = true, updateLocation, children }: MapDisplayProps) {
     const { theme } = useTheme()
 
     return (
-        <View style={[inputElementStyles[theme].inputGroup, styles.mapContainer]}>
+        <View style={styles.mapContainer}>
             <MapView
-                ref={mapRef}
-                style={{ flex: 1 }}
+                ref={ref}
+                style={{ flex: 1, overflow: 'hidden' }}
                 rotateEnabled={false}
                 mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
-                scrollEnabled={interactable}
-                zoomEnabled={interactable}
+                scrollEnabled={scrollEnabled}
+                zoomEnabled={zoomEnabled}
             >
                 {children}
                 <Camera
