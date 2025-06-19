@@ -50,7 +50,7 @@ export default function AnnotationContent({ fullVehicleTypes, data_id, title, st
             </TouchableOpacity>
             {enableTitle && (
                 <TouchableOpacity onPress={() => setEnableTitle(!enableTitle)}>
-                    <Input.Text style={{ fontSize: 10 }}>{title}</Input.Text>
+                    <Input.Text style={{ fontSize: 10, textAlign: 'center' }}>{title}</Input.Text>
                 </TouchableOpacity>
             )}
         </TouchableOpacity>
