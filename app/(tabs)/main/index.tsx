@@ -113,7 +113,10 @@ export default function HomePage() {
         React.useCallback(() => {
             const data = getGroupedData(travelAtDate, laps)
             setGroupedData(data)
-            setLoading(false)
+
+            setTimeout(() => {
+                setLoading(false)
+            }, 200)
         }, [travelAtDate, laps])
     )
 
