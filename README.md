@@ -10,7 +10,7 @@ Based on my personal experience as a former public transport commuter. I used to
 - [Build Preview APK](#build-preview-apk)
   - [With EAS](#with-eas)
   - [With Android Studio](#with-android-studio)
-- [Screenshots](#screenshots)
+- [Screenshots](#screenshots-as-of-160-rc6)
 
 ## Tech Stack
 
@@ -293,9 +293,9 @@ npx expo prebuild --clean
 
 This command will create the android folder necessary to build with Android Studio. Close any `npx expo start` instance to avoid Android Studio gradle import error.
 
-## Screenshots (as of 1.6.0b13)
+## Screenshots (as of 1.6.0-rc.6)
 ### Light Mode
-![Light Mode](https://github.com/user-attachments/assets/f3566d1e-d54b-4985-adf0-a435ca3deb29)
+![Light Mode(1)](https://github.com/user-attachments/assets/540bd0e8-b75f-4993-b671-83ebeef0a4d1)
 
 ### Dark Mode
-![Dark Mode](https://github.com/user-attachments/assets/8d721aab-da1a-4814-9d0d-0a076b286d0e)
+![Dark Mode(1)](https://github.com/user-attachments/assets/b1da4388-4b1b-49ec-9c84-1a4897a38ae9)
