@@ -92,7 +92,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                         />
 
                         <ModalButton.Block
-                            label="First Stop"
+                            label="Default First Stop"
                             condition={route.first_stop_id}
                             value={stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}
                             onPress={() => openModalWithSearch('first_stop_id')}
@@ -100,7 +100,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                         />
 
                         <ModalButton.Block
-                            label="Last Stop"
+                            label="Default Last Stop"
                             condition={route.last_stop_id}
                             value={stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}
                             onPress={() => openModalWithSearch('last_stop_id')}
