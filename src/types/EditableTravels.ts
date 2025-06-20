@@ -1,4 +1,5 @@
-import { Direction, Route, Stop } from "./Travels"
+import { ManageableLap } from "@/components/modal/FlatlistPicker"
+import { Direction, IconType, Route, Stop, VehicleType } from "./Travels"
 
 interface EditableStop {
     id: number,
@@ -7,6 +8,7 @@ interface EditableStop {
     lon?: number,
     name_alt?: string,
     vehicle_type: number
+    icon_id: IconType
 }
 
 interface EditableVehicleType {
@@ -20,6 +22,7 @@ interface EditableRoute {
     last_stop_id: number,
     code: string,
     name: string,
+    vehicle_type: VehicleType,
     vehicle_type_id: number,
 }
 
@@ -41,8 +44,8 @@ interface EditableLap {
     id: number
     travel_id: number
     time: string
-    stop_id: number | null
-    note: string | null
+    stop_id: number | undefined
+    note: string | undefined
 }
 
 interface EditableTravelModalProp {
@@ -78,23 +81,24 @@ interface EditableTravelStopModalProp {
     setSearchQuery: (query: string) => void
     onClose: () => void
     onSelect: (stopId: number) => void
+    vehicleTypeId?: number | null
 }
 
 interface EditableLapsModalProp {
     travel_id: number
-    currentLaps: EditableLap[]
+    currentLaps: ManageableLap[]
     stops: Stop[]
     isModalVisible: boolean
     onClose: () => void
-    onSelect: (lap: EditableLap) => void
+    onSelect: (lap: ManageableLap[]) => void
 }
 
 interface EditableLapModalProp {
     stops: Stop[]
-    selectedLap: EditableLap
+    selectedLap: ManageableLap
     isModalVisible: boolean
     onClose: () => void
-    onSelect: (lap: EditableLap) => void
+    onSelect: (lap: ManageableLap[]) => void
 }
 
 export {

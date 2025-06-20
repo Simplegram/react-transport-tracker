@@ -1,24 +1,25 @@
-import Button from "@/components/BaseButton"
-import { colors } from "@/const/color"
-import { useModalContext } from "@/context/ModalContext"
+import Button from "@/components/button/BaseButton"
+import Input from "@/components/input/Input"
+import { TextInputBlock } from "@/components/input/TextInput"
+import { IconSelector } from "@/components/input/VehicleSelector"
+import { useDataEditContext } from "@/context/DataEditContext"
+import { useDialog } from "@/context/DialogContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
-import { styles } from "@/src/styles/Styles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { EditableVehicleType } from "@/src/types/EditableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { IconType } from "@/src/types/Travels"
 import { sortByIdToFront } from "@/src/utils/utils"
 import { useEffect, useRef, useState } from "react"
-import { Alert, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { ScrollView, View } from "react-native"
 
 export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalContentProps) {
+    const { dialog } = useDialog()
     const { theme } = useTheme()
 
-    const { modalData: data } = useModalContext()
+    const { modalData: data } = useDataEditContext()
 
     const { icons, getIcons } = useGetTravelData()
 
@@ -33,7 +34,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
 
     const handleOnSubmit = () => {
         if (!vehicleType.name || !vehicleType.icon_id) {
-            Alert.alert('Input Required', 'Please enter a type name and choose an icon.')
+            dialog('Input Required', 'Please enter type name and choose an icon')
             return
         }
 
@@ -43,61 +44,46 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
     return (
         <View>
             {loading ? (
-                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
+                <Input.LoadingLabel />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
-                            <TextInput
-                                style={inputStyles[theme].textInput}
-                                placeholder="e.g., Standard Bus"
-                                placeholderTextColor={colors.text.placeholderGray}
-                                value={vehicleType.name}
-                                onChangeText={text => setVehicleType({ ...vehicleType, "name": text })}
-                            />
-                        </View>
+                    <Input.Container>
+                        <TextInputBlock
+                            label="Name"
+                            value={vehicleType.name}
+                            placeholder="e.g., Standard Bus"
+                            onChangeText={(text) => setVehicleType({ ...vehicleType, "name": text })}
+                            onClear={() => setVehicleType({ ...vehicleType, "name": '' })}
+                            required
+                        />
 
-                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                        <View style={inputElementStyles[theme].inputGroup}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Icon:</Text>
+                                <Input.Label required={!vehicleType.icon_id}>Icon</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
                                     keyboardShouldPersistTaps={"always"}
                                 >
                                     {sortByIdToFront(icons, savedVehicleTypeId.current).map((icon: IconType) => (
-                                        <TouchableOpacity
+                                        <IconSelector
                                             key={icon.id}
-                                            style={[
-                                                iconPickerStyles[theme].iconContainer,
-                                                vehicleType.icon_id === icon.id && iconPickerStyles[theme].selectedIconContainer,
-                                            ]}
-                                            onPress={() => setVehicleType({ ...vehicleType, icon_id: icon.id })}
-                                        >
-                                            <Icon
-                                                style={
-                                                    vehicleType.icon_id === icon.id ?
-                                                        iconPickerStyles[theme].selectedIcon
-                                                        :
-                                                        styles[theme].icon
-                                                }
-                                                name={icon.name}
-                                                size={20}
-                                            />
-                                        </TouchableOpacity>
+                                            icon={icon}
+                                            condition={vehicleType.icon_id === icon.id}
+                                            onPress={() => setVehicleType({ ...vehicleType, "icon_id": icon.id })}
+                                        />
                                     ))}
                                 </ScrollView>
                             </View>
                         </View>
-                    </View>
+                    </Input.Container>
 
-                    <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button title='Edit Type' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                    </View>
+                    <Button.Row>
+                        <Button.Dismiss label='Cancel' onPress={onCancel} />
+                        <Button.Add label='Edit Type' onPress={handleOnSubmit} />
+                    </Button.Row>
                 </>
             )}
         </View>

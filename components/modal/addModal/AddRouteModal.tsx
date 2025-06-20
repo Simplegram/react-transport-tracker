@@ -1,34 +1,39 @@
-import Button from "@/components/BaseButton"
-import { colors } from "@/const/color"
+import Button from "@/components/button/BaseButton"
+import { ModalButton } from "@/components/button/ModalButton"
+import Input from "@/components/input/Input"
+import { TextInputBlock } from "@/components/input/TextInput"
+import VehicleSelector from "@/components/input/VehicleSelector"
+import { useDialog } from "@/context/DialogContext"
+import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
-import useStopModal from "@/hooks/useStopModal"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
-import { styles } from "@/src/styles/Styles"
+import useModalHandler from "@/hooks/useModalHandler"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { AddableRoute } from "@/src/types/AddableTravels"
 import { ModalProp } from "@/src/types/TravelModal"
-import { useState } from "react"
-import { Alert, Pressable, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { useFocusEffect } from "expo-router"
+import { useCallback, useState } from "react"
+import { ScrollView, View } from "react-native"
 import EditTravelStopModal from "../travelModal/EditTravelStopModal"
 
 export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: ModalProp) {
+    const { dialog } = useDialog()
     const { theme } = useTheme()
+    const { setVehicleTypeId } = useModalContext()
 
     const { fullVehicleTypes } = useGetTravelData()
 
     const { loading } = useLoading()
 
     const {
-        showStopModal,
-        editingStopField,
-        stopSearchQuery,
-        setStopSearchQuery,
-        openStopModal,
-        closeStopModal
-    } = useStopModal()
+        showModal,
+        editingField,
+        searchQuery,
+        setSearchQuery,
+        openModalWithSearch,
+        closeModal
+    } = useModalHandler()
 
     const [route, setRoute] = useState<AddableRoute>({
         code: undefined,
@@ -38,18 +43,24 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
         vehicle_type_id: undefined
     })
 
+    useFocusEffect(
+        useCallback(() => {
+            setVehicleTypeId(null)
+        }, [])
+    )
+
     const handleStopSelect = (stopId: number) => {
-        if (!editingStopField) {
+        if (!editingField) {
             return
         }
 
-        setRoute({ ...route, [editingStopField]: stopId })
-        closeStopModal()
+        setRoute({ ...route, [editingField]: stopId })
+        closeModal()
     }
 
     const handleOnSubmit = () => {
         if (!route.name || !route.first_stop_id || !route.last_stop_id || !route.vehicle_type_id) {
-            Alert.alert('Input Required', 'Please add route name/stops/vehicle type')
+            dialog('Input Required', 'Please add name/stops/vehicle type')
             return
         }
 
@@ -59,100 +70,80 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
     return (
         <View>
             {loading || !stops ? (
-                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
+                <Input.LoadingLabel />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Code:</Text>
-                            <TextInput
-                                style={inputStyles[theme].textInput}
-                                placeholder="Route code..."
-                                placeholderTextColor={colors.text.placeholderGray}
-                                value={route.code}
-                                onChangeText={text => (setRoute({ ...route, "code": text }))}
-                            />
-                        </View>
+                    <Input.Container>
+                        <TextInputBlock
+                            label="Code"
+                            value={route.code}
+                            placeholder="Route code..."
+                            onChangeText={(text) => setRoute({ ...route, "code": text })}
+                            onClear={() => setRoute({ ...route, "code": '' })}
+                        />
+
+                        <TextInputBlock
+                            label="Name"
+                            value={route.name}
+                            placeholder="Route name..."
+                            onChangeText={(text) => setRoute({ ...route, "name": text })}
+                            onClear={() => setRoute({ ...route, "name": '' })}
+                            required
+                        />
+
+                        <ModalButton.Block
+                            label="Default First Stop"
+                            condition={route.first_stop_id}
+                            value={stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}
+                            onPress={() => openModalWithSearch('first_stop_id')}
+                            required
+                        />
+
+                        <ModalButton.Block
+                            label="Default Last Stop"
+                            condition={route.last_stop_id}
+                            value={stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}
+                            onPress={() => openModalWithSearch('last_stop_id')}
+                            required
+                        />
 
                         <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
-                            <TextInput
-                                style={inputStyles[theme].textInput}
-                                placeholder="Route name..."
-                                placeholderTextColor={colors.text.placeholderGray}
-                                value={route.name}
-                                onChangeText={text => (setRoute({ ...route, "name": text }))}
-                            />
-                        </View>
-
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>First Stop:</Text>
-                            <Pressable
-                                style={inputStyles[theme].pressableInput}
-                                onPress={() => openStopModal('first_stop_id')}>
-                                <Text style={[inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}</Text>
-                            </Pressable>
-                        </View>
-
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Last Stop:</Text>
-                            <Pressable
-                                style={inputStyles[theme].pressableInput}
-                                onPress={() => openStopModal('last_stop_id')}>
-                                <Text style={[inputElementStyles[theme].insideLabel, { marginBottom: 0 }]}>{stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}</Text>
-                            </Pressable>
-                        </View>
-
-                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Type:</Text>
+                                <Input.Label required={!route.vehicle_type_id}>Type</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
                                     keyboardShouldPersistTaps={"always"}
                                 >
                                     {fullVehicleTypes.map((type) => (
-                                        <TouchableOpacity
+                                        <VehicleSelector
                                             key={type.id}
-                                            style={[
-                                                iconPickerStyles[theme].iconTextContainer,
-                                                route.vehicle_type_id === type.id && iconPickerStyles[theme].selectedIconContainer,
-                                            ]}
+                                            type={type}
+                                            condition={route.vehicle_type_id === type.id}
                                             onPress={() => setRoute({ ...route, vehicle_type_id: type.id })}
-                                        >
-                                            <Icon
-                                                style={
-                                                    route.vehicle_type_id === type.id ?
-                                                        iconPickerStyles[theme].selectedIcon
-                                                        :
-                                                        styles[theme].icon
-                                                }
-                                                name={type.icon_id.name}
-                                                size={20}
-                                            />
-                                            <Text style={inputElementStyles[theme].inputLabel}>{type.name.slice(0, 5)}</Text>
-                                        </TouchableOpacity>
+                                        />
                                     ))}
                                 </ScrollView>
                             </View>
                         </View>
-                    </View>
+                    </Input.Container>
 
                     <EditTravelStopModal
                         stops={stops}
-                        isModalVisible={showStopModal}
-                        searchQuery={stopSearchQuery}
-                        setSearchQuery={setStopSearchQuery}
+                        isModalVisible={showModal}
+                        searchQuery={searchQuery}
+                        vehicleTypeId={route.vehicle_type_id}
+                        setSearchQuery={setSearchQuery}
                         onSelect={handleStopSelect}
-                        onClose={closeStopModal}
+                        onClose={closeModal}
                     />
 
-                    <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button title='Add Route' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                    </View>
+                    <Button.Row>
+                        <Button.Dismiss label='Cancel' onPress={onCancel} />
+                        <Button.Add label='Add Route' onPress={handleOnSubmit} />
+                    </Button.Row>
                 </>
             )}
         </View>

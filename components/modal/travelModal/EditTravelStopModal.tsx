@@ -1,74 +1,77 @@
-import { colors } from "@/const/color"
+import Button from "@/components/button/BaseButton"
+import Input from "@/components/input/Input"
+import { TextInputBase } from "@/components/input/TextInput"
+import ModalTemplate from "@/components/ModalTemplate"
+import { useModalContext } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
-import { inputStyles } from "@/src/styles/InputStyles"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
-import { styles } from "@/src/styles/Styles"
 import { EditableTravelStopModalProp } from "@/src/types/EditableTravels"
-import { useMemo } from "react"
-import { Modal, Pressable, Text, TextInput, View } from "react-native"
-import Icon from "react-native-vector-icons/FontAwesome6"
-import FlatlistPicker from "../FlatlistPicker"
+import { Stop } from "@/src/types/Travels"
+import { useEffect, useMemo, useState } from "react"
+import { Pressable, View } from "react-native"
+import FlatlistBase from "../FlatlistPicker"
 
-export default function EditTravelStopModal({ stops, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelStopModalProp) {
+export default function EditTravelStopModal({ stops, searchQuery, isModalVisible, vehicleTypeId, setSearchQuery, onClose, onSelect }: EditableTravelStopModalProp) {
     const { theme } = useTheme()
+
+    const [enableFilter, setEnableFilter] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (vehicleTypeId) setEnableFilter(true)
+    }, [vehicleTypeId])
 
     const filteredStops = useMemo(() => {
         if (!stops) return []
         const query = searchQuery.toLowerCase()
-        return stops.filter(stop =>
+        const stopsByQuery = stops.filter(stop =>
             stop.name.toLowerCase().includes(query)
         )
-    }, [stops, searchQuery])
+        const stopsByVehicleId = stopsByQuery.filter(stop => stop.vehicle_type?.id === vehicleTypeId)
+        return (enableFilter && vehicleTypeId) ? stopsByVehicleId : stopsByQuery
+    }, [stops, searchQuery, enableFilter, vehicleTypeId])
 
     return (
-        <>
-            <Modal
-                visible={isModalVisible}
-                transparent={true}
-                animationType="slide"
-                onRequestClose={onClose}
-            >
-                <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose}>
-                    <View style={modalStyles[theme].modalContainer}>
-                        <View style={modalElementStyles[theme].header}>
-                            <Text style={modalElementStyles[theme].title}>Select a Stop</Text>
-                            <Text style={modalElementStyles[theme].closeLabel}>Close</Text>
-                        </View>
-                        <TextInput
-                            style={inputStyles[theme].textInput}
-                            placeholder="Search stop..."
-                            placeholderTextColor={colors.text.placeholderGray}
-                            value={searchQuery}
-                            onChangeText={setSearchQuery}
-                        />
-                        {filteredStops.length === 0 ? (
-                            <View style={modalStyles[theme].emptyList}>
-                                <Text style={modalElementStyles[theme].label}>No stop found</Text>
-                            </View>
-                        ) : (
-                            <FlatlistPicker
-                                items={filteredStops}
-                                onSelect={onSelect}
-                            >
-                                {(item) => (
-                                    <>
-                                        {item.vehicle_type?.name ? (
-                                            <Icon
-                                                style={[styles[theme].icon, { width: 20 }]}
-                                                name={item.vehicle_type.icon_id.name.toLocaleLowerCase()}
-                                                size={16}
-                                            />
-                                        ) : (
-                                            <Icon style={styles[theme].icon} name="train" size={16}></Icon>
-                                        )}
-                                        <Text style={modalElementStyles[theme].label}>{item.name}</Text>
-                                    </>
-                                )}
-                            </FlatlistPicker>
-                        )}
+        <ModalTemplate.Bottom
+            visible={isModalVisible}
+            onRequestClose={onClose}
+        >
+            <ModalTemplate.BottomContainer>
+                <View style={modalElementStyles[theme].header}>
+                    <Input.Header>Select a stop</Input.Header>
+                    <Pressable onPress={onClose}>
+                        <Input.Subtitle>Close</Input.Subtitle>
+                    </Pressable>
+                </View>
+                <View style={{
+                    gap: 5,
+                    flexDirection: 'row'
+                }}>
+                    <TextInputBase.Clear
+                        value={searchQuery}
+                        placeholder="Search stop..."
+                        onChangeText={setSearchQuery}
+                        onClear={() => setSearchQuery('')}
+                        containerStyle={{ flex: 6.5 }}
+                    />
+                    <Button.Switch switch={enableFilter} onPress={() => setEnableFilter(!enableFilter)}>Filter</Button.Switch>
+                </View>
+                {filteredStops.length === 0 ? (
+                    <View style={modalStyles[theme].emptyList}>
+                        <Input.Label>No stop found</Input.Label>
                     </View>
-                </Pressable>
-            </Modal>
-        </>
+                ) : (
+                    <FlatlistBase.Picker
+                        items={filteredStops}
+                        onSelect={onSelect}
+                    >
+                        {(item: Stop) => (
+                            <FlatlistBase.PickerItem item={item}>
+                                <Input.SubtitlePrimary>{item.name}</Input.SubtitlePrimary>
+                            </FlatlistBase.PickerItem>
+                        )}
+                    </FlatlistBase.Picker>
+                )}
+            </ModalTemplate.BottomContainer>
+        </ModalTemplate.Bottom>
     )
 }

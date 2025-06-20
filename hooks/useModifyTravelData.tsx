@@ -52,7 +52,10 @@ export default function useModifyTravelData() {
             .insert(item)
             .select()
 
-        if (error) console.log(error)
+        if (error) {
+            console.log(error)
+            return error
+        }
         if (getData === true) return data
     }
 
@@ -122,6 +125,17 @@ export default function useModifyTravelData() {
         if (error) console.log(error)
     }
 
+    // ---
+
+    const deleteLaps = async (itemIds: number[]) => {
+        const response = await supabase
+            .from("laps")
+            .delete()
+            .in('id', itemIds)
+
+        if (response.error) console.log(response)
+    }
+
     return {
         addDirection, editDirection,
         addStop, editStop,
@@ -129,6 +143,6 @@ export default function useModifyTravelData() {
         addVehicleType, editVehicleType,
         addRoute, editRoute,
         addTravel, editTravel,
-        addLaps, editLaps
+        addLaps, editLaps, deleteLaps
     }
 }

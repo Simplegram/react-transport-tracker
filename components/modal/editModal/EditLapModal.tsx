@@ -1,38 +1,36 @@
-import Button from '@/components/BaseButton'
+import Button from '@/components/button/BaseButton'
+import { ModalButton } from '@/components/button/ModalButton'
+import Divider from '@/components/Divider'
+import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
+import MapDisplay from '@/components/MapDisplay'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
-import { colors } from '@/const/color'
+import ModalTemplate from '@/components/ModalTemplate'
+import { useDialog } from '@/context/DialogContext'
 import { useTheme } from '@/context/ThemeContext'
-import useStopModal from '@/hooks/useStopModal'
-import { buttonStyles } from '@/src/styles/ButtonStyles'
-import { inputElementStyles, inputStyles } from '@/src/styles/InputStyles'
-import { modalStyles } from '@/src/styles/ModalStyles'
-import { EditableLap, EditableLapModalProp } from '@/src/types/EditableTravels'
+import useModalHandler from '@/hooks/useModalHandler'
+import { inputElementStyles } from '@/src/styles/InputStyles'
+import { EditableLapModalProp } from '@/src/types/EditableTravels'
+import { getDateToIsoString } from '@/src/utils/dateUtils'
 import { formatDateForDisplay } from '@/src/utils/utils'
-import moment from 'moment-timezone'
 import React, { useEffect, useState } from 'react'
-import {
-    Alert,
-    Modal,
-    Pressable,
-    Text,
-    TextInput,
-    View
-} from 'react-native'
+import { View } from 'react-native'
+import { ManageableLap } from '../FlatlistPicker'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
 
 export default function EditLapModal({ stops, selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
+    const { dialog } = useDialog()
     const { theme } = useTheme()
 
     const {
-        showStopModal,
-        stopSearchQuery,
-        setStopSearchQuery,
-        openStopModal,
-        closeStopModal
-    } = useStopModal()
+        showModal,
+        searchQuery,
+        setSearchQuery,
+        openModal,
+        closeModal
+    } = useModalHandler()
 
-    const [lap, setLap] = useState<EditableLap>()
+    const [lap, setLap] = useState<ManageableLap>()
 
     const [showDatetimePicker, setShowDatetimePicker] = useState(false)
 
@@ -41,10 +39,10 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
     }, [selectedLap])
 
     const handleCustomDateConfirm = (selectedDate: Date) => {
-        const isoSelectedDate = moment(selectedDate).tz('Asia/Jakarta').format()
+        const isoSelectedDate = getDateToIsoString(selectedDate)
 
         if (!lap) {
-            Alert.alert(
+            dialog(
                 "Unexpected Error",
                 `Lap is null which is not supposed to happen. Try again.\nSelected date is ${isoSelectedDate}`
             )
@@ -52,7 +50,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
         }
 
         if (!lap.time) {
-            Alert.alert('Input Required', 'Please select time')
+            dialog('Input Required', 'Please select time')
             return
         }
 
@@ -63,7 +61,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
 
     const handleStopSelect = (stopId: number) => {
         if (!lap) {
-            Alert.alert(
+            dialog(
                 "Unexpected Error",
                 "Lap is null which is not supposed to happen. Try again."
             )
@@ -72,12 +70,12 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
         }
 
         setLap({ ...lap, stop_id: stopId })
-        closeStopModal()
+        closeModal()
     }
 
     const handleOnSubmit = () => {
         if (!lap) {
-            Alert.alert(
+            dialog(
                 "Unexpected Error",
                 "Lap is null which is not supposed to happen. Try again."
             )
@@ -89,76 +87,71 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
     }
 
     return (
-        <Modal
-            visible={isModalVisible}
-            transparent={true}
-            animationType="slide"
-            onRequestClose={onClose}
-        >
+        <ModalTemplate.Bottom visible={isModalVisible}>
             {!lap ? (
                 <LoadingScreen></LoadingScreen>
             ) : (
-                <Pressable style={modalStyles[theme].modalBackdrop} onPress={onClose}>
-                    <View style={[modalStyles[theme].modalContainer, modalStyles[theme].lapModalContainer]}>
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].insideLabel}>Time:</Text>
-                            <Pressable onPress={() => setShowDatetimePicker(true)} style={inputStyles[theme].pressableInput}>
-                                <Text style={inputElementStyles[theme].inputLabel}>{formatDateForDisplay(lap.time)}</Text>
-                            </Pressable>
-                        </View>
+                <>
+                    <ModalTemplate.BottomContainer style={{ maxHeight: 600 }}>
+                        <ModalButton.Block
+                            label='Time'
+                            condition={lap.time}
+                            value={formatDateForDisplay(lap.time)}
+                            onPress={() => setShowDatetimePicker(true)}
+                            required
+                        />
 
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].insideLabel}>Stop:</Text>
-                            <Pressable
-                                style={inputStyles[theme].pressableInput}
-                                onPress={() => openStopModal('last_stop_id')}>
-                                <Text style={[inputElementStyles[theme].inputLabel, { marginBottom: 0 }]}>
-                                    {stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
-                                </Text>
-                            </Pressable>
-                        </View>
+                        <ModalButton.Block
+                            label='Stop'
+                            condition={lap.stop_id}
+                            value={stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
+                            onPress={openModal}
+                        />
 
-                        {showDatetimePicker && (
-                            <CustomDateTimePicker
-                                visible={showDatetimePicker}
-                                initialDateTime={new Date()}
-                                onClose={() => setShowDatetimePicker(false)}
-                                onConfirm={handleCustomDateConfirm}
-                            />
-                        )}
-
-                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Note:</Text>
-                            <TextInput
-                                placeholder="Optional notes"
-                                placeholderTextColor={colors.text.placeholderGray}
-                                value={lap.note || ''}
-                                onChangeText={text => setLap({ ...lap, note: text })}
-                                keyboardType="default"
-                                returnKeyType="done"
-                                multiline={true}
-                                numberOfLines={3}
-                                style={[inputStyles[theme].textInput, inputStyles[theme].multilineTextInput, inputElementStyles[theme].insideLabel]}
+                        <View style={[inputElementStyles[theme].inputGroup, { height: 160 }]}>
+                            <MapDisplay.Pin
+                                zoomLevel={15}
+                                centerCoordinate={[lap.lon || 0, lap.lat || 0]}
+                                zoomEnabled={false}
+                                scrollEnabled={false}
                             />
                         </View>
 
-                        <View style={buttonStyles[theme].buttonRow}>
-                            <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                            <Button title='Edit Lap' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                        </View>
-                    </View>
+                        <TextInputBlock.Multiline
+                            label='Note'
+                            value={lap.note}
+                            placeholder='Notes (optional)'
+                            onChangeText={(text) => setLap({ ...lap, note: text })}
+                            onClear={() => setLap({ ...lap, note: '' })}
+                        />
 
+                        <Divider />
+
+                        <Button.Row>
+                            <Button.Dismiss label='Cancel' onPress={onClose} />
+                            <Button.Add label='Edit Lap' onPress={handleOnSubmit} />
+                        </Button.Row>
+                    </ModalTemplate.BottomContainer>
 
                     <EditTravelStopModal
                         stops={stops}
-                        isModalVisible={showStopModal}
-                        searchQuery={stopSearchQuery}
-                        setSearchQuery={setStopSearchQuery}
+                        isModalVisible={showModal}
+                        searchQuery={searchQuery}
+                        setSearchQuery={setSearchQuery}
                         onSelect={handleStopSelect}
-                        onClose={closeStopModal}
+                        onClose={closeModal}
                     />
-                </Pressable>
+
+                    {showDatetimePicker && (
+                        <CustomDateTimePicker
+                            visible={showDatetimePicker}
+                            initialDateTime={new Date()}
+                            onClose={() => setShowDatetimePicker(false)}
+                            onConfirm={handleCustomDateConfirm}
+                        />
+                    )}
+                </>
             )}
-        </Modal>
+        </ModalTemplate.Bottom>
     )
 }

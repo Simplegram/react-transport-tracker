@@ -1,5 +1,6 @@
+import { ManageableLap } from "@/components/modal/FlatlistPicker"
 import { useSupabase } from "@/context/SupabaseContext"
-import { Direction, FullLap, IconType, Lap, Route, Stop, VehicleType } from "@/src/types/Travels"
+import { Direction, FullLap, IconType, Route, Stop, VehicleType } from "@/src/types/Travels"
 import { useEffect, useState } from "react"
 
 export default function useGetTravelData() {
@@ -11,8 +12,9 @@ export default function useGetTravelData() {
     const [fullVehicleTypes, setFullVehicleTypes] = useState<VehicleType[]>([])
     const [vehicleTypes, setVehicleTypes] = useState<VehicleType[]>([])
     const [icons, setIcons] = useState<IconType[]>([])
+    const [averageTime, setAverageTime] = useState()
 
-    const [laps, setLaps] = useState<Lap[]>([])
+    const [laps, setLaps] = useState<ManageableLap[]>([])
     const [travelLaps, setTravelLaps] = useState<FullLap[] | undefined>(undefined)
 
     const getDirections = async () => {
@@ -37,7 +39,7 @@ export default function useGetTravelData() {
     const getRoutes = async () => {
         const { data, error } = await supabase
             .from("routes")
-            .select("*, first_stop_id(id, name), last_stop_id(id, name), vehicle_type_id(id, name, icon_id(id, name))")
+            .select("*, first_stop_id(id, name), last_stop_id(id, name), vehicle_type:vehicle_type_id(id, name, icon_id(id, name))")
             .order("code")
 
         if (error) console.log(error)

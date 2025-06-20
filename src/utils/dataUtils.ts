@@ -1,4 +1,6 @@
+import { ManageableLap } from "@/components/modal/FlatlistPicker"
 import { DataItem, Lap } from "../types/Travels"
+import { getCleanMomentTime } from "./dateUtils"
 
 export interface DataItemWithNewKey extends DataItem {
     lapCount: number
@@ -22,7 +24,7 @@ export const getGroupedData = (data: DataItem[], laps: Lap[]) => {
             const timeA = (a.bus_initial_departure && new Date(a.bus_initial_departure).getTime()) || Infinity
             const timeB = (b.bus_initial_departure && new Date(b.bus_initial_departure).getTime()) || Infinity
 
-            return timeA - timeB
+            return timeB - timeA
         })
     })
 
@@ -40,4 +42,24 @@ export const getGroupedData = (data: DataItem[], laps: Lap[]) => {
     })
 
     return finalGroupedDataWithNewKey
+}
+
+export function getKeysSortedByCreatedAt(data: Record<string, DataItemWithNewKey[]>) {
+    const keys = Object.keys(data)
+
+    keys.sort((a, b) => {
+        const createdAtA = new Date(data[a][0].created_at)
+        const createdAtB = new Date(data[b][0].created_at)
+        return createdAtA - createdAtB
+    })
+
+    return keys
+}
+
+export function sortLaps(laps: ManageableLap[]) {
+    const sortedLaps = laps.sort((a, b) => {
+        return getCleanMomentTime(b.time).diff(getCleanMomentTime(a.time))
+    })
+
+    return sortedLaps
 }

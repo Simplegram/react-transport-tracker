@@ -1,3 +1,4 @@
+import { useDialog } from "@/context/DialogContext"
 import { useSupabase } from "@/context/SupabaseContext"
 import { DataItem } from "@/src/types/Travels"
 import { useEffect, useState } from "react"
@@ -34,6 +35,8 @@ function getDateToday() {
 export default function useTravelCalendar() {
     const { supabaseClient: supabase } = useSupabase()
 
+    const { dialog } = useDialog()
+
     const [travelAtDate, setTravelAtDate] = useState<DataItem[]>([])
     const [selectedDate, setSelectedDate] = useState<string>(getDateToday)
 
@@ -58,6 +61,7 @@ export default function useTravelCalendar() {
 
         if (error) {
             console.error("Error fetching dates:", error)
+            dialog('An error occured', JSON.stringify(error, null, 2))
             return
         }
 

@@ -1,10 +1,11 @@
 import { useTheme } from "@/context/ThemeContext"
-import { calendarStyles, calendarTheme } from "@/src/styles/CalendarStyles"
+import { calendarTheme } from "@/src/styles/CalendarStyles"
 import { StandaloneModalProp } from "@/src/types/AddableTravels"
-import { getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils"
-import { useState } from "react"
-import { Modal, Text, TouchableOpacity, View } from "react-native"
+import { getDateString, getFutureMonthFromLatestDate, getMonthsSinceEarliestDate } from "@/src/utils/dateUtils"
+import { View } from "react-native"
 import { CalendarList } from "react-native-calendars"
+import Button from "../button/BaseButton"
+import ModalTemplate from "../ModalTemplate"
 
 interface CalendarModalProps {
     dates: any
@@ -20,19 +21,17 @@ interface CalendarModalProps {
 export default function CalendarModal({ dates, markedDates, currentSelectedDate, modalElements }: CalendarModalProps) {
     const { theme } = useTheme()
 
-    const pastScrollRange = getMonthsSinceEarliestDate(dates)
-    const futureScrollRange = getFutureMonthFromLatestDate(dates, 1)
-    const [currentDate] = useState(new Date().toISOString().split('T')[0])
+    const pastScrollRange = getMonthsSinceEarliestDate(dates, currentSelectedDate)
+    const futureScrollRange = getFutureMonthFromLatestDate(currentSelectedDate)
 
     return (
-        <Modal
+        <ModalTemplate
             visible={modalElements.isModalVisible}
-            transparent={true}
             animationType="slide"
             onRequestClose={modalElements.onClose}
         >
-            <View style={calendarStyles[theme].modalBackdrop}>
-                <View style={calendarStyles[theme].calendarContainer}>
+            <ModalTemplate.Backdrop>
+                <ModalTemplate.CalendarContainer>
                     <CalendarList
                         current={currentSelectedDate}
                         pastScrollRange={pastScrollRange}
@@ -40,15 +39,24 @@ export default function CalendarModal({ dates, markedDates, currentSelectedDate,
                         markedDates={markedDates}
                         onDayPress={modalElements.onSelect}
                         theme={calendarTheme[theme]}
+                        contentContainerStyle={{ paddingBottom: 30 }}
                     />
-                    <TouchableOpacity
-                        style={calendarStyles[theme].todayButton}
-                        onPress={() => modalElements.onSelect({ dateString: currentDate })}
-                    >
-                        <Text style={calendarStyles[theme].todayButtonText}>Set Today</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-        </Modal>
+                    <View style={{
+                        position: 'absolute',
+                        bottom: 20,
+                        left: 0,
+                        right: 0,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        zIndex: 1,
+                        flexDirection: 'row',
+                        gap: 5,
+                    }}>
+                        <Button.Add label="Set Today" onPress={() => modalElements.onSelect({ dateString: getDateString() })} style={{ flex: 0 }} />
+                        <Button.Dismiss label="Close" onPress={modalElements.onClose} style={{ flex: 0 }} />
+                    </View>
+                </ModalTemplate.CalendarContainer>
+            </ModalTemplate.Backdrop>
+        </ModalTemplate>
     )
 }

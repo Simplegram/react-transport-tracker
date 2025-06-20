@@ -1,20 +1,22 @@
-import Button from "@/components/BaseButton"
-import { colors } from "@/const/color"
+import Button from "@/components/button/BaseButton"
+import { ModalButton } from "@/components/button/ModalButton"
+import Input from "@/components/input/Input"
+import { TextInputBase, TextInputBlock } from "@/components/input/TextInput"
+import VehicleSelector from "@/components/input/VehicleSelector"
+import { useDialog } from "@/context/DialogContext"
 import { useTheme } from "@/context/ThemeContext"
 import useGetTravelData from "@/hooks/useGetTravelData"
 import { useLoading } from "@/hooks/useLoading"
-import useStopModal from "@/hooks/useStopModal"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { iconPickerStyles, inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
-import { styles } from "@/src/styles/Styles"
+import useModalHandler from "@/hooks/useModalHandler"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { AddableCoordinates, AddableStop } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, Pressable, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native"
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { ScrollView, View } from "react-native"
 import AddCoordModal from "./AddCoordModal"
 
 export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentProps) {
+    const { dialog } = useDialog()
     const { theme } = useTheme()
 
     const { fullVehicleTypes } = useGetTravelData()
@@ -30,14 +32,14 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
     const { loading } = useLoading()
 
     const {
-        showStopModal: showCoordModal,
-        openStopModal: openCoordModal,
-        closeStopModal: closeCoordModal
-    } = useStopModal()
+        showModal: showCoordModal,
+        openModalWithSearch: openCoordModal,
+        closeModal: closeCoordModal
+    } = useModalHandler()
 
     const handleCoordSelect = (coordinates: AddableCoordinates) => {
         if (!coordinates.lat || !coordinates.lon) {
-            Alert.alert('Input Required', 'Please pick the right coordinates')
+            dialog('Input Required', 'Please pick coordinates')
             return
         }
 
@@ -47,7 +49,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
 
     const handleOnSubmit = () => {
         if (!stop.name?.trim() || !stop.vehicle_type) {
-            Alert.alert('Input Required', 'Please enter a stop name and choose a vehicle type.')
+            dialog('Input Required', 'Please enter stop name and choose a vehicle type')
             return
         }
 
@@ -57,93 +59,73 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
     return (
         <View>
             {loading ? (
-                <Text style={inputElementStyles[theme].inputLabel}>Loading...</Text>
+                <Input.LoadingLabel />
             ) : (
                 <>
-                    <View style={inputElementStyles[theme].inputContainer}>
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Name:</Text>
-                            <TextInput
-                                style={inputStyles[theme].textInput}
-                                placeholder="Stop name..."
-                                placeholderTextColor={colors.text.placeholderGray}
-                                value={stop.name}
-                                onChangeText={text => (setStop({ ...stop, "name": text }))}
-                            />
-                        </View>
+                    <Input.Container>
+                        <TextInputBlock
+                            label="Name"
+                            value={stop.name}
+                            placeholder="Stop name..."
+                            onChangeText={(text) => setStop({ ...stop, "name": text })}
+                            onClear={() => setStop({ ...stop, "name": '' })}
+                            required
+                        />
 
                         <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Latitude and Longitude:</Text>
+                            <Input.Label>Latitude and Longitude</Input.Label>
                             <View style={inputElementStyles[theme].inputGroupCoord}>
-                                <TextInput
-                                    style={[inputStyles[theme].textInput, inputStyles[theme].pressableInputCoord]}
-                                    placeholder="Stop latitude..."
-                                    placeholderTextColor={colors.text.placeholderGray}
+                                <TextInputBase
                                     value={stop.lat?.toString()}
-                                    onChangeText={text => (setStop({ ...stop, "lat": Number(text) }))}
+                                    placeholder="Stop latitude..."
+                                    onChangeText={(text) => setStop({ ...stop, "lat": Number(text) })}
+                                    style={{ flex: 1 }}
                                 />
-                                <TextInput
-                                    style={[inputStyles[theme].textInput, inputStyles[theme].pressableInputCoord]}
-                                    placeholder="Stop longitude..."
-                                    placeholderTextColor={colors.text.placeholderGray}
+                                <TextInputBase
                                     value={stop.lon?.toString()}
-                                    onChangeText={text => (setStop({ ...stop, "lon": Number(text) }))}
+                                    placeholder="Stop longitude..."
+                                    onChangeText={(text) => setStop({ ...stop, "lon": Number(text) })}
+                                    style={{ flex: 1 }}
                                 />
                             </View>
-                            <Pressable
-                                style={[inputStyles[theme].pressableInput, { marginTop: 10 }]}
-                                onPress={() => openCoordModal()}>
-                                <Text style={inputElementStyles[theme].insideLabel}>Pick Latitude and Longitude...</Text>
-                            </Pressable>
-                        </View>
-
-                        <View style={inputElementStyles[theme].inputGroup}>
-                            <Text style={inputElementStyles[theme].inputLabel}>Alternative name:</Text>
-                            <TextInput
-                                style={inputStyles[theme].textInput}
-                                placeholder="Alternative name..."
-                                placeholderTextColor={colors.text.placeholderGray}
-                                value={stop.name_alt ? stop.name_alt : ''}
-                                onChangeText={text => (setStop({ ...stop, "name_alt": text }))}
+                            <ModalButton
+                                condition={false}
+                                value="Pick Latitude and Longitude..."
+                                onPress={() => openCoordModal()}
+                                style={{ marginTop: 10 }}
                             />
                         </View>
 
-                        <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupEnd]}>
+                        <TextInputBlock
+                            label="Alternative name"
+                            value={stop.name_alt || ''}
+                            placeholder="Alternative name..."
+                            onChangeText={(text) => setStop({ ...stop, "name_alt": text })}
+                            onClear={() => setStop({ ...stop, "name_alt": '' })}
+                        />
+
+                        <View style={inputElementStyles[theme].inputGroup}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Text style={inputElementStyles[theme].inputLabel}>Icon:</Text>
+                                <Input.Label required={!stop.vehicle_type}>Icon</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
                                     keyboardShouldPersistTaps={"always"}
                                 >
                                     {fullVehicleTypes.map((type) => (
-                                        <TouchableOpacity
+                                        <VehicleSelector
                                             key={type.id}
-                                            style={[
-                                                iconPickerStyles[theme].iconTextContainer,
-                                                stop.vehicle_type === type.id && iconPickerStyles[theme].selectedIconContainer,
-                                            ]}
+                                            type={type}
+                                            condition={stop.vehicle_type === type.id}
                                             onPress={() => setStop({ ...stop, vehicle_type: type.id })}
-                                        >
-                                            <Icon
-                                                style={
-                                                    stop.vehicle_type === type.id ?
-                                                        iconPickerStyles[theme].selectedIcon
-                                                        :
-                                                        styles[theme].icon
-                                                }
-                                                name={type.icon_id.name}
-                                                size={20}
-                                            />
-                                            <Text style={inputElementStyles[theme].inputLabel}>{type.name.slice(0, 5)}</Text>
-                                        </TouchableOpacity>
+                                        />
                                     ))}
                                 </ScrollView>
                             </View>
                         </View>
-                    </View>
+                    </Input.Container>
 
                     <AddCoordModal
                         currentCoordinates={{
@@ -155,10 +137,10 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         onSelect={handleCoordSelect}
                     />
 
-                    <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button title='Add Stop' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                    </View>
+                    <Button.Row>
+                        <Button.Dismiss label='Cancel' onPress={onCancel} />
+                        <Button.Add label='Add Stop' onPress={handleOnSubmit} />
+                    </Button.Row>
                 </>
             )}
         </View>

@@ -1,16 +1,17 @@
-import Button from "@/components/BaseButton"
-import { colors } from "@/const/color"
+import Button from "@/components/button/BaseButton"
+import CustomIcon from "@/components/CustomIcon"
+import Input from "@/components/input/Input"
+import { TextInputBase } from "@/components/input/TextInput"
+import { useDialog } from "@/context/DialogContext"
 import { useTheme } from "@/context/ThemeContext"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles, inputStyles } from "@/src/styles/InputStyles"
-import { styles } from "@/src/styles/Styles"
+import { inputElementStyles } from "@/src/styles/InputStyles"
 import { AddableIconType } from "@/src/types/AddableTravels"
 import { BaseModalContentProps } from "@/src/types/ModalContentProps"
 import { useState } from "react"
-import { Alert, Text, TextInput, View } from "react-native"
-import Icon from 'react-native-vector-icons/FontAwesome6'
+import { View } from "react-native"
 
 export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentProps) {
+    const { dialog } = useDialog()
     const { theme } = useTheme()
 
     const [icon, setIcon] = useState<AddableIconType>({ 'name': undefined })
@@ -18,7 +19,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
 
     const handleOnSubmit = () => {
         if (!icon.name?.trim()) {
-            Alert.alert('Input Required', 'Please enter icon name')
+            dialog('Input Required', 'Please enter icon name')
             return
         }
 
@@ -38,25 +39,24 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
 
     return (
         <View>
-            <Text style={inputElementStyles[theme].inputLabel}>Icon name (FontAwesome6):</Text>
-            <View style={inputElementStyles[theme].inputContainer}>
+            <Input.Label required>Icon name (FontAwesome6)</Input.Label>
+            <Input.Container>
                 <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupIcon]}>
-                    <Icon style={styles[theme].icon} name={icon.name ? icon.name : 'xmark'} size={32} />
-                    <TextInput
-                        style={[inputStyles[theme].textInput, { flex: 1 }]}
-                        placeholder="e.g., train-subway"
-                        placeholderTextColor={colors.text.placeholderGray}
+                    <CustomIcon name={icon.name ? icon.name : 'xmark'} size={32} />
+                    <TextInputBase.Clear
                         value={iconQuery}
+                        placeholder="e.g., train-subway"
                         onChangeText={changeIcon}
-                        autoFocus={true}
+                        containerStyle={{ flex: 1 }}
+                        onClear={() => changeIcon('')}
                     />
                 </View>
-            </View>
+            </Input.Container>
 
-            <View style={buttonStyles[theme].buttonRow}>
-                <Button title='Cancel' onPress={onCancel} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                <Button title='Add Icon' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-            </View>
+            <Button.Row>
+                <Button.Dismiss label='Cancel' onPress={onCancel} />
+                <Button.Add label='Add Icon' onPress={handleOnSubmit} />
+            </Button.Row>
         </View>
     )
 }

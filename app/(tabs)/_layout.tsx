@@ -1,107 +1,74 @@
-import { colors } from "@/const/color"
-import { ModalContext } from "@/context/ModalContext"
-import { TravelContext } from "@/context/PageContext"
-import { SupabaseProvider } from "@/context/SupabaseContext"
+import { ModalProvider } from "@/context/ModalContext"
 import { useTheme } from "@/context/ThemeContext"
-import { statusBarStyles } from "@/src/styles/Styles"
-import { DataItem } from "@/src/types/Travels"
-import { Tabs } from "expo-router"
-import { useState } from "react"
+import { colors } from "@/src/const/color"
+import { Tabs, usePathname } from "expo-router"
 import { StatusBar } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 const TabsLayout = () => {
     const { theme } = useTheme()
 
-    const barColor = theme === 'light' ? colors.text.dimWhite : colors.background.black
-    const iconColor = theme === 'light' ? colors.background.black : colors.text.dimmerWhite2
+    const barColor = theme === 'light' ? colors.white_100 : colors.black
+    const iconColor = theme === 'light' ? colors.black : colors.white_200
 
-    const [selectedItem, setSelectedItem] = useState<DataItem | undefined>(undefined)
-    const [selectedTravelItems, setSelectedTravelItems] = useState<DataItem[] | undefined>(undefined)
-    const [selectedModification, setSelectedModification] = useState<string | undefined>(undefined)
+    const getDisplayValue = () => {
+        const paths = ["/manage/settings", "/manage/datalist", "/main/editTravel", "/main/travelDetail", "/main/estimate"]
 
-    const [modalData, setModalData] = useState<string | undefined>(undefined)
+        const currentPathname = usePathname()
+        if (paths.indexOf(currentPathname) <= -1) return "flex"
+
+        return "none"
+    }
 
     return (
-        <SupabaseProvider>
-            <TravelContext.Provider value={{
-                selectedItem,
-                setSelectedItem,
-                selectedModification,
-                setSelectedModification,
-                selectedTravelItems,
-                setSelectedTravelItems
-            }}>
-                <ModalContext.Provider value={{ modalData, setModalData }}>
-                    <StatusBar
-                        backgroundColor={statusBarStyles[theme]}
-                    />
-                    <Tabs screenOptions={{
-                        tabBarStyle: {
-                            height: 60,
-                            backgroundColor: barColor,
-                            borderTopWidth: 0
-                        },
-                        tabBarLabelStyle: {
-                            fontSize: 13,
-                            fontWeight: 'bold',
-                        },
-                        tabBarActiveTintColor: colors.appBlue,
-                        tabBarInactiveTintColor: iconColor,
-                        headerShown: false,
-                    }}>
-                        <Tabs.Screen
-                            name="mainMenu"
-                            options={{
-                                title: "Home",
-                                tabBarIcon: ({ color }) => <Icon size={24} name="house" color={color} />,
-                            }}
-                        />
-                        <Tabs.Screen
-                            name="addTravel"
-                            options={{
-                                title: "Add",
-                                tabBarIcon: ({ color }) => <Icon size={24} name="square-plus" color={color} />,
-                            }}
-                        />
-                        <Tabs.Screen
-                            name="addPage"
-                            options={{
-                                title: "Modify",
-                                tabBarIcon: ({ color }) => <Icon size={24} name="pen-to-square" color={color} />,
-                            }}
-                        />
-                        <Tabs.Screen
-                            name="editTravel"
-                            options={{
-                                title: "Edit Travel",
-                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
-                                href: null,
-                                tabBarStyle: {
-                                    display: "none"
-                                }
-                            }}
-                        />
-                        <Tabs.Screen
-                            name="dataList"
-                            options={{
-                                title: "Data List",
-                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
-                                href: null
-                            }}
-                        />
-                        <Tabs.Screen
-                            name="travelDetail"
-                            options={{
-                                title: "Travel Detail",
-                                tabBarIcon: ({ color }) => <Icon size={24} name="plus" color={color} />,
-                                href: null
-                            }}
-                        />
-                    </Tabs>
-                </ModalContext.Provider>
-            </TravelContext.Provider>
-        </SupabaseProvider>
+        <ModalProvider>
+            <StatusBar backgroundColor={theme === 'light' ? colors.white_100 : colors.black} />
+            <Tabs
+                screenOptions={{
+                    tabBarStyle: {
+                        height: 60,
+                        elevation: 0,
+                        borderTopWidth: 0,
+
+                        display: getDisplayValue(),
+                        backgroundColor: barColor,
+                    },
+                    tabBarLabelStyle: {
+                        fontSize: 13,
+                        fontWeight: 'bold',
+                    },
+                    tabBarActiveTintColor: colors.primary,
+                    tabBarInactiveTintColor: iconColor,
+                    headerShown: false,
+                    sceneStyle: {
+                        backgroundColor: barColor
+                    }
+                }}
+                backBehavior="order"
+            >
+                <Tabs.Screen
+                    name="main"
+                    options={{
+                        title: "Home",
+                        tabBarIcon: ({ color }) => <Icon size={24} name="house" color={color} />,
+                    }}
+                />
+                <Tabs.Screen
+                    name="addTravel"
+                    options={{
+                        title: "Add",
+                        tabBarIcon: ({ color }) => <Icon size={24} name="square-plus" color={color} />,
+                    }}
+                />
+                <Tabs.Screen
+                    name="manage"
+                    options={{
+                        title: "Modify",
+                        tabBarIcon: ({ color }) => <Icon size={24} name="pen-to-square" color={color} />,
+                    }}
+                />
+            </Tabs>
+        </ModalProvider>
     )
 }
 

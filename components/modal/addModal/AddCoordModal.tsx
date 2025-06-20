@@ -1,22 +1,14 @@
-import Button from "@/components/BaseButton"
-import { useTheme } from "@/context/ThemeContext"
+import Button from "@/components/button/BaseButton"
+import MapDisplay from "@/components/MapDisplay"
+import ModalTemplate from "@/components/ModalTemplate"
+import { useDialog } from "@/context/DialogContext"
 import useLocation from "@/hooks/useLocation"
-import { buttonStyles } from "@/src/styles/ButtonStyles"
-import { inputElementStyles } from "@/src/styles/InputStyles"
-import { modalStyles } from "@/src/styles/ModalStyles"
 import { AddableCoordModalProp } from "@/src/types/AddableTravels"
-import { Camera, MapView } from "@maplibre/maplibre-react-native"
 import { LocationObject } from "expo-location"
 import { useEffect, useRef, useState } from "react"
-import { Alert, Modal, Pressable, StyleSheet, View } from "react-native"
-
-const pointSize = {
-    width: 8,
-    height: 8
-}
 
 export default function AddCoordModal({ currentCoordinates, isModalVisible, onClose, onSelect }: AddableCoordModalProp) {
-    const { theme } = useTheme()
+    const { dialog } = useDialog()
 
     const mapRef = useRef(null)
 
@@ -52,7 +44,7 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
         const currentMapRef = mapRef.current
 
         if (currentMapRef === null) {
-            Alert.alert('MapRef not available', 'There is a problem obtaining current map ref')
+            dialog('MapRef not available', 'There is a problem obtaining current map ref')
             return
         }
 
@@ -66,56 +58,19 @@ export default function AddCoordModal({ currentCoordinates, isModalVisible, onCl
     }
 
     return (
-        <Modal
-            visible={isModalVisible}
-            transparent={true}
-            animationType="slide"
-        >
-            <Pressable style={modalStyles[theme].modalBackdrop}>
-                <View style={[modalStyles[theme].modalContainer, modalStyles[theme].coordModalContainer]} onStartShouldSetResponder={() => true}>
-                    <View style={[inputElementStyles[theme].inputGroup, { flex: 1 }]}>
-                        <MapView
-                            ref={mapRef}
-                            style={{ flex: 1 }}
-                            rotateEnabled={false}
-                            mapStyle={process.env.EXPO_PUBLIC_MAP_STYLE}
-                        >
-                            <Camera
-                                zoomLevel={zoomLevel}
-                                centerCoordinate={centerCoordinate}
-                            />
-                        </MapView>
-                        <View style={styles.container}>
-                            <View style={styles.point} />
-                        </View>
-                    </View>
+        <ModalTemplate.Bottom visible={isModalVisible}>
+            <ModalTemplate.BottomContainer style={{ height: 475 }}>
+                <MapDisplay.Pin
+                    mapRef={mapRef}
+                    zoomLevel={zoomLevel}
+                    centerCoordinate={centerCoordinate}
+                />
 
-                    <View style={buttonStyles[theme].buttonRow}>
-                        <Button title='Cancel' onPress={onClose} style={buttonStyles[theme].cancelButton} textStyle={buttonStyles[theme].cancelButtonText}></Button>
-                        <Button title='Pick Coordinate' color='#0284f5' onPress={handleOnSubmit} style={buttonStyles[theme].addButton} textStyle={buttonStyles[theme].addButtonText}></Button>
-                    </View>
-                </View>
-            </Pressable>
-        </Modal>
+                <Button.Row>
+                    <Button.Dismiss label='Cancel' onPress={onClose} />
+                    <Button.Add label='Pick Coordinate' onPress={handleOnSubmit} />
+                </Button.Row>
+            </ModalTemplate.BottomContainer>
+        </ModalTemplate.Bottom>
     )
 }
-
-const styles = StyleSheet.create({
-    container: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        pointerEvents: 'box-none',
-    },
-    point: {
-        width: pointSize.width,
-        height: pointSize.height,
-        borderRadius: 5,
-        borderWidth: 1,
-        backgroundColor: 'red',
-    },
-})
