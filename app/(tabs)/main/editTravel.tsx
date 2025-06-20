@@ -425,6 +425,7 @@ export default function EditTravelItem() {
                         stops={stops}
                         isModalVisible={showStopModal}
                         searchQuery={stopSearchQuery}
+                        vehicleTypeId={travel.type_id}
                         setSearchQuery={setStopSearchQuery}
                         onSelect={handleStopSelect}
                         onClose={closeStopModal}

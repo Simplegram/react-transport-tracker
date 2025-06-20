@@ -7,15 +7,18 @@ import { useTheme } from "@/context/ThemeContext"
 import { modalElementStyles, modalStyles } from "@/src/styles/ModalStyles"
 import { EditableTravelStopModalProp } from "@/src/types/EditableTravels"
 import { Stop } from "@/src/types/Travels"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Pressable, View } from "react-native"
 import FlatlistBase from "../FlatlistPicker"
 
-export default function EditTravelStopModal({ stops, searchQuery, isModalVisible, setSearchQuery, onClose, onSelect }: EditableTravelStopModalProp) {
+export default function EditTravelStopModal({ stops, searchQuery, isModalVisible, vehicleTypeId, setSearchQuery, onClose, onSelect }: EditableTravelStopModalProp) {
     const { theme } = useTheme()
-    const { vehicleTypeId } = useModalContext()
 
-    const [enableFilter, setEnableFilter] = useState<boolean>(vehicleTypeId ? true : false)
+    const [enableFilter, setEnableFilter] = useState<boolean>(false)
+
+    useEffect(() => {
+        if (vehicleTypeId) setEnableFilter(true)
+    }, [vehicleTypeId])
 
     const filteredStops = useMemo(() => {
         if (!stops) return []

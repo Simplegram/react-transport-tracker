@@ -12,6 +12,7 @@ import EditTravelDirectionModal from '@/components/modal/travelModal/EditTravelD
 import EditTravelRouteModal from '@/components/modal/travelModal/EditTravelRouteModal'
 import EditTravelStopModal from '@/components/modal/travelModal/EditTravelStopModal'
 import { useDialog } from '@/context/DialogContext'
+import { useModalContext } from '@/context/ModalContext'
 import { useTheme } from '@/context/ThemeContext'
 import useGetTravelData from '@/hooks/useGetTravelData'
 import { useToggleLoading } from '@/hooks/useLoading'
@@ -30,6 +31,7 @@ import {
 export default function AddTravel() {
     const { theme } = useTheme()
     const { dialog } = useDialog()
+    const { setVehicleTypeId } = useModalContext()
 
     const { addTravel, addLaps } = useModifyTravelData()
     const { stops, routes, directions, vehicleTypes, refetchTravelData } = useGetTravelData()
@@ -371,6 +373,7 @@ export default function AddTravel() {
                 stops={stops}
                 isModalVisible={showStopModal}
                 searchQuery={stopSearchQuery}
+                vehicleTypeId={travel.type_id}
                 setSearchQuery={setStopSearchQuery}
                 onSelect={handleStopSelect}
                 onClose={closeStopModal}

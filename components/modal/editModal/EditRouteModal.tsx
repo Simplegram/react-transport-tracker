@@ -143,6 +143,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                         stops={stops}
                         isModalVisible={showModal}
                         searchQuery={searchQuery}
+                        vehicleTypeId={route.vehicle_type_id}
                         setSearchQuery={setSearchQuery}
                         onSelect={handleStopSelect}
                         onClose={closeModal}

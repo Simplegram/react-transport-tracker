@@ -218,6 +218,7 @@ export default function EstimationPage() {
                 stops={stops}
                 isModalVisible={showStopModal}
                 searchQuery={stopSearchQuery}
+                vehicleTypeId={route?.vehicle_type.id}
                 setSearchQuery={setStopSearchQuery}
                 onSelect={handleStopSelect}
                 onClose={closeStopModal}

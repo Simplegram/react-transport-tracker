@@ -81,6 +81,7 @@ interface EditableTravelStopModalProp {
     setSearchQuery: (query: string) => void
     onClose: () => void
     onSelect: (stopId: number) => void
+    vehicleTypeId?: number | null
 }
 
 interface EditableLapsModalProp {

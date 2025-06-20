@@ -134,6 +134,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                         stops={stops}
                         isModalVisible={showModal}
                         searchQuery={searchQuery}
+                        vehicleTypeId={route.vehicle_type_id}
                         setSearchQuery={setSearchQuery}
                         onSelect={handleStopSelect}
                         onClose={closeModal}
