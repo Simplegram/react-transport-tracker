@@ -80,6 +80,8 @@ function TitleDivide({ style, ...props }: TextBaseProps) {
     return (
         <Title style={[
             {
+                width: '100%',
+
                 paddingBottom: 5,
                 borderBottomWidth: 0.5,
 

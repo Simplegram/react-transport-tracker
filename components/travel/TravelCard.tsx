@@ -23,7 +23,7 @@ function CardContent({ item }: CardContentProps) {
             key={item.id}
             style={travelCardStyles[theme].card}
         >
-            <View style={travelCardStyles[theme].routeInfoSection}>
+            <View style={{ alignItems: 'center' }}>
                 <Input.SubtitlePrimary style={{ textAlign: 'center' }}>
                     {item.routes?.code} | {item.routes?.name || item.routes?.code || 'N/A'}
                 </Input.SubtitlePrimary>
