@@ -12,7 +12,7 @@ export default function Container({ style, ...props }: ViewProps) {
                     gap: 10,
                     flexGrow: 1,
                     paddingTop: 5,
-                    paddingBottom: 20,
+                    paddingBottom: 15,
                     paddingHorizontal: 15,
                     justifyContent: 'center',
 

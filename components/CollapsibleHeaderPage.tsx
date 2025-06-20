@@ -38,7 +38,7 @@ export default function CollapsibleHeaderPage({
             <ScrollView
                 contentContainerStyle={{
                     flexGrow: 1,
-                    paddingBottom: 20,
+                    paddingBottom: 15,
                 }}
                 showsVerticalScrollIndicator={false}
                 keyboardShouldPersistTaps={'always'}
