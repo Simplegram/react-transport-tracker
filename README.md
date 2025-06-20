@@ -31,10 +31,12 @@ Based on my personal experience as a former public transport commuter. I used to
   - moment
   - moment-timezone
   - react-native-calendars
+  - expo-localization (for getting timezone)
 - **Other Utilities:**
   - expo-crypto (for generating UUID)
   - react-native-keyboard-aware-scroll-view (for handling view autoscroll)
   - react-native-gesture-handler (core for touch/gesture handling)
+  - @react-native-community/netinfo (for fetching internet connection status)
 
 ## Get Started
 
