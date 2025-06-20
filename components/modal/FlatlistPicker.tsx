@@ -18,7 +18,7 @@ interface PickerProps {
     children?: (item: any) => React.ReactNode
 }
 
-function PickerFlatlist({ items, maxHeight = 300, onSelect, children }: PickerProps) {
+function PickerFlatlist({ items, maxHeight = 350, onSelect, children }: PickerProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -28,7 +28,7 @@ function PickerFlatlist({ items, maxHeight = 300, onSelect, children }: PickerPr
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
                 <TouchableOpacity
-                    activeOpacity={0.5}
+                    activeOpacity={0.7}
                     style={{
                         gap: 10,
                         display: 'flex',
