@@ -81,7 +81,7 @@ const formatDateForDisplay = (isoString: string | undefined | null) => {
 }
 
 export const formatLapTimeDisplay = (isoString: string | undefined | null, timeOnly: boolean = false) => {
-    if (!isoString) return 'Select Date/Time...'
+    if (!isoString) return null
     const cleanTime = isoString.replace("T", " ")
     const formattedDate = moment(cleanTime).format("YYYY-MM-DD")
     const formattedTime = moment(cleanTime).format("HH:mm:ss")

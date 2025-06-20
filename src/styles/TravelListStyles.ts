@@ -11,7 +11,6 @@ const lightTravelCardStyles = StyleSheet.create({
         height: 290,
         justifyContent: 'space-between',
     },
-    routeInfoSection: {},
     stopsTimeSection: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -41,9 +40,6 @@ export const travelCardStyles = {
             ...lightTravelCardStyles.card,
             backgroundColor: colors.black,
             borderColor: colors.white_300,
-        },
-        routeInfoSection: {
-            ...lightTravelCardStyles.routeInfoSection,
         },
         stopsTimeSection: {
             ...lightTravelCardStyles.stopsTimeSection,

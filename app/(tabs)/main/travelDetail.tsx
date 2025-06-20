@@ -223,6 +223,9 @@ export default function TravelDetail() {
     let efficiencyPercentage = 0
     if (averageRouteDurationMilliseconds > 0) {
         efficiencyPercentage = (averageRouteDurationMilliseconds / totalOnRoadMilliseconds) * 100
+        if (!isFinite(efficiencyPercentage)) {
+            efficiencyPercentage = 0
+        }
     }
 
     const timeDiff = formatMsToMinutes(totalOnRoadMilliseconds - averageRouteDurationMilliseconds, true)

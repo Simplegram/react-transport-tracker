@@ -24,8 +24,8 @@ export default function IndividualTravelDetailCard({ travel, travelTime }: Trave
         const travelDuration = moment.duration(finalArrivalDate.diff(departureDate, 'seconds', true), "seconds")
         const durationString = getDiffString(travelDuration)
 
-        const departureTime = formatLapTimeDisplay(travel.bus_initial_departure, true)
-        const arrivalTime = formatLapTimeDisplay(travel.bus_final_arrival, true)
+        const departureTime = formatLapTimeDisplay(travel.bus_initial_departure, true) || 'N/A'
+        const arrivalTime = formatLapTimeDisplay(travel.bus_final_arrival, true) || 'N/A'
         const timeString = `${departureTime} - ${arrivalTime}`
 
         const stopString = `${travel.first_stop_id.name} to ${travel.last_stop_id.name}`

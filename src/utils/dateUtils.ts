@@ -121,9 +121,9 @@ export const getDiffString = (duration: moment.Duration, usePrefix: boolean = fa
     const minutes = duration.minutes()
     const seconds = duration.seconds()
 
-    const hoursString = hours !== 0 ? `${Math.abs(hours)}h ` : ``
-    const minutesString = minutes !== 0 ? `${padNumber(Math.abs(minutes))}m ` : ``
-    const secondsString = `${padNumber(Math.abs(seconds))}s`
+    const hoursString = ((hours !== 0) && !isNaN(hours)) ? `${Math.abs(hours)}h ` : ''
+    const minutesString = ((minutes !== 0) && !isNaN(minutes)) ? `${padNumber(Math.abs(minutes))}m ` : ''
+    const secondsString = !isNaN(seconds) ? `${padNumber(Math.abs(seconds))}s` : 'N/A'
 
     const prefix = usePrefix ? (hours < 0 || minutes < 0 || seconds < 0) ? "+" : "-" : ""
 
