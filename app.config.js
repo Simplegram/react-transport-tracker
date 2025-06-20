@@ -43,7 +43,8 @@ export default {
                 "android.permission.ACCESS_FINE_LOCATION",
                 "android.permission.FOREGROUND_SERVICE",
                 "android.permission.VIBRATE",
-            ]
+            ],
+            softwareKeyboardLayoutMode: 'pan'
         },
         orientation: 'portrait',
         newArchEnabled: false,

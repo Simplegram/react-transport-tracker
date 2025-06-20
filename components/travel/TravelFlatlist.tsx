@@ -22,13 +22,13 @@ export function EmptyHeaderComponent({ children }: PropsWithChildren) {
         }
     }, [])
 
-    const minMaxHeight = width < height ? height * 0.3 : 0
-    const minHeight = width < height ? height * 0.15 : 0
+    const maxMinHeight = height * 0.4
+    const minHeight = height * 0.1
 
     return (
         <View style={{
             flex: 1,
-            height: keyboardShown ? minHeight : minMaxHeight,
+            height: keyboardShown ? minHeight : maxMinHeight,
             justifyContent: 'center',
             alignItems: 'center'
         }}>

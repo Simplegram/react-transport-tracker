@@ -10,7 +10,7 @@ import { colors } from '@/src/const/color'
 import { statusBarStyles } from '@/src/styles/Styles'
 import { SupabaseClient } from '@supabase/supabase-js'
 import React, { useEffect, useState } from 'react'
-import { KeyboardAvoidingView, StatusBar, StyleSheet, Text, View } from 'react-native'
+import { StatusBar, StyleSheet, Text, View } from 'react-native'
 
 const Login = () => {
     const {
@@ -69,7 +69,7 @@ const Login = () => {
     }, [supabaseClient])
 
     return (
-        <KeyboardAvoidingView
+        <View
             style={styles[theme].keyboardView}
         >
             <StatusBar
@@ -123,7 +123,7 @@ const Login = () => {
                         </>
                     )}
             </View>
-        </KeyboardAvoidingView>
+        </View>
     )
 }
 
