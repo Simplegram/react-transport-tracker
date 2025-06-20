@@ -1,6 +1,5 @@
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
-import { EditableLap } from "@/src/types/EditableTravels"
 import { Stop } from "@/src/types/Travels"
 import { formatLapTimeDisplay } from "@/src/utils/utils"
 import React from "react"
@@ -143,7 +142,7 @@ function LapList({ laps, stops, onPress, onRemove }: LapProps) {
 
                     </Pressable>
                     {index < (laps.length - 1) && (
-                        <Divider />
+                        <Divider paddingSize={8} />
                     )}
                 </Animated.View>
             )}
