@@ -3,19 +3,24 @@ import { ModalButton } from '@/components/button/ModalButton'
 import Divider from '@/components/Divider'
 import { TextInputBlock } from '@/components/input/TextInput'
 import LoadingScreen from '@/components/LoadingScreen'
+import MapDisplay from '@/components/MapDisplay'
 import CustomDateTimePicker from '@/components/modal/CustomDatetimePicker'
 import ModalTemplate from '@/components/ModalTemplate'
 import { useDialog } from '@/context/DialogContext'
+import { useTheme } from '@/context/ThemeContext'
 import useModalHandler from '@/hooks/useModalHandler'
+import { inputElementStyles } from '@/src/styles/InputStyles'
 import { EditableLapModalProp } from '@/src/types/EditableTravels'
 import { getDateToIsoString } from '@/src/utils/dateUtils'
 import { formatDateForDisplay } from '@/src/utils/utils'
 import React, { useEffect, useState } from 'react'
+import { View } from 'react-native'
 import { ManageableLap } from '../FlatlistPicker'
 import EditTravelStopModal from '../travelModal/EditTravelStopModal'
 
 export default function EditLapModal({ stops, selectedLap, isModalVisible, onClose, onSelect }: EditableLapModalProp) {
     const { dialog } = useDialog()
+    const { theme } = useTheme()
 
     const {
         showModal,
@@ -105,6 +110,15 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
                             value={stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
                             onPress={openModal}
                         />
+
+                        <View style={[inputElementStyles[theme].inputGroup, { height: 160 }]}>
+                            <MapDisplay.Pin
+                                zoomLevel={15}
+                                centerCoordinate={[lap.lon || 0, lap.lat || 0]}
+                                zoomEnabled={false}
+                                scrollEnabled={false}
+                            />
+                        </View>
 
                         <TextInputBlock.Multiline
                             label='Note'
