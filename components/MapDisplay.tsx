@@ -1,8 +1,8 @@
 import { useTheme } from "@/context/ThemeContext"
+import { colors } from "@/src/const/color"
 import { Camera, MapView } from "@maplibre/maplibre-react-native"
-import { StyleSheet, View } from "react-native"
+import { StyleSheet, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
-import Button from "./button/BaseButton"
 
 const pointSize = {
     width: 8,
@@ -74,11 +74,31 @@ export function Pin(props: PinProps) {
                 <View style={styles.point} />
             </View>
             {updateLocation && (
-                <View style={styles.buttonContainer}>
-                    <Button style={styles.button} onPress={updateLocation}>
-                        <Icon name="location-crosshairs" style={{ color: theme.palette.textBlack }} size={24} />
-                    </Button>
-                </View>
+                <TouchableOpacity
+                    style={{
+                        width: 42,
+                        aspectRatio: 1,
+
+                        right: 5,
+                        bottom: 5,
+                        position: 'absolute',
+
+                        alignItems: 'center',
+                        justifyContent: 'center',
+
+                        borderWidth: 1,
+                        borderColor: 'black',
+                        borderRadius: 50,
+                        backgroundColor: theme.name === 'light' ? colors.white_200 : colors.white_800,
+
+                        overflow: 'hidden',
+                        pointerEvents: 'box-none',
+                    }}
+                    onPress={updateLocation}
+                    activeOpacity={0.7}
+                >
+                    <Icon name="location-crosshairs" style={{ color: theme.palette.textBlack }} size={24} />
+                </TouchableOpacity>
             )}
         </View>
     )
@@ -86,13 +106,13 @@ export function Pin(props: PinProps) {
 
 const styles = StyleSheet.create({
     pointContainer: {
-        position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
-        justifyContent: 'center',
+        position: 'absolute',
         alignItems: 'center',
+        justifyContent: 'center',
         pointerEvents: 'box-none',
     },
     point: {
@@ -101,18 +121,6 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 1,
         backgroundColor: 'red',
-    },
-    buttonContainer: {
-        position: 'absolute',
-        right: 0,
-        bottom: 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        pointerEvents: 'box-none',
-    },
-    button: {
-        borderWidth: 0,
-        backgroundColor: 'transparent',
     },
 })
 
