@@ -305,6 +305,12 @@ export default function AddTravel() {
                         onPress={() => openStopModal('last_stop_id')}
                         required
                     />
+
+                    <Button.Dismiss onPress={() => {
+                        const first_id = travel.first_stop_id
+
+                        setTravel({ ...travel, first_stop_id: travel.last_stop_id, last_stop_id: first_id })
+                    }}>Switch Stop</Button.Dismiss>
                 </View>
 
                 <Divider />
