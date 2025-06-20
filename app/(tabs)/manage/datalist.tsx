@@ -98,7 +98,7 @@ export default function DataListScreen() {
 
     return (
         <Container style={{ flex: 1 }}>
-            {loading || !dataType ? (
+            {loading || !dataType || !data ? (
                 <LoadingScreen />
             ) : (
                 <>
