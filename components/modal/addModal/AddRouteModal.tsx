@@ -111,7 +111,7 @@ export default function AddRouteModal({ stops: stops, onCancel, onSubmit }: Moda
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Input.Label required>Type</Input.Label>
+                                <Input.Label required={!route.vehicle_type_id}>Type</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}

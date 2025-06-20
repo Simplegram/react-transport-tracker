@@ -48,7 +48,7 @@ export default function AddVehicleTypeModal({ icons, onSubmit, onCancel }: Vehic
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Input.Label required>Icon</Input.Label>
+                                <Input.Label required={!vehicleType.icon_id}>Icon</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}

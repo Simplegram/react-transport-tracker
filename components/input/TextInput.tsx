@@ -101,7 +101,7 @@ export function TextInputBlock({ style, required = false, ...props }: TextInputB
 
     return (
         <View style={inputElementStyles[theme].inputGroup}>
-            {props.label && <Input.Label required={required}>{props.label}</Input.Label>}
+            {props.label && <Input.Label required={required ? (props.value ? false : true) : false}>{props.label}</Input.Label>}
             <TextInputWithClear style={style} {...restOfProps} />
         </View>
     )

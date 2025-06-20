@@ -108,7 +108,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Input.Label required>Icon</Input.Label>
+                                <Input.Label required={!stop.vehicle_type}>Icon</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}

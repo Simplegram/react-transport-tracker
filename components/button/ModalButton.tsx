@@ -48,7 +48,7 @@ interface ButtonBlockProps extends ModalButtonProps {
 function ModalButtonBlock({ label, condition, value, style, required = false, onPress }: ButtonBlockProps) {
     return (
         <Input>
-            <Input.Label required={required}>{label}</Input.Label>
+            <Input.Label required={required ? (condition ? false : true) : false}>{label}</Input.Label>
             <ModalButton
                 condition={condition}
                 value={value}
