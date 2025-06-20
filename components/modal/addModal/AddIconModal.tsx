@@ -39,7 +39,7 @@ export default function AddIconModal({ onSubmit, onCancel }: BaseModalContentPro
 
     return (
         <View>
-            <Input.Label>Icon name (FontAwesome6):</Input.Label>
+            <Input.Label required>Icon name (FontAwesome6)</Input.Label>
             <Input.Container>
                 <View style={[inputElementStyles[theme].inputGroup, inputElementStyles[theme].inputGroupIcon]}>
                     <CustomIcon name={icon.name ? icon.name : 'xmark'} size={32} />

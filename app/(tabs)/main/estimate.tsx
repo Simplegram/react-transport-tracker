@@ -151,35 +151,39 @@ export default function EstimationPage() {
             <Input.Container style={{ paddingBottom: 0 }}>
                 <View style={inputElementStyles[theme].inputLargeGroup}>
                     <ModalButton.Block
-                        label='Route:'
+                        label='Route'
                         condition={input.route_id}
                         value={input.route_id ? `${routes.find(route => route.id === input.route_id)?.code || ''} | ${routes.find(route => route.id === input.route_id)?.name || ''}` : 'Select Route...'}
                         onPress={() => openRouteModal()}
+                        required
                     />
 
                     <ModalButton.Block
-                        label='Direction:'
+                        label='Direction'
                         condition={input.direction_id}
                         value={directions.find(direction => direction.id === input.direction_id)?.name || 'Select Direction...'}
                         onPress={() => openDirectionModal()}
+                        required
                     />
 
                     <ModalButton.Block
-                        label='First Stop:'
+                        label='First Stop'
                         condition={input.first_stop_id}
                         value={stops.find(stop => stop.id === input.first_stop_id)?.name || 'Select First Stop...'}
                         onPress={() => openStopModal('first_stop_id')}
+                        required
                     />
 
                     <ModalButton.Block
-                        label='Last Stop:'
+                        label='Last Stop'
                         condition={input.last_stop_id}
                         value={stops.find(stop => stop.id === input.last_stop_id)?.name || 'Select Last Stop...'}
                         onPress={() => openStopModal('last_stop_id')}
+                        required
                     />
 
                     <Input>
-                        <Input.Label>Estimate Type:</Input.Label>
+                        <Input.Label>Estimate Type</Input.Label>
                         <TypeButton.Block
                             type={input.estimate_type}
                             onPress={setTimeCase}

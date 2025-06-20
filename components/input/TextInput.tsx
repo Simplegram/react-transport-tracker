@@ -91,16 +91,17 @@ function TextInputNumeric(props: TextInputProps) {
 
 interface TextInputBlockProps extends InputClearProps {
     label: string
+    required?: boolean
 }
 
-export function TextInputBlock({ style, ...props }: TextInputBlockProps) {
+export function TextInputBlock({ style, required = false, ...props }: TextInputBlockProps) {
     const { theme } = useTheme()
 
     const { label, ...restOfProps } = props
 
     return (
         <View style={inputElementStyles[theme].inputGroup}>
-            {props.label && <Input.Label>{props.label}</Input.Label>}
+            {props.label && <Input.Label required={required}>{props.label}</Input.Label>}
             <TextInputWithClear style={style} {...restOfProps} />
         </View>
     )

@@ -20,7 +20,7 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
 
     const handleOnSubmit = () => {
         if (!direction.name?.trim()) {
-            dialog('Input Required', 'Please enter a direction name')
+            dialog('Input Required', 'Please enter direction name')
             return
         }
 
@@ -36,10 +36,11 @@ export default function EditDirectionModal({ onCancel, onSubmit }: BaseModalCont
                     <Input.Container>
                         <TextInputBlock
                             value={direction.name}
-                            label="Name:"
+                            label="Name"
                             placeholder="Direction name..."
                             onChangeText={(text) => setDirection({ ...direction, "name": text })}
                             onClear={() => setDirection({ ...direction, "name": '' })}
+                            required
                         />
                     </Input.Container>
 

@@ -67,7 +67,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
 
     const handleOnSubmit = () => {
         if (!route.name || !route.first_stop_id || !route.last_stop_id || !route.vehicle_type) {
-            dialog('Input Required', 'Please add route name/stops/vehicle type')
+            dialog('Input Required', 'Please add name/stops/vehicle type')
             return
         }
 
@@ -84,7 +84,7 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                 <>
                     <Input.Container>
                         <TextInputBlock
-                            label="Code:"
+                            label="Code"
                             value={route.code}
                             placeholder="Route code..."
                             onChangeText={(text) => setRoute({ ...route, "code": text })}
@@ -92,32 +92,35 @@ export default function EditRouteModal({ stops: stops, onCancel, onSubmit }: Mod
                         />
 
                         <TextInputBlock
-                            label="Name:"
+                            label="Name"
                             value={route.name}
                             placeholder="Route name..."
                             onChangeText={(text) => setRoute({ ...route, "name": text })}
                             onClear={() => setRoute({ ...route, "name": '' })}
+                            required
                         />
 
                         <ModalButton.Block
-                            label="First Stop:"
+                            label="First Stop"
                             condition={route.first_stop_id}
                             value={stops.find(item => item.id === route.first_stop_id)?.name || 'Select First Stop'}
                             onPress={() => openModalWithSearch('first_stop_id')}
+                            required
                         />
 
                         <ModalButton.Block
-                            label="Last Stop:"
+                            label="Last Stop"
                             condition={route.last_stop_id}
                             value={stops.find(item => item.id === route.last_stop_id)?.name || 'Select Last Stop'}
                             onPress={() => openModalWithSearch('last_stop_id')}
+                            required
                         />
 
                         <View style={inputElementStyles[theme].inputGroup}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Input.Label>Type:</Input.Label>
+                                <Input.Label required>Type</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}

@@ -35,38 +35,45 @@ function Remove({ onPress }: RemoveProps) {
     )
 }
 
-function TextBase({ style, children, ...props }: TextProps) {
+interface TextBaseProps extends TextProps {
+    required?: boolean
+}
+
+function TextBase({ style, children, required = false, ...props }: TextBaseProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
     return (
-        <Text
-            style={[
-                {
-                    fontSize: 12,
-                    fontWeight: '600',
+        <View style={{ gap: 2, flexDirection: 'row', alignItems: 'flex-start' }}>
+            <Text
+                style={[
+                    {
+                        fontSize: 12,
+                        fontWeight: '600',
 
-                    color: theme.palette.textBlack,
-                }, style
-            ]}
-            {...props}
-        >{children}</Text>
+                        color: theme.palette.textBlack,
+                    }, style
+                ]}
+                {...props}
+            >{children}</Text>
+            {required && <Input.LabelLight style={{ color: 'red' }}>*</Input.LabelLight>}
+        </View>
     )
 }
 
-function Header({ style, ...props }: TextProps) {
+function Header({ style, ...props }: TextBaseProps) {
     return (
         <TextBase style={[{ fontSize: 20 }, style]} {...props} />
     )
 }
 
-function Title({ style, ...props }: TextProps) {
+function Title({ style, ...props }: TextBaseProps) {
     return (
         <TextBase style={[{ fontSize: 18 }, style]} {...props} />
     )
 }
 
-function TitleDivide({ style, ...props }: TextProps) {
+function TitleDivide({ style, ...props }: TextBaseProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -82,13 +89,13 @@ function TitleDivide({ style, ...props }: TextProps) {
     )
 }
 
-function Subtitle({ style, ...props }: TextProps) {
+function Subtitle({ style, ...props }: TextBaseProps) {
     return (
         <TextBase style={[{ fontSize: 16 }, style]} {...props} />
     )
 }
 
-function SubtitleWhite({ style, ...props }: TextProps) {
+function SubtitleWhite({ style, ...props }: TextBaseProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -97,7 +104,7 @@ function SubtitleWhite({ style, ...props }: TextProps) {
     )
 }
 
-function SubtitlePrimary({ style, ...props }: TextProps) {
+function SubtitlePrimary({ style, ...props }: TextBaseProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -106,7 +113,7 @@ function SubtitlePrimary({ style, ...props }: TextProps) {
     )
 }
 
-function Label({ style, ...props }: TextProps) {
+function Label({ style, ...props }: TextBaseProps) {
     return (
         <TextBase style={[
             {
@@ -118,7 +125,7 @@ function Label({ style, ...props }: TextProps) {
     )
 }
 
-function LabelLight({ style, ...props }: TextProps) {
+function LabelLight({ style, ...props }: TextBaseProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -132,7 +139,7 @@ function LabelLight({ style, ...props }: TextProps) {
     )
 }
 
-function ValueText({ style, ...props }: TextProps) {
+function ValueText({ style, ...props }: TextBaseProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -149,7 +156,7 @@ function ValueText({ style, ...props }: TextProps) {
     )
 }
 
-function ValuePrimary({ style, ...props }: TextProps) {
+function ValuePrimary({ style, ...props }: TextBaseProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -162,7 +169,7 @@ function ValuePrimary({ style, ...props }: TextProps) {
     )
 }
 
-function LoadingLabel(props: TextProps) {
+function LoadingLabel(props: TextBaseProps) {
     return (
         <SubtitlePrimary {...props}>Loading...</SubtitlePrimary>
     )

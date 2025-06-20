@@ -34,7 +34,7 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
 
     const handleOnSubmit = () => {
         if (!vehicleType.name || !vehicleType.icon_id) {
-            dialog('Input Required', 'Please enter a type name and choose an icon.')
+            dialog('Input Required', 'Please enter type name and choose an icon')
             return
         }
 
@@ -49,18 +49,19 @@ export default function EditVehicleTypeModal({ onSubmit, onCancel }: BaseModalCo
                 <>
                     <Input.Container>
                         <TextInputBlock
-                            label="Name:"
+                            label="Name"
                             value={vehicleType.name}
                             placeholder="e.g., Standard Bus"
                             onChangeText={(text) => setVehicleType({ ...vehicleType, "name": text })}
                             onClear={() => setVehicleType({ ...vehicleType, "name": '' })}
+                            required
                         />
 
                         <View style={inputElementStyles[theme].inputGroup}>
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Input.Label>Icon:</Input.Label>
+                                <Input.Label required>Icon</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}

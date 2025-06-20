@@ -39,7 +39,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
 
     const handleCoordSelect = (coordinates: AddableCoordinates) => {
         if (!coordinates.lat || !coordinates.lon) {
-            dialog('Input Required', 'Please pick the right coordinates')
+            dialog('Input Required', 'Please pick coordinates')
             return
         }
 
@@ -49,7 +49,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
 
     const handleOnSubmit = () => {
         if (!stop.name?.trim() || !stop.vehicle_type) {
-            dialog('Input Required', 'Please enter a stop name and choose a vehicle type.')
+            dialog('Input Required', 'Please enter stop name and choose a vehicle type')
             return
         }
 
@@ -64,15 +64,16 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                 <>
                     <Input.Container>
                         <TextInputBlock
-                            label="Name:"
+                            label="Name"
                             value={stop.name}
                             placeholder="Stop name..."
                             onChangeText={(text) => setStop({ ...stop, "name": text })}
                             onClear={() => setStop({ ...stop, "name": '' })}
+                            required
                         />
 
                         <View style={inputElementStyles[theme].inputGroup}>
-                            <Input.Label>Latitude and Longitude:</Input.Label>
+                            <Input.Label>Latitude and Longitude</Input.Label>
                             <View style={inputElementStyles[theme].inputGroupCoord}>
                                 <TextInputBase
                                     value={stop.lat?.toString()}
@@ -96,7 +97,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                         </View>
 
                         <TextInputBlock
-                            label="Alternative name:"
+                            label="Alternative name"
                             value={stop.name_alt || ''}
                             placeholder="Alternative name..."
                             onChangeText={(text) => setStop({ ...stop, "name_alt": text })}
@@ -107,7 +108,7 @@ export default function AddStopModal({ onCancel, onSubmit }: BaseModalContentPro
                             <View style={{
                                 flexDirection: 'column',
                             }}>
-                                <Input.Label>Icon:</Input.Label>
+                                <Input.Label required>Icon</Input.Label>
                                 <ScrollView
                                     horizontal
                                     showsHorizontalScrollIndicator={false}

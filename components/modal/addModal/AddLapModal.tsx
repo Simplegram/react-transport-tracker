@@ -122,14 +122,15 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                 <>
                     <ModalTemplate.BottomContainer style={{ maxHeight: 600 }}>
                         <ModalButton.Block
-                            label='Time:'
+                            label='Time'
                             condition={lap.time}
                             value={formatDateForDisplay(lap.time)}
                             onPress={() => setShowDatetimePicker(true)}
+                            required
                         />
 
                         <ModalButton.Block
-                            label='Stop:'
+                            label='Stop'
                             condition={lap.stop_id}
                             value={stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
                             onPress={() => openModal()}
@@ -149,7 +150,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                         </View>
 
                         <TextInputBlock.Multiline
-                            label='Note:'
+                            label='Note'
                             value={lap.note}
                             placeholder='Notes (optional)'
                             onChangeText={(text) => setLap({ ...lap, note: text })}

@@ -41,10 +41,14 @@ export function ModalButton({ condition, value, style, onPress }: ModalButtonPro
     )
 }
 
-function ModalButtonBlock({ label, condition, value, style, onPress }: ModalButtonProps) {
+interface ButtonBlockProps extends ModalButtonProps {
+    required?: boolean
+}
+
+function ModalButtonBlock({ label, condition, value, style, required = false, onPress }: ButtonBlockProps) {
     return (
         <Input>
-            <Input.Label>{label}</Input.Label>
+            <Input.Label required={required}>{label}</Input.Label>
             <ModalButton
                 condition={condition}
                 value={value}
