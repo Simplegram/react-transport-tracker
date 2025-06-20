@@ -248,6 +248,12 @@ export default function EditTravelItem() {
         return finalString
     }
 
+    let routeCode, routeName
+    if (travel) {
+        routeCode = routes.find(route => route.id === travel.route_id)?.code || ''
+        routeName = routes.find(route => route.id === travel.route_id)?.name || ''
+    }
+
     return (
         <CollapsibleHeaderPage
             headerText='Edit Travel'
@@ -305,7 +311,7 @@ export default function EditTravelItem() {
                             <ModalButton.Block
                                 label='Route'
                                 condition={travel.route_id}
-                                value={travel.route_id ? `${routes.find(route => route.id === travel.route_id)?.code || ''} | ${routes.find(route => route.id === travel.route_id)?.name || ''}` : 'Select Route...'}
+                                value={(travel.route_id && routeName) ? `${routeCode} | ${routeName}` : 'Loading route...'}
                                 onPress={() => openRouteModal()}
                                 required
                             />
