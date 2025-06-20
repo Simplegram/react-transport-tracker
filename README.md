@@ -2,6 +2,8 @@
 
 Based on my personal experience as a former public transport commuter. I used to travel to and from Gading Serpong, Tangerang (a Jakarta satellite city) and Kemang, South Jakarta.
 
+**Disclaimer: Only tested on Android, untested on iOS**
+
 ## Table of Contents
 
 - [Tech Stack](#tech-stack)
