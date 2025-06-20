@@ -112,10 +112,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
     }
 
     return (
-        <ModalTemplate.Bottom
-            visible={isModalVisible}
-            onRequestClose={onClose}
-        >
+        <ModalTemplate.Bottom visible={isModalVisible}>
             {!stops ? (
                 <Input.LoadingLabel />
             ) : (

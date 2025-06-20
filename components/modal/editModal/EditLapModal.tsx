@@ -87,10 +87,7 @@ export default function EditLapModal({ stops, selectedLap, isModalVisible, onClo
     }
 
     return (
-        <ModalTemplate.Bottom
-            visible={isModalVisible}
-            onRequestClose={onClose}
-        >
+        <ModalTemplate.Bottom visible={isModalVisible}>
             {!lap ? (
                 <LoadingScreen></LoadingScreen>
             ) : (
