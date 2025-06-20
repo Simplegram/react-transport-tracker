@@ -108,7 +108,7 @@ export default function DataListScreen() {
                             justifyContent: 'center',
                             alignItems: 'center',
                         }}>
-                            <Input.Title>No {dataType} found.</Input.Title>
+                            <Input.Title>No {dataType} available to display</Input.Title>
                         </View>
                     ) : (
                         <FlatList
