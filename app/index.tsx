@@ -7,7 +7,6 @@ import { useSupabase } from '@/context/SupabaseContext'
 import { useTheme } from '@/context/ThemeContext'
 import { useToggleLoading } from '@/hooks/useLoading'
 import { colors } from '@/src/const/color'
-import { statusBarStyles } from '@/src/styles/Styles'
 import { SupabaseClient } from '@supabase/supabase-js'
 import React, { useEffect, useState } from 'react'
 import { StatusBar, StyleSheet, Text, View } from 'react-native'
@@ -73,7 +72,7 @@ const Login = () => {
             style={styles[theme].keyboardView}
         >
             <StatusBar
-                backgroundColor={statusBarStyles[theme]}
+                backgroundColor={theme === 'light' ? colors.white_100 : colors.black}
             />
             <View style={styles[theme].container}>
                 {loading ? (
