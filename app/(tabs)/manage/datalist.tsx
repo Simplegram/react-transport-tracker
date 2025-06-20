@@ -147,8 +147,8 @@ export default function DataListScreen() {
                         onRequestClose={closeModal}
                     >
                         <ModalTemplate.BottomContainer>
-                            <Input.Header>{activeModalConfig ? activeModalConfig.title : 'Modal'}</Input.Header>
-                            <KeyboardAwareScrollView keyboardShouldPersistTaps={'always'}>
+                            <KeyboardAwareScrollView contentContainerStyle={{ gap: 10 }} keyboardShouldPersistTaps={'always'}>
+                                <Input.Header>{activeModalConfig ? activeModalConfig.title : 'Modal'}</Input.Header>
                                 {ModalContentComponent ? (
                                     <ModalContentComponent
                                         stops={stops}
