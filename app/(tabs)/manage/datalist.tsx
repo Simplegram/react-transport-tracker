@@ -125,6 +125,7 @@ export default function DataListScreen() {
                             keyboardShouldPersistTaps={'always'}
                             ListHeaderComponent={EmptyHeaderComponent}
                             ListHeaderComponentStyle={{ flex: 1 }}
+                            showsVerticalScrollIndicator={false}
                             numColumns={2}
                         />
                     )}
