@@ -10,10 +10,25 @@ const lightCalendarTheme: Theme = {
     indicatorColor: '#00adf5',
     textDayFontWeight: '300',
     textMonthFontWeight: 'bold',
-    textDayHeaderFontWeight: '300',
-    textDayFontSize: 16,
-    textMonthFontSize: 16,
-    textDayHeaderFontSize: 16,
+    textDayHeaderFontWeight: 'bold',
+    textDayFontSize: 15,
+    textMonthFontSize: 17,
+    textDayHeaderFontSize: 15,
+    'stylesheet.calendar.header': {
+        monthText: {
+            margin: 10,
+            fontSize: 17,
+            fontWeight: 'bold',
+            color: 'black',
+        },
+        dayHeader: {
+            width: 32,
+            marginTop: 2,
+            marginBottom: 7,
+            textAlign: 'center',
+            color: '#2d4150',
+        }
+    }
 }
 
 export const calendarTheme = {
@@ -22,6 +37,16 @@ export const calendarTheme = {
         ...lightCalendarTheme,
         calendarBackground: '#000',
         dayTextColor: colors.white_200,
-        monthTextColor: colors.white_100,
+        monthTextColor: colors.white_200,
+        'stylesheet.calendar.header': {
+            dayHeader: {
+                width: 32,
+                marginTop: 2,
+                marginBottom: 7,
+                textAlign: 'center',
+
+                color: colors.white_300,
+            }
+        }
     },
 }
