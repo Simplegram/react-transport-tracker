@@ -13,11 +13,11 @@ import useTravelDetail from '@/hooks/useTravelDetail'
 import { colors } from '@/src/const/color'
 import { travelDetailStyles } from '@/src/styles/TravelDetailStyles'
 import { DataItem, Stop } from '@/src/types/Travels'
-import { formatMsToMinutes, sumTimesToMs } from '@/src/utils/dateUtils'
+import { formatMsToMinutes, sumTimesToMs, timeToEpoch } from '@/src/utils/dateUtils'
 import { getSimpleCentroid } from '@/src/utils/mapUtils'
-import { MarkerView } from '@maplibre/maplibre-react-native'
+import { LineLayer, MarkerView, ShapeSource } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Dimensions, View } from 'react-native'
 
 const { width: screenWidth } = Dimensions.get("screen")
@@ -47,7 +47,10 @@ export default function TravelDetail() {
         refetchTravelData,
     } = useGetTravelData()
 
-    const { travelTimes, getAllTravelTimes } = useTravelDetail()
+    const {
+        travelTimes, getAllTravelTimes,
+        routeTrace, getRouteTrace
+    } = useTravelDetail()
 
     const [dataToUse, setDataToUse] = useState<DataItem[]>([])
     const [type, setType] = useState<'best' | 'average' | 'worst'>('average')
@@ -75,6 +78,10 @@ export default function TravelDetail() {
         getAllTravelTimes(inputItems)
     }, [selectedTravelItems])
 
+    useEffect(() => {
+        console.log(routeTrace)
+    }, [routeTrace])
+
     useFocusEffect(
         React.useCallback(() => {
             refetchTravelData()
@@ -82,6 +89,43 @@ export default function TravelDetail() {
             const allLaps = selectedTravelItems.map(travel => travel.id)
             getTravelLaps(allLaps)
         }, [])
+    )
+
+    useFocusEffect(
+        useCallback(() => {
+            if (travelLaps) {
+                const sortedLaps = travelLaps.sort((a, b) => {
+                    const epochA = timeToEpoch(a.time)
+                    const epochB = timeToEpoch(b.time)
+                    return epochA - epochB
+                })
+                    .filter((lap) => lap.lon && lap.lat)
+                    .filter((lap) =>
+                        (timeToEpoch(lap.time) > timeToEpoch(dataToUse[0].bus_initial_departure))
+                        &&
+                        (timeToEpoch(lap.time) < timeToEpoch(dataToUse[dataToUse.length - 1].bus_final_arrival))
+                    )
+
+                let joinedCoordinates: string = ''
+                if (sortedLaps) {
+                    const coordinateStrings = sortedLaps.map(lap => {
+                        return `${lap.lon},${lap.lat}`
+                    })
+
+                    if(dataToUse[0].first_stop_id.lon && dataToUse[0].first_stop_id.lat)
+                    coordinateStrings.unshift(`${dataToUse[0].first_stop_id.lon},${dataToUse[0].first_stop_id.lat}`)
+
+                    if(dataToUse[dataToUse.length - 1].last_stop_id.lon && dataToUse[dataToUse.length - 1].last_stop_id.lat)
+                    coordinateStrings.push(`${dataToUse[dataToUse.length - 1].last_stop_id.lon},${dataToUse[dataToUse.length - 1].last_stop_id.lat}`)
+
+                    joinedCoordinates = coordinateStrings.join(';')
+                }
+
+                console.log(joinedCoordinates)
+
+                getRouteTrace(joinedCoordinates)
+            }
+        }, [travelLaps])
     )
 
     useFocusEffect(
@@ -312,6 +356,26 @@ export default function TravelDetail() {
                                     />
                                 </MarkerView>
                             ))}
+                        {routeTrace && (
+                            <ShapeSource
+                                id="source1"
+                                lineMetrics
+                                shape={{
+                                    type: "Feature",
+                                    geometry: {
+                                        type: 'LineString',
+                                        coordinates: routeTrace
+                                    }
+                                }}
+                            >
+                                <LineLayer id="layer1" style={{
+                                    lineColor: colors.primary,
+                                    lineCap: "round",
+                                    lineJoin: "round",
+                                    lineWidth: 4,
+                                }} />
+                            </ShapeSource>
+                        )}
                     </MapDisplay>
                 </View>
             </View>

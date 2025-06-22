@@ -131,3 +131,10 @@ export const getDiffString = (duration: moment.Duration, usePrefix: boolean = fa
 
     return diffString
 }
+
+export const timeToEpoch = (date: string) => {
+    const cleanDate = date.replace("T", " ")
+    const epoch = moment(cleanDate, "YYYY-MM-DD hh:mm:ss").valueOf()
+
+    return epoch
+}
