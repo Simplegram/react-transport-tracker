@@ -1,5 +1,5 @@
 import React from 'react'
-import { ModalProps, useWindowDimensions, View } from 'react-native'
+import { ModalProps, ScrollView, useWindowDimensions, View } from 'react-native'
 import ModalTemplate from '../ModalTemplate'
 import Button from '../button/BaseButton'
 import Input from '../input/Input'
@@ -38,11 +38,15 @@ export interface DialogContent {
 }
 
 function InformationBox({ label, content, buttons = [] }: DialogContent) {
+    const { height } = useWindowDimensions()
+
     return (
         <View style={{ gap: 12 }}>
-            <View style={{ gap: 5 }}>
+            <View style={{ gap: 5, maxHeight: height * 0.8 }}>
                 <Input.Title>{label}</Input.Title>
-                <Input.ValueText style={{ minHeight: 75 }}>{content}</Input.ValueText>
+                <ScrollView>
+                    <Input.ValueText style={{ minHeight: 75 }}>{content}</Input.ValueText>
+                </ScrollView>
             </View>
             <Button.Row>
                 {buttons.map((button, index) => {
