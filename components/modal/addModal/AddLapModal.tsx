@@ -45,6 +45,8 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
     const [centerCoordinate, setCenterCoordinate] = useState<number[]>([0, 0])
 
+    const [locationLoading, setLocationLoading] = useState<boolean>(false)
+
     useEffect(() => {
         LocationManager.start()
 
@@ -64,6 +66,8 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
             setLap({ ...lap, lon: lon, lat: lat })
             setCenterCoordinate([lon, lat])
+
+            setLocationLoading(false)
         }, [location])
     )
 
@@ -140,7 +144,11 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 centerCoordinate={centerCoordinate}
                                 zoomEnabled={false}
                                 scrollEnabled={false}
-                                updateLocation={refetchLocation}
+                                updateLocation={() => {
+                                    setLocationLoading(true)
+                                    refetchLocation()
+                                }}
+                                locationLoading={locationLoading}
                             >
                                 <UserLocation visible={true} />
                             </MapDisplay.Pin>
