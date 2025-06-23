@@ -64,7 +64,10 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                 lat = location.coords.latitude
             }
 
-            setLap({ ...lap, lon: lon, lat: lat })
+            const currentTime = new Date().toISOString()
+            const formattedTime = formatLapTimeDisplay(currentTime)
+
+            setLap({ ...lap, time: formattedTime, lon: lon, lat: lat })
             setCenterCoordinate([lon, lat])
 
             setLocationLoading(false)
