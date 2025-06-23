@@ -5,8 +5,9 @@ import { useTheme } from '@/context/ThemeContext'
 import useModalHandler from '@/hooks/useModalHandler'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { AddableLap, AddableLapsModalProp } from '@/src/types/AddableTravels'
+import { LocationManager } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
     StyleSheet,
     View
@@ -32,6 +33,16 @@ export default function AddTravelLapsModal({ stops, currentLaps, isModalVisible,
 
     const [laps, setLaps] = useState<AddableLap[]>([])
     const [selectedLap, setSelectedLap] = useState<AddableLap | undefined>(undefined)
+
+    useFocusEffect(
+        useCallback(() => {
+            LocationManager.start()
+
+            return () => {
+                LocationManager.stop()
+            }
+        }, [])
+    )
 
     const handleOnSubmit = () => {
         onSelect(laps)

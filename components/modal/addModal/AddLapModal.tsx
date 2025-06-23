@@ -14,10 +14,10 @@ import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
 import { getDateToIsoString } from '@/src/utils/dateUtils'
 import { formatDateForDisplay, formatLapTimeDisplay } from '@/src/utils/utils'
-import { LocationManager, UserLocation } from '@maplibre/maplibre-react-native'
+import { UserLocation } from '@maplibre/maplibre-react-native'
 import * as Crypto from 'expo-crypto'
 import { useFocusEffect } from 'expo-router'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
     View
 } from 'react-native'
@@ -45,15 +45,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
     const [centerCoordinate, setCenterCoordinate] = useState<number[]>([0, 0])
 
-    const [locationLoading, setLocationLoading] = useState<boolean>(false)
-
-    useEffect(() => {
-        LocationManager.start()
-
-        return () => {
-            LocationManager.stop()
-        }
-    }, [])
+    const [locationLoading, setLocationLoading] = useState<boolean>(true)
 
     useFocusEffect(
         React.useCallback(() => {
@@ -147,11 +139,11 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 centerCoordinate={centerCoordinate}
                                 zoomEnabled={false}
                                 scrollEnabled={false}
+                                locationLoading={locationLoading}
                                 updateLocation={() => {
                                     setLocationLoading(true)
                                     refetchLocation()
                                 }}
-                                locationLoading={locationLoading}
                             >
                                 <UserLocation visible={true} />
                             </MapDisplay.Pin>
