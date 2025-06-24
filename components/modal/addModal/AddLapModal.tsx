@@ -49,20 +49,22 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
     useFocusEffect(
         React.useCallback(() => {
-            let lon: number = 0
-            let lat: number = 0
-            if (location) {
-                lon = location.coords.longitude
-                lat = location.coords.latitude
+            if (!lap.stop_id) {
+                let lon: number = 0
+                let lat: number = 0
+                if (location) {
+                    lon = location.coords.longitude
+                    lat = location.coords.latitude
+                }
+    
+                const currentTime = new Date().toISOString()
+                const formattedTime = formatLapTimeDisplay(currentTime)
+    
+                setLap({ ...lap, time: formattedTime, lon: lon, lat: lat })
+                setCenterCoordinate([lon, lat])
+    
+                setLocationLoading(false)
             }
-
-            const currentTime = new Date().toISOString()
-            const formattedTime = formatLapTimeDisplay(currentTime)
-
-            setLap({ ...lap, time: formattedTime, lon: lon, lat: lat })
-            setCenterCoordinate([lon, lat])
-
-            setLocationLoading(false)
         }, [location])
     )
 
@@ -130,6 +132,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                             condition={lap.stop_id}
                             value={stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
                             onPress={() => openModal()}
+                            onClear={() => setLap({ ...lap, stop_id: undefined })}
                         />
 
                         <View style={[inputElementStyles[theme].inputGroup, { height: 160 }]}>
@@ -140,10 +143,10 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 zoomEnabled={false}
                                 scrollEnabled={false}
                                 locationLoading={locationLoading}
-                                updateLocation={() => {
+                                updateLocation={lap.stop_id ? undefined : (() => {
                                     setLocationLoading(true)
                                     refetchLocation()
-                                }}
+                                })}
                             >
                                 <UserLocation visible={true} />
                             </MapDisplay.Pin>
