@@ -37,12 +37,10 @@ export default function useLocation() {
         }
         setHasLocationPermission(true)
 
-        await stopLocationWatch()
-
         try {
             console.log('Getting current location with high accuracy...')
             let currentLocation = await Location.getCurrentPositionAsync({
-                accuracy: Location.LocationAccuracy.Highest
+                accuracy: Location.LocationAccuracy.BestForNavigation
             })
             setLocation(currentLocation)
             console.log('Current location obtained:', currentLocation.coords.latitude)
@@ -69,15 +67,12 @@ export default function useLocation() {
             try {
                 console.log('Starting low-accuracy watch for warm-up...')
                 locationSubscriptionRef.current = await Location.watchPositionAsync(
-                    { accuracy: Location.LocationAccuracy.Low },
+                    {
+                        accuracy: Location.LocationAccuracy.BestForNavigation,
+                        timeInterval: 1,
+                    },
                     (loc) => { }
                 )
-
-                warmUpTimeoutIdRef.current = setTimeout(async () => {
-                    await stopLocationWatch()
-                    console.log(`Warm-up watch stopped after ${WARM_UP_DURATION_MS / 1000} seconds.`)
-                }, WARM_UP_DURATION_MS)
-
             } catch (error) {
                 console.error('Error during location warm-up:', error)
             }
