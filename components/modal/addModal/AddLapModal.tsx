@@ -35,7 +35,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
         closeModal
     } = useModalHandler()
 
-    const { location, refetchLocation } = useLocation()
+    const { location, refetchLocation, isLoadingLocation } = useLocation()
 
     const mapRef = useRef(null)
 
@@ -44,8 +44,6 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
     const [showDatetimePicker, setShowDatetimePicker] = useState(false)
 
     const [centerCoordinate, setCenterCoordinate] = useState<number[]>([0, 0])
-
-    const [locationLoading, setLocationLoading] = useState<boolean>(true)
 
     useFocusEffect(
         React.useCallback(() => {
@@ -56,14 +54,12 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                     lon = location.coords.longitude
                     lat = location.coords.latitude
                 }
-    
+
                 const currentTime = new Date().toISOString()
                 const formattedTime = formatLapTimeDisplay(currentTime)
-    
+
                 setLap({ ...lap, time: formattedTime, lon: lon, lat: lat })
                 setCenterCoordinate([lon, lat])
-    
-                setLocationLoading(false)
             }
         }, [location])
     )
@@ -142,11 +138,8 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 centerCoordinate={centerCoordinate}
                                 zoomEnabled={false}
                                 scrollEnabled={false}
-                                locationLoading={locationLoading}
-                                updateLocation={lap.stop_id ? undefined : (() => {
-                                    setLocationLoading(true)
-                                    refetchLocation()
-                                })}
+                                locationLoading={isLoadingLocation}
+                                updateLocation={lap.stop_id ? undefined : (() => refetchLocation())}
                             >
                                 <UserLocation visible={true} />
                             </MapDisplay.Pin>
