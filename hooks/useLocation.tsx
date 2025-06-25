@@ -2,8 +2,6 @@ import { useDialog } from "@/context/DialogContext"
 import * as Location from 'expo-location'
 import { useCallback, useEffect, useRef, useState } from "react" // Added useCallback and useRef
 
-const WARM_UP_DURATION_MS = 10000
-
 export default function useLocation() {
     const { dialog } = useDialog()
 
@@ -69,9 +67,10 @@ export default function useLocation() {
                 locationSubscriptionRef.current = await Location.watchPositionAsync(
                     {
                         accuracy: Location.LocationAccuracy.BestForNavigation,
-                        timeInterval: 1,
+                        timeInterval: 500,
+                        distanceInterval: 0,
                     },
-                    (loc) => { }
+                    (loc) => { console.log(loc) }
                 )
             } catch (error) {
                 console.error('Error during location warm-up:', error)
@@ -97,7 +96,7 @@ export default function useLocation() {
     return {
         location,
         refetchLocation,
-        isLoadingLocation, // Expose loading state for UI
-        hasLocationPermission // Expose permission state for UI
+        isLoadingLocation,
+        hasLocationPermission
     }
 }
