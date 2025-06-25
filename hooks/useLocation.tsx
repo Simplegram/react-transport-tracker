@@ -70,7 +70,7 @@ export default function useLocation() {
                         timeInterval: 500,
                         distanceInterval: 0,
                     },
-                    (loc) => { console.log(loc) }
+                    (loc) => { }
                 )
             } catch (error) {
                 console.error('Error during location warm-up:', error)
