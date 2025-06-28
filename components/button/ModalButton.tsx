@@ -1,5 +1,6 @@
 import { useTheme } from "@/context/ThemeContext"
 import { Pressable, StyleProp, ViewStyle } from "react-native"
+import CustomIcon from "../CustomIcon"
 import HighlightedText from "../HighlightedText"
 import Input from "../input/Input"
 
@@ -8,10 +9,11 @@ interface ModalButtonProps {
     condition: any
     value: any
     style?: StyleProp<ViewStyle>
+    children?: React.ReactNode
     onPress: () => void
 }
 
-export function ModalButton({ condition, value, style, onPress }: ModalButtonProps) {
+export function ModalButton({ condition, value, style, children, onPress }: ModalButtonProps) {
     const { getTheme } = useTheme()
     const theme = getTheme()
 
@@ -37,23 +39,54 @@ export function ModalButton({ condition, value, style, onPress }: ModalButtonPro
             <HighlightedText condition={condition}>
                 {value}
             </HighlightedText>
+            {children}
         </Pressable>
     )
 }
 
-interface ButtonBlockProps extends ModalButtonProps {
+interface ButtonClear extends ModalButtonProps {
+    onClear?: () => void
+}
+
+function ModalButtonWithClear({ onClear, ...props }: ButtonClear) {
+    const { getTheme } = useTheme()
+    const theme = getTheme()
+
+    return (
+        <ModalButton {...props} style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+        }}>
+            {onClear && props.condition && (
+                <Pressable onPress={onClear}>
+                    <CustomIcon name='xmark' style={[
+                        {
+                            paddingLeft: 5,
+
+                            color: theme.palette.borderColorSoft,
+                        }, props.condition && { color: theme.palette.borderColor }
+                    ]} />
+                </Pressable>
+            )}
+        </ModalButton>
+    )
+}
+
+interface ButtonBlockProps extends ButtonClear {
     required?: boolean
 }
 
-function ModalButtonBlock({ label, condition, value, style, required = false, onPress }: ButtonBlockProps) {
+function ModalButtonBlock({ required = false, ...props }: ButtonBlockProps) {
     return (
         <Input>
-            <Input.Label required={required ? (condition ? false : true) : false}>{label}</Input.Label>
-            <ModalButton
-                condition={condition}
-                value={value}
-                onPress={onPress}
-                style={style}
+            <Input.Label required={required ? (props.condition ? false : true) : false}>{props.label}</Input.Label>
+            <ModalButtonWithClear
+                style={props.style}
+                value={props.value}
+                condition={props.condition}
+                onPress={props.onPress}
+                onClear={props.onClear}
             />
         </Input>
     )

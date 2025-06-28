@@ -1,12 +1,12 @@
 import { ManageableLap } from "@/components/modal/FlatlistPicker"
-import { DataItem, Lap } from "../types/Travels"
+import { DataItem } from "../types/Travels"
 import { getCleanMomentTime } from "./dateUtils"
 
 export interface DataItemWithNewKey extends DataItem {
     lapCount: number
 }
 
-export const getGroupedData = (data: DataItem[], laps: Lap[]) => {
+export const getGroupedData = (data: DataItem[], laps: ManageableLap[]) => {
     const groupedData = data.reduce((acc, currentItem) => {
         const directionName = currentItem.directions?.name || 'Unassigned Direction'
         const directionKey = directionName

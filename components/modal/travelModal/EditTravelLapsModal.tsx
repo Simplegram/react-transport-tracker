@@ -6,8 +6,9 @@ import useModalHandler from '@/hooks/useModalHandler'
 import { modalStyles } from '@/src/styles/ModalStyles'
 import { EditableLapsModalProp } from '@/src/types/EditableTravels'
 import { sortLaps } from '@/src/utils/dataUtils'
+import { LocationManager } from '@maplibre/maplibre-react-native'
 import { useFocusEffect } from 'expo-router'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import {
     StyleSheet,
     View
@@ -33,6 +34,16 @@ export default function EditTravelLapsModal({ stops, travel_id, currentLaps, isM
 
     const [laps, setLaps] = useState<ManageableLap[]>([])
     const [selectedLap, setSelectedLap] = useState<ManageableLap | undefined>(undefined)
+
+    useFocusEffect(
+        useCallback(() => {
+            LocationManager.start()
+    
+            return () => {
+                LocationManager.stop()
+            }
+        }, [])
+    )
 
     const handleLapSelect = (lap: ManageableLap) => {
         setSelectedLap(lap)

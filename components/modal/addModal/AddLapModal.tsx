@@ -14,10 +14,10 @@ import { inputElementStyles } from '@/src/styles/InputStyles'
 import { AddableLap, AddableLapModalProp } from '@/src/types/AddableTravels'
 import { getDateToIsoString } from '@/src/utils/dateUtils'
 import { formatDateForDisplay, formatLapTimeDisplay } from '@/src/utils/utils'
-import { LocationManager, UserLocation } from '@maplibre/maplibre-react-native'
+import { UserLocation } from '@maplibre/maplibre-react-native'
 import * as Crypto from 'expo-crypto'
 import { useFocusEffect } from 'expo-router'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {
     View
 } from 'react-native'
@@ -35,7 +35,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
         closeModal
     } = useModalHandler()
 
-    const { location, refetchLocation } = useLocation()
+    const { location, refetchLocation, isLoadingLocation } = useLocation()
 
     const mapRef = useRef(null)
 
@@ -45,25 +45,22 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
 
     const [centerCoordinate, setCenterCoordinate] = useState<number[]>([0, 0])
 
-    useEffect(() => {
-        LocationManager.start()
-
-        return () => {
-            LocationManager.stop()
-        }
-    }, [])
-
     useFocusEffect(
         React.useCallback(() => {
-            let lon: number = 0
-            let lat: number = 0
-            if (location) {
-                lon = location.coords.longitude
-                lat = location.coords.latitude
-            }
+            if (!lap.stop_id) {
+                let lon: number = 0
+                let lat: number = 0
+                if (location) {
+                    lon = location.coords.longitude
+                    lat = location.coords.latitude
+                }
 
-            setLap({ ...lap, lon: lon, lat: lat })
-            setCenterCoordinate([lon, lat])
+                const currentTime = new Date().toISOString()
+                const formattedTime = formatLapTimeDisplay(currentTime)
+
+                setLap({ ...lap, time: formattedTime, lon: lon, lat: lat })
+                setCenterCoordinate([lon, lat])
+            }
         }, [location])
     )
 
@@ -131,6 +128,7 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                             condition={lap.stop_id}
                             value={stops.find(item => item.id === lap.stop_id)?.name || 'Select Stop'}
                             onPress={() => openModal()}
+                            onClear={() => setLap({ ...lap, stop_id: undefined })}
                         />
 
                         <View style={[inputElementStyles[theme].inputGroup, { height: 160 }]}>
@@ -140,7 +138,8 @@ export default function AddLapModal({ stops, isModalVisible, onClose, onSelect }
                                 centerCoordinate={centerCoordinate}
                                 zoomEnabled={false}
                                 scrollEnabled={false}
-                                updateLocation={refetchLocation}
+                                locationLoading={isLoadingLocation}
+                                updateLocation={lap.stop_id ? undefined : (() => refetchLocation())}
                             >
                                 <UserLocation visible={true} />
                             </MapDisplay.Pin>

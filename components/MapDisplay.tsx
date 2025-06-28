@@ -1,7 +1,7 @@
 import { useTheme } from "@/context/ThemeContext"
 import { colors } from "@/src/const/color"
 import { Camera, MapView } from "@maplibre/maplibre-react-native"
-import { StyleSheet, TouchableOpacity, View } from "react-native"
+import { ActivityIndicator, StyleSheet, TouchableOpacity, View } from "react-native"
 import Icon from 'react-native-vector-icons/FontAwesome6'
 
 const pointSize = {
@@ -58,6 +58,7 @@ export default function MapDisplay({
 }
 
 interface PinProps extends MapDisplayProps {
+    locationLoading?: boolean
     updateLocation?: () => void
 }
 
@@ -75,6 +76,7 @@ export function Pin(props: PinProps) {
             </View>
             {updateLocation && (
                 <TouchableOpacity
+                    disabled={props.locationLoading}
                     style={{
                         width: 42,
                         aspectRatio: 1,
@@ -97,7 +99,11 @@ export function Pin(props: PinProps) {
                     onPress={updateLocation}
                     activeOpacity={0.7}
                 >
-                    <Icon name="location-crosshairs" style={{ color: theme.palette.textBlack }} size={24} />
+                    {props.locationLoading ? (
+                        <ActivityIndicator color={theme.palette.textBlack} />
+                    ) : (
+                        <Icon name="location-crosshairs" style={{ color: theme.palette.textBlack }} size={24} />
+                    )}
                 </TouchableOpacity>
             )}
         </View>
